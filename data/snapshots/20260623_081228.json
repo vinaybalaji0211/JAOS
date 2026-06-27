@@ -1,0 +1,14 @@
+{
+    "status": "ONLINE",
+    "modules": [
+        "Logger"
+    ],
+    "events": [
+        "system_started"
+    ],
+    "health": {
+        "CPU Usage": 11.1,
+        "Memory Usage": 63.8,
+        "Disk Usage": 16.2
+    }
+}

@@ -1,0 +1,15 @@
+JARVIS_NAME = "JARVIS OS"
+
+VERSION = "0.1.0"
+
+AUTHOR = "Vinay"
+
+DEBUG_MODE = True
+
+SAFE_MODE = True
+
+CURRENT_PHASE = 1
+
+CURRENT_STEP = 3
+
+BUILD = "Alpha"

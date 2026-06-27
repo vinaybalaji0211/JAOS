@@ -1,0 +1,36 @@
+{
+    "status": {
+        "name": "JARVIS OS",
+        "state": "ONLINE",
+        "phase": "Phase 1",
+        "mode": "NORMAL"
+    },
+    "modules": [
+        "Logger"
+    ],
+    "events": [
+        "system_started"
+    ],
+    "plugins": [
+        "sample_plugin"
+    ],
+    "health": {
+        "CPU Usage": 8.3,
+        "Memory Usage": 65.1,
+        "Disk Usage": 16.3
+    },
+    "diagnostics": {
+        "Engine": "ONLINE",
+        "Modules Loaded": 1,
+        "Events Recorded": 1,
+        "Plugins Loaded": 1,
+        "CPU Usage": 8.3,
+        "Memory Usage": 65.1,
+        "Disk Usage": 16.3
+    },
+    "config": {
+        "jarvis_name": "JARVIS OS",
+        "mode": "NORMAL",
+        "ai_provider": "NONE"
+    }
+}

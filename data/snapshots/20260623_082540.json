@@ -1,0 +1,26 @@
+{
+    "status": "ONLINE",
+    "modules": [
+        "Logger"
+    ],
+    "events": [
+        "system_started"
+    ],
+    "plugins": [
+        "sample_plugin"
+    ],
+    "health": {
+        "CPU Usage": 33.3,
+        "Memory Usage": 64.8,
+        "Disk Usage": 16.3
+    },
+    "diagnostics": {
+        "Engine": "ONLINE",
+        "Modules Loaded": 1,
+        "Events Recorded": 1,
+        "Plugins Loaded": 1,
+        "CPU Usage": 33.3,
+        "Memory Usage": 64.8,
+        "Disk Usage": 16.3
+    }
+}

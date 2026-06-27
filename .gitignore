@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environments
+.env
+.venv/
+venv/
+env/
+*.env
+
+# Conda
+.conda/
+
+# Logs
+logs/*.log
+*.log
+
+# Cache
+.cache/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data / Local runtime
+data/runtime/
+data/cache/
+data/temp/
+
+# Secrets
+secrets/
+*.key
+*.pem
+*.token
+config/secrets.json
+
+# Build
+build/
+dist/
+*.egg-info/

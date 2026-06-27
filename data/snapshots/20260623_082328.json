@@ -1,0 +1,17 @@
+{
+    "status": "ONLINE",
+    "modules": [
+        "Logger"
+    ],
+    "events": [
+        "system_started"
+    ],
+    "plugins": [
+        "sample_plugin"
+    ],
+    "health": {
+        "CPU Usage": 5.0,
+        "Memory Usage": 63.0,
+        "Disk Usage": 16.3
+    }
+}

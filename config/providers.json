@@ -1,0 +1,97 @@
+{
+    "openai": {
+        "type": "cloud",
+        "status": "AVAILABLE",
+        "priority": 2,
+        "capabilities": [
+            "reasoning",
+            "coding",
+            "vision",
+            "writing",
+            "general"
+        ]
+    },
+    "ollama": {
+        "type": "local",
+        "status": "AVAILABLE",
+        "priority": 1,
+        "capabilities": [
+            "offline",
+            "local",
+            "reasoning",
+            "general"
+        ]
+    },
+    "gemini": {
+        "type": "cloud",
+        "status": "AVAILABLE",
+        "priority": 2,
+        "capabilities": [
+            "vision",
+            "multimodal",
+            "reasoning",
+            "general"
+        ]
+    },
+    "deepseek": {
+        "type": "cloud",
+        "status": "AVAILABLE",
+        "priority": 3,
+        "capabilities": [
+            "coding",
+            "cheap",
+            "reasoning"
+        ]
+    },
+    "claude": {
+        "type": "cloud",
+        "status": "AVAILABLE",
+        "priority": 3,
+        "capabilities": [
+            "writing",
+            "reasoning",
+            "analysis",
+            "long_context"
+        ]
+    },
+    "qwen": {
+        "type": "local",
+        "status": "AVAILABLE",
+        "priority": 3,
+        "capabilities": [
+            "coding",
+            "local",
+            "reasoning"
+        ]
+    },
+    "llamacpp": {
+        "type": "local",
+        "status": "AVAILABLE",
+        "priority": 4,
+        "capabilities": [
+            "offline",
+            "local",
+            "lightweight"
+        ]
+    },
+    "mistral": {
+        "type": "cloud",
+        "status": "AVAILABLE",
+        "priority": 4,
+        "capabilities": [
+            "reasoning",
+            "fast",
+            "general"
+        ]
+    },
+    "perplexity": {
+        "type": "cloud",
+        "status": "AVAILABLE",
+        "priority": 4,
+        "capabilities": [
+            "research",
+            "web_search",
+            "summarization"
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+[
+    {
+        "goal": "Build JARVIS OS as an independent 24/7 AI Operating System",
+        "status": "ACTIVE",
+        "created_at": "2026-06-23 13:55:09"
+    },
+    {
+        "goal": "Complete Phase 3 Brain and Memory Architecture",
+        "status": "ACTIVE",
+        "created_at": "2026-06-23 13:55:09"
+    },
+    {
+        "goal": "Release JARVIS OS v0.3",
+        "status": "ACTIVE",
+        "created_at": "2026-06-23 15:08:49"
+    }
+]
