@@ -18,15 +18,14 @@ goal.add_metadata(
     "VS Code"
 )
 
-registry.add(
-    goal.goal_id,
+registry.add_goal(
     goal
 )
 
 print("Count:", registry.count())
 print("Exists:", registry.exists(goal.goal_id))
 
-stored = registry.get(goal.goal_id)
+stored = registry.get_goal(goal.goal_id)
 print("Retrieved:", stored.to_dict())
 
 print("By Status:", len(registry.get_by_status(LifecycleStatus.ACTIVE)))
@@ -34,6 +33,6 @@ print("By Priority:", len(registry.get_by_priority(Priority.HIGH)))
 print("By Decision:", len(registry.get_by_decision("DEC-001")))
 print("Active:", len(registry.get_active_goals()))
 
-registry.remove(goal.goal_id)
+registry.remove_goal(goal.goal_id)
 
 print("Final Count:", registry.count())

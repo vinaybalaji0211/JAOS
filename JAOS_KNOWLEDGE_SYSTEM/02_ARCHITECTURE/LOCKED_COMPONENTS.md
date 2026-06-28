@@ -164,13 +164,15 @@ A component becomes locked only after:
 
 | DecisionRegistry | 🔒 Locked | 0.5.0-dev | Tested |
 
-
-
-\---
+| GoalRegistry | 🔒 Locked | 0.5.0-dev | Tested |
 
 
 
-\# In Progress
+---
+
+
+
+# In Progress
 
 
 
@@ -178,9 +180,7 @@ A component becomes locked only after:
 
 |---|---|---|
 
-| GoalRegistry | 🟡 In Progress | 0.5.0 |
-
-| MissionRegistry | ⬜ Pending | 0.5.0 |
+| MissionRegistry | 🟡 In Progress | 0.5.0 |
 
 | ExecutionPlanRegistry | ⬜ Pending | 0.5.0 |
 
