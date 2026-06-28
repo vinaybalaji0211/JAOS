@@ -2,91 +2,79 @@
 
 
 
-All notable changes to JAOS will be recorded here.
+Version 1.0.0
 
 
 
-\## v0.4.0 — Executive Brain Foundation
+\---
 
 
 
-\### Added
+\## Added
 
 
 
-\- IntentModel
+\- JAOS Constitution
 
-\- ContextSnapshotModel
+\- START\_HERE
 
-\- DecisionModel
+\- PROJECT\_DNA
 
-\- GoalModel
+\- DEVELOPMENT\_RULES
 
-\- MissionModel
+\- AI\_BEHAVIOR
 
-\- ExecutionPlanModel
+\- LOCKED\_COMPONENTS
 
-\- ResultModel
+\- COMPLETE\_ROADMAP
 
-\- Validation hardening
+\- MASTER\_INDEX
 
-\- Shared enums
+\- CAPABILITY\_MATRIX
 
-\- Executive Brain certification
+\- LIMITATION\_MATRIX
 
+\- PROJECT\_SELF\_AWARENESS
 
+\- FEATURE\_BACKLOG
 
-\## v0.3.0 — Runtime
+\- VERSION\_PLAN
 
+\- MILESTONES
 
+\- VERSION\_HISTORY
 
-\### Added
+\- JKS\_STATUS
 
+\- REPOSITORY\_SYNC
 
+\- GITHUB\_WORKFLOW
 
-\- Runtime Context
+\- DECISION\_HISTORY
 
-\- Boot Manager
+\- LESSONS\_LEARNED
 
-\- Boot Phase Manager
-
-
-
-\## v0.2.0 — Kernel
-
-
-
-\### Added
+\- CONTEXT\_PACKAGE
 
 
 
-\- JAOS Kernel
-
-\- Service Registry
-
-\- Event Bus
-
-\- Lifecycle Manager
-
-\- Health Monitor
-
-\- Router
-
-\- Permission Gateway
+\---
 
 
 
-\## v0.1.0 — Project Foundation
+\## Repository
 
 
 
-\### Added
+Initial engineering and knowledge foundation completed.
 
 
 
-\- Project folder structure
+\---
 
-\- Environment setup
 
-\- Initial engineering framework
+
+Future changes should be appended to this document.
+
+
 
