@@ -1,128 +1,59 @@
-\# JAOS — Jarvis Artificial Operating System
+# JAOS — Jarvis Artificial Operating System
 
+JAOS is a modular AI Operating System designed to understand intent, reason about tasks, manage memory, coordinate tools, and execute approved actions safely.
 
+---
 
-JAOS is an AI Operating System designed to understand intent, reason about tasks, manage memory, coordinate platforms, and execute actions safely.
+## Status
 
+Stage: Alpha  
+Current Version: 0.5.0-dev  
+Current Phase: Registry Layer  
+Current Component: GoalRegistry  
 
+---
 
-Status: Alpha Development
-
-
-
-\## Current Version
-
-
-
-JAOS Software: v0.4.0  
-
-Engineering Handbook: v1.0.0  
-
-Developer Platform: v1.0.0  
-
-Repository: v1.0.0  
-
-
-
-\## Current Milestone
-
-
-
-Registry Layer
-
-
-
-\## Core Architecture
-
-
-
-User  
-
-↓  
-
-Executive Brain  
-
-↓  
-
-Kernel  
-
-↓  
-
-Platform Layer  
-
-↓  
-
-External Systems  
-
-
-
-\## Project Principles
-
-
-
-\- Architecture before implementation
-
-\- Models own data
-
-\- Engines own behavior
-
-\- Kernel executes
-
-\- Executive Brain thinks
-
-\- Documentation evolves with code
-
-\- Security before convenience
-
-
-
-\## Main Folders
-
-
-
-\- `executive\_brain/` — reasoning foundation
-
-\- `kernel/` — runtime and execution layer
-
-\- `tests/` — test files
-
-\- `JAOS\_ENGINEERING\_HANDBOOK/` — official engineering handbook
-
-\- `JAOS\_BIBLE/` — earlier engineering knowledge base
-
-\- `.github/` — GitHub templates and workflows
-
-
-
-\## Development Status
-
-
+## Current Progress
 
 Completed:
 
-
-
-\- Kernel
-
-\- Runtime
-
-\- Executive Brain Foundation
-
-\- Engineering Handbook Framework
-
-
+- Kernel
+- Runtime
+- Executive Brain Foundation
+- Engineering Foundation
+- JAOS Knowledge System v1.0
+- GitHub Repository
+- BaseRegistry
+- IntentRegistry
+- DecisionRegistry
 
 In Progress:
 
-
-
-\- Repository setup
-
-
+- GoalRegistry
+- Registry Layer
 
 Next:
 
+- MissionRegistry
+- ExecutionPlanRegistry
+- ResultRegistry
+- RegistryManager
+- Planning Engine
 
+---
 
-\- Registry Layer
+## Project Structure
 
+```text
+JAOS
+├── AI_CONTEXT.md
+├── JAOS_KNOWLEDGE_SYSTEM
+├── JAOS_ENGINEERING_HANDBOOK
+├── executive_brain
+├── kernel
+├── runtime
+├── tests
+├── config
+├── data
+├── logs
+└── .github
