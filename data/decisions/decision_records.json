@@ -10,5 +10,17 @@
         "decision": "Use Reasoning Engine",
         "reason": "The plan needs high-level reasoning before validation",
         "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-06-28 19:22:21",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-06-28 19:22:22",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
     }
 ]
