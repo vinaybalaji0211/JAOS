@@ -1,0 +1,1699 @@
+2026-06-23 07:46:32,157 - INFO - JARVIS OS logging system is online.
+2026-06-23 07:49:57,007 - INFO - Engine initialized.
+2026-06-23 07:49:57,007 - INFO - Engine started.
+2026-06-23 07:53:05,408 - INFO - Engine initialized.
+2026-06-23 07:53:05,408 - INFO - Engine started.
+2026-06-23 07:53:05,409 - INFO - Module loaded: Logger
+2026-06-23 07:55:18,624 - INFO - Engine initialized.
+2026-06-23 07:55:18,625 - INFO - Engine started.
+2026-06-23 07:55:18,625 - INFO - Module loaded: Logger
+2026-06-23 07:55:18,625 - INFO - Event emitted: system_started
+2026-06-23 07:57:49,817 - INFO - Engine initialized.
+2026-06-23 07:57:49,817 - INFO - Engine started.
+2026-06-23 07:57:49,818 - INFO - Module loaded: Logger
+2026-06-23 07:57:49,848 - INFO - Event emitted: system_started
+2026-06-23 08:00:34,873 - INFO - Engine initialized
+2026-06-23 08:00:34,874 - INFO - Engine started
+2026-06-23 08:00:34,874 - INFO - Module loaded: Logger
+2026-06-23 08:00:34,874 - INFO - Event emitted: system_started
+2026-06-23 08:03:27,581 - INFO - Engine initialized
+2026-06-23 08:03:27,582 - INFO - Engine started
+2026-06-23 08:03:27,582 - INFO - Module loaded: Logger
+2026-06-23 08:03:27,582 - INFO - Event emitted: system_started
+2026-06-23 08:03:27,585 - INFO - Snapshot created: data/snapshots\20260623_080327.json
+2026-06-23 08:08:20,339 - INFO - Engine initialized
+2026-06-23 08:08:20,339 - INFO - Engine started
+2026-06-23 08:08:20,339 - INFO - Module loaded: Logger
+2026-06-23 08:08:20,339 - INFO - Event emitted: system_started
+2026-06-23 08:08:20,341 - INFO - Recovered snapshot: data/snapshots\20260623_080327.json
+2026-06-23 08:08:20,342 - INFO - Snapshot created: data/snapshots\20260623_080820.json
+2026-06-23 08:12:28,270 - INFO - Engine initialized
+2026-06-23 08:12:28,271 - INFO - Engine started
+2026-06-23 08:12:28,272 - INFO - Action recorded: Engine started
+2026-06-23 08:12:28,272 - INFO - Module loaded: Logger
+2026-06-23 08:12:28,274 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:12:28,274 - INFO - Event emitted: system_started
+2026-06-23 08:12:28,275 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:12:28,277 - INFO - Recovered snapshot: data/snapshots\20260623_080820.json
+2026-06-23 08:12:28,279 - INFO - Snapshot created: data/snapshots\20260623_081228.json
+2026-06-23 08:12:28,280 - INFO - Action recorded: Snapshot created
+2026-06-23 08:16:39,741 - INFO - Engine initialized
+2026-06-23 08:16:39,741 - INFO - Engine started
+2026-06-23 08:16:39,743 - INFO - Action recorded: Engine started
+2026-06-23 08:16:39,743 - INFO - Module loaded: Logger
+2026-06-23 08:16:39,744 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:16:39,744 - INFO - Event emitted: system_started
+2026-06-23 08:16:39,746 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:16:39,746 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:16:39,748 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:16:39,750 - INFO - Recovered snapshot: data/snapshots\20260623_081228.json
+2026-06-23 08:16:39,752 - INFO - Snapshot created: data/snapshots\20260623_081639.json
+2026-06-23 08:16:39,753 - INFO - Action recorded: Snapshot created
+2026-06-23 08:20:47,982 - INFO - Engine initialized
+2026-06-23 08:20:47,982 - INFO - Engine started
+2026-06-23 08:20:47,984 - INFO - Action recorded: Engine started
+2026-06-23 08:20:47,984 - INFO - Module loaded: Logger
+2026-06-23 08:20:47,985 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:20:47,986 - INFO - Event emitted: system_started
+2026-06-23 08:20:47,987 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:20:47,987 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:20:47,989 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:20:47,990 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:20:47,991 - INFO - Action recorded: System tests completed
+2026-06-23 08:20:47,992 - INFO - Recovered snapshot: data/snapshots\20260623_081639.json
+2026-06-23 08:20:47,994 - INFO - Snapshot created: data/snapshots\20260623_082047.json
+2026-06-23 08:20:47,995 - INFO - Action recorded: Snapshot created
+2026-06-23 08:21:23,642 - INFO - Engine initialized
+2026-06-23 08:21:23,642 - INFO - Engine started
+2026-06-23 08:21:23,643 - INFO - Action recorded: Engine started
+2026-06-23 08:21:23,643 - INFO - Module loaded: Logger
+2026-06-23 08:21:23,645 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:21:23,645 - INFO - Event emitted: system_started
+2026-06-23 08:21:23,647 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:21:23,648 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:21:23,649 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:21:23,650 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:21:23,651 - INFO - Action recorded: System tests completed
+2026-06-23 08:21:23,652 - INFO - Recovered snapshot: data/snapshots\20260623_082047.json
+2026-06-23 08:21:23,653 - INFO - Snapshot created: data/snapshots\20260623_082123.json
+2026-06-23 08:21:23,654 - INFO - Action recorded: Snapshot created
+2026-06-23 08:23:28,938 - INFO - Engine initialized
+2026-06-23 08:23:28,938 - INFO - Engine started
+2026-06-23 08:23:28,940 - INFO - Action recorded: Engine started
+2026-06-23 08:23:28,940 - INFO - Module loaded: Logger
+2026-06-23 08:23:28,942 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:23:28,942 - INFO - Event emitted: system_started
+2026-06-23 08:23:28,943 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:23:28,944 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:23:28,946 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:23:28,948 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:23:28,949 - INFO - Action recorded: System tests completed
+2026-06-23 08:23:28,951 - INFO - Recovered snapshot: data/snapshots\20260623_082123.json
+2026-06-23 08:23:28,952 - INFO - Snapshot created: data/snapshots\20260623_082328.json
+2026-06-23 08:23:28,954 - INFO - Action recorded: Snapshot created
+2026-06-23 08:25:40,597 - INFO - Engine initialized
+2026-06-23 08:25:40,597 - INFO - Engine started
+2026-06-23 08:25:40,599 - INFO - Action recorded: Engine started
+2026-06-23 08:25:40,599 - INFO - Module loaded: Logger
+2026-06-23 08:25:40,601 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:25:40,602 - INFO - Event emitted: system_started
+2026-06-23 08:25:40,603 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:25:40,604 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:25:40,610 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:25:40,611 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:25:40,613 - INFO - Action recorded: System tests completed
+2026-06-23 08:25:40,614 - INFO - Diagnostics completed.
+2026-06-23 08:25:40,616 - INFO - Recovered snapshot: data/snapshots\20260623_082328.json
+2026-06-23 08:25:40,617 - INFO - Snapshot created: data/snapshots\20260623_082540.json
+2026-06-23 08:25:40,619 - INFO - Action recorded: Snapshot created
+2026-06-23 08:27:57,638 - INFO - Engine initialized
+2026-06-23 08:27:57,639 - INFO - Engine started
+2026-06-23 08:27:57,640 - INFO - Action recorded: Engine started
+2026-06-23 08:27:57,640 - INFO - Module loaded: Logger
+2026-06-23 08:27:57,642 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:27:57,643 - INFO - Event emitted: system_started
+2026-06-23 08:27:57,645 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:27:57,646 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:27:57,648 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:27:57,649 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:27:57,651 - INFO - Action recorded: System tests completed
+2026-06-23 08:27:57,653 - INFO - Diagnostics completed.
+2026-06-23 08:27:57,654 - INFO - Recovered snapshot: data/snapshots\20260623_082540.json
+2026-06-23 08:27:57,655 - INFO - Status requested.
+2026-06-23 08:27:57,656 - INFO - Snapshot created: data/snapshots\20260623_082757.json
+2026-06-23 08:27:57,658 - INFO - Action recorded: Snapshot created
+2026-06-23 08:31:10,886 - INFO - Engine initialized
+2026-06-23 08:31:10,886 - INFO - Configuration loaded.
+2026-06-23 08:31:10,886 - INFO - Engine started
+2026-06-23 08:31:10,889 - INFO - Action recorded: Engine started
+2026-06-23 08:31:10,889 - INFO - Module loaded: Logger
+2026-06-23 08:31:10,890 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:31:10,891 - INFO - Event emitted: system_started
+2026-06-23 08:31:10,892 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:31:10,893 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:31:10,895 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:31:10,896 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:31:10,897 - INFO - Action recorded: System tests completed
+2026-06-23 08:31:10,899 - INFO - Diagnostics completed.
+2026-06-23 08:31:10,900 - INFO - Recovered snapshot: data/snapshots\20260623_082757.json
+2026-06-23 08:31:10,901 - INFO - Status requested.
+2026-06-23 08:31:10,902 - INFO - Snapshot created: data/snapshots\20260623_083110.json
+2026-06-23 08:31:10,904 - INFO - Action recorded: Snapshot created
+2026-06-23 08:35:15,800 - INFO - Engine initialized
+2026-06-23 08:35:15,800 - INFO - Configuration loaded.
+2026-06-23 08:35:15,801 - INFO - Engine started
+2026-06-23 08:35:15,802 - INFO - Action recorded: Engine started
+2026-06-23 08:35:15,803 - INFO - Module loaded: Logger
+2026-06-23 08:35:15,805 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:35:15,805 - INFO - Event emitted: system_started
+2026-06-23 08:35:15,807 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:35:15,807 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:35:15,809 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:35:15,811 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:35:15,813 - INFO - Action recorded: System tests completed
+2026-06-23 08:35:15,814 - INFO - Diagnostics completed.
+2026-06-23 08:35:15,815 - INFO - Recovered snapshot: data/snapshots\20260623_083110.json
+2026-06-23 08:35:15,816 - INFO - Command received: status
+2026-06-23 08:35:15,818 - INFO - Action recorded: Command processed
+2026-06-23 08:35:15,818 - INFO - Status requested.
+2026-06-23 08:35:15,820 - INFO - Snapshot created: data/snapshots\20260623_083515.json
+2026-06-23 08:35:15,821 - INFO - Action recorded: Snapshot created
+2026-06-23 08:37:27,967 - INFO - Engine initialized
+2026-06-23 08:37:27,968 - INFO - Configuration loaded.
+2026-06-23 08:37:27,968 - INFO - Engine started
+2026-06-23 08:37:27,970 - INFO - Action recorded: Engine started
+2026-06-23 08:37:27,970 - INFO - Module loaded: Logger
+2026-06-23 08:37:27,972 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:37:27,973 - INFO - Event emitted: system_started
+2026-06-23 08:37:27,975 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:37:27,975 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:37:27,978 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:37:27,979 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:37:27,981 - INFO - Action recorded: System tests completed
+2026-06-23 08:37:27,982 - INFO - Diagnostics completed.
+2026-06-23 08:37:27,983 - INFO - Recovered snapshot: data/snapshots\20260623_083515.json
+2026-06-23 08:37:27,984 - INFO - Status requested.
+2026-06-23 08:37:27,986 - INFO - Snapshot created: data/snapshots\20260623_083727.json
+2026-06-23 08:37:27,988 - INFO - Action recorded: Snapshot created
+2026-06-23 08:37:36,791 - INFO - Command received: hello
+2026-06-23 08:37:36,794 - INFO - Action recorded: Command: hello
+2026-06-23 08:37:46,495 - INFO - Command received: how are u
+2026-06-23 08:37:46,497 - INFO - Action recorded: Command: how are u
+2026-06-23 08:37:51,472 - INFO - Command received: exit
+2026-06-23 08:37:51,475 - INFO - Action recorded: Command: exit
+2026-06-23 08:41:09,990 - INFO - Engine initialized
+2026-06-23 08:41:09,991 - INFO - Configuration loaded.
+2026-06-23 08:41:09,991 - INFO - Engine started
+2026-06-23 08:41:09,993 - INFO - Action recorded: Engine started
+2026-06-23 08:41:09,993 - INFO - Module loaded: Logger
+2026-06-23 08:41:09,996 - INFO - Action recorded: Logger module loaded
+2026-06-23 08:41:09,996 - INFO - Event emitted: system_started
+2026-06-23 08:41:09,998 - INFO - Action recorded: system_started event emitted
+2026-06-23 08:41:09,998 - INFO - Plugin loaded: sample_plugin
+2026-06-23 08:41:10,001 - INFO - Action recorded: Plugins loaded
+2026-06-23 08:41:10,002 - INFO - Tests completed. 9/9 passed.
+2026-06-23 08:41:10,004 - INFO - Action recorded: System tests completed
+2026-06-23 08:41:10,005 - INFO - Diagnostics completed.
+2026-06-23 08:41:10,009 - INFO - Action recorded: Version information displayed
+2026-06-23 08:41:10,009 - INFO - Recovered snapshot: data/snapshots\20260623_083727.json
+2026-06-23 08:41:10,010 - INFO - Status requested.
+2026-06-23 08:41:10,011 - INFO - Snapshot created: data/snapshots\20260623_084110.json
+2026-06-23 08:41:10,012 - INFO - Snapshot created: data/snapshots\20260623_084110.json
+2026-06-23 08:41:10,015 - INFO - Action recorded: Snapshot created
+2026-06-23 08:41:23,751 - INFO - Command received: exit
+2026-06-23 08:41:23,754 - INFO - Action recorded: Command: exit
+2026-06-23 10:39:40,273 - INFO - Task added: Initialize Memory System
+2026-06-23 10:39:40,274 - INFO - Task added: Load AI Provider
+2026-06-23 12:06:21,585 - INFO - Job scheduled: Daily backup
+2026-06-23 12:06:21,585 - INFO - Job scheduled: Memory cleanup
+2026-06-23 12:11:24,132 - INFO - Memory added to window: User said hello
+2026-06-23 12:11:24,133 - INFO - Memory added to window: JARVIS replied
+2026-06-23 12:11:24,133 - INFO - Memory added to window: User asked for scheduler
+2026-06-23 12:11:24,133 - INFO - Memory added to window: Oldest memory should be removed
+2026-06-23 12:15:04,545 - INFO - Context updated: current_phase = Phase 2
+2026-06-23 12:15:04,545 - INFO - Context updated: current_step = Step 5
+2026-06-23 12:15:04,545 - INFO - Context updated: active_system = Context Manager
+2026-06-23 12:19:25,010 - INFO - Permission checked: delete_file = False
+2026-06-23 12:19:25,011 - INFO - Permission checked: read_file = True
+2026-06-23 12:27:04,958 - INFO - Permission checked: delete_file = False
+2026-06-23 12:27:04,958 - INFO - Permission checked: read_file = True
+2026-06-23 12:29:38,748 - INFO - Action queued: Load Memory
+2026-06-23 12:29:38,748 - INFO - Action queued: Initialize AI Provider
+2026-06-23 12:29:38,748 - INFO - Action queued: Check System Health
+2026-06-23 12:29:38,749 - INFO - Action executed: Load Memory
+2026-06-23 12:37:25,939 - INFO - Thread started: TestThread
+2026-06-23 12:37:27,941 - INFO - All threads completed.
+2026-06-23 12:39:03,270 - INFO - Performance timer started.
+2026-06-23 12:39:05,271 - INFO - Performance timer stopped.
+2026-06-23 12:40:53,254 - INFO - Recovery event recorded: Recovered snapshot after crash
+2026-06-23 12:40:53,254 - INFO - Recovery event recorded: Restarted engine successfully
+2026-06-23 12:44:59,249 - INFO - Backup created: data/backups\20260623_124459_history
+2026-06-23 12:47:59,014 - INFO - Explanation recorded: Created backup -> To protect project data from loss
+2026-06-23 12:47:59,014 - INFO - Explanation recorded: Checked permissions -> To prevent unsafe actions
+2026-06-23 12:51:31,641 - INFO - Internet connection available.
+2026-06-23 12:54:33,621 - INFO - Transparency report shown: JARVIS OS Internal State
+2026-06-23 12:56:47,428 - INFO - Agent registered: Memory Agent
+2026-06-23 12:56:47,428 - INFO - Agent registered: Planner Agent
+2026-06-23 12:56:47,429 - INFO - Agent registered: Tool Agent
+2026-06-23 12:56:47,429 - INFO - Agent registered: Security Agent
+2026-06-23 12:59:01,971 - INFO - Resource information collected.
+2026-06-23 13:02:43,102 - INFO - System state changed to: PROCESSING
+2026-06-23 13:02:43,103 - INFO - System state changed to: IDLE
+2026-06-23 13:08:36,450 - INFO - Capability registered: File Manager -> read_file
+2026-06-23 13:08:36,451 - INFO - Capability registered: File Manager -> write_file
+2026-06-23 13:08:36,451 - INFO - Capability registered: Permission System -> check_permission
+2026-06-23 13:08:36,451 - INFO - Capability registered: Agent Manager -> register_agent
+2026-06-23 13:14:07,187 - INFO - Session started.
+2026-06-23 13:14:07,187 - INFO - Session event added: JARVIS OS started
+2026-06-23 13:14:07,187 - INFO - Session event added: Capability registry checked
+2026-06-23 13:16:14,485 - INFO - Notification created: JARVIS OS started successfully.
+2026-06-23 13:16:14,486 - INFO - Notification created: Capability registry loaded.
+2026-06-23 13:16:14,486 - INFO - Notification created: System resources checked.
+2026-06-23 13:19:01,113 - INFO - Engine initialized
+2026-06-23 13:19:01,114 - INFO - Configuration loaded.
+2026-06-23 13:19:01,114 - INFO - Engine started
+2026-06-23 13:19:01,118 - INFO - Action recorded: Engine started
+2026-06-23 13:19:01,118 - INFO - Module loaded: Logger
+2026-06-23 13:19:01,120 - INFO - Action recorded: Logger module loaded
+2026-06-23 13:19:01,121 - INFO - Event emitted: system_started
+2026-06-23 13:19:01,123 - INFO - Action recorded: system_started event emitted
+2026-06-23 13:19:01,124 - INFO - Plugin loaded: sample_plugin
+2026-06-23 13:19:01,126 - INFO - Action recorded: Plugins loaded
+2026-06-23 13:19:01,127 - INFO - Tests completed. 9/9 passed.
+2026-06-23 13:19:01,130 - INFO - Action recorded: System tests completed
+2026-06-23 13:19:01,131 - INFO - Diagnostics completed.
+2026-06-23 13:19:01,135 - INFO - Action recorded: Version information displayed
+2026-06-23 13:19:01,140 - INFO - Recovered snapshot: data/snapshots\20260623_084110.json
+2026-06-23 13:19:01,141 - INFO - Status requested.
+2026-06-23 13:19:01,143 - INFO - Snapshot created: data/snapshots\20260623_131901.json
+2026-06-23 13:19:01,144 - INFO - Snapshot created: data/snapshots\20260623_131901.json
+2026-06-23 13:19:01,146 - INFO - Action recorded: Snapshot created
+2026-06-23 13:19:15,261 - INFO - Command received: exit
+2026-06-23 13:19:15,264 - INFO - Action recorded: Command: exit
+2026-06-23 13:19:27,413 - INFO - Task added: Initialize Memory System
+2026-06-23 13:19:27,413 - INFO - Task added: Load AI Provider
+2026-06-23 13:19:51,449 - INFO - Job scheduled: Daily backup
+2026-06-23 13:19:51,449 - INFO - Job scheduled: Memory cleanup
+2026-06-23 13:19:57,291 - INFO - Memory added to window: User said hello
+2026-06-23 13:19:57,291 - INFO - Memory added to window: JARVIS replied
+2026-06-23 13:19:57,291 - INFO - Memory added to window: User asked for scheduler
+2026-06-23 13:19:57,291 - INFO - Memory added to window: Oldest memory should be removed
+2026-06-23 13:20:03,026 - INFO - Context updated: current_phase = Phase 2
+2026-06-23 13:20:03,026 - INFO - Context updated: current_step = Step 5
+2026-06-23 13:20:03,026 - INFO - Context updated: active_system = Context Manager
+2026-06-23 13:20:12,099 - INFO - Permission checked: delete_file = False
+2026-06-23 13:20:12,100 - INFO - Permission checked: read_file = True
+2026-06-23 13:20:20,586 - INFO - Action queued: Load Memory
+2026-06-23 13:20:20,586 - INFO - Action queued: Initialize AI Provider
+2026-06-23 13:20:20,586 - INFO - Action queued: Check System Health
+2026-06-23 13:20:20,587 - INFO - Action executed: Load Memory
+2026-06-23 13:20:27,844 - INFO - Thread started: TestThread
+2026-06-23 13:20:29,845 - INFO - All threads completed.
+2026-06-23 13:20:35,483 - INFO - Performance timer started.
+2026-06-23 13:20:37,484 - INFO - Performance timer stopped.
+2026-06-23 13:20:42,746 - INFO - Recovery event recorded: Recovered snapshot after crash
+2026-06-23 13:20:42,746 - INFO - Recovery event recorded: Restarted engine successfully
+2026-06-23 13:20:50,989 - INFO - Backup created: data/backups\20260623_132050_history
+2026-06-23 13:20:56,043 - INFO - Explanation recorded: Created backup -> To protect project data from loss
+2026-06-23 13:20:56,043 - INFO - Explanation recorded: Checked permissions -> To prevent unsafe actions
+2026-06-23 13:21:01,617 - INFO - Internet connection available.
+2026-06-23 13:21:06,731 - INFO - Transparency report shown: JARVIS OS Internal State
+2026-06-23 13:21:12,116 - INFO - Agent registered: Memory Agent
+2026-06-23 13:21:12,116 - INFO - Agent registered: Planner Agent
+2026-06-23 13:21:12,116 - INFO - Agent registered: Tool Agent
+2026-06-23 13:21:12,117 - INFO - Agent registered: Security Agent
+2026-06-23 13:21:17,139 - INFO - Resource information collected.
+2026-06-23 13:21:22,252 - INFO - System state changed to: PROCESSING
+2026-06-23 13:21:22,252 - INFO - System state changed to: IDLE
+2026-06-23 13:21:30,208 - INFO - Capability registered: File Manager -> read_file
+2026-06-23 13:21:30,208 - INFO - Capability registered: File Manager -> write_file
+2026-06-23 13:21:30,208 - INFO - Capability registered: Permission System -> check_permission
+2026-06-23 13:21:30,208 - INFO - Capability registered: Agent Manager -> register_agent
+2026-06-23 13:21:36,498 - INFO - Session started.
+2026-06-23 13:21:36,499 - INFO - Session event added: JARVIS OS started
+2026-06-23 13:21:36,499 - INFO - Session event added: Capability registry checked
+2026-06-23 13:21:41,051 - INFO - Notification created: JARVIS OS started successfully.
+2026-06-23 13:21:41,051 - INFO - Notification created: Capability registry loaded.
+2026-06-23 13:21:41,051 - INFO - Notification created: System resources checked.
+2026-06-23 13:30:34,953 - INFO - Long-term memory added: JARVIS OS started Phase 3 memory architecture.
+2026-06-23 13:30:34,954 - INFO - Long-term memory added: Long-term memory system created successfully.
+2026-06-23 13:35:29,967 - INFO - Short-term memory added: User is currently working on Phase 3 Step 3
+2026-06-23 13:35:29,967 - INFO - Memory manager stored short-term memory: User is currently working on Phase 3 Step 3
+2026-06-23 13:35:29,968 - INFO - Long-term memory added: Memory Manager system was created in Phase 3 Step 3
+2026-06-23 13:35:29,969 - INFO - Memory manager stored long-term memory: Memory Manager system was created in Phase 3 Step 3
+2026-06-23 13:38:39,406 - INFO - Memory search performed for: phase 3
+2026-06-23 13:41:53,869 - INFO - Importance score calculated: 5
+2026-06-23 13:41:53,870 - INFO - Importance score calculated: 1
+2026-06-23 13:41:53,870 - INFO - Importance score calculated: 5
+2026-06-23 13:46:18,311 - INFO - Context analyzed: Current goal detected: Build memory and brain architecture
+2026-06-23 13:50:10,894 - INFO - User profile saved.
+2026-06-23 13:55:09,738 - INFO - Goal added: Build JARVIS OS as an independent 24/7 AI Operating System
+2026-06-23 13:55:09,739 - INFO - Goal added: Complete Phase 3 Brain and Memory Architecture
+2026-06-23 13:58:47,346 - INFO - Hidden requirements detected: ['platform', 'features', 'users', 'provider', 'model', 'data']
+2026-06-23 14:00:31,821 - INFO - Goal decomposed into 5 tasks
+2026-06-23 14:02:13,549 - INFO - Memory search performed for: phase 3
+2026-06-23 14:02:13,549 - INFO - Memory reuse requested for: Phase 3
+2026-06-23 14:06:14,718 - INFO - Behavior recorded: User continues JARVIS project step-by-step
+2026-06-23 14:06:14,719 - INFO - Behavior recorded: User prefers full step format with goals and ideas
+2026-06-23 14:07:48,684 - INFO - Proactive suggestions generated.
+2026-06-23 14:10:48,724 - INFO - Long-term memory added: User opened VS Code
+2026-06-23 14:10:48,726 - INFO - Long-term memory added: Critical Phase 3 memory goal completed
+2026-06-23 14:10:48,727 - INFO - Importance score calculated: 3
+2026-06-23 14:10:48,727 - INFO - Importance score calculated: 1
+2026-06-23 14:10:48,727 - INFO - Importance score calculated: 3
+2026-06-23 14:10:48,727 - INFO - Importance score calculated: 1
+2026-06-23 14:10:48,727 - INFO - Importance score calculated: 7
+2026-06-23 14:10:48,728 - INFO - Memory cleanup completed. Removed 2 memories.
+2026-06-23 14:13:31,561 - INFO - Memory exported to exports\memory_export_20260623_141331.json
+2026-06-23 14:15:27,958 - WARNING - Unsafe memory blocked: password
+2026-06-23 14:15:27,958 - WARNING - Unsafe memory blocked: password
+2026-06-23 14:18:37,654 - INFO - Memory classified as: project
+2026-06-23 14:18:37,655 - INFO - Memory classified as: project
+2026-06-23 14:18:37,655 - INFO - Memory classified as: error
+2026-06-23 14:18:37,656 - INFO - Memory classified as: system
+2026-06-23 14:20:17,558 - INFO - Brain state changed to UNDERSTANDING
+2026-06-23 14:20:17,559 - INFO - Brain state changed to PLANNING
+2026-06-23 14:20:17,560 - INFO - Brain state changed to REASONING
+2026-06-23 14:20:17,560 - INFO - Brain state changed to EXECUTING
+2026-06-23 15:05:39,748 - INFO - Reasoning trace recorded: Use memory search
+2026-06-23 15:05:39,749 - INFO - Reasoning trace recorded: Proceed to Phase 3 Step 20
+2026-06-23 15:08:49,359 - INFO - Brain state changed to PLANNING
+2026-06-23 15:08:49,360 - INFO - Short-term memory added: Phase 3 integration test running
+2026-06-23 15:08:49,360 - INFO - Memory manager stored short-term memory: Phase 3 integration test running
+2026-06-23 15:08:49,362 - INFO - Long-term memory added: Phase 3 integration completed
+2026-06-23 15:08:49,362 - INFO - Memory manager stored long-term memory: Phase 3 integration completed
+2026-06-23 15:08:49,364 - INFO - Goal added: Release JARVIS OS v0.3
+2026-06-23 15:08:49,365 - INFO - Goal decomposed into 5 tasks
+2026-06-23 15:08:49,366 - INFO - Hidden requirements detected: ['platform', 'features', 'users', 'provider', 'model', 'data']
+2026-06-23 15:08:49,366 - INFO - Proactive suggestions generated.
+2026-06-23 15:08:49,367 - INFO - Memory classified as: project
+2026-06-23 15:08:49,367 - INFO - Memory search performed for: phase 3
+2026-06-23 15:08:49,369 - INFO - Reasoning trace recorded: Release JARVIS OS v0.3
+2026-06-23 15:15:48,094 - INFO - Intent detected: TASK
+2026-06-23 15:15:48,095 - INFO - Intent detected: QUESTION
+2026-06-23 15:15:48,095 - INFO - Intent detected: MEMORY
+2026-06-23 15:15:48,096 - INFO - Intent detected: RESEARCH
+2026-06-23 15:15:48,096 - INFO - Intent detected: FILE
+2026-06-23 15:27:22,871 - INFO - Intent detected: TASK
+2026-06-23 15:27:22,872 - INFO - Plan created for intent: TASK
+2026-06-23 15:29:37,426 - INFO - Intent detected: TASK
+2026-06-23 15:29:37,426 - INFO - Plan created for intent: TASK
+2026-06-23 15:29:37,426 - INFO - Reasoning completed
+2026-06-23 15:33:01,225 - INFO - Decision recorded: Use Planner Engine
+2026-06-23 15:33:01,227 - INFO - Decision recorded: Use Reasoning Engine
+2026-06-23 15:36:01,509 - INFO - Node added: Intent Classifier
+2026-06-23 15:36:01,509 - INFO - Node added: Planner Engine
+2026-06-23 15:36:01,509 - INFO - Node added: Reasoning Engine
+2026-06-23 15:36:01,509 - INFO - Node added: Build JARVIS OS
+2026-06-23 15:36:01,509 - INFO - Edge added: Planner Engine depends_on Intent Classifier
+2026-06-23 15:36:01,510 - INFO - Edge added: Reasoning Engine depends_on Planner Engine
+2026-06-23 15:36:01,510 - INFO - Edge added: Build JARVIS OS uses Reasoning Engine
+2026-06-23 15:39:27,102 - INFO - Tool registered: File Manager
+2026-06-23 15:39:27,102 - INFO - Tool registered: Memory Search
+2026-06-23 15:39:27,103 - INFO - Tool registered: Task Decomposer
+2026-06-23 15:41:36,774 - INFO - Skill installed: Memory Management
+2026-06-23 15:41:36,774 - INFO - Skill installed: Planning
+2026-06-23 15:41:36,774 - INFO - Skill installed: Reasoning
+2026-06-23 16:10:06,257 - INFO - Providers loaded from config.
+2026-06-23 16:10:06,259 - INFO - Best provider for general: ollama
+2026-06-23 16:10:06,260 - INFO - Best provider for offline: ollama
+2026-06-23 16:10:06,260 - INFO - Best provider for coding: openai
+2026-06-23 16:10:06,261 - INFO - Best provider for vision: openai
+2026-06-23 16:10:06,261 - INFO - Best provider for writing: openai
+2026-06-23 16:10:06,263 - INFO - Providers saved to config.
+2026-06-23 16:10:06,263 - INFO - Provider registered: mistral
+2026-06-23 16:16:02,379 - INFO - openai success recorded
+2026-06-23 16:16:02,379 - INFO - openai success recorded
+2026-06-23 16:16:02,379 - WARNING - gemini failure recorded
+2026-06-23 16:16:02,379 - INFO - ollama success recorded
+2026-06-23 16:19:16,989 - INFO - Provider transparency recorded: openai
+2026-06-23 16:23:37,447 - INFO - Providers loaded from config.
+2026-06-23 16:23:37,448 - INFO - Best provider for coding: openai
+2026-06-23 16:23:37,448 - INFO - Provider recommended: openai
+2026-06-23 16:23:37,450 - INFO - Providers loaded from config.
+2026-06-23 16:23:37,450 - INFO - Best provider for vision: openai
+2026-06-23 16:23:37,450 - INFO - Provider recommended: openai
+2026-06-23 16:23:37,451 - INFO - Providers loaded from config.
+2026-06-23 16:23:37,451 - INFO - Best provider for offline: ollama
+2026-06-23 16:23:37,451 - INFO - Provider recommended: ollama
+2026-06-23 16:23:37,452 - INFO - Providers loaded from config.
+2026-06-23 16:23:37,452 - INFO - Best provider for writing: openai
+2026-06-23 16:23:37,452 - INFO - Provider recommended: openai
+2026-06-23 16:25:30,790 - INFO - Recommended AI: openai
+2026-06-23 16:25:30,790 - INFO - Recommended AI: gemini
+2026-06-23 16:25:30,791 - INFO - Recommended AI: claude
+2026-06-23 16:29:56,277 - INFO - Recommended AI model: openai
+2026-06-23 16:29:56,277 - INFO - Recommended AI model: gemini
+2026-06-23 16:29:56,278 - INFO - Recommended AI model: claude
+2026-06-23 16:29:56,278 - INFO - Recommended AI model: ollama
+2026-06-23 16:33:52,110 - WARNING - Provider installation blocked. Approval required: perplexity
+2026-06-23 16:33:52,112 - INFO - Providers loaded from config.
+2026-06-23 16:33:52,113 - INFO - Providers saved to config.
+2026-06-23 16:33:52,113 - INFO - Provider registered: perplexity
+2026-06-23 16:33:52,113 - INFO - Provider installed: perplexity
+2026-06-23 16:39:45,303 - INFO - Provider result recorded: openai
+2026-06-23 16:39:45,304 - INFO - Provider result recorded: gemini
+2026-06-23 16:39:45,306 - INFO - Provider result recorded: deepseek
+2026-06-23 16:43:53,403 - INFO - Provider result recorded: openai
+2026-06-23 16:43:53,404 - INFO - Provider result recorded: openai
+2026-06-23 16:43:53,406 - INFO - Provider result recorded: gemini
+2026-06-23 16:43:53,407 - INFO - Provider result recorded: deepseek
+2026-06-23 16:43:53,408 - INFO - Provider result recorded: gemini
+2026-06-23 16:43:53,409 - INFO - Provider benchmark ranking generated.
+2026-06-23 16:43:53,410 - INFO - Provider benchmark ranking generated.
+2026-06-23 16:49:26,364 - INFO - Providers loaded from config.
+2026-06-23 16:49:26,364 - INFO - Best provider for coding: openai
+2026-06-23 16:49:26,365 - INFO - Provider recommended: openai
+2026-06-23 16:49:26,365 - INFO - Providers loaded from config.
+2026-06-23 16:49:26,365 - INFO - Best provider for vision: openai
+2026-06-23 16:49:26,365 - INFO - Provider recommended: openai
+2026-06-23 16:49:26,366 - INFO - Providers loaded from config.
+2026-06-23 16:49:26,366 - INFO - Best provider for writing: openai
+2026-06-23 16:49:26,366 - INFO - Provider recommended: openai
+2026-06-23 16:49:26,366 - INFO - Providers loaded from config.
+2026-06-23 16:49:26,366 - INFO - Best provider for offline: ollama
+2026-06-23 16:49:26,366 - INFO - Provider recommended: ollama
+2026-06-23 16:49:26,366 - INFO - Multi-provider collaboration selected: ['openai', 'ollama']
+2026-06-23 17:06:08,258 - INFO - Subscriber added for event: goal_created
+2026-06-23 17:06:08,259 - INFO - Subscriber added for event: goal_created
+2026-06-23 17:06:08,259 - INFO - Event published: goal_created
+2026-06-23 17:10:44,371 - INFO - Agent collaboration completed.
+2026-06-23 17:14:43,025 - INFO - Task priority calculated: 19
+2026-06-23 17:14:43,025 - INFO - Task priority calculated: 12
+2026-06-23 17:14:43,025 - INFO - Task priority calculated: 18
+2026-06-23 17:14:43,025 - INFO - Tasks ranked by priority.
+2026-06-23 17:19:33,389 - INFO - Capability matching completed.
+2026-06-23 17:25:07,852 - INFO - Capability gaps detected.
+2026-06-23 17:31:37,233 - INFO - Tool recommendations generated.
+2026-06-23 17:39:58,392 - INFO - Execution strategy selected: SEQUENTIAL
+2026-06-23 17:39:58,392 - INFO - Execution strategy selected: PARALLEL
+2026-06-23 17:39:58,393 - INFO - Execution strategy selected: MULTI_AGENT
+2026-06-23 17:39:58,393 - INFO - Execution strategy selected: SAFE_MODE
+2026-06-23 17:47:54,300 - INFO - Plan validation completed. Valid=True
+2026-06-23 17:47:54,301 - INFO - Plan validation completed. Valid=False
+2026-06-23 17:56:04,055 - INFO - Risk evaluated: LOW
+2026-06-23 17:56:04,057 - INFO - Risk evaluated: MEDIUM
+2026-06-23 17:56:04,058 - INFO - Risk evaluated: HIGH
+2026-06-23 18:02:29,168 - INFO - Reality assessment completed. Feasible=False
+2026-06-23 18:02:29,169 - INFO - Reality assessment completed. Feasible=False
+2026-06-23 18:02:29,170 - INFO - Reality assessment completed. Feasible=False
+2026-06-23 18:05:41,326 - INFO - Self-awareness information displayed.
+2026-06-23 18:13:47,927 - INFO - Resource assessment completed.
+2026-06-23 18:16:50,701 - INFO - Time awareness updated.
+2026-06-23 18:19:55,411 - INFO - Goal added: Build Independent 24/7 AI OS
+2026-06-23 18:19:55,411 - INFO - Goal added: Meta-Cognition
+2026-06-23 18:19:55,412 - INFO - Goal added: World Model
+2026-06-23 18:19:55,412 - INFO - Goal added: Continuous Learning
+2026-06-23 18:22:58,376 - INFO - Current goal set: Build Independent 24/7 AI Operating System
+2026-06-23 18:22:58,376 - INFO - Current task set: Implement Meta-Cognition
+2026-06-23 18:22:58,376 - INFO - Resource assessment completed.
+2026-06-23 18:22:58,377 - INFO - Time awareness updated.
+2026-06-23 19:37:55,296 - INFO - Knowledge conflicts detected: 3
+2026-06-23 19:41:44,592 - INFO - Confidence estimated: 80.0
+2026-06-23 19:45:45,791 - INFO - Safety decision: ALLOW
+2026-06-23 19:45:45,792 - INFO - Safety decision: WARNING
+2026-06-23 19:45:45,792 - INFO - Safety decision: RESTRICT
+2026-06-23 19:45:45,793 - INFO - Safety decision: BLOCK
+2026-06-23 19:49:34,519 - INFO - Reflection completed for Train YOLO model
+2026-06-23 19:53:31,920 - INFO - Experience added: Train YOLO model
+2026-06-23 19:53:31,920 - INFO - Experience added: Provider selection
+2026-06-23 19:57:24,154 - INFO - Meta-cognition analysis completed.
+2026-06-23 20:01:52,521 - INFO - Risk evaluated: LOW
+2026-06-23 20:01:52,522 - INFO - Reality assessment completed. Feasible=True
+2026-06-23 20:01:52,523 - INFO - Resource assessment completed.
+2026-06-23 20:01:52,524 - INFO - Time awareness updated.
+2026-06-23 20:01:52,524 - INFO - Current goal set: Build Independent 24/7 AI Operating System
+2026-06-23 20:01:52,524 - INFO - Current task set: Phase 5 World Model
+2026-06-23 20:01:52,524 - INFO - Knowledge conflicts detected: 0
+2026-06-23 20:01:52,525 - INFO - Confidence estimated: 96.0
+2026-06-23 20:01:52,525 - INFO - Safety decision: ALLOW
+2026-06-23 20:01:52,525 - INFO - Reflection completed for Phase 4 integration
+2026-06-23 20:01:52,525 - INFO - Experience added: Phase 4 Integration
+2026-06-23 20:01:52,525 - INFO - Meta-cognition analysis completed.
+2026-06-23 20:05:56,792 - INFO - Cognitive state updated: current_task
+2026-06-23 20:05:56,793 - INFO - Cognitive state updated: confidence
+2026-06-23 20:05:56,793 - INFO - Cognitive state updated: time_period
+2026-06-23 20:12:20,590 - INFO - Environment assessment completed.
+2026-06-23 20:17:33,104 - INFO - Build Independent AI OS contains Phase 5 World Model
+2026-06-23 20:17:33,105 - INFO - Phase 5 World Model contains Train YOLO
+2026-06-23 20:17:33,105 - INFO - Train YOLO uses Ultralytics
+2026-06-23 20:17:33,105 - INFO - Ultralytics runs_on RTX3050
+2026-06-23 20:21:45,102 - INFO - Registered RTX3050
+2026-06-23 20:21:45,103 - INFO - Registered OpenAI
+2026-06-23 20:21:45,103 - INFO - Registered Ultralytics
+2026-06-23 20:21:45,103 - INFO - Registered Build Independent AI OS
+2026-06-23 20:28:24,938 - INFO - Spatial location remembered: Logs
+2026-06-23 20:28:24,939 - INFO - Spatial location remembered: Provider Config
+2026-06-23 20:28:24,939 - INFO - Spatial location remembered: Exports
+2026-06-23 20:28:24,939 - INFO - Spatial location remembered: Brain Modules
+2026-06-23 20:33:43,296 - INFO - Prediction completed.
+2026-06-23 20:33:43,297 - INFO - Prediction completed.
+2026-06-23 20:41:17,670 - INFO - Digital twin simulation result: SAFE_TO_EXECUTE
+2026-06-23 20:41:17,672 - INFO - Digital twin simulation result: NEEDS_ADJUSTMENT
+2026-06-23 20:44:59,464 - INFO - Learned successes: YOLO validation completed
+2026-06-23 20:44:59,464 - INFO - Learned failures: GPU memory exceeded
+2026-06-23 20:44:59,464 - INFO - Learned lessons: Use batch size 4
+2026-06-23 20:44:59,464 - INFO - Learned strategies: Gemini for reasoning
+2026-06-23 20:44:59,464 - INFO - Learned resource_problems: RTX3050 limited VRAM
+2026-06-23 20:47:16,162 - INFO - Experience replay completed.
+2026-06-23 20:49:37,567 - INFO - Pattern discovery completed.
+2026-06-23 20:51:47,752 - INFO - Recorded performance for OpenAI
+2026-06-23 20:51:47,752 - INFO - Recorded performance for OpenAI
+2026-06-23 20:51:47,752 - INFO - Recorded performance for Gemini
+2026-06-23 20:51:47,752 - INFO - Recorded performance for Gemini
+2026-06-23 20:51:47,752 - INFO - Recorded performance for Gemini
+2026-06-23 20:59:54,381 - INFO - Strategy optimization decision: REUSE_STRATEGY
+2026-06-23 20:59:54,382 - INFO - Strategy optimization decision: AVOID_STRATEGY
+2026-06-23 20:59:54,383 - INFO - Strategy optimization decision: MODIFY_STRATEGY
+2026-06-23 20:59:54,383 - INFO - Strategy optimization decision: TRY_NEW_STRATEGY
+2026-06-23 21:02:52,083 - INFO - Curiosity questions generated.
+2026-06-23 21:06:48,309 - INFO - Autonomous improvement plan generated.
+2026-06-23 21:11:39,944 - INFO - Learned failures: GPU memory overflow
+2026-06-23 21:11:39,944 - INFO - Learned failures: GPU memory overflow
+2026-06-23 21:11:39,944 - INFO - Learned successes: Gemini reasoning success
+2026-06-23 21:11:39,945 - INFO - Experience replay completed.
+2026-06-23 21:11:39,946 - INFO - Pattern discovery completed.
+2026-06-23 21:11:39,946 - INFO - Recorded performance for OpenAI
+2026-06-23 21:11:39,946 - INFO - Recorded performance for Gemini
+2026-06-23 21:11:39,946 - INFO - Recorded performance for Gemini
+2026-06-23 21:11:39,947 - INFO - Strategy optimization decision: REUSE_STRATEGY
+2026-06-23 21:11:39,947 - INFO - Curiosity questions generated.
+2026-06-23 21:11:39,947 - INFO - Curiosity questions generated.
+2026-06-23 21:11:39,948 - INFO - Autonomous improvement plan generated.
+2026-06-23 21:17:26,215 - INFO - Topic set: Building JARVIS OS
+2026-06-23 21:17:26,215 - INFO - Mode set: PLANNING
+2026-06-23 21:17:26,215 - INFO - Intent set: Continue roadmap
+2026-06-23 21:20:19,985 - INFO - Personality updated: proactivity
+2026-06-23 21:20:19,986 - INFO - Personality updated: humor
+2026-06-23 21:23:04,105 - INFO - Emotion state changed to FOCUSED
+2026-06-23 21:23:04,106 - INFO - Emotion state changed to CURIOUS
+2026-06-23 21:23:04,107 - INFO - Emotion state changed to CONFIDENT
+2026-06-23 21:25:49,280 - INFO - Voice identity changed to male
+2026-06-23 21:25:49,281 - INFO - Speech rate changed to 1.1
+2026-06-23 21:29:23,395 - INFO - Memory stored for Vinay
+2026-06-23 21:29:23,396 - INFO - Memory stored for Vinay
+2026-06-23 21:29:23,396 - INFO - Memory stored for Vinay
+2026-06-23 21:29:23,396 - INFO - Memory stored for Vinay
+2026-06-23 21:36:41,751 - INFO - Topic set: Building JARVIS OS
+2026-06-23 21:36:41,752 - INFO - Mode set: PLANNING
+2026-06-23 21:36:41,752 - INFO - Intent set: Continue roadmap
+2026-06-23 21:36:41,753 - INFO - Personality updated: proactivity
+2026-06-23 21:36:41,754 - INFO - Emotion state changed to FOCUSED
+2026-06-23 21:36:41,755 - INFO - Memory stored for Vinay
+2026-06-23 21:36:41,755 - INFO - Memory stored for Vinay
+2026-06-23 21:41:08,613 - INFO - Health updated: providers
+2026-06-23 21:41:08,615 - INFO - Health updated: voice_system
+2026-06-23 21:43:05,167 - INFO - Recovery action for GPU_OOM: Reduce resource usage
+2026-06-23 21:43:05,168 - INFO - Recovery action for VOICE_FAILURE: Restart voice system
+2026-06-23 21:43:05,169 - INFO - Recovery action for UNKNOWN_ERROR: Manual intervention required
+2026-06-23 21:51:12,178 - INFO - Crash recovery checkpoint saved.
+2026-06-23 21:56:50,022 - INFO - Repair diagnosis completed for: missing_file
+2026-06-23 21:56:50,023 - INFO - Repair diagnosis completed for: import_error
+2026-06-23 21:56:50,024 - INFO - Repair diagnosis completed for: memory_corruption
+2026-06-23 22:00:01,347 - INFO - Resource recovery: LOW_RAM
+2026-06-23 22:00:01,348 - INFO - Resource recovery: GPU_OOM
+2026-06-23 22:00:01,349 - INFO - Resource recovery: DISK_FULL
+2026-06-23 22:04:41,077 - INFO - Autonomous maintenance plan generated.
+2026-06-23 22:04:41,078 - INFO - Autonomous maintenance plan generated.
+2026-06-23 22:09:16,469 - INFO - Health updated: providers
+2026-06-23 22:09:16,469 - INFO - Health updated: voice_system
+2026-06-23 22:09:16,471 - INFO - Recovery action for VOICE_FAILURE: Restart voice system
+2026-06-23 22:09:16,473 - INFO - Crash recovery checkpoint saved.
+2026-06-23 22:09:16,474 - INFO - Repair diagnosis completed for: import_error
+2026-06-23 22:09:16,475 - INFO - Resource recovery: LOW_RAM
+2026-06-23 22:09:16,475 - INFO - Autonomous maintenance plan generated.
+2026-06-23 22:16:30,319 - INFO - ocr_engine enabled.
+2026-06-23 22:16:30,320 - INFO - screen_understanding enabled.
+2026-06-23 22:22:22,183 - INFO - OCR requested for: screenshot
+2026-06-23 22:28:27,843 - INFO - Screen understanding completed.
+2026-06-23 22:31:26,611 - INFO - GUI action: click
+2026-06-23 22:31:26,611 - INFO - GUI action: type
+2026-06-23 22:31:26,612 - INFO - GUI action: open
+2026-06-23 22:40:02,745 - INFO - Camera connected.
+2026-06-23 22:40:02,745 - INFO - Camera enabled.
+2026-06-23 22:40:02,745 - INFO - Camera frame received.
+2026-06-23 22:42:52,305 - INFO - Visual memory stored: screen_text
+2026-06-23 22:42:52,305 - INFO - Visual memory stored: camera_frame
+2026-06-23 22:42:52,305 - INFO - Visual memory stored: gui_state
+2026-06-23 22:45:20,979 - INFO - ocr_engine enabled.
+2026-06-23 22:45:20,979 - INFO - screen_understanding enabled.
+2026-06-23 22:45:20,980 - INFO - gui_agent enabled.
+2026-06-23 22:45:20,980 - INFO - camera_awareness enabled.
+2026-06-23 22:45:20,980 - INFO - visual_memory enabled.
+2026-06-23 22:45:20,981 - INFO - OCR requested for: screen
+2026-06-23 22:45:20,981 - INFO - Screen understanding completed.
+2026-06-23 22:45:20,982 - INFO - GUI action: open
+2026-06-23 22:45:20,982 - INFO - Camera connected.
+2026-06-23 22:45:20,982 - INFO - Camera enabled.
+2026-06-23 22:45:20,982 - INFO - Camera frame received.
+2026-06-23 22:45:20,983 - INFO - Visual memory stored: screen_text
+2026-06-23 22:45:20,983 - INFO - Visual memory stored: camera_frame
+2026-06-23 22:45:20,983 - INFO - Visual memory stored: gui_state
+2026-06-23 22:49:12,270 - INFO - Task scheduled: Run diagnostics
+2026-06-23 22:49:12,270 - INFO - Task scheduled: Memory consolidation
+2026-06-23 22:49:12,271 - INFO - Task completed: Run diagnostics
+2026-06-23 22:51:20,602 - INFO - Background task started: Health Monitor
+2026-06-23 22:51:20,603 - INFO - Background task started: Memory Consolidation
+2026-06-23 22:51:20,603 - INFO - Background task stopped: Health Monitor
+2026-06-23 22:58:43,533 - INFO - Event emitted: TASK_COMPLETED
+2026-06-23 22:58:43,534 - INFO - Event emitted: LOW_MEMORY
+2026-06-23 22:58:43,534 - INFO - Event emitted: PROVIDER_FAILED
+2026-06-23 23:05:21,585 - INFO - Goal scheduled: Build Vision Layer
+2026-06-23 23:05:21,586 - INFO - Goal scheduled: Run health check
+2026-06-23 23:05:21,586 - INFO - Goal scheduled: Memory consolidation
+2026-06-23 23:05:21,587 - INFO - Goal completed: Run health check
+2026-06-23 23:10:03,174 - INFO - Task execution result: EXECUTED
+2026-06-23 23:10:03,175 - INFO - Task execution result: BLOCKED
+2026-06-23 23:10:03,176 - INFO - Task execution result: WAITING_APPROVAL
+2026-06-23 23:11:52,387 - INFO - Goal added: Provider optimization
+2026-06-23 23:11:52,387 - INFO - Goal added: Memory consolidation
+2026-06-23 23:11:52,387 - INFO - Goal added: Run health checks
+2026-06-23 23:11:52,387 - INFO - Goal added: Build JARVIS OS
+2026-06-23 23:14:43,412 - INFO - Task scheduled: Run diagnostics
+2026-06-23 23:14:43,413 - INFO - Background task started: Memory Consolidation
+2026-06-23 23:14:43,413 - INFO - Event emitted: TASK_COMPLETED
+2026-06-23 23:14:43,414 - INFO - Goal scheduled: Build JARVIS OS
+2026-06-23 23:14:43,414 - INFO - Goal added: Build JARVIS OS
+2026-06-23 23:14:43,414 - INFO - Goal added: Run health checks
+2026-06-23 23:14:43,415 - INFO - Task execution result: EXECUTED
+2026-06-23 23:18:54,589 - INFO - Firewall decision: READ_MEMORY -> ALLOW
+2026-06-23 23:18:54,590 - INFO - Firewall decision: INSTALL_PACKAGE -> REQUIRE_APPROVAL
+2026-06-23 23:18:54,591 - INFO - Firewall decision: DELETE_FILE -> BLOCK
+2026-06-23 23:21:08,889 - INFO - Approval result: RUN_DIAGNOSTICS -> APPROVED
+2026-06-23 23:21:08,890 - INFO - Approval result: INSTALL_PACKAGE -> WAITING_APPROVAL
+2026-06-23 23:21:08,891 - INFO - Approval result: DELETE_FILE -> DENIED
+2026-06-23 23:23:12,872 - INFO - Sandbox level: RUN_DIAGNOSTICS -> READ_ONLY
+2026-06-23 23:23:12,873 - INFO - Sandbox level: INSTALL_PACKAGE -> LIMITED
+2026-06-23 23:23:12,874 - INFO - Sandbox level: FORMAT_DISK -> BLOCKED
+2026-06-23 23:27:38,910 - INFO - Secret stored: OPENAI_API_KEY
+2026-06-23 23:27:38,910 - INFO - Secret stored: GEMINI_API_KEY
+2026-06-23 23:27:38,911 - INFO - Secret accessed: OPENAI_API_KEY
+2026-06-23 23:30:01,556 - INFO - Security audit event logged: RUN_DIAGNOSTICS
+2026-06-23 23:30:01,556 - INFO - Security audit event logged: INSTALL_PACKAGE
+2026-06-23 23:30:01,556 - INFO - Security audit event logged: DELETE_FILE
+2026-06-23 23:32:44,692 - INFO - Capability check: READ_MEMORY
+2026-06-23 23:32:44,693 - INFO - Capability check: INSTALL_PACKAGE
+2026-06-23 23:32:44,694 - INFO - Capability check: FORMAT_DISK
+2026-06-23 23:34:16,730 - INFO - Firewall decision: INSTALL_PACKAGE -> REQUIRE_APPROVAL
+2026-06-23 23:34:16,731 - INFO - Approval result: INSTALL_PACKAGE -> WAITING_APPROVAL
+2026-06-23 23:34:16,732 - INFO - Sandbox level: INSTALL_PACKAGE -> LIMITED
+2026-06-23 23:34:16,733 - INFO - Secret stored: OPENAI_API_KEY
+2026-06-23 23:34:16,733 - INFO - Security audit event logged: INSTALL_PACKAGE
+2026-06-23 23:34:16,733 - INFO - Capability check: INSTALL_PACKAGE
+2026-06-23 23:37:54,770 - INFO - Plugin loaded: Weather Plugin
+2026-06-23 23:37:54,771 - INFO - Plugin loaded: Browser Plugin
+2026-06-23 23:37:54,772 - INFO - Plugin unloaded: Weather Plugin
+2026-06-23 23:41:44,978 - INFO - Module loaded: Weather Plugin
+2026-06-23 23:41:44,978 - INFO - Module loaded: Browser Plugin
+2026-06-23 23:41:44,979 - INFO - Module unloaded: Weather Plugin
+2026-06-23 23:41:44,980 - INFO - Module reloaded: Weather Plugin
+2026-06-23 23:51:23,325 - INFO - Plugin registered: Weather Plugin
+2026-06-23 23:51:23,325 - INFO - Plugin registered: Browser Plugin
+2026-06-23 23:51:23,325 - INFO - Plugin status updated: Weather Plugin
+2026-06-23 23:59:23,627 - INFO - Plugin trust decision: TRUSTED
+2026-06-23 23:59:23,628 - INFO - Plugin trust decision: REVIEW_REQUIRED
+2026-06-23 23:59:23,629 - INFO - Plugin trust decision: BLOCKED
+2026-06-24 00:06:33,945 - INFO - Command scanned safe: dir
+2026-06-24 00:06:33,946 - WARNING - Command needs review: pip install requests
+2026-06-24 00:06:33,947 - WARNING - Blocked risky command: format C:
+2026-06-24 00:06:33,947 - WARNING - Blocked risky command: shutdown /s
+2026-06-24 00:12:01,766 - INFO - Author lock access check: Vinay -> architecture = LOCKED
+2026-06-24 00:12:01,767 - INFO - Author lock access check: Vinay -> architecture = AUTHOR_APPROVED
+2026-06-24 00:12:01,768 - INFO - Author lock access check: Plugin -> secrets = DENIED
+2026-06-24 00:12:01,768 - INFO - Author lock access check: Plugin -> weather = ALLOW
+2026-06-24 00:23:09,416 - WARNING - Security event: failed_login | Level: WARNING
+2026-06-24 00:23:09,417 - WARNING - Security event: unauthorized_access | Level: ALARM
+2026-06-24 00:23:09,418 - WARNING - Security event: secret_access_attempt | Level: LOCKDOWN
+2026-06-24 00:23:09,419 - WARNING - Security event: dangerous_command | Level: LOCKDOWN
+2026-06-24 00:23:09,419 - WARNING - Security event: normal_activity | Level: NORMAL
+2026-06-24 00:33:41,278 - WARNING - SYSTEM ENTERED LOCKDOWN MODE
+2026-06-24 00:33:41,278 - INFO - Recovery mode activated.
+2026-06-24 00:33:41,279 - INFO - System restored to NORMAL mode.
+2026-06-24 00:42:48,751 - INFO - Skill installed: Weather Skill
+2026-06-24 00:42:48,751 - INFO - Skill installed: Translator Skill
+2026-06-24 00:42:48,752 - INFO - Skill removed: Weather Skill
+2026-06-24 00:52:39,553 - INFO - Agent installed: Coder Agent
+2026-06-24 00:52:39,553 - INFO - Agent installed: Research Agent
+2026-06-24 00:52:39,553 - INFO - Agent installed: Security Agent
+2026-06-24 00:52:39,554 - INFO - Agent removed: Research Agent
+2026-06-24 01:04:25,858 - INFO - Dependency checked: requests
+2026-06-24 01:04:25,858 - INFO - Dependency checked: numpy
+2026-06-24 01:04:25,858 - INFO - Dependency checked: opencv-python
+2026-06-24 01:06:47,804 - INFO - Plugin loaded: Weather Plugin
+2026-06-24 01:06:47,805 - INFO - Plugin registered: Weather Plugin
+2026-06-24 01:06:47,806 - INFO - Plugin trust decision: TRUSTED
+2026-06-24 01:06:47,806 - WARNING - Command needs review: pip install requests
+2026-06-24 01:06:47,806 - INFO - Author lock access check: Vinay -> architecture = AUTHOR_APPROVED
+2026-06-24 01:06:47,807 - WARNING - Security event: failed_login | Level: WARNING
+2026-06-24 01:06:47,807 - WARNING - SYSTEM ENTERED LOCKDOWN MODE
+2026-06-24 01:06:47,808 - INFO - Skill installed: Translator Skill
+2026-06-24 01:06:47,808 - INFO - Agent installed: Research Agent
+2026-06-24 01:06:47,809 - INFO - Dependency checked: requests
+2026-06-24 01:13:50,005 - INFO - Daemon mode started.
+2026-06-24 01:13:50,006 - INFO - Daemon mode stopped.
+2026-06-24 01:21:48,346 - INFO - plugins status updated to WARNING
+2026-06-24 01:21:48,346 - INFO - security status updated to ALERT
+2026-06-24 01:28:20,294 - INFO - Executive observation updated: current_goals
+2026-06-24 01:28:20,294 - INFO - Executive observation updated: pending_tasks
+2026-06-24 01:28:20,294 - INFO - Executive observation updated: system_status
+2026-06-24 01:28:20,294 - INFO - Executive observation updated: security_status
+2026-06-24 01:28:20,295 - INFO - Executive observation updated: plugin_status
+2026-06-24 01:28:20,295 - INFO - Executive observation updated: recent_failures
+2026-06-24 09:15:52,561 - INFO - Maintenance scheduled: Health Check
+2026-06-24 09:15:52,562 - INFO - Maintenance scheduled: Memory Consolidation
+2026-06-24 09:15:52,562 - INFO - Maintenance scheduled: Backup Recovery Vault
+2026-06-24 09:15:52,563 - INFO - Maintenance completed: Health Check
+2026-06-24 09:21:33,591 - INFO - Short-term memory added.
+2026-06-24 09:21:33,592 - INFO - Short-term memory added.
+2026-06-24 09:21:33,593 - INFO - Memory consolidation completed.
+2026-06-24 09:24:01,223 - WARNING - Failure detected: Plugin Manager
+2026-06-24 09:24:01,224 - WARNING - Failure detected: Research Agent
+2026-06-24 09:24:01,224 - INFO - Recovering Plugin Manager
+2026-06-24 09:24:01,225 - INFO - Recovering Research Agent
+2026-06-24 09:24:01,225 - INFO - Recovery cycle complete.
+2026-06-24 09:26:01,513 - INFO - Daemon mode started.
+2026-06-24 09:26:01,515 - INFO - Maintenance scheduled: Memory Consolidation
+2026-06-24 09:26:01,516 - INFO - Short-term memory added.
+2026-06-24 09:26:01,516 - INFO - Memory consolidation completed.
+2026-06-24 09:26:01,517 - WARNING - Failure detected: Research Agent
+2026-06-24 09:26:01,518 - INFO - Recovering Research Agent
+2026-06-24 09:26:01,518 - INFO - Recovery cycle complete.
+2026-06-24 09:29:58,735 - INFO - Goal set: Build Iron-Man-level JARVIS
+2026-06-24 09:29:58,735 - INFO - Task set: Implement Executive Brain
+2026-06-24 09:29:58,736 - INFO - Agent assigned: Coding Agent
+2026-06-24 09:29:58,736 - INFO - State changed to WORKING
+2026-06-24 09:32:33,161 - INFO - Attention focused on Executive Brain
+2026-06-24 09:32:33,162 - INFO - Attention cleared.
+2026-06-24 09:39:22,264 - INFO - Reflection stored for Plugin installation
+2026-06-24 09:39:22,264 - INFO - Reflection stored for Security attack
+2026-06-24 09:44:53,674 - INFO - Goal added: Build Iron-Man-level JARVIS
+2026-06-24 09:44:53,675 - INFO - Goal added: Improve security layer
+2026-06-24 09:44:53,675 - INFO - Goal progress updated: Build Iron-Man-level JARVIS
+2026-06-24 09:44:53,675 - INFO - Goal status updated: Improve security layer
+2026-06-24 09:51:43,758 - INFO - Experience summary generated.
+2026-06-24 09:53:45,078 - INFO - Metric recorded: Security
+2026-06-24 09:53:45,078 - INFO - Metric recorded: Memory
+2026-06-24 09:53:45,078 - INFO - Metric recorded: Planning
+2026-06-24 09:53:45,078 - INFO - Metric recorded: Recovery
+2026-06-24 10:00:00,853 - INFO - Improvement recommendations generated.
+2026-06-24 10:06:37,517 - INFO - Learning strategy generated.
+2026-06-24 10:09:41,475 - INFO - Adaptive strategy changed to IMPROVEMENT
+2026-06-24 10:09:41,476 - INFO - Adaptive strategy changed to OPTIMIZATION
+2026-06-24 10:12:33,571 - INFO - Knowledge score recorded for Security
+2026-06-24 10:12:33,571 - INFO - Knowledge score recorded for Planning
+2026-06-24 10:12:33,571 - INFO - Knowledge score recorded for Long-Term Reasoning
+2026-06-24 10:12:33,571 - INFO - Knowledge score recorded for Memory
+2026-06-24 10:19:09,786 - INFO - Goal created: Build Iron-Man-level JARVIS
+2026-06-24 10:19:09,786 - INFO - Subgoal added: Executive Brain
+2026-06-24 10:19:09,786 - INFO - Task added: Implement Decision Engine
+2026-06-24 10:19:09,786 - INFO - Task added: Implement Context Manager
+2026-06-24 10:26:04,885 - INFO - Long-term plan added: Complete Executive Brain
+2026-06-24 10:26:04,886 - INFO - Long-term plan added: Build Iron-Man-level JARVIS
+2026-06-24 10:26:04,886 - INFO - Plan status updated: Complete Executive Brain
+2026-06-24 11:10:04,305 - INFO - Goal conflict check completed.
+2026-06-24 11:16:32,613 - INFO - Goal tracking started: Complete Executive Brain
+2026-06-24 11:16:32,613 - INFO - Milestone added: Finish Goal Layer
+2026-06-24 11:16:32,614 - INFO - Milestone added: Finish Decision Engine
+2026-06-24 11:16:32,614 - INFO - Progress updated: Complete Executive Brain
+2026-06-24 11:22:32,502 - INFO - Decision made: Use OpenAI
+2026-06-24 11:27:43,417 - INFO - Cognitive load assessed: BUSY
+2026-06-24 11:27:43,418 - INFO - Cognitive load assessed: OVERLOADED
+2026-06-24 11:34:53,872 - INFO - Context updated: current_goal
+2026-06-24 11:34:53,873 - INFO - Context updated: current_task
+2026-06-24 11:34:53,873 - INFO - Context updated: current_user_request
+2026-06-24 11:34:53,873 - INFO - Context updated: current_agent
+2026-06-24 11:34:53,873 - INFO - Context updated: current_mode
+2026-06-24 11:34:53,873 - INFO - Recent context added.
+2026-06-24 11:34:53,873 - INFO - Recent context added.
+2026-06-24 11:40:28,626 - INFO - Executive dashboard displayed.
+2026-06-24 11:45:27,908 - INFO - Curiosity item added: Threat Monitoring
+2026-06-24 11:45:27,908 - INFO - Curiosity item added: Long-Term Planning
+2026-06-24 11:46:39,465 - INFO - Context compressed.
+2026-06-24 11:55:04,729 - INFO - Goal set: Build Iron-Man-level JARVIS
+2026-06-24 11:55:04,730 - INFO - State changed to EXECUTIVE
+2026-06-24 11:55:04,730 - INFO - Attention focused on Executive Brain
+2026-06-24 11:55:04,731 - INFO - Task prioritized: Security Review
+2026-06-24 11:55:04,731 - INFO - Task prioritized: Voice System
+2026-06-24 11:55:04,731 - INFO - Goal added: Complete Phase 14
+2026-06-24 11:55:04,731 - INFO - Goal progress updated: Complete Phase 14
+2026-06-24 11:55:04,732 - INFO - Decision made: Safe Option
+2026-06-24 11:55:04,733 - INFO - Context updated: current_mode
+2026-06-24 11:56:18,225 - INFO - Goal set: Build Iron-Man-level JARVIS
+2026-06-24 11:56:18,225 - INFO - State changed to EXECUTIVE
+2026-06-24 11:56:18,226 - INFO - Attention focused on Executive Brain
+2026-06-24 11:56:18,227 - INFO - Task prioritized: Security Review
+2026-06-24 11:56:18,227 - INFO - Task prioritized: Voice System
+2026-06-24 11:56:18,227 - INFO - Goal added: Complete Phase 14
+2026-06-24 11:56:18,228 - INFO - Goal progress updated: Complete Phase 14
+2026-06-24 11:56:18,228 - INFO - Decision made: Safe Option
+2026-06-24 11:56:18,228 - INFO - Context updated: current_mode
+2026-06-24 12:46:57,875 - INFO - Voice enabled.
+2026-06-24 12:46:57,875 - INFO - Microphone activated.
+2026-06-24 12:46:57,876 - INFO - Speaker activated.
+2026-06-24 12:46:57,876 - INFO - Voice session state: LISTENING
+2026-06-24 13:00:06,454 - INFO - Voice session started.
+2026-06-24 13:00:06,455 - INFO - Voice command recorded.
+2026-06-24 13:00:06,455 - INFO - Voice session ended.
+2026-06-24 13:07:29,078 - INFO - Wake word changed to Friday
+2026-06-24 13:10:38,318 - INFO - Wake-word confidence: 85
+2026-06-24 13:10:38,318 - INFO - Wake-word confidence: 30
+2026-06-24 13:13:33,624 - INFO - Conversation started.
+2026-06-24 13:13:33,625 - INFO - Message added: User
+2026-06-24 13:13:33,625 - INFO - Message added: Jarvis
+2026-06-24 13:13:33,626 - INFO - Conversation ended.
+2026-06-24 13:16:21,218 - INFO - Topic changed to Executive Brain
+2026-06-24 13:16:21,218 - INFO - Topic changed to Voice System
+2026-06-24 13:18:13,075 - INFO - Response strategy: TECHNICAL
+2026-06-24 13:18:13,076 - INFO - Response strategy: EXECUTIVE
+2026-06-24 13:20:26,474 - INFO - Conversation success recorded.
+2026-06-24 13:20:26,475 - INFO - Conversation success recorded.
+2026-06-24 13:20:26,475 - INFO - Conversation success recorded.
+2026-06-24 13:20:26,475 - INFO - Conversation misunderstanding recorded.
+2026-06-24 13:24:52,314 - INFO - Task started: Explaining Executive Brain
+2026-06-24 13:24:52,315 - INFO - Interrupted by: User new command
+2026-06-24 13:24:52,316 - INFO - Task started: Answer interruption
+2026-06-24 13:24:52,316 - INFO - Task resumed.
+2026-06-24 13:26:50,105 - INFO - Interruption decision: IGNORE
+2026-06-24 13:26:50,106 - INFO - Interruption decision: PAUSE_AND_HANDLE
+2026-06-24 13:26:50,107 - INFO - Interruption decision: OVERRIDE
+2026-06-24 13:28:45,467 - WARNING - Emergency override: UNAUTHORIZED_ACCESS
+2026-06-24 13:28:45,468 - INFO - Emergency cleared.
+2026-06-24 13:34:07,251 - INFO - Tone selected: CONFIDENT
+2026-06-24 13:34:07,252 - INFO - Tone selected: CAUTIOUS
+2026-06-24 13:34:07,253 - INFO - Tone selected: EMERGENCY
+2026-06-24 13:36:57,326 - INFO - Noise analysis: CLEAN
+2026-06-24 13:36:57,327 - INFO - Noise analysis: MODERATE
+2026-06-24 13:36:57,328 - INFO - Noise analysis: NOISY
+2026-06-24 13:36:57,328 - INFO - Noise analysis: VERY_NOISY
+2026-06-24 13:39:26,837 - INFO - Audio quality score: 100
+2026-06-24 13:39:26,837 - INFO - Audio quality score: 65
+2026-06-24 13:41:30,490 - INFO - Voice activity: SILENCE
+2026-06-24 13:41:30,491 - INFO - Voice activity: POSSIBLE_SPEECH
+2026-06-24 13:41:30,491 - INFO - Voice activity: SPEAKING
+2026-06-24 13:47:07,076 - INFO - Response timing decision: WAIT
+2026-06-24 13:47:07,081 - INFO - Response timing decision: WAIT_SHORT
+2026-06-24 13:47:07,081 - INFO - Response timing decision: RESPOND
+2026-06-24 13:47:07,082 - INFO - Response timing decision: WAIT
+2026-06-24 13:55:12,496 - INFO - Voice memory stored.
+2026-06-24 13:55:12,496 - INFO - Low importance speech ignored.
+2026-06-24 13:55:12,496 - INFO - Voice memory stored.
+2026-06-24 13:57:40,478 - INFO - Speaker registered: Vinay
+2026-06-24 13:57:40,479 - INFO - Speaker registered: FamilyMember
+2026-06-24 14:03:35,175 - INFO - Command allowed: SECURITY_ACCESS
+2026-06-24 14:03:35,175 - WARNING - Blocked command: SECURITY_ACCESS
+2026-06-24 14:03:35,176 - INFO - Command allowed: NORMAL_COMMAND
+2026-06-24 14:17:05,149 - INFO - Microphone added: Laptop Mic
+2026-06-24 14:17:05,149 - INFO - Microphone added: USB Mic
+2026-06-24 14:17:05,150 - INFO - Microphone removed: Laptop Mic
+2026-06-24 14:44:47,385 - INFO - Voice command prioritized: Play music
+2026-06-24 14:44:47,385 - INFO - Voice command prioritized: Emergency lockdown
+2026-06-24 14:44:47,386 - INFO - Voice command prioritized: Run security scan
+2026-06-24 14:44:47,386 - INFO - Voice command prioritized: Open browser
+2026-06-24 14:44:47,386 - INFO - Voice command prioritized: Author override
+2026-06-24 14:52:59,553 - INFO - Voice enabled.
+2026-06-24 14:52:59,554 - INFO - Microphone activated.
+2026-06-24 14:52:59,554 - INFO - Speaker activated.
+2026-06-24 14:52:59,554 - INFO - Voice session state: LISTENING
+2026-06-24 14:52:59,555 - INFO - Voice session started.
+2026-06-24 14:52:59,555 - INFO - Voice command recorded.
+2026-06-24 14:52:59,557 - INFO - Wake-word confidence: 85
+2026-06-24 14:52:59,557 - INFO - Conversation started.
+2026-06-24 14:52:59,557 - INFO - Message added: User
+2026-06-24 14:52:59,557 - INFO - Message added: Jarvis
+2026-06-24 14:52:59,559 - INFO - Task started: Voice response
+2026-06-24 14:52:59,559 - INFO - Interrupted by: User command
+2026-06-24 14:52:59,560 - INFO - Tone selected: EMERGENCY
+2026-06-24 14:52:59,562 - INFO - Noise analysis: MODERATE
+2026-06-24 14:52:59,563 - INFO - Audio quality score: 100
+2026-06-24 14:52:59,564 - INFO - Voice activity: SPEAKING
+2026-06-24 14:52:59,564 - INFO - Response timing decision: RESPOND
+2026-06-24 14:52:59,567 - INFO - Voice memory stored.
+2026-06-24 14:52:59,567 - INFO - Speaker registered: Vinay
+2026-06-24 14:52:59,569 - INFO - Command allowed: SECURITY_ACCESS
+2026-06-24 14:52:59,570 - INFO - Microphone added: Laptop Mic
+2026-06-24 14:52:59,570 - INFO - Microphone added: USB Mic
+2026-06-24 14:52:59,571 - INFO - Voice command prioritized: Play music
+2026-06-24 14:52:59,571 - INFO - Voice command prioritized: Emergency lockdown
+2026-06-24 14:52:59,571 - INFO - Voice command prioritized: Run security scan
+2026-06-24 14:58:07,433 - INFO - Agent registered: Memory Agent
+2026-06-24 14:58:07,435 - INFO - Agent registered: Security Agent
+2026-06-24 14:58:07,435 - INFO - Agent registered: Research Agent
+2026-06-24 14:58:07,435 - INFO - Request received: Analyze system security
+2026-06-24 15:11:34,316 - INFO - Agent registered: Research Agent
+2026-06-24 15:11:34,316 - INFO - Agent registered: Coding Agent
+2026-06-24 15:11:34,317 - INFO - Agent registered: Security Agent
+2026-06-24 15:11:34,317 - INFO - Agent status updated: Research Agent
+2026-06-24 15:17:12,468 - INFO - AI provider registered: OpenAI
+2026-06-24 15:17:12,469 - INFO - AI provider registered: DeepSeek
+2026-06-24 15:17:12,469 - INFO - AI provider registered: Gemini
+2026-06-24 15:17:12,469 - INFO - Provider status updated: DeepSeek
+2026-06-24 15:23:47,990 - INFO - Dynamic assignment completed for Gemini
+2026-06-24 15:23:47,991 - INFO - Dynamic assignment completed for DeepSeek
+2026-06-24 15:23:47,992 - INFO - Dynamic assignment completed for Unknown AI
+2026-06-24 15:29:28,709 - INFO - Task assigned to Coding Agent
+2026-06-24 15:29:28,709 - INFO - Task assigned to Security Agent
+2026-06-24 15:29:28,711 - INFO - Result received from Coding Agent
+2026-06-24 15:29:28,711 - INFO - Result received from Security Agent
+2026-06-24 15:36:29,387 - INFO - Coding Agent handled task.
+2026-06-24 15:36:29,388 - INFO - Coding Agent handled task.
+2026-06-24 15:36:29,388 - INFO - Coding Agent handled task.
+2026-06-24 15:41:34,549 - INFO - Research Agent handled task.
+2026-06-24 15:41:34,550 - INFO - Research Agent handled task.
+2026-06-24 15:41:34,550 - INFO - Research Agent handled task.
+2026-06-24 16:07:28,369 - INFO - Agent created: Pet Care Agent
+2026-06-24 16:07:28,370 - INFO - Agent created: Finance Planning Agent
+2026-06-24 16:14:30,805 - INFO - Agent lifecycle added: Pet Care Agent
+2026-06-24 16:14:30,806 - INFO - Agent lifecycle added: Finance Planning Agent
+2026-06-24 16:14:30,806 - INFO - Agent activated: Pet Care Agent
+2026-06-24 16:14:30,806 - INFO - Agent paused: Finance Planning Agent
+2026-06-24 16:14:30,807 - INFO - Agent retired: Finance Planning Agent
+2026-06-24 16:14:30,807 - WARNING - Agent failed: Pet Care Agent
+2026-06-24 16:20:46,821 - INFO - Success recorded for Research Agent
+2026-06-24 16:20:46,821 - INFO - Success recorded for Research Agent
+2026-06-24 16:20:46,821 - INFO - Failure recorded for Research Agent
+2026-06-24 16:24:27,595 - INFO - Lesson recorded for Research Agent
+2026-06-24 16:24:27,595 - INFO - Lesson recorded for Research Agent
+2026-06-24 16:27:33,031 - INFO - Memory stored.
+2026-06-24 16:27:33,031 - INFO - Memory stored.
+2026-06-24 16:27:33,032 - INFO - Memory stored.
+2026-06-24 16:33:10,380 - INFO - Memory importance decision: STORE_NORMAL
+2026-06-24 16:33:10,382 - INFO - Memory importance decision: IGNORE_OR_SHORT_TERM
+2026-06-24 16:33:10,383 - INFO - Memory importance decision: STORE_HIGH_PRIORITY
+2026-06-24 16:40:00,819 - INFO - Document Agent handled task.
+2026-06-24 16:40:00,820 - INFO - Document Agent handled task.
+2026-06-24 16:40:00,820 - INFO - Document Agent handled task.
+2026-06-24 16:43:19,583 - INFO - Email Agent handled task.
+2026-06-24 16:43:19,583 - INFO - Email Agent handled task.
+2026-06-24 16:43:19,583 - INFO - Email Agent handled task.
+2026-06-24 16:46:16,502 - INFO - Calendar Agent handled task.
+2026-06-24 16:46:16,502 - INFO - Calendar Agent handled task.
+2026-06-24 16:46:16,502 - INFO - Calendar Agent handled task.
+2026-06-24 16:49:05,141 - INFO - PC Control Agent handled task.
+2026-06-24 16:49:05,142 - INFO - PC Control Agent handled task.
+2026-06-24 16:49:05,142 - INFO - PC Control Agent handled task.
+2026-06-24 16:51:52,638 - INFO - Vision Agent handled task.
+2026-06-24 16:51:52,638 - INFO - Vision Agent handled task.
+2026-06-24 16:51:52,639 - INFO - Vision Agent handled task.
+2026-06-24 16:55:06,397 - INFO - Security Agent handled task.
+2026-06-24 16:55:06,397 - INFO - Security Agent handled task.
+2026-06-24 16:55:06,397 - INFO - Security Agent handled task.
+2026-06-24 17:00:36,817 - INFO - Agent registered: Coding Agent
+2026-06-24 17:00:36,818 - INFO - Agent registered: Research Agent
+2026-06-24 17:00:36,818 - INFO - Agent registered: Memory Agent
+2026-06-24 17:00:36,818 - INFO - Agent registered: Security Agent
+2026-06-24 17:00:36,818 - INFO - Request received: Analyze security and code quality
+2026-06-24 17:00:36,819 - INFO - Agent registered: Coding Agent
+2026-06-24 17:00:36,819 - INFO - Agent registered: Research Agent
+2026-06-24 17:00:36,819 - INFO - Agent registered: Security Agent
+2026-06-24 17:00:36,820 - INFO - AI provider registered: OpenAI
+2026-06-24 17:00:36,820 - INFO - AI provider registered: Gemini
+2026-06-24 17:00:36,821 - INFO - Dynamic assignment completed for Gemini
+2026-06-24 17:00:36,821 - INFO - Task assigned to Coding Agent
+2026-06-24 17:00:36,821 - INFO - Task assigned to Security Agent
+2026-06-24 17:00:36,821 - INFO - Result received from Coding Agent
+2026-06-24 17:00:36,821 - INFO - Result received from Security Agent
+2026-06-24 17:00:36,822 - INFO - Coding Agent handled task.
+2026-06-24 17:00:36,823 - INFO - Research Agent handled task.
+2026-06-24 17:01:18,384 - INFO - Agent registered: Coding Agent
+2026-06-24 17:01:18,384 - INFO - Agent registered: Research Agent
+2026-06-24 17:01:18,384 - INFO - Agent registered: Memory Agent
+2026-06-24 17:01:18,384 - INFO - Agent registered: Security Agent
+2026-06-24 17:01:18,384 - INFO - Request received: Analyze security and code quality
+2026-06-24 17:01:18,385 - INFO - Agent registered: Coding Agent
+2026-06-24 17:01:18,385 - INFO - Agent registered: Research Agent
+2026-06-24 17:01:18,385 - INFO - Agent registered: Security Agent
+2026-06-24 17:01:18,387 - INFO - AI provider registered: OpenAI
+2026-06-24 17:01:18,387 - INFO - AI provider registered: Gemini
+2026-06-24 17:01:18,388 - INFO - Dynamic assignment completed for Gemini
+2026-06-24 17:01:18,388 - INFO - Task assigned to Coding Agent
+2026-06-24 17:01:18,388 - INFO - Task assigned to Security Agent
+2026-06-24 17:01:18,388 - INFO - Result received from Coding Agent
+2026-06-24 17:01:18,388 - INFO - Result received from Security Agent
+2026-06-24 17:01:18,389 - INFO - Coding Agent handled task.
+2026-06-24 17:01:18,389 - INFO - Research Agent handled task.
+2026-06-24 17:03:08,440 - INFO - Agent registered: Coding Agent
+2026-06-24 17:03:08,440 - INFO - Agent registered: Research Agent
+2026-06-24 17:03:08,441 - INFO - Agent registered: Memory Agent
+2026-06-24 17:03:08,441 - INFO - Agent registered: Security Agent
+2026-06-24 17:03:08,441 - INFO - Request received: Analyze security and code quality
+2026-06-24 17:03:08,442 - INFO - Agent registered: Coding Agent
+2026-06-24 17:03:08,442 - INFO - Agent registered: Research Agent
+2026-06-24 17:03:08,442 - INFO - Agent registered: Security Agent
+2026-06-24 17:03:08,443 - INFO - AI provider registered: OpenAI
+2026-06-24 17:03:08,443 - INFO - AI provider registered: Gemini
+2026-06-24 17:03:08,444 - INFO - Dynamic assignment completed for Gemini
+2026-06-24 17:03:08,445 - INFO - Task assigned to Coding Agent
+2026-06-24 17:03:08,445 - INFO - Task assigned to Security Agent
+2026-06-24 17:03:08,445 - INFO - Result received from Coding Agent
+2026-06-24 17:03:08,445 - INFO - Result received from Security Agent
+2026-06-24 17:03:08,446 - INFO - Coding Agent handled task.
+2026-06-24 17:03:08,446 - INFO - Research Agent handled task.
+2026-06-24 17:03:08,446 - INFO - Document Agent handled task.
+2026-06-24 17:03:08,447 - INFO - Email Agent handled task.
+2026-06-24 17:03:08,447 - INFO - Calendar Agent handled task.
+2026-06-24 17:03:08,447 - INFO - PC Control Agent handled task.
+2026-06-24 17:03:08,447 - INFO - Vision Agent handled task.
+2026-06-24 17:03:08,448 - INFO - Security Agent handled task.
+2026-06-24 17:07:40,486 - INFO - Entity added: Vinay
+2026-06-24 17:07:40,487 - INFO - Entity added: JARVIS
+2026-06-24 17:07:40,487 - INFO - Relationship added: Vinay -> owns -> JARVIS
+2026-06-24 17:07:40,487 - INFO - Relationship added: JARVIS -> contains -> Security Agent
+2026-06-24 17:07:40,487 - INFO - Relationship added: Security Agent -> protects -> Cloud Memory
+2026-06-24 17:15:49,408 - INFO - Knowledge domain added: Physics
+2026-06-24 17:15:49,408 - INFO - Topic added to Physics: Quantum Physics
+2026-06-24 17:15:49,408 - INFO - Topic added to Physics: Electromagnetism
+2026-06-24 17:15:49,408 - INFO - Knowledge domain added: Cybersecurity
+2026-06-24 17:15:49,408 - INFO - Topic added to Cybersecurity: Threat Detection
+2026-06-24 17:19:21,740 - INFO - Entity added: Quantum Physics
+2026-06-24 17:19:21,741 - INFO - Entity added: JARVIS
+2026-06-24 17:19:21,741 - INFO - Entity updated: JARVIS
+2026-06-24 17:22:10,179 - INFO - Relationship added: Vinay -> owns -> JARVIS
+2026-06-24 17:22:10,179 - INFO - Relationship added: JARVIS -> contains -> Security Agent
+2026-06-24 17:22:10,179 - INFO - Relationship added: Security Agent -> protects -> Cloud Memory
+2026-06-24 17:27:16,621 - INFO - Stored entity: Quantum Physics
+2026-06-24 17:27:16,621 - INFO - Stored entity: JARVIS
+2026-06-24 17:27:16,621 - INFO - Stored relationship.
+2026-06-24 17:27:16,621 - INFO - Stored domain: Physics
+2026-06-24 17:31:23,642 - INFO - Knowledge added.
+2026-06-24 17:31:23,643 - INFO - Knowledge added.
+2026-06-24 17:31:23,643 - INFO - Knowledge added.
+2026-06-24 17:38:38,891 - INFO - Knowledge validation: TRUSTED
+2026-06-24 17:38:38,892 - INFO - Knowledge validation: LIKELY_VALID
+2026-06-24 17:38:38,893 - INFO - Knowledge validation: TRUSTED
+2026-06-24 17:41:55,343 - INFO - Learning initiated: Quantum Physics
+2026-06-24 17:41:55,343 - INFO - Learning initiated: Cybersecurity
+2026-06-24 17:41:55,344 - INFO - Learning completed: Quantum Physics
+2026-06-24 17:48:52,323 - INFO - Knowledge score: 15
+2026-06-24 17:48:52,324 - INFO - Knowledge score: 45
+2026-06-24 17:48:52,324 - INFO - Knowledge score: 0
+2026-06-24 17:55:15,489 - INFO - Relationship added: Vinay -> owns -> JARVIS
+2026-06-24 17:55:15,490 - INFO - Relationship added: JARVIS -> contains -> Knowledge Graph
+2026-06-24 17:55:15,491 - INFO - Knowledge domain added: Physics
+2026-06-24 17:55:15,491 - INFO - Topic added to Physics: Quantum Physics
+2026-06-24 17:55:15,492 - INFO - Entity added: Quantum Physics
+2026-06-24 17:55:15,492 - INFO - Relationship added: Quantum Physics -> belongs_to -> Physics
+2026-06-24 17:55:15,493 - INFO - Stored entity: Quantum Physics
+2026-06-24 17:55:15,493 - INFO - Stored domain: Physics
+2026-06-24 17:55:15,493 - INFO - Stored relationship.
+2026-06-24 17:55:15,493 - INFO - Knowledge added.
+2026-06-24 17:55:15,493 - INFO - Knowledge added.
+2026-06-24 17:55:15,494 - INFO - Knowledge validation: TRUSTED
+2026-06-24 17:55:15,494 - INFO - Learning initiated: Quantum Physics
+2026-06-24 17:55:15,495 - INFO - Knowledge score: 45
+2026-06-24 18:02:23,499 - INFO - Environment set: Windows Desktop
+2026-06-24 18:02:23,499 - INFO - Skill registered: Application Control
+2026-06-24 18:02:23,500 - INFO - Skill registered: Workflow Observation
+2026-06-24 18:02:23,500 - INFO - Skill registered: Task Planning
+2026-06-24 18:05:56,287 - INFO - Learned application: VS Code
+2026-06-24 18:05:56,287 - INFO - Learned application: Chrome
+2026-06-24 18:10:21,048 - INFO - Recording started: VS Code Project Workflow
+2026-06-24 18:14:08,963 - INFO - Plan created: Train YOLO Model
+2026-06-24 18:17:36,629 - INFO - Executing: Activate Environment
+2026-06-24 18:17:36,629 - INFO - Executing: Run Tests
+2026-06-24 18:17:36,630 - INFO - Executing: Generate Report
+2026-06-24 18:22:51,054 - INFO - Environment updated: Operating System
+2026-06-24 18:22:51,055 - INFO - Environment updated: GPU
+2026-06-24 18:22:51,055 - INFO - Environment updated: Primary Project
+2026-06-24 18:26:59,719 - INFO - Skill added: YOLO Training
+2026-06-24 18:26:59,719 - INFO - Skill added: VS Code Workflow
+2026-06-24 18:31:12,578 - INFO - Learning captured from VS Code Workflow
+2026-06-24 18:31:12,578 - INFO - Learning captured from YOLO Training
+2026-06-24 18:31:12,578 - INFO - Learning captured from Research Workflow
+2026-06-24 18:33:50,797 - INFO - Environment set: Windows Desktop
+2026-06-24 18:33:50,797 - INFO - Skill registered: Application Control
+2026-06-24 18:33:50,798 - INFO - Learned application: VS Code
+2026-06-24 18:33:50,798 - INFO - Recording started: VS Code Workflow
+2026-06-24 18:33:50,799 - INFO - Plan created: Run Project
+2026-06-24 18:33:50,799 - INFO - Executing: Activate Environment
+2026-06-24 18:33:50,799 - INFO - Executing: Run Tests
+2026-06-24 18:33:50,800 - INFO - Environment updated: OS
+2026-06-24 18:33:50,800 - INFO - Environment updated: Project
+2026-06-24 18:33:50,800 - INFO - Skill added: YOLO Training
+2026-06-24 18:33:50,801 - INFO - Learning captured from Workflow
+2026-06-24 18:37:34,763 - INFO - Weakness detected: Cloud Memory Architecture Missing
+2026-06-24 18:37:34,763 - INFO - Weakness detected: OCR Intelligence Engine Missing
+2026-06-24 18:37:34,763 - INFO - Weakness detected: Agent Reputation System Missing
+2026-06-24 18:41:20,598 - INFO - Upgrade recommended: Cloud Memory Architecture
+2026-06-24 18:41:20,599 - INFO - Upgrade recommended: OCR Intelligence Engine
+2026-06-24 18:44:59,841 - INFO - Impact predicted: Cloud Memory Architecture
+2026-06-24 18:44:59,841 - INFO - Impact predicted: OCR Intelligence Engine
+2026-06-24 18:57:41,210 - INFO - Upgrade proposed: Cloud Memory Architecture
+2026-06-24 18:57:41,210 - INFO - Upgrade proposed: Security Threat Response Engine
+2026-06-24 18:57:41,212 - INFO - Upgrade approved: Cloud Memory Architecture
+2026-06-24 18:57:41,212 - INFO - Upgrade rejected: Security Threat Response Engine
+2026-06-24 19:02:49,587 - INFO - Upgrade plan created: Cloud Memory Architecture
+2026-06-24 19:10:10,376 - INFO - Code proposal generated: Cloud Memory Architecture
+2026-06-24 19:10:10,376 - INFO - Code proposal generated: OCR Intelligence Engine
+2026-06-24 19:16:26,662 - INFO - Test executed: Cloud Memory Unit Test
+2026-06-24 19:16:26,663 - INFO - Test executed: OCR Engine Integration Test
+2026-06-24 19:16:26,663 - INFO - Test executed: Security Validation Test
+2026-06-24 19:20:42,457 - INFO - Approval requested: Cloud Memory Architecture
+2026-06-24 19:20:42,458 - INFO - Approval requested: OCR Intelligence Engine
+2026-06-24 19:23:41,322 - INFO - Checkpoint created: v1.0
+2026-06-24 19:23:41,322 - INFO - Checkpoint created: v1.1
+2026-06-24 19:23:41,323 - INFO - Rollback executed: v1.0
+2026-06-24 19:26:29,633 - INFO - Evolution event: UPGRADE_PROPOSED
+2026-06-24 19:26:29,634 - INFO - Evolution event: UPGRADE_APPROVED
+2026-06-24 19:26:29,634 - INFO - Evolution event: UPGRADE_DEPLOYED
+2026-06-24 19:26:29,634 - INFO - Evolution event: UPGRADE_SUCCESS
+2026-06-24 19:28:41,276 - INFO - Weakness detected: Cloud Memory Missing
+2026-06-24 19:28:41,277 - INFO - Upgrade recommended: Cloud Memory Architecture
+2026-06-24 19:28:41,278 - INFO - Impact predicted: Cloud Memory Architecture
+2026-06-24 19:28:41,278 - INFO - Upgrade proposed: Cloud Memory Architecture
+2026-06-24 19:28:41,279 - INFO - Upgrade approved: Cloud Memory Architecture
+2026-06-24 19:28:41,279 - INFO - Upgrade plan created: Cloud Memory Architecture
+2026-06-24 19:28:41,280 - INFO - Code proposal generated: Cloud Memory Architecture
+2026-06-24 19:28:41,280 - INFO - Test executed: Cloud Memory Unit Test
+2026-06-24 19:28:41,281 - INFO - Approval requested: Cloud Memory Architecture
+2026-06-24 19:28:41,281 - INFO - Checkpoint created: v1.0
+2026-06-24 19:28:41,282 - INFO - Evolution event: UPGRADE_SUCCESS
+2026-06-24 19:34:59,348 - INFO - Threat detected: Unauthorized Upgrade Attempt
+2026-06-24 19:34:59,349 - INFO - Threat detected: Cloud Authentication Failure
+2026-06-24 19:34:59,349 - INFO - Responding to: Unauthorized Upgrade Attempt
+2026-06-24 19:34:59,349 - INFO - Threat resolved: Cloud Authentication Failure
+2026-06-24 19:38:35,748 - INFO - Threat analyzed: failed_login
+2026-06-24 19:38:35,749 - INFO - Threat analyzed: unauthorized_upgrade
+2026-06-24 19:38:35,750 - INFO - Threat analyzed: memory_tampering
+2026-06-24 19:41:33,519 - INFO - Alert created: Unauthorized Upgrade Attempt
+2026-06-24 19:41:33,519 - INFO - Alert created: Memory Tampering
+2026-06-24 19:44:50,405 - WARNING - SAFE MODE ACTIVATED: Memory Tampering Detected
+2026-06-24 19:44:50,406 - INFO - Safe mode deactivated.
+2026-06-24 19:48:02,125 - INFO - Evidence collected: Unauthorized Upgrade Attempt
+2026-06-24 19:48:02,125 - INFO - Evidence collected: Memory Tampering
+2026-06-24 19:52:14,194 - INFO - Timeline event added: Unauthorized Login Attempt
+2026-06-24 19:52:14,194 - INFO - Timeline event added: Safe Mode Activated
+2026-06-24 19:52:14,195 - INFO - Timeline event added: Threat Resolved
+2026-06-24 19:55:45,937 - INFO - Security intelligence added: Multiple Failed Logins
+2026-06-24 19:55:45,937 - INFO - Security intelligence added: Unauthorized Upgrade Attempt
+2026-06-24 20:08:42,836 - WARNING - Intrusion detected: Multiple Failed Login Attempts
+2026-06-24 20:08:42,836 - WARNING - Intrusion detected: Unauthorized Upgrade Request
+2026-06-24 20:12:31,078 - INFO - Agent registered: ResearchAgent
+2026-06-24 20:12:31,078 - INFO - Agent registered: MemoryAgent
+2026-06-24 20:15:59,484 - INFO - Cloud session created: vinay
+2026-06-24 20:15:59,485 - INFO - Cloud session created: jarvis_admin
+2026-06-24 20:15:59,485 - WARNING - Session revoked: jarvis_admin
+2026-06-24 20:20:35,408 - INFO - Agent reputation created: ResearchAgent
+2026-06-24 20:20:35,408 - INFO - Agent reputation created: MemoryAgent
+2026-06-24 20:20:35,408 - INFO - Agent reputation created: NewQuantumAgent
+2026-06-24 20:24:48,155 - INFO - Conflict detected: ResearchAgent vs SecurityAgent
+2026-06-24 20:24:48,155 - INFO - Conflict detected: MemoryAgent vs CodingAgent
+2026-06-24 20:24:48,155 - INFO - Conflict resolved: External API Usage
+2026-06-24 20:29:49,149 - INFO - Cloud memory stored: user_name
+2026-06-24 20:29:49,149 - INFO - Cloud memory stored: project
+2026-06-24 20:29:49,149 - INFO - Cloud memory stored: goal
+2026-06-24 20:32:45,166 - INFO - Connected to cloud provider: Supabase
+2026-06-24 20:32:45,166 - INFO - Disconnected from: Supabase
+2026-06-24 20:37:18,212 - INFO - Backup created: KnowledgeGraph_Backup
+2026-06-24 20:37:18,212 - INFO - Backup created: EvolutionMemory_Backup
+2026-06-24 20:43:04,958 - INFO - Knowledge synced: Knowledge Graph
+2026-06-24 20:43:04,958 - INFO - Knowledge synced: Skill Library
+2026-06-24 20:43:04,958 - INFO - Knowledge synced: Evolution Memory
+2026-06-24 20:46:57,777 - INFO - Memory node added: PrimaryCloud
+2026-06-24 20:46:57,777 - INFO - Memory node added: BackupCloud
+2026-06-24 20:52:32,935 - INFO - Memory synced to ResearchAgent
+2026-06-24 20:52:32,935 - INFO - Memory synced to MemoryAgent
+2026-06-24 20:52:32,935 - INFO - Memory synced to SecurityAgent
+2026-06-24 20:55:11,313 - INFO - Knowledge synchronized: Knowledge Graph
+2026-06-24 20:55:11,314 - INFO - Knowledge synchronized: Skill Library
+2026-06-24 20:55:11,314 - INFO - Knowledge synchronized: Evolution Memory
+2026-06-24 20:58:00,552 - INFO - Recovery executed: KnowledgeGraph_Backup
+2026-06-24 20:58:00,552 - INFO - Recovery executed: EvolutionMemory_Backup
+2026-06-24 21:00:00,891 - INFO - Cloud memory stored: project
+2026-06-24 21:00:00,892 - INFO - Connected to cloud provider: Supabase
+2026-06-24 21:00:00,893 - INFO - Backup created: KnowledgeGraph_Backup
+2026-06-24 21:00:00,893 - INFO - Knowledge synced: Knowledge Graph
+2026-06-24 21:00:00,894 - INFO - Memory node added: PrimaryCloud
+2026-06-24 21:00:00,894 - INFO - Memory node added: BackupCloud
+2026-06-24 21:00:00,895 - INFO - Memory synced to ResearchAgent
+2026-06-24 21:00:00,895 - INFO - Knowledge synchronized: Knowledge Graph
+2026-06-24 21:00:00,896 - INFO - Recovery executed: KnowledgeGraph_Backup
+2026-06-24 21:20:06,696 - INFO - Learning plan created: Quantum Physics
+2026-06-24 21:23:23,558 - INFO - Curriculum created: Quantum Physics
+2026-06-24 21:26:56,236 - INFO - Learned topic: Classical Physics
+2026-06-24 21:26:56,236 - INFO - Learned topic: Wave Mechanics
+2026-06-24 21:26:56,236 - INFO - Learned topic: Quantum States
+2026-06-24 21:30:52,229 - INFO - Expertise updated: Quantum Physics
+2026-06-24 21:30:52,229 - INFO - Expertise updated: Cybersecurity
+2026-06-24 21:30:52,230 - INFO - Expertise updated: Machine Learning
+2026-06-24 21:34:13,704 - INFO - Priority set: Cybersecurity
+2026-06-24 21:34:13,704 - INFO - Priority set: Quantum Physics
+2026-06-24 21:34:13,704 - INFO - Priority set: Machine Learning
+2026-06-24 21:38:11,810 - INFO - Capability registered: Research Analysis
+2026-06-24 21:38:11,810 - INFO - Capability registered: Quantum Physics Expert
+2026-06-24 21:41:06,999 - INFO - Learning plan created: Quantum Physics
+2026-06-24 21:41:07,000 - INFO - Curriculum created: Quantum Physics
+2026-06-24 21:41:07,000 - INFO - Learned topic: Classical Physics
+2026-06-24 21:41:07,000 - INFO - Learned topic: Wave Mechanics
+2026-06-24 21:41:07,001 - INFO - Expertise updated: Quantum Physics
+2026-06-24 21:41:07,001 - INFO - Priority set: Quantum Physics
+2026-06-24 21:41:07,001 - INFO - Capability registered: Research Analysis
+2026-06-24 21:41:07,001 - INFO - Capability registered: Quantum Expert
+2026-06-24 21:46:19,198 - INFO - Expert agent created: QuantumPhysicsAgent
+2026-06-24 21:46:19,199 - INFO - Expert agent created: CyberSecurityAgent
+2026-06-24 21:50:42,006 - INFO - Blueprint created: QuantumPhysicsAgent
+2026-06-24 21:54:41,374 - INFO - Training started: QuantumPhysicsAgent
+2026-06-24 21:58:09,385 - INFO - Agent deployed: QuantumPhysicsAgent
+2026-06-24 21:58:09,385 - INFO - Agent deployed: CyberSecurityAgent
+2026-06-24 22:01:30,008 - INFO - Agent created: QuantumPhysicsAgent
+2026-06-24 22:01:30,008 - INFO - QuantumPhysicsAgent -> TRAINING
+2026-06-24 22:01:30,008 - INFO - QuantumPhysicsAgent -> ACTIVE
+2026-06-24 22:05:32,200 - INFO - Agent proposal created: QuantumPhysicsAgent
+2026-06-24 22:05:32,200 - INFO - Agent proposal created: MedicalResearchAgent
+2026-06-24 22:08:24,033 - INFO - Agent proposal created: QuantumPhysicsAgent
+2026-06-24 22:08:24,033 - INFO - Blueprint created: QuantumPhysicsAgent
+2026-06-24 22:08:24,034 - INFO - Expert agent created: QuantumPhysicsAgent
+2026-06-24 22:08:24,034 - INFO - Training started: QuantumPhysicsAgent
+2026-06-24 22:08:24,035 - INFO - Agent deployed: QuantumPhysicsAgent
+2026-06-24 22:08:24,035 - INFO - Agent created: QuantumPhysicsAgent
+2026-06-24 22:08:24,035 - INFO - QuantumPhysicsAgent -> ACTIVE
+2026-06-24 22:28:39,017 - INFO - Collaboration started: Analyze research paper security risks
+2026-06-24 22:28:39,018 - INFO - Collaboration completed: Analyze research paper security risks
+2026-06-24 22:31:16,555 - INFO - Task created: Analyze Quantum Paper
+2026-06-24 22:38:50,061 - INFO - Message sent: ResearchAgent -> SecurityAgent
+2026-06-24 22:38:50,062 - INFO - Message sent: MemoryAgent -> ExecutiveBrain
+2026-06-24 22:41:53,064 - INFO - Task delegated: ResearchAgent -> DocumentAgent
+2026-06-24 22:41:53,065 - INFO - Task delegated: ExecutiveBrain -> SecurityAgent
+2026-06-24 22:45:00,544 - INFO - Vote recorded: ResearchAgent
+2026-06-24 22:45:00,547 - INFO - Vote recorded: SecurityAgent
+2026-06-24 22:45:00,548 - INFO - Vote recorded: MemoryAgent
+2026-06-24 22:48:12,537 - INFO - Project created: Quantum Research Analysis
+2026-06-24 22:51:23,556 - INFO - Collaboration started: Analyze Quantum Research
+2026-06-24 22:51:23,558 - INFO - Task created: Analyze Quantum Research
+2026-06-24 22:51:23,558 - INFO - Message sent: ResearchAgent -> DocumentAgent
+2026-06-24 22:51:23,559 - INFO - Task delegated: ResearchAgent -> DocumentAgent
+2026-06-24 22:51:23,559 - INFO - Vote recorded: ResearchAgent
+2026-06-24 22:51:23,560 - INFO - Vote recorded: MemoryAgent
+2026-06-24 22:51:23,560 - INFO - Vote recorded: SecurityAgent
+2026-06-24 22:51:23,561 - INFO - Project created: Quantum Research Analysis
+2026-06-24 22:58:08,171 - INFO - Tool registered: PDFReader
+2026-06-24 22:58:08,171 - INFO - Tool registered: WebSearch
+2026-06-24 22:58:08,172 - INFO - Tool registered: PythonExecutor
+2026-06-24 23:05:02,038 - INFO - Tool registered: PDFReader
+2026-06-24 23:05:02,038 - INFO - Tool registered: WebSearch
+2026-06-24 23:05:02,039 - INFO - Tool registered: PythonExecutor
+2026-06-24 23:10:38,240 - INFO - Permission registered: WebSearch
+2026-06-24 23:10:38,241 - INFO - Permission registered: DeleteFile
+2026-06-24 23:10:38,241 - INFO - Permission registered: SendEmail
+2026-06-24 23:13:55,353 - INFO - Action executed: ReadKnowledgeGraph
+2026-06-24 23:13:55,353 - INFO - Action executed: GenerateReport
+2026-06-24 23:17:16,202 - INFO - Route registered: PDF_ANALYSIS
+2026-06-24 23:17:16,203 - INFO - Route registered: WEB_SEARCH
+2026-06-24 23:17:16,203 - INFO - Route registered: PYTHON_EXECUTION
+2026-06-24 23:20:35,682 - INFO - Audit logged: WebSearch
+2026-06-24 23:20:35,682 - INFO - Audit logged: PythonExecutor
+2026-06-24 23:20:35,682 - INFO - Audit logged: PDFReader
+2026-06-24 23:23:06,188 - INFO - Tool registered: WebSearch
+2026-06-24 23:23:06,189 - INFO - Tool registered: WebSearch
+2026-06-24 23:23:06,190 - INFO - Permission registered: WebSearch
+2026-06-24 23:23:06,190 - INFO - Permission registered: DeleteFile
+2026-06-24 23:23:06,191 - INFO - Route registered: WEB_SEARCH
+2026-06-24 23:23:06,191 - INFO - Action executed: WebSearch
+2026-06-24 23:23:06,194 - INFO - Audit logged: WebSearch
+2026-06-24 23:26:48,732 - INFO - Knowledge acquired: Wikipedia Quantum Physics
+2026-06-24 23:26:48,733 - INFO - Knowledge acquired: Quantum Mechanics Notes
+2026-06-24 23:26:48,733 - INFO - Knowledge acquired: Quantum Computing Paper
+2026-06-24 23:30:16,597 - INFO - Resource added: MIT Quantum Notes
+2026-06-24 23:30:16,598 - INFO - Resource added: Quantum Computing Paper
+2026-06-24 23:30:16,598 - INFO - Resource added: University Lecture Series
+2026-06-24 23:33:41,715 - INFO - Learned from website: Wikipedia
+2026-06-24 23:33:41,715 - INFO - Learned from website: MIT OpenCourseWare
+2026-06-24 23:33:41,716 - INFO - Learned from website: Stanford Encyclopedia
+2026-06-24 23:37:03,237 - INFO - Learned paper: Attention Is All You Need
+2026-06-24 23:37:03,238 - INFO - Learned paper: YOLOv8 Object Detection
+2026-06-24 23:37:03,238 - INFO - Learned paper: Quantum Error Correction
+2026-06-25 11:08:33,486 - INFO - Knowledge validated: Quantum Physics
+2026-06-25 11:08:33,486 - INFO - Knowledge validated: Warp Drive
+2026-06-25 11:08:33,486 - INFO - Knowledge validated: Wave Mechanics
+2026-06-25 11:12:43,197 - INFO - Knowledge extracted: Attention Is All You Need
+2026-06-25 11:12:43,197 - INFO - Knowledge extracted: Quantum Computing Paper
+2026-06-25 11:15:26,920 - INFO - Knowledge acquired: MIT OpenCourseWare
+2026-06-25 11:15:26,920 - INFO - Knowledge acquired: Attention Is All You Need
+2026-06-25 11:15:26,921 - INFO - Resource added: MIT OpenCourseWare
+2026-06-25 11:15:26,922 - INFO - Resource added: Attention Is All You Need
+2026-06-25 11:15:26,922 - INFO - Learned from website: MIT OpenCourseWare
+2026-06-25 11:15:26,923 - INFO - Learned paper: Attention Is All You Need
+2026-06-25 11:15:26,924 - INFO - Knowledge validated: Neural Networks
+2026-06-25 11:15:26,924 - INFO - Knowledge validated: Magic AI
+2026-06-25 11:15:26,925 - INFO - Knowledge extracted: Attention Is All You Need
+2026-06-25 11:22:50,130 - INFO - Reasoning started: Optimize YOLO Training
+2026-06-25 11:22:50,131 - INFO - Reasoning started: Choose Best AI Provider
+2026-06-25 11:22:50,131 - INFO - Reasoning completed: Optimize YOLO Training
+2026-06-25 11:47:27,366 - INFO - Reasoning chain created: Optimize YOLO Training
+2026-06-25 11:50:32,877 - INFO - Decision analyzed: Choose Database
+2026-06-25 11:50:32,878 - INFO - Decision analyzed: Choose AI Provider
+2026-06-25 11:54:12,800 - INFO - Strategic plan created: Build JAOS
+2026-06-25 11:54:12,802 - INFO - Plan completed: Build JAOS
+2026-06-25 11:58:42,194 - INFO - Hypotheses generated: YOLO Training Slow
+2026-06-25 12:55:40,110 - INFO - Reflection completed: Optimize YOLO Training
+2026-06-25 12:58:04,786 - INFO - Reasoning started: Optimize JAOS
+2026-06-25 12:58:04,786 - INFO - Reasoning chain created: Optimize JAOS
+2026-06-25 12:58:04,787 - INFO - Decision analyzed: Choose AI Provider
+2026-06-25 12:58:04,787 - INFO - Strategic plan created: JAOS v1 Alpha
+2026-06-25 12:58:04,787 - INFO - Hypotheses generated: Slow Performance
+2026-06-25 12:58:04,787 - INFO - Reflection completed: Optimize JAOS
+2026-06-25 13:09:19,517 - INFO - Capability registered: GitHub Integration
+2026-06-25 13:09:19,517 - INFO - Capability registered: Robot Control
+2026-06-25 13:09:19,517 - INFO - Capability registered: IoT Automation
+2026-06-25 13:12:58,303 - INFO - Executive Brain added to JAOS v1 Alpha
+2026-06-25 13:12:58,303 - INFO - Reasoning Engine added to JAOS v1 Alpha
+2026-06-25 13:12:58,304 - INFO - Workflow Automation added to JAOS v2
+2026-06-25 13:12:58,304 - INFO - Robot Control added to JAOS v7
+2026-06-25 13:19:38,741 - INFO - Unsupported request logged: Control Drone
+2026-06-25 13:19:38,742 - INFO - Unsupported request logged: Smart Home Automation
+2026-06-25 13:19:38,742 - INFO - Unsupported request logged: Mobile Companion
+2026-06-25 13:46:29,113 - INFO - Feature request added: Mobile Companion
+2026-06-25 13:46:29,113 - INFO - Feature request added: Robot Control
+2026-06-25 13:46:29,113 - INFO - Feature request added: Mobile Companion
+2026-06-25 13:46:29,113 - INFO - Feature request added: Smart Home
+2026-06-25 13:46:29,113 - INFO - Feature request added: Mobile Companion
+2026-06-25 13:49:46,922 - INFO - Roadmap recommendation: Mobile Companion
+2026-06-25 13:49:46,924 - INFO - Roadmap recommendation: Robot Control
+2026-06-25 13:52:21,092 - INFO - Capability registered: GitHub Integration
+2026-06-25 13:52:21,092 - INFO - Capability registered: Robot Control
+2026-06-25 13:52:21,092 - INFO - GitHub Integration added to JAOS v1 Alpha
+2026-06-25 13:52:21,092 - INFO - Robot Control added to JAOS v7
+2026-06-25 13:52:21,093 - INFO - Unsupported request logged: Robot Control
+2026-06-25 13:52:21,093 - INFO - Feature request added: Mobile Companion
+2026-06-25 13:52:21,093 - INFO - Feature request added: Mobile Companion
+2026-06-25 13:52:21,094 - INFO - Feature request added: Robot Control
+2026-06-25 13:52:21,094 - INFO - Roadmap recommendation: Mobile Companion
+2026-06-25 14:29:37,615 - INFO - Infrastructure component registered: AI Provider Manager
+2026-06-25 14:29:37,615 - INFO - Infrastructure component registered: Storage Intelligence
+2026-06-25 14:29:37,615 - INFO - Infrastructure component registered: Database Intelligence
+2026-06-25 14:48:45,300 - INFO - AI Provider Registered: OpenAI
+2026-06-25 14:48:45,300 - INFO - AI Provider Registered: Gemini
+2026-06-25 14:48:45,301 - INFO - AI Provider Registered: Ollama
+2026-06-25 15:09:37,678 - INFO - Registered resource: OpenAI
+2026-06-25 15:09:37,678 - INFO - Registered resource: GitHub
+2026-06-25 15:09:37,678 - INFO - Registered resource: Local LLM
+2026-06-25 15:09:37,678 - INFO - Registered resource: Docker
+2026-06-25 15:15:13,881 - INFO - Execution step added: Planner Agent
+2026-06-25 15:15:13,881 - INFO - Execution step added: OpenAI
+2026-06-25 15:15:13,881 - INFO - Execution step added: Local LLM
+2026-06-25 15:15:13,881 - INFO - Execution step added: GitHub
+2026-06-25 15:15:13,881 - INFO - Execution step added: Testing Agent
+2026-06-25 15:36:44,830 - INFO - API Registered: OpenAI
+2026-06-25 15:36:44,830 - INFO - API Registered: Gemini
+2026-06-25 15:36:44,830 - INFO - API Registered: Ollama
+2026-06-25 15:45:42,308 - INFO - Storage registered: Local Disk
+2026-06-25 15:45:42,309 - INFO - Storage registered: Google Drive
+2026-06-25 15:45:42,309 - INFO - Storage registered: Vector Store
+2026-06-25 16:43:14,327 - INFO - Database registered: PostgreSQL
+2026-06-25 16:43:14,328 - INFO - Database registered: pgvector
+2026-06-25 16:43:14,328 - INFO - Database registered: SQLite
+2026-06-25 16:43:14,328 - INFO - Database registered: SecretVault
+2026-06-25 16:49:54,245 - INFO - Resource evaluated: OpenAI
+2026-06-25 16:49:54,246 - INFO - Resource evaluated: Gemini
+2026-06-25 16:49:54,246 - INFO - Resource evaluated: Local
+2026-06-25 16:55:19,726 - INFO - Infrastructure component registered: Infrastructure Core
+2026-06-25 16:55:19,726 - INFO - AI Provider Registered: OpenAI
+2026-06-25 16:55:19,726 - INFO - Registered resource: GitHub
+2026-06-25 16:55:19,726 - INFO - Execution step added: Planner Agent
+2026-06-25 16:55:19,726 - INFO - API Registered: Gemini
+2026-06-25 16:55:19,726 - INFO - Storage registered: Local Disk
+2026-06-25 16:55:19,727 - INFO - Database registered: PostgreSQL
+2026-06-25 16:55:19,727 - INFO - Resource evaluated: Local
+2026-06-25 16:55:45,533 - INFO - Infrastructure component registered: Infrastructure Core
+2026-06-25 16:55:45,533 - INFO - AI Provider Registered: OpenAI
+2026-06-25 16:55:45,534 - INFO - Registered resource: GitHub
+2026-06-25 16:55:45,534 - INFO - Execution step added: Planner Agent
+2026-06-25 16:55:45,534 - INFO - API Registered: Gemini
+2026-06-25 16:55:45,534 - INFO - Storage registered: Local Disk
+2026-06-25 16:55:45,534 - INFO - Database registered: PostgreSQL
+2026-06-25 16:55:45,534 - INFO - Resource evaluated: Local
+2026-06-25 17:05:53,840 - INFO - Workflow registered: Morning Briefing
+2026-06-25 17:05:53,841 - INFO - Workflow registered: GitHub Automation
+2026-06-25 17:05:53,841 - INFO - Workflow registered: Research Workflow
+2026-06-25 17:09:57,383 - INFO - Task created: Build Portfolio
+2026-06-25 17:09:57,383 - INFO - Task created: Summarize Emails
+2026-06-25 17:13:20,281 - INFO - Queued task: Read Emails
+2026-06-25 17:13:20,282 - INFO - Queued task: Deploy Website
+2026-06-25 17:13:20,282 - INFO - Queued task: Generate Notes
+2026-06-25 17:20:06,725 - INFO - Scheduled: Daily Report
+2026-06-25 17:20:06,726 - INFO - Scheduled: Weekly Backup
+2026-06-25 17:23:57,968 - INFO - Dependency added: Deploy Website -> Run Tests
+2026-06-25 17:23:57,968 - INFO - Dependency added: Run Tests -> Generate Code
+2026-06-25 17:23:57,968 - INFO - Dependency added: Generate Code -> Research
+2026-06-25 17:32:35,968 - WARNING - Failure detected: Deploy Website
+2026-06-25 17:32:35,969 - WARNING - Failure detected: Generate Report
+2026-06-25 17:37:25,557 - INFO - Automation rule added: Daily 08:00
+2026-06-25 17:37:25,557 - INFO - Automation rule added: GitHub Push
+2026-06-25 17:37:25,557 - INFO - Automation rule added: Battery <20%
+2026-06-25 17:44:50,240 - INFO - Workflow updated: Morning Briefing
+2026-06-25 17:44:50,240 - INFO - Workflow updated: Deploy Website
+2026-06-25 17:44:50,240 - INFO - Workflow updated: YOLO Training
+2026-06-25 17:47:29,417 - INFO - Workflow registered: Website Deployment
+2026-06-25 17:47:29,417 - INFO - Task created: Build Website
+2026-06-25 17:47:29,417 - INFO - Queued task: Build Website
+2026-06-25 17:47:29,417 - INFO - Scheduled: Daily Report
+2026-06-25 17:47:29,417 - INFO - Dependency added: Deploy Website -> Run Tests
+2026-06-25 17:47:29,417 - WARNING - Failure detected: Deploy Website
+2026-06-25 17:47:29,418 - INFO - Automation rule added: GitHub Push
+2026-06-25 17:47:29,418 - INFO - Workflow updated: Website Deployment
+2026-06-25 17:53:03,131 - INFO - Application registered: VS Code
+2026-06-25 17:53:03,132 - INFO - Application registered: Chrome
+2026-06-25 17:53:03,132 - INFO - Application registered: Terminal
+2026-06-25 17:57:09,330 - INFO - Window registered: VS Code - JAOS
+2026-06-25 17:57:09,330 - INFO - Window registered: Chrome - ChatGPT
+2026-06-25 17:57:09,330 - INFO - Window registered: Terminal
+2026-06-25 18:02:17,319 - INFO - Registered file: Resume.pdf
+2026-06-25 18:02:17,319 - INFO - Registered file: JAOS.py
+2026-06-25 18:02:17,319 - INFO - Registered file: Notes.txt
+2026-06-25 18:06:53,427 - INFO - Terminal command registered: git status
+2026-06-25 18:06:53,427 - INFO - Terminal command registered: python train.py
+2026-06-25 18:06:53,428 - INFO - Terminal command registered: pip install ultralytics
+2026-06-25 18:10:55,632 - INFO - Browser session updated: Chrome
+2026-06-25 18:10:55,632 - INFO - Browser session updated: Chrome
+2026-06-25 18:10:55,633 - INFO - Browser session updated: Edge
+2026-06-25 18:15:33,980 - INFO - Metric updated: CPU
+2026-06-25 18:15:33,981 - INFO - Metric updated: RAM
+2026-06-25 18:15:33,981 - INFO - Metric updated: GPU
+2026-06-25 18:15:33,981 - INFO - Metric updated: Battery
+2026-06-25 18:20:30,318 - INFO - Notification added: SUCCESS
+2026-06-25 18:20:30,318 - INFO - Notification added: WARNING
+2026-06-25 18:20:30,318 - INFO - Notification added: APPROVAL
+2026-06-25 18:24:05,981 - INFO - Application registered: VS Code
+2026-06-25 18:24:05,981 - INFO - Window registered: VS Code - JAOS
+2026-06-25 18:24:05,982 - INFO - Registered file: main.py
+2026-06-25 18:24:05,982 - INFO - Terminal command registered: python main.py
+2026-06-25 18:24:05,982 - INFO - Browser session updated: Chrome
+2026-06-25 18:24:05,982 - INFO - Metric updated: CPU
+2026-06-25 18:24:05,982 - INFO - Metric updated: RAM
+2026-06-25 18:24:05,982 - INFO - Notification added: SUCCESS
+2026-06-25 18:36:23,363 - INFO - Calendar event added: JAOS Development
+2026-06-25 18:36:23,364 - INFO - Calendar event added: Project Review
+2026-06-25 18:41:22,703 - INFO - Contact added: Rahul
+2026-06-25 18:41:22,703 - INFO - Contact added: Professor
+2026-06-25 18:45:23,530 - INFO - Communication event: Gmail
+2026-06-25 18:45:23,531 - INFO - Communication event: GitHub
+2026-06-25 18:45:23,531 - INFO - Communication event: Calendar
+2026-06-25 18:50:41,508 - INFO - Conversation registered: Family
+2026-06-25 18:50:41,508 - INFO - Conversation registered: JAOS Dev
+2026-06-25 18:55:14,351 - INFO - Meeting registered: JAOS Architecture Review
+2026-06-25 18:55:14,351 - INFO - Meeting registered: Project Planning
+2026-06-25 19:06:04,175 - INFO - Email account registered: vinay@example.com
+2026-06-25 19:06:04,176 - INFO - Email account registered: work@example.com
+2026-06-25 19:06:12,474 - INFO - Email account registered: vinay@example.com
+2026-06-25 19:06:12,475 - INFO - Calendar event added: JAOS Development
+2026-06-25 19:06:12,475 - INFO - Contact added: Professor
+2026-06-25 19:06:12,475 - INFO - Communication event: Gmail
+2026-06-25 19:06:12,475 - INFO - Conversation registered: JAOS Dev
+2026-06-25 19:06:12,475 - INFO - Meeting registered: Architecture Review
+2026-06-25 19:07:26,292 - INFO - Email account registered: vinay@example.com
+2026-06-25 19:07:26,293 - INFO - Calendar event added: JAOS Development
+2026-06-25 19:07:26,293 - INFO - Contact added: Professor
+2026-06-25 19:07:26,293 - INFO - Communication event: Gmail
+2026-06-25 19:07:26,293 - INFO - Conversation registered: JAOS Dev
+2026-06-25 19:07:26,293 - INFO - Meeting registered: Architecture Review
+2026-06-25 19:12:05,423 - INFO - Repository registered: JAOS
+2026-06-25 19:12:05,424 - INFO - Repository registered: YOLO Project
+2026-06-25 19:15:04,506 - INFO - GitHub repository registered: JAOS
+2026-06-25 19:15:04,507 - INFO - GitHub repository registered: YOLO Project
+2026-06-25 19:19:52,986 - INFO - Repository added: JAOS
+2026-06-25 19:19:52,986 - INFO - Repository added: YOLO Project
+2026-06-25 19:22:52,123 - INFO - Workspace registered: JAOS Workspace
+2026-06-25 19:22:52,124 - INFO - Workspace registered: YOLO Workspace
+2026-06-25 19:26:37,756 - INFO - Development workspace registered: JAOS Development
+2026-06-25 19:26:37,757 - INFO - Development workspace registered: YOLO Development
+2026-06-25 19:29:45,153 - INFO - Build/Test profile registered: JAOS
+2026-06-25 19:29:45,154 - INFO - Build/Test profile registered: YOLO Project
+2026-06-25 19:32:17,267 - INFO - Repository registered: JAOS
+2026-06-25 19:32:17,268 - INFO - GitHub repository registered: JAOS
+2026-06-25 19:32:17,268 - INFO - Repository added: JAOS
+2026-06-25 19:32:17,268 - INFO - Workspace registered: JAOS Workspace
+2026-06-25 19:32:17,268 - INFO - Development workspace registered: JAOS Development
+2026-06-25 19:32:17,268 - INFO - Build/Test profile registered: JAOS
+2026-06-25 19:36:59,615 - INFO - Document registered: JAOS Roadmap
+2026-06-25 19:36:59,616 - INFO - Document registered: YOLO Notes
+2026-06-25 19:40:20,193 - INFO - Knowledge entry added: YOLO
+2026-06-25 19:40:20,194 - INFO - Knowledge entry added: JAOS
+2026-06-25 19:43:24,679 - INFO - Research project registered: Underwater Detection
+2026-06-25 19:43:24,679 - INFO - Research project registered: JAOS Research
+2026-06-25 19:46:40,062 - INFO - OCR job registered: research_paper.pdf
+2026-06-25 19:46:40,062 - INFO - OCR job registered: whiteboard.jpg
+2026-06-25 19:50:20,757 - INFO - Relationship added: JAOS
+2026-06-25 19:50:20,757 - INFO - Relationship added: JAOS
+2026-06-25 19:50:20,758 - INFO - Relationship added: YOLO Project
+2026-06-25 19:54:05,056 - INFO - Synchronization registered: Memory->Knowledge Base
+2026-06-25 19:54:05,057 - INFO - Synchronization registered: Knowledge Graph->Learning Platform
+2026-06-25 19:56:43,838 - INFO - Document registered: JAOS Roadmap
+2026-06-25 19:56:43,838 - INFO - Knowledge entry added: JAOS
+2026-06-25 19:56:43,838 - INFO - Research project registered: JAOS Research
+2026-06-25 19:56:43,838 - INFO - OCR job registered: roadmap.pdf
+2026-06-25 19:56:43,839 - INFO - Relationship added: JAOS
+2026-06-25 19:56:43,839 - INFO - Synchronization registered: Knowledge Base->Memory
+2026-06-25 20:09:33,309 - INFO - Identity registered: Vinay
+2026-06-25 20:09:33,310 - INFO - Identity registered: Admin
+2026-06-25 20:14:09,436 - INFO - Authentication registered: Vinay
+2026-06-25 20:14:09,436 - INFO - Authentication registered: Admin
+2026-06-25 20:19:59,826 - INFO - Role assigned: Vinay -> USER
+2026-06-25 20:19:59,826 - INFO - Role assigned: Admin -> SYSTEM
+2026-06-25 20:24:08,874 - INFO - Permission granted: Vinay -> OPEN_VSCODE
+2026-06-25 20:24:08,874 - INFO - Permission granted: Vinay -> READ_FILES
+2026-06-25 20:24:08,874 - INFO - Permission granted: Admin -> DELETE_SYSTEM_FILES
+2026-06-25 20:27:25,440 - INFO - Audit: Vinay -> OPEN_VSCODE
+2026-06-25 20:27:25,440 - INFO - Audit: Admin -> DELETE_TEMP_FILES
+2026-06-25 20:30:13,898 - INFO - Security event: LOW
+2026-06-25 20:30:13,898 - INFO - Security event: HIGH
+2026-06-25 20:33:07,545 - INFO - Identity registered: Vinay
+2026-06-25 20:33:07,545 - INFO - Authentication registered: Vinay
+2026-06-25 20:33:07,545 - INFO - Role assigned: Vinay -> USER
+2026-06-25 20:33:07,545 - INFO - Permission granted: Vinay -> OPEN_VSCODE
+2026-06-25 20:33:07,545 - INFO - Audit: Vinay -> OPEN_VSCODE
+2026-06-25 20:33:07,545 - INFO - Security event: LOW
+2026-06-25 20:37:56,313 - INFO - Mission Control displayed.
+2026-06-25 20:41:50,066 - INFO - Platform registered: Security
+2026-06-25 20:41:50,066 - INFO - Platform registered: Knowledge
+2026-06-25 20:41:50,067 - INFO - Platform registered: Dashboard
+2026-06-25 20:45:41,906 - INFO - Capability registered: Open VS Code
+2026-06-25 20:45:41,907 - INFO - Capability registered: Autonomous Self-Improvement
+2026-06-25 20:49:26,562 - INFO - Notification added: Permission granted.
+2026-06-25 20:49:26,562 - INFO - Notification added: Build completed successfully.
+2026-06-25 20:52:48,084 - INFO - Timeline action: Register Repository
+2026-06-25 20:52:48,084 - INFO - Timeline action: Grant Permission
+2026-06-25 20:56:07,519 - INFO - Health updated: Memory Platform
+2026-06-25 20:56:07,519 - INFO - Health updated: Security Platform
+2026-06-25 20:56:07,519 - INFO - Health updated: Dashboard Platform
+2026-06-25 20:58:23,788 - INFO - Platform registered: Security
+2026-06-25 20:58:23,788 - INFO - Capability registered: Open VS Code
+2026-06-25 20:58:23,788 - INFO - Notification added: Permission granted.
+2026-06-25 20:58:23,788 - INFO - Timeline action: Repository Registered
+2026-06-25 20:58:23,789 - INFO - Health updated: Security Platform
+2026-06-25 20:58:23,789 - INFO - Mission Control displayed.
+2026-06-25 21:03:11,444 - INFO - Startup service registered: JAOS Core
+2026-06-25 21:03:11,444 - INFO - Startup service registered: Notification Center
+2026-06-25 21:06:27,254 - INFO - Configuration updated: theme
+2026-06-25 21:06:27,255 - INFO - Configuration updated: default_ai
+2026-06-25 21:10:52,976 - INFO - Task scheduled: Morning Briefing
+2026-06-25 21:10:52,976 - INFO - Task scheduled: Automatic Backup
+2026-06-25 21:14:13,246 - INFO - Cache added: active_ai
+2026-06-25 21:14:13,246 - INFO - Cache added: current_project
+2026-06-25 21:14:13,247 - INFO - Cache removed: active_ai
+2026-06-25 21:14:13,248 - INFO - Cache cleared.
+2026-06-25 21:17:43,674 - INFO - Cleanup task registered: Temporary Cache
+2026-06-25 21:17:43,674 - INFO - Cleanup task registered: Temporary Logs
+2026-06-25 21:17:43,674 - INFO - Cleanup task registered: Unused Generated Files
+2026-06-25 21:40:16,109 - INFO - Update registered: JAOS Core Patch
+2026-06-25 21:40:16,109 - INFO - Update registered: Security Rules Update
+2026-06-25 21:47:08,803 - INFO - Backup registered: JAOS Code Backup
+2026-06-25 21:47:08,804 - INFO - Backup registered: Memory Backup
+2026-06-25 21:49:14,154 - INFO - Startup service registered: JAOS Core
+2026-06-25 21:49:14,154 - INFO - Configuration updated: theme
+2026-06-25 21:49:14,154 - INFO - Task scheduled: Morning Briefing
+2026-06-25 21:49:14,154 - INFO - Cache added: active_ai
+2026-06-25 21:49:14,154 - INFO - Cleanup task registered: Temporary Cache
+2026-06-25 21:49:14,154 - INFO - Update registered: JAOS Core Patch
+2026-06-25 21:49:14,154 - INFO - Backup registered: JAOS Backup
+2026-06-25 22:10:40,219 - INFO - Module registered: Memory Manager
+2026-06-25 22:10:40,219 - INFO - Module registered: Permission Manager
+2026-06-25 22:19:25,434 - INFO - Platform registered: Security Platform
+2026-06-25 22:19:25,434 - INFO - Platform registered: Engineering & Validation
+2026-06-25 22:26:39,069 - INFO - Package registered: ultralytics
+2026-06-25 22:26:39,070 - INFO - Package registered: torch
+2026-06-25 22:33:36,878 - INFO - Dependency added: Workflow Engine -> Task Manager
+2026-06-25 22:33:36,878 - INFO - Dependency added: Security Monitor -> Audit Logger
+2026-06-25 22:38:07,476 - INFO - Import registered: security.permission_manager
+2026-06-25 22:38:07,477 - INFO - Import registered: dashboard.mission_control
+2026-06-25 22:38:07,477 - INFO - Import registered: system_services.backup_manager
+2026-06-25 22:38:07,477 - INFO - Import registered: knowledge.knowledge_graph
+2026-06-25 22:41:48,889 - INFO - Required config key added: theme
+2026-06-25 22:41:48,889 - INFO - Required config key added: default_ai
+2026-06-25 22:46:28,569 - INFO - Startup service registered: JAOS Core
+2026-06-25 22:46:28,570 - INFO - Startup service registered: Memory Manager
+2026-06-25 22:46:28,570 - INFO - Startup service registered: Security Manager
+2026-06-25 22:49:49,817 - INFO - Integration test registered: Memory Platform
+2026-06-25 22:49:49,817 - INFO - Integration test registered: Security Platform
+2026-06-25 22:49:49,817 - INFO - Integration test registered: Dashboard Platform
+2026-06-25 22:53:09,286 - INFO - Health updated: Security Platform
+2026-06-25 22:53:09,287 - INFO - Health updated: Engineering Platform
+2026-06-25 22:56:22,043 - INFO - Capability registered: Open VS Code
+2026-06-25 22:56:22,044 - INFO - Capability registered: Autonomous Self Improvement
+2026-06-25 23:02:56,951 - INFO - Module registered: Memory Manager
+2026-06-25 23:02:56,952 - INFO - Platform registered: Security
+2026-06-25 23:02:56,952 - INFO - Package registered: torch
+2026-06-25 23:02:56,952 - INFO - Dependency added: Workflow -> Memory
+2026-06-25 23:02:56,952 - INFO - Import registered: security.permission_manager
+2026-06-25 23:02:56,953 - INFO - Required config key added: theme
+2026-06-25 23:02:56,953 - INFO - Startup service registered: JAOS Core
+2026-06-25 23:02:56,953 - INFO - Integration test registered: Security Platform
+2026-06-25 23:02:56,953 - INFO - Health updated: Security
+2026-06-25 23:02:56,953 - INFO - Capability registered: Open VS Code
+2026-06-25 23:14:52,295 - INFO - Kernel registered platform: Memory Platform
+2026-06-25 23:14:52,296 - INFO - Kernel registered platform: Security Platform
+2026-06-25 23:14:52,296 - INFO - Kernel registered platform: Workflow Platform
+2026-06-25 23:14:52,296 - INFO - JAOS Kernel started.
+2026-06-25 23:22:22,337 - INFO - Kernel service registered: Configuration Service
+2026-06-25 23:22:22,338 - INFO - Kernel service registered: Logging Service
+2026-06-25 23:22:22,338 - INFO - Kernel service registered: Security Service
+2026-06-25 23:28:27,010 - INFO - Kernel event published: PERMISSION_GRANTED
+2026-06-25 23:28:27,011 - INFO - Kernel event published: TASK_STARTED
+2026-06-25 23:42:55,916 - INFO - Platform registered: Memory Platform
+2026-06-25 23:42:55,917 - INFO - Platform registered: Security Platform
+2026-06-25 23:42:55,917 - INFO - Platform started: Memory Platform
+2026-06-25 23:42:55,917 - INFO - Platform started: Security Platform
+2026-06-25 23:42:55,918 - INFO - Platform stopped: Security Platform
+2026-06-26 18:51:35,835 - INFO - Route registered: PERMISSION_GRANTED -> Security Platform
+2026-06-26 18:51:35,835 - INFO - Route registered: WORKFLOW_STARTED -> Workflow Platform
+2026-06-26 18:51:35,835 - INFO - Route registered: MEMORY_UPDATED -> Memory Platform
+2026-06-26 18:55:47,475 - INFO - Permission granted: OPEN_VSCODE
+2026-06-26 18:55:47,475 - INFO - Permission granted: DELETE_TEMP_FILES
+2026-06-26 18:55:47,475 - INFO - Permission revoked: DELETE_TEMP_FILES
+2026-06-26 19:03:03,541 - INFO - Kernel health updated: Memory Platform
+2026-06-26 19:03:03,542 - INFO - Kernel health updated: Security Platform
+2026-06-26 19:03:14,922 - INFO - JAOS Kernel started.
+2026-06-26 19:03:14,923 - INFO - Kernel service registered: Configuration Service
+2026-06-26 19:03:14,923 - INFO - Kernel service registered: Logging Service
+2026-06-26 19:03:14,923 - INFO - Kernel event published: STARTUP
+2026-06-26 19:03:14,923 - INFO - Platform registered: Memory Platform
+2026-06-26 19:03:14,923 - INFO - Platform started: Memory Platform
+2026-06-26 19:03:14,923 - INFO - Kernel health updated: Memory Platform
+2026-06-26 19:03:14,923 - INFO - Route registered: MEMORY_UPDATED -> Memory Platform
+2026-06-26 19:03:14,923 - INFO - Permission granted: OPEN_VSCODE
+2026-06-26 19:12:00,125 - INFO - Runtime context updated: current_user
+2026-06-26 19:12:00,125 - INFO - Runtime context updated: active_project
+2026-06-26 19:12:00,125 - INFO - Runtime context updated: active_ai_provider
+2026-06-26 19:29:13,420 - INFO - Runtime context updated: current_user
+2026-06-26 19:29:13,421 - INFO - Runtime context updated: active_project
+2026-06-26 19:29:13,422 - INFO - Runtime context updated: active_ai_provider
+2026-06-26 19:29:18,597 - INFO - JAOS Kernel started.
+2026-06-26 19:29:18,598 - INFO - Kernel service registered: Configuration Service
+2026-06-26 19:29:18,598 - INFO - Kernel service registered: Logging Service
+2026-06-26 19:29:18,598 - INFO - Kernel service registered: Security Service
+2026-06-26 19:29:18,598 - INFO - Kernel event published: STARTUP
+2026-06-26 19:29:18,598 - INFO - Platform registered: Memory Platform
+2026-06-26 19:29:18,598 - INFO - Platform registered: Security Platform
+2026-06-26 19:29:18,598 - INFO - Platform started: Memory Platform
+2026-06-26 19:29:18,599 - INFO - Platform started: Security Platform
+2026-06-26 19:29:18,599 - INFO - Kernel health updated: Memory Platform
+2026-06-26 19:29:18,599 - INFO - Kernel health updated: Security Platform
+2026-06-26 19:29:18,599 - INFO - Route registered: MEMORY_UPDATED -> Memory Platform
+2026-06-26 19:29:18,599 - INFO - Route registered: PERMISSION_GRANTED -> Security Platform
+2026-06-26 19:29:18,599 - INFO - Permission granted: OPEN_VSCODE
+2026-06-26 19:29:18,599 - INFO - Permission revoked: DELETE_SYSTEM_FILES
+2026-06-26 19:29:18,599 - INFO - Runtime context updated: current_user
+2026-06-26 19:29:18,599 - INFO - Runtime context updated: active_project
+2026-06-26 19:29:18,599 - INFO - Runtime context updated: active_ai_provider
+2026-06-26 19:48:05,255 - INFO - Memory Platform initialized.
+2026-06-26 19:48:05,255 - INFO - Memory Platform started.
+2026-06-26 19:48:05,255 - INFO - Memory Platform paused.
+2026-06-26 19:48:05,256 - INFO - Memory Platform resumed.
+2026-06-26 19:48:05,256 - INFO - Memory Platform stopped.
+2026-06-26 19:59:47,701 - INFO - Boot Step Completed: Load Configuration
+2026-06-26 19:59:47,701 - INFO - Boot Step Completed: Initialize Logger
+2026-06-26 19:59:47,702 - INFO - Boot Step Completed: Start Kernel
+2026-06-26 19:59:47,702 - INFO - Boot Step Completed: Create Runtime Context
+2026-06-26 19:59:47,702 - INFO - Boot Step Completed: Register Services
+2026-06-26 19:59:47,702 - INFO - Boot Step Completed: Initialize Platforms
+2026-06-26 19:59:47,702 - INFO - Boot Step Completed: Health Verification
+2026-06-26 20:07:49,150 - INFO - Boot phase step registered: PRE_BOOT -> Load Configuration
+2026-06-26 20:07:49,151 - INFO - Boot phase step registered: CORE_BOOT -> Initialize Logger
+2026-06-26 20:07:49,151 - INFO - Boot phase step registered: KERNEL_BOOT -> Start JAOS Kernel
+2026-06-26 20:07:49,151 - INFO - Boot phase step registered: PLATFORM_BOOT -> Register Platforms
+2026-06-26 20:07:49,151 - INFO - Boot phase step registered: SERVICE_BOOT -> Register Services
+2026-06-26 20:07:49,151 - INFO - Boot phase step registered: READY -> JAOS Ready
+2026-06-26 20:07:49,152 - INFO - Boot phase completed: PRE_BOOT -> Load Configuration
+2026-06-26 20:07:49,153 - INFO - Boot phase completed: CORE_BOOT -> Initialize Logger
+2026-06-26 20:07:49,154 - INFO - Boot phase completed: KERNEL_BOOT -> Start JAOS Kernel
+2026-06-26 20:07:49,154 - INFO - Boot phase completed: PLATFORM_BOOT -> Register Platforms
+2026-06-26 20:07:49,154 - INFO - Boot phase completed: SERVICE_BOOT -> Register Services
+2026-06-26 20:07:49,155 - INFO - Boot phase completed: READY -> JAOS Ready
