@@ -110,5 +110,61 @@
         "task_type": "coding",
         "result": "SUCCESS",
         "notes": "Useful for low-cost coding tasks"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "openai",
+        "task_type": "coding",
+        "result": "SUCCESS",
+        "notes": "Generated strong code"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "openai",
+        "task_type": "coding",
+        "result": "SUCCESS",
+        "notes": "Handled debugging well"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "gemini",
+        "task_type": "coding",
+        "result": "FAILURE",
+        "notes": "Weak coding response"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "deepseek",
+        "task_type": "coding",
+        "result": "SUCCESS",
+        "notes": "Good coding response"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "gemini",
+        "task_type": "vision",
+        "result": "SUCCESS",
+        "notes": "Good image analysis"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "openai",
+        "task_type": "coding",
+        "result": "SUCCESS",
+        "notes": "Generated correct Python code"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "gemini",
+        "task_type": "vision",
+        "result": "SUCCESS",
+        "notes": "Good for multimodal analysis"
+    },
+    {
+        "timestamp": "2026-06-29 18:49:47",
+        "provider": "deepseek",
+        "task_type": "coding",
+        "result": "SUCCESS",
+        "notes": "Useful for low-cost coding tasks"
     }
 ]

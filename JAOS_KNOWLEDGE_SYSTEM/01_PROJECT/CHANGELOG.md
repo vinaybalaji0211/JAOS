@@ -2,7 +2,7 @@
 
 
 
-\## v0.6.0-dev
+\## v0.7.0-dev
 
 
 
@@ -16,7 +16,11 @@ Added
 
 \* WorkingMemory
 
-\* WorkingMemory unit tests
+\* Unit tests
+
+
+
+\---
 
 
 
@@ -30,7 +34,11 @@ Added
 
 \* MemoryRegistry
 
-\* MemoryRegistry unit tests
+\* Unit tests
+
+
+
+\---
 
 
 
@@ -44,7 +52,45 @@ Added
 
 \* MemoryManager
 
-\* MemoryManager unit tests
+\* Unit tests
+
+
+
+\---
+
+
+
+\### JAOS-M-0021
+
+
+
+Added
+
+
+
+\* ExecutiveBrain ↔ Memory integration
+
+
+
+\---
+
+
+
+\### JAOS-M-0022
+
+
+
+Added
+
+
+
+\* End-to-End Memory Integration Tests
+
+\* Executive Pipeline Memory Validation
+
+
+
+\---
 
 
 
@@ -52,7 +98,7 @@ Status
 
 
 
-Memory Foundation completed.
+✅ Phase 2 (Memory Foundation) completed.
 
 
 
