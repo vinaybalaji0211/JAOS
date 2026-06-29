@@ -1,7 +1,7 @@
 import pytest
 
-from executive_brain.ai.ai_provider_interface import AIProviderInterface
-from executive_brain.ai.ai_provider_models import (
+from executive_brain.ai.providers.ai_provider_interface import AIProviderInterface
+from executive_brain.ai.providers.ai_provider_models import (
     AIProviderRequest,
     AIProviderResponse,
     AIProviderStatus,
@@ -37,7 +37,6 @@ def test_provider_health():
 
 def test_provider_generate():
     provider = DummyProvider()
-
     request = AIProviderRequest(prompt="Hello JAOS")
 
     response = provider.generate(request)

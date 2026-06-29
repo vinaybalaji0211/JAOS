@@ -1,6 +1,4 @@
-import pytest
-
-from executive_brain.ai.ai_provider_models import (
+from executive_brain.ai.providers.ai_provider_models import (
     AIProviderRequest,
     AIProviderResponse,
     AIProviderStatus,
