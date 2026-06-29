@@ -6,13 +6,11 @@ from executive_brain.memory.working_memory import WorkingMemory
 
 def test_registry_initializes():
     registry = MemoryRegistry()
-
     assert registry.count() == 0
 
 
 def test_add_memory():
     registry = MemoryRegistry()
-
     memory = WorkingMemory()
 
     registry.add_memory(memory)
@@ -22,7 +20,6 @@ def test_add_memory():
 
 def test_get_memory():
     registry = MemoryRegistry()
-
     memory = WorkingMemory()
 
     registry.add_memory(memory)
@@ -32,13 +29,10 @@ def test_get_memory():
 
 def test_update_memory():
     registry = MemoryRegistry()
-
     memory = WorkingMemory()
 
     registry.add_memory(memory)
-
     memory.set_user_request("Open Chrome")
-
     registry.update_memory(memory)
 
     assert registry.get_memory().current_user_request == "Open Chrome"
@@ -46,13 +40,12 @@ def test_update_memory():
 
 def test_remove_memory():
     registry = MemoryRegistry()
-
     memory = WorkingMemory()
 
     registry.add_memory(memory)
+    removed = registry.remove_memory()
 
-    registry.remove_memory()
-
+    assert removed == memory
     assert registry.count() == 0
 
 
