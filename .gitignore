@@ -1,10 +1,41 @@
+# Virtual environments
+jaos/
+.venv/
+venv/
+env/
+
+# Python cache
 __pycache__/
-*.pyc
+*.py[cod]
+*.pyo
+*.pyd
+
+# Pytest
 .pytest_cache/
-jarvis/
-jarvis os/
+
+# Logs
+*.log
+
+# Temporary audit/inventory files
+audit_*.txt
+foundation_*.txt
 repo_tree.txt
-executive_brain_files.txt
-tests_files.txt
-markdown_files.txt
+*_files.txt
 tools_structure.txt
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Environment variables
+.env
+.env.*
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
