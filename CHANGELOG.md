@@ -1,62 +1,98 @@
-\# Phase 3 — AI Layer
+\# JAOS Changelog
 
 
 
-\## Added
+\## v0.4.0-alpha
 
 
 
-\* AI Provider Interface
-
-\* AI Provider Models
-
-\* AI Provider Exceptions
-
-\* AI Provider Manager
-
-\* Prompt Models
-
-\* Prompt Engine
-
-\* Centralized AI Configuration
-
-\* Ollama Provider
-
-\* OpenAI Provider
-
-\* Multi-LLM Router
+\### Added
 
 
 
-\## Architecture
+\- Platform Runtime
+
+\- Service Container
+
+\- Runtime Context
+
+\- Event Bus
+
+\- BasePlatformService
+
+\- Boot Manager
+
+\- Runtime Validator
+
+\- Startup Validator
+
+\- Dependency Validator
+
+\- Runtime Health Certification
+
+\- Executive Pipeline
+
+\- Runtime-managed subsystem architecture
 
 
 
-\* Refactored AI package into:
+\### Integrated
 
 
 
-&#x20; \* providers/
+\- Executive Brain
 
-&#x20; \* prompt/
+\- Memory
 
-&#x20; \* routing/
+\- Workflow
+
+\- Security
+
+\- Knowledge
+
+\- Infrastructure
+
+\- Communication
+
+\- PC Control
+
+\- Dashboard
+
+\- Development
+
+\- Engineering
+
+\- System Services
 
 
 
-\## Testing
+\### Architecture
 
 
 
-\* Expanded test suite from 138 to \*\*204 passing tests\*\*
+\- Unified Runtime
+
+\- Unified Boot Sequence
+
+\- Unified Execution Pipeline
+
+\- Dependency Injection
+
+\- Event-driven Platform
 
 
 
-\## Release
+\### Testing
 
 
 
-\*\*v0.1.0-alpha\*\*
+\- Full regression suite passing
 
 
+
+\### Status
+
+
+
+Phase 4.12 nearing completion
 

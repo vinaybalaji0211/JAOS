@@ -10,12 +10,15 @@ Responsibilities:
     - Maintain working memory
     - Report executive health
     - Provide a single entry point for orchestration
+    - Integrate with the JAOS Platform Runtime
 
 Non-Responsibilities:
     - AI reasoning
     - Long-term memory management
     - Real tool execution
 """
+
+from jaos_platform.platform_runtime import PlatformRuntime
 
 from executive_brain.managers.registry_manager import RegistryManager
 from executive_brain.managers.planning_manager import PlanningManager
@@ -31,9 +34,17 @@ class ExecutiveBrain:
 
     VERSION = "0.5.0-dev"
 
-    def __init__(self):
+    def __init__(self, runtime: PlatformRuntime | None = None):
+        self.runtime = runtime or PlatformRuntime()
+
         self.registry_manager = RegistryManager()
-        self.memory_manager = MemoryManager()
+
+        if self.runtime.container.is_registered("memory_manager"):
+            self.memory_manager = self.runtime.container.resolve(
+                "memory_manager"
+            )
+        else:
+            self.memory_manager = MemoryManager(self.runtime)
 
         self.planning_manager = PlanningManager(self.registry_manager)
         self.decision_manager = DecisionManager(self.registry_manager)
@@ -43,6 +54,13 @@ class ExecutiveBrain:
 
         self.status = "INITIALIZED"
 
+        self.runtime.container.register("executive_brain", self)
+        self.runtime.context.set("executive_brain_status", self.status)
+        self.runtime.events.publish(
+            "executive_brain_initialized",
+            {"status": self.status},
+        )
+
     def initialize(self):
         self.planning_manager.initialize()
         self.decision_manager.initialize()
@@ -51,6 +69,13 @@ class ExecutiveBrain:
         self.result_manager.initialize()
 
         self.status = "READY"
+
+        self.runtime.context.set("executive_brain_status", self.status)
+        self.runtime.events.publish(
+            "executive_brain_ready",
+            {"status": self.status},
+        )
+
         return True
 
     def get_status(self):

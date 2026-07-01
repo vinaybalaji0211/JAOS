@@ -1,21 +1,13 @@
 from logs.logger import logger
-from jaos_platform.platform_runtime import PlatformRuntime
 
 
 class JAOSKernel:
 
     def __init__(self):
 
-        self.runtime = PlatformRuntime()
         self.platforms = {}
 
         self.status = "INITIALIZED"
-
-        self.register_platform(
-            "platform_runtime",
-            self.runtime,
-            status="ACTIVE",
-        )
 
     def register_platform(
             self,
@@ -35,8 +27,6 @@ class JAOSKernel:
     def start(self):
 
         self.status = "ONLINE"
-        self.runtime.context.set("kernel_status", self.status)
-        self.runtime.events.publish("kernel_started", {"status": self.status})
 
         logger.info(
             "JAOS Kernel started."
