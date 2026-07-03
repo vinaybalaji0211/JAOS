@@ -4,7 +4,7 @@ from jaos.cli.shell import JAOSShell
 class JAOSApplication:
     def boot(self) -> None:
         print("=" * 40)
-        print("JAOS v0.6.0-alpha")
+        print("JAOS v0.7.0-alpha")
         print("Jarvis Artificial Operating System")
         print("=" * 40)
         print()
