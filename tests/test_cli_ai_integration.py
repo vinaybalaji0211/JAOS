@@ -20,9 +20,12 @@ def test_status_ai_command(capsys):
     output = capsys.readouterr().out
 
     assert should_continue is True
-    assert "AI Platform Status" in output
+    assert "AI Platform" in output
+    assert "Healthy: True" in output
+    assert "Message: AI Platform is online." in output
     assert "Provider Count: 1" in output
     assert "Default Provider: mock" in output
+    assert "- mock" in output
 
 
 def test_ai_prompt_command(capsys):
