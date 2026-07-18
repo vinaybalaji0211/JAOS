@@ -8,6 +8,10 @@ from jaos.memory.models.memory_query import MemoryQuery
 from jaos.memory.models.memory_record import MemoryRecord
 from jaos.memory.models.memory_result import MemoryResult
 from jaos.memory.storage.memory_store import MemoryStore
+from jaos.memory.providers.in_memory_transaction import (
+    InMemoryTransaction,
+)
+from jaos.memory.storage.memory_transaction import MemoryTransaction
 
 
 class InMemoryStore(MemoryStore):
@@ -186,6 +190,11 @@ class InMemoryStore(MemoryStore):
             deleted_count = len(self._records)
             self._records.clear()
             return deleted_count
+    def begin_transaction(self) -> MemoryTransaction:
+        """
+        Create a new isolated transaction for this store.
+        """
+        return InMemoryTransaction(self)
 
     @staticmethod
     def _matches_query(

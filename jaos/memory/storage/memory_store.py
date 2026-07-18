@@ -6,6 +6,7 @@ from jaos.memory.models.memory_filter import MemoryFilter
 from jaos.memory.models.memory_query import MemoryQuery
 from jaos.memory.models.memory_record import MemoryRecord
 from jaos.memory.models.memory_result import MemoryResult
+from jaos.memory.storage.memory_transaction import MemoryTransaction
 
 
 class MemoryStore(ABC):
@@ -73,4 +74,9 @@ class MemoryStore(ABC):
         Delete all stored memories.
 
         Returns the number of deleted records.
+        """
+    @abstractmethod
+    def begin_transaction(self) -> MemoryTransaction:
+        """
+        Create a new transaction for atomic memory write operations.
         """
