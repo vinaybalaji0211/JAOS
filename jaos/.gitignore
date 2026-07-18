@@ -1,0 +1,3 @@
+# Python-generated files inside the JAOS source package
+__pycache__/
+*.py[cod]
