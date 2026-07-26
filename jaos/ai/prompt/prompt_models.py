@@ -9,8 +9,10 @@ class PromptSectionType(str, Enum):
     CONTEXT = "context"
     MEMORY = "memory"
     TOOLS = "tools"
+    TOOL_RESULT = "tool_result"
     USER = "user"
     INSTRUCTION = "instruction"
+    OUTPUT_SCHEMA = "output_schema"
 
 
 @dataclass(frozen=True)
@@ -68,7 +70,9 @@ class CompiledPrompt:
             raise ValueError("Compiled prompt text cannot be empty")
 
         if self.section_count <= 0:
-            raise ValueError("Compiled prompt section_count must be greater than zero")
+            raise ValueError(
+                "Compiled prompt section_count must be greater than zero"
+            )
 
         object.__setattr__(self, "text", text)
         object.__setattr__(self, "metadata", dict(self.metadata or {}))

@@ -1,6 +1,6 @@
 # JAOS Phase 8 Milestones
 
-Version: 1.0
+Version: 1.1
 Status: ACTIVE
 Phase: Phase 8 — AI Intelligence Platform
 Release Target: v0.10.0-alpha
@@ -40,7 +40,7 @@ concrete AI or memory provider.
 
 ## 3. MS-0025A — Intelligence Domain Models and Contracts
 
-Status: ACTIVE
+Status: COMPLETED
 
 ### Objective
 
@@ -82,7 +82,7 @@ by every Phase 8 component.
 
 ## 4. MS-0025B — Context Management Foundation
 
-Status: PLANNED
+Status: COMPLETED
 
 ### Objective
 
@@ -116,7 +116,7 @@ Build deterministic, identity-aware, permission-aware context construction.
 
 ## 5. MS-0025C — Prompt Composition Foundation
 
-Status: PLANNED
+Status: COMPLETED
 
 ### Objective
 
@@ -149,7 +149,7 @@ requests and validated context bundles.
 
 ## 6. MS-0025D — Conversation Engine
 
-Status: PLANNED
+Status: COMPLETED
 
 ### Objective
 
@@ -179,11 +179,22 @@ Manager, Prompt Composer, AI Platform, and Memory Platform boundaries.
 - Unit and integration tests pass.
 - Full regression suite passes.
 
+### Completion Evidence
+
+- Conversation Engine implementation is complete.
+- Conversation orchestration and lifecycle behavior are covered by tests.
+- AI Platform and Memory Platform boundaries were validated.
+- Provider-independent behavior was preserved.
+- The complete regression suite passed with `1584 passed`.
+- `git diff --check` completed without errors.
+- Architecture review found no blocking boundary violation.
+- Technical-debt review found no blocker for MS-0025E.
+
 ---
 
 ## 7. MS-0025E — Reasoning and Planning Intelligence
 
-Status: PLANNED
+Status: ACTIVE
 
 ### Objective
 
@@ -326,11 +337,12 @@ Stabilize, audit, certify, and prepare the Phase 8 release.
 
 The current active milestone is:
 
-`MS-0025A — Intelligence Domain Models and Contracts`
+`MS-0025E — Reasoning and Planning Intelligence`
 
-The next engineering action is to audit existing model, enum, protocol, error,
-serialization, and package-export conventions before creating the
-`jaos/intelligence/` foundation.
+The next engineering action is to audit the existing reasoning and planning
+models, intelligence component conventions, Planning Manager interfaces,
+Decision Manager boundaries, and Execution Manager boundaries before
+implementing the Reasoning Engine and Planning Intelligence components.
 
 ---
 
