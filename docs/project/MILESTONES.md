@@ -1,446 +1,538 @@
-# \# Milestones
+# JAOS Milestones
+
+Version: 3.0
+Status: ACTIVE
+Owner: Vinay B
+Maintainer: JAOS Engineering
+Current Release: v0.9.0-alpha
+Development Target: v0.10.0-alpha
+Current Phase: Phase 8 — AI Intelligence Platform
+Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 
-# 
+---
 
-# Version: 2.0
+## 1. Purpose
 
-# Status: ACTIVE
+This document records the major engineering milestones achieved and planned
+throughout the development of the Jarvis Artificial Operating System.
 
-# Owner: Vinay B
+A milestone represents a stable engineering checkpoint, not merely the
+completion of code.
 
-# Maintainer: JAOS Engineering
+---
 
-# 
+## 2. Milestone Governance
 
-# \---
+The following rules apply:
 
-# 
+- `docs/project/ROADMAP.md` defines the authoritative 20-phase order and names.
+- This document records achieved, active, and planned engineering checkpoints.
+- Existing release and implementation history must be preserved.
+- Future milestone identifiers must not be invented before their milestone plans
+  are approved.
+- Detailed Phase 8 milestone authority is maintained in
+  `docs/project/PHASE8_MILESTONES.md`.
+- Every phase must complete the permanent engineering lifecycle before it is
+  certified or released.
+- Repository documentation must be synchronized after milestone changes.
 
-# \# JAOS Development Timeline
+---
 
-# 
+## 3. Phase Status Summary
 
-# This document records the major engineering milestones achieved throughout the development of JAOS.
+| Phase | Locked phase name | Status |
+|---|---|---|
+| 1 | Engineering Foundation | Completed |
+| 2 | Core Runtime & Kernel Foundation | Completed |
+| 3 | Tool Platform | Completed |
+| 4 | Executive Platform | Completed |
+| 5 | Executive Integration & Stabilization | Completed |
+| 6 | AI Platform | Completed — v0.8.0-alpha |
+| 7 | Memory Platform | Completed — v0.9.0-alpha |
+| 8 | AI Intelligence Platform | Active — temporarily paused for repository stabilization |
+| 9 | Workflow & Automation Platform | Planned |
+| 10 | Desktop & Operating System Integration | Planned |
+| 11 | Voice & Audio Intelligence | Planned |
+| 12 | Vision & Multimodal Intelligence | Planned |
+| 13 | Multi-Agent Intelligence Platform | Planned |
+| 14 | Robotics & Physical AI Platform | Planned |
+| 15 | IoT & Device Ecosystem Platform | Planned |
+| 16 | Cloud & Distributed Intelligence Platform | Planned |
+| 17 | Security, Privacy & Trust Platform | Planned |
+| 18 | Monitoring, Observability & Adaptive Resource Management | Planned |
+| 19 | JAOS Experience Platform | Planned |
+| 20 | Production Certification & Public Release (v1.0) | Planned |
 
-# 
+---
 
-# Each milestone represents a stable engineering checkpoint rather than simply completed code.
+## 4. Completed Milestones
 
-# 
+### Phase 1 — Engineering Foundation
 
-# \---
+Status: COMPLETED
 
-# 
+Major achievements:
 
-# \# Phase 1 — Core Runtime
+- Repository and package structure
+- Engineering standards
+- Testing foundation
+- Project conventions
+- Documentation practices
+- Development workflow
+- Release and versioning discipline
 
-# 
+Outcome:
 
-# Status: ✅ Completed
+JAOS established a disciplined and testable engineering foundation.
 
-# 
+---
 
-# Major Deliverables
+### Phase 2 — Core Runtime & Kernel Foundation
 
-# 
+Status: COMPLETED
 
-# \- Runtime lifecycle
+Major achievements:
 
-# \- Boot sequence
+- Runtime lifecycle
+- Boot and shutdown sequence
+- Service initialization
+- Configuration management
+- Runtime registries
+- Runtime health monitoring
+- Core platform coordination
 
-# \- Service initialization
+Outcome:
 
-# \- Runtime health monitoring
+JAOS established a stable runtime and kernel foundation for higher-level
+platforms.
 
-# \- Core runtime architecture
+---
 
-# 
+### Phase 3 — Tool Platform
 
-# \---
+Status: COMPLETED
 
-# 
+Major achievements:
 
-# \# Phase 2 — Engineering Foundation
+- Tool contracts
+- Tool Registry
+- Tool Manager
+- Tool discovery
+- Tool Execution Engine
+- Tool permissions
+- Tool approvals
+- Tool execution audit
+- Core Tool Ecosystem
 
-# 
+Outcome:
 
-# Status: ✅ Completed
+JAOS established controlled, permission-aware, and auditable tool execution.
 
-# 
+---
 
-# Major Deliverables
+### Phase 4 — Executive Platform
 
-# 
+Status: COMPLETED
 
-# \- Engineering standards
+Major achievements:
 
-# \- Testing framework
+- Executive architecture
+- Intent models
+- Executive Controller
+- Planning foundations
+- Execution coordination
+- Policy-controlled authority
+- Executive diagnostics
+- Executive telemetry
 
-# \- Repository structure
+Outcome:
 
-# \- Project conventions
+JAOS established the Executive Platform responsible for coordinating controlled
+system actions.
 
-# 
+---
 
-# \---
+### Phase 5 — Executive Integration & Stabilization
 
-# 
+Status: COMPLETED
 
-# \# Phase 3 — Tool Platform
+Major achievements:
 
-# 
+- Runtime and Executive integration
+- Executive and Tool Platform integration
+- End-to-end execution pipelines
+- Failure handling
+- Integration testing
+- Regression testing
+- Architecture audit
+- Runtime certification
 
-# Status: ✅ Completed
+Outcome:
 
-# 
+The Executive Platform became integrated with the JAOS runtime and Tool
+Platform through certified execution boundaries.
 
-# Major Deliverables
+---
 
-# 
+### DG-1 — Documentation & Engineering Governance
 
-# \- Tool Registry
+Status: COMPLETED
 
-# \- Tool Manager
+Milestone type: Cross-phase governance milestone
 
-# \- Tool Execution Engine
+Major achievements:
 
-# \- Tool Permissions
+- Engineering Constitution
+- Documentation Platform
+- Bootstrap Platform
+- Continuity Framework
+- Architecture Governance
+- Knowledge Platform foundations
+- JAOS Manifest
+- Living statistics
+- Documentation generation foundations
 
-# \- Tool Approval
+Outcome:
 
-# \- Tool Audit
+The Git repository became the permanent source of truth for JAOS implementation
+and engineering history.
 
-# \- Core Tool Ecosystem
+---
 
-# 
+### Phase 6 — AI Platform
 
-# \---
+Status: COMPLETED
+Release: v0.8.0-alpha
 
-# 
+Major achievements:
 
-# \# Phase 4 — Executive Foundation
+- AI Platform composition
+- AI Manager facade
+- Provider abstraction
+- Provider Registry
+- Provider Manager
+- Provider health management
+- Provider routing
+- Prompt Platform
+- Context Platform
+- Response Platform
+- Executive AI Gateway
+- AI Reasoning Service
+- Executive and AI integration
+- AI diagnostics
+- AI telemetry
+- Provider profiles
+- Secret management
+- Provider operational status
 
-# 
+Engineering certification:
 
-# Status: ✅ Completed
+- Architecture Audit — PASS
+- Code Quality Audit — PASS
+- Dependency Audit — PASS
+- Test and Coverage Audit — PASS
+- Runtime Certification — PASS
 
-# 
+Outcome:
 
-# Major Deliverables
+The AI Platform became a certified, provider-independent Alpha foundation for
+future intelligent capabilities.
 
-# 
+---
 
-# \- Executive architecture
+### Phase 7 — Memory Platform
 
-# \- Intent model
+Status: COMPLETED
+Release: v0.9.0-alpha
 
-# \- Planning foundation
+Major achievements:
 
-# \- Execution model
+- Canonical memory models and contracts
+- Memory identity
+- Memory metadata
+- Memory lifecycle
+- Memory statistics
+- Memory query contracts
+- SQLite backend
+- PostgreSQL backend
+- Provider Registry
+- Provider Factory
+- Runtime provider selection
+- Provider capabilities
+- Transaction layer
+- Health checks
+- Semantic retrieval foundations
+- Hybrid local and cloud memory architecture
+- Cloud Memory Platform planning
+- Secure retention, backup, recovery, and synchronization foundations
 
-# 
+Engineering certification:
 
-# \---
+- Architecture Audit — PASS
+- Code Quality Audit — PASS
+- Dependency Audit — PASS
+- Test and Coverage Audit — PASS
+- Runtime Certification — PASS
+- Phase Certification — PASS
 
-# 
+Outcome:
 
-# \# Phase 5 — Executive Platform
+The Memory Platform became a certified provider-independent foundation for
+persistent, structured, and future semantic JAOS memory.
 
-# 
+Future Memory Platform production work must preserve the certified
+v0.9.0-alpha contracts.
 
-# Status: ✅ Completed
+---
 
-# 
+## 5. Current Milestone
 
-# Major Deliverables
+### Phase 8 — AI Intelligence Platform
 
-# 
+Status: ACTIVE
+Execution state: Temporarily paused for repository stabilization
+Release target: v0.10.0-alpha
+Milestone family: MS-0025
+Current milestone: MS-0025E — Reasoning and Planning Intelligence
 
-# \- Executive Controller
+Phase 8 milestone status:
 
-# \- Planner
+| Milestone | Name | Status |
+|---|---|---|
+| MS-0025A | Intelligence Domain Models and Contracts | COMPLETED |
+| MS-0025B | Context Management Foundation | COMPLETED |
+| MS-0025C | Prompt Composition Foundation | COMPLETED |
+| MS-0025D | Conversation Engine | COMPLETED |
+| MS-0025E | Reasoning and Planning Intelligence | ACTIVE — execution temporarily paused |
+| MS-0025G | Agent and Execution Proposal Foundations | PLANNED |
+| MS-0025X | AI Intelligence Platform Composition | PLANNED |
+| MS-0025F | AI Intelligence End-to-End Certification | PLANNED |
 
-# \- Execution Coordinator
+Current outcome:
 
-# \- Diagnostics
+The domain contracts, context foundation, prompt composition foundation, and
+Conversation Engine are complete.
 
-# \- Telemetry
+Reasoning and Planning Intelligence remains the active milestone. Implementation
+will resume after repository stabilization and documentation synchronization
+are complete.
 
-# \- Executive runtime integration
+Phase 8 must preserve the authority boundaries of the Runtime, Executive, Tool,
+Permission, AI Provider, and Memory Platforms.
 
-# 
+Phase 8 certification requires:
 
-# \---
+- Completion of every MS-0025 milestone
+- Unit and integration testing
+- Runtime and shell verification
+- Stabilization sprint
+- Architecture audit
+- Code-quality audit
+- Dependency audit
+- Test and coverage audit
+- Technical-debt review
+- Security review
+- Performance review
+- Documentation synchronization
+- Phase certification
+- Release of v0.10.0-alpha
 
-# 
+---
 
-# \# DG-1 — Documentation \& Engineering Governance
+## 6. Planned Milestones
 
-# 
+Milestone identifiers for Phases 9–20 have not yet been assigned. They will be
+created only when each phase enters approved engineering planning.
 
-# Status: ✅ Completed
+### Phase 9 — Workflow & Automation Platform
 
-# 
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# Major Deliverables
+Planned outcome:
 
-# 
+A native event-driven, scheduled, conditional, approval-aware, and persistent
+workflow platform with optional external automation connectors.
 
-# \- Engineering Constitution
+---
 
-# \- Documentation Platform
+### Phase 10 — Desktop & Operating System Integration
 
-# \- Bootstrap Platform
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- Continuity Framework
+Planned outcome:
 
-# \- Architecture Governance
+Safe and permission-controlled application, file, browser, window, notification,
+and operating-system automation.
 
-# \- Knowledge Platform
+---
 
-# \- JAOS Manifest
+### Phase 11 — Voice & Audio Intelligence
 
-# \- Living Statistics
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- Documentation Generator
+Planned outcome:
 
-# 
+Wake-word activation, speech recognition, speech generation, continuous voice
+conversation, voice identity, and audio-event understanding.
 
-# Outcome
+---
 
-# 
+### Phase 12 — Vision & Multimodal Intelligence
 
-# The repository became the permanent source of truth for JAOS.
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# 
+Planned outcome:
 
-# Future development is based on repository documentation rather than conversation history.
+Permission-controlled screen, camera, image, video, OCR, object-detection, and
+multimodal reasoning capabilities.
 
-# 
+---
 
-# \---
+### Phase 13 — Multi-Agent Intelligence Platform
 
-# 
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \# Phase 6 — AI Platform
+Planned outcome:
 
-# 
+Bounded and auditable specialized-agent registration, delegation,
+collaboration, coordination, and shared-context capabilities.
 
-# Status: ✅ Completed
+---
 
-# 
+### Phase 14 — Robotics & Physical AI Platform
 
-# Release
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# 
+Planned outcome:
 
-# v0.8.0-alpha
+Safe integration with robotics controllers, sensors, actuators, embedded
+systems, simulation, motion planning, and physical-world execution.
 
-# 
+---
 
-# Major Deliverables
+### Phase 15 — IoT & Device Ecosystem Platform
 
-# 
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- AI Platform Composition
+Planned outcome:
 
-# \- AIManager Facade
+Secure discovery, registration, permission control, protocol adaptation, edge
+execution, and lifecycle management for connected devices.
 
-# \- Provider Abstraction
+---
 
-# \- Provider Registry
+### Phase 16 — Cloud & Distributed Intelligence Platform
 
-# \- Provider Manager
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- Provider Health
+Planned outcome:
 
-# \- Provider Routing
+Provider-independent hybrid local, cloud, and remote compute, storage,
+synchronization, distributed execution, and cost-aware resource optimization.
 
-# \- Prompt Platform
+---
 
-# \- Context Platform
+### Phase 17 — Security, Privacy & Trust Platform
 
-# \- Response Platform
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- Executive AI Gateway
+Planned outcome:
 
-# \- AI Reasoning Service
+System-wide identity, authentication, permissions, encryption, secrets,
+sandboxing, privacy, device trust, auditing, threat detection, and recovery
+controls.
 
-# \- Executive ↔ AI Integration
+---
 
-# \- AI Diagnostics
+### Phase 18 — Monitoring, Observability & Adaptive Resource Management
 
-# \- AI Telemetry
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- Provider Profiles
+Planned outcome:
 
-# \- Secret Manager
+Complete system monitoring, diagnostics, hardware discovery, adaptive execution
+placement, performance optimization, budget enforcement, anomaly detection, and
+automatic fallback.
 
-# \- Provider Operational Status
+Hardware differences must change execution strategy rather than arbitrarily
+remove core JAOS capabilities.
 
-# 
+---
 
-# Engineering Certification
+### Phase 19 — JAOS Experience Platform
 
-# 
+Status: PLANNED
+Milestone identifier: Not assigned
 
-# \- Architecture Audit — PASS
+Planned outcome:
 
-# \- Code Quality Audit — PASS
+A complete and consistent JAOS experience across the HUD, desktop interface,
+assistant window, control center, settings, permissions, monitoring,
+explainability, onboarding, and supported devices.
 
-# \- Dependency Audit — PASS
+---
 
-# \- Test \& Coverage Audit — PASS
+### Phase 20 — Production Certification & Public Release (v1.0)
 
-# \- Runtime Certification — PASS
+Status: PLANNED
+Milestone identifier: Not assigned
+Release target: JAOS v1.0
 
-# 
+Planned outcome:
 
-# Outcome
+Complete testing, security auditing, performance certification, packaging,
+installation, updating, documentation, recovery validation, production
+readiness, and public release.
 
-# 
+JAOS v1.0 must not be publicly released until every production certification
+gate passes.
 
-# The AI Platform became a certified production-quality Alpha foundation for future intelligent capabilities.
+---
 
-# 
+## 7. Release Checkpoints
 
-# \---
+| Release | Phase | Status |
+|---|---|---|
+| v0.8.0-alpha | Phase 6 — AI Platform | RELEASED |
+| v0.9.0-alpha | Phase 7 — Memory Platform | RELEASED |
+| v0.10.0-alpha | Phase 8 — AI Intelligence Platform | DEVELOPMENT TARGET |
+| v1.0 | Phase 20 — Production Certification & Public Release | LONG-TERM TARGET |
 
-# 
+---
 
-# \# Current Milestone
+## 8. Permanent Engineering Lifecycle
 
-# 
+Every phase must complete:
 
-# \## Phase 7 — Memory Platform
+1. Requirements
+2. Architecture design
+3. Implementation
+4. Unit testing
+5. Integration testing
+6. Runtime verification
+7. JAOS Shell testing where applicable
+8. Stabilization sprint
+9. Architecture audit
+10. Code-quality audit
+11. Dependency audit
+12. Test audit
+13. Technical-debt review
+14. Security review
+15. Performance review
+16. Documentation synchronization
+17. Phase certification
+18. Git commit, tag, and push
+19. Next-phase planning
 
-# 
-
-# Status: 🚧 Ready to Start
-
-# 
-
-# Objectives
-
-# 
-
-# \- Working Memory
-
-# \- Short-Term Memory
-
-# \- Long-Term Memory
-
-# \- Episodic Memory
-
-# \- Semantic Memory
-
-# \- Memory Retrieval
-
-# \- Memory Ranking
-
-# \- Memory Lifecycle
-
-# \- Memory-backed Prompting
-
-# 
-
-# \---
-
-# 
-
-# \# Future Milestones
-
-# 
-
-# \## Phase 8
-
-# 
-
-# Intelligent Planning Platform
-
-# 
-
-# \---
-
-# 
-
-# \## Phase 9
-
-# 
-
-# Desktop Integration Platform
-
-# 
-
-# \---
-
-# 
-
-# \## Phase 10
-
-# 
-
-# Voice Platform
-
-# 
-
-# \---
-
-# 
-
-# \## Phase 11
-
-# 
-
-# Vision Platform
-
-# 
-
-# \---
-
-# 
-
-# \## Phase 12
-
-# 
-
-# Autonomous Multi-Agent Platform
-
-# 
-
-# \---
-
-# 
-
-# \## Long-Term Milestone
-
-# 
-
-# JAOS v1.0
-
-# 
-
-# Target
-
-# 
-
-# A production-ready intelligent AI Operating System with:
-
-# 
-
-# \- Persistent memory
-
-# \- Multi-agent reasoning
-
-# \- Voice
-
-# \- Vision
-
-# \- Desktop automation
-
-# \- Robotics integration
-
-# \- Self-improvement
-
-# \- Complete engineering governance
-
+No phase is complete until the lifecycle has been executed and documented
+successfully.

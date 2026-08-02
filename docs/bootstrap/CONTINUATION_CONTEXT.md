@@ -1,578 +1,1475 @@
-# \# CONTINUATION CONTEXT
+# Continuation Context
 
-# 
+Version: 4.0
 
-# Version: 3.0
+Status: ACTIVE
 
-# 
+Owner: Vinay B
 
-# Status: ACTIVE
+Maintainer: JAOS Engineering
 
-# 
+Last Synchronized: 2026-07-30
 
-# Owner: Vinay B
+Document Role: Authoritative Engineering Continuation Record
 
-# 
+Roadmap Scope: 20 Phases
 
-# Maintainer: JAOS Engineering
+Certified Release: v0.9.0-alpha
 
-# 
+Development Target: v0.10.0-alpha
 
-# \--------------------------------------------------
+Current Phase: Phase 8 — AI Intelligence Platform
 
-# CURRENT CHECKPOINT
+Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 
-# \--------------------------------------------------
+Execution State: Temporarily paused for repository stabilization
 
-# 
+Current Stabilization Activity: Step 4 — Runtime Architecture Audit
 
-# Phase 7 — Memory Platform
+---
 
-# 
+## 1. Purpose
 
-# Status:
+This document records the exact engineering continuation point for JAOS.
 
-# 
+It allows a new human or AI engineering session to determine:
 
-# ✅ IMPLEMENTATION COMPLETE
+- What has been completed
 
-# 
+- What has been certified and released
 
-# ✅ ENGINEERING CERTIFIED
+- What is currently implemented
 
-# 
+- What remains incomplete
 
-# 🚧 DOCUMENTATION \& RELEASE IN PROGRESS
+- Why active implementation is paused
 
-# 
+- Which stabilization activity is in progress
 
-# Release Target:
+- Which architecture boundaries must be preserved
 
-# 
+- Which action must be performed next
 
-# v0.9.0-alpha
+- Where Phase 8 resumes after stabilization
 
-# 
+This document must describe the real repository state.
 
-# \--------------------------------------------------
+It must not depend on conversational history to explain the current checkpoint.
 
-# CURRENT PRODUCT PHASE
+---
 
-# \--------------------------------------------------
+## 2. Repository Authority
 
-# 
+The Git repository is the permanent engineering source of truth for JAOS.
 
-# Phase 7 — Memory Platform
+Repository documentation takes precedence over conversational history unless the
 
-# 
+Founder explicitly approves a new decision and that decision is synchronized
 
-# \--------------------------------------------------
+into the repository.
 
-# CURRENT SPRINT
+The locked master roadmap is maintained in:
 
-# \--------------------------------------------------
+`docs/project/ROADMAP.md`
 
-# 
+The roadmap contains 20 phases.
 
-# Phase 7 Documentation, Certification \& Release
+Its approved numbering, phase boundaries, sequencing, and long-term structure
 
-# 
+must not be redesigned or renumbered without explicit Founder approval and a
 
-# \--------------------------------------------------
+documented engineering decision.
 
-# LAST COMPLETED MILESTONE
+If repository documentation, implementation, tests, Git history, or
 
-# \--------------------------------------------------
+conversational context disagree, development must pause until the discrepancy is
 
-# 
+audited.
 
-# MS-0024F — Memory Platform End-to-End Certification
+Completed and certified work must not be repeated or discarded without an
 
-# 
+approved reason.
 
-# Status:
+---
 
-# 
+## 3. Current Engineering Checkpoint
 
-# COMPLETED
+| Item | Current state |
 
-# 
+|---|---|
 
-# \--------------------------------------------------
+| Certified release | v0.9.0-alpha |
 
-# PHASE 7 SUMMARY
+| Development target | v0.10.0-alpha |
 
-# \--------------------------------------------------
+| Current phase | Phase 8 — AI Intelligence Platform |
 
-# 
+| Milestone family | MS-0025 |
 
-# The Memory Platform has been successfully implemented using a provider-independent architecture.
+| Active milestone | MS-0025E — Reasoning and Planning Intelligence |
 
-# 
+| Phase 8 execution | Temporarily paused |
 
-# Completed Components
+| Stabilization step | Step 4 of 9 |
 
-# 
+| Stabilization activity | Runtime Architecture Audit |
 
-# Core Memory
+| Repository health | HEALTHY |
 
-# 
+| Architecture health | STABLE |
 
-# \- Memory Models
+| Full regression certification | PENDING |
 
-# \- Identity System
+| Phase 8 release readiness | NOT YET CERTIFIED |
 
-# \- Metadata System
+Phase 7 — Memory Platform is complete, certified, released, tagged, and pushed
 
-# \- Statistics System
+as:
 
-# 
+`v0.9.0-alpha`
 
-# SQLite Backend
+Phase 8 implementation remains preserved.
 
-# 
+The Phase 8 pause is a controlled repository-stabilization checkpoint.
 
-# \- Schema
+It is not:
 
-# \- Serializer
+- A rollback
 
-# \- Transactions
+- A phase restart
 
-# \- Store
+- An implementation failure
 
-# \- Provider
+- A roadmap revision
 
-# 
+- Authorization to discard completed work
 
-# PostgreSQL Backend
+- Authorization to redesign approved architecture
 
-# 
+No new Phase 8 functionality may be added until repository stabilization is
 
-# \- Schema
+certified.
 
-# \- Serializer
+---
 
-# \- Transactions
+## 4. Certified Engineering Baseline
 
-# \- Store
+The current certified release is:
 
-# \- Provider
+`v0.9.0-alpha`
 
-# 
+That release represents the certified completion of Phase 7 — Memory Platform.
 
-# Memory Infrastructure
+The certified baseline includes the established JAOS platform foundations:
 
-# 
+- Runtime Platform
 
-# \- Provider Registry
+- Kernel and application composition
 
-# \- Provider Factory
+- Executive Platform
 
-# \- Provider Capabilities
+- Tool Platform
 
-# \- Health Checks
+- AI Platform
 
-# \- Runtime Provider Selection
+- Memory Platform
 
-# \- Transaction Layer
+- Provider abstractions
 
-# \- Serialization Layer
+- Registry and factory patterns
 
-# 
+- Permission-controlled execution boundaries
 
-# \--------------------------------------------------
+- Runtime lifecycle management
 
-# ENGINEERING CERTIFICATION
+- CLI and JAOS Shell foundations
 
-# \--------------------------------------------------
+- Engineering governance
 
-# 
+- Architecture documentation
 
-# Architecture Audit
+- Testing and certification workflows
 
-# 
+The Phase 7 release must remain recoverable and must not be rewritten as part of
 
-# PASS
+the current stabilization work.
 
-# 
+The current development target is:
 
-# Code Quality Audit
+`v0.10.0-alpha`
 
-# 
+That target belongs to Phase 8 — AI Intelligence Platform.
 
-# PASS
+---
 
-# 
+## 5. Phase 7 — Memory Platform Status
 
-# Dependency Audit
+Phase 7 is complete.
 
-# 
+Its certified scope includes:
 
-# PASS
+### Memory Contracts and Models
 
-# 
+- Memory identity
 
-# Test \& Coverage Audit
+- Memory types
 
-# 
+- Memory scopes
 
-# PASS
+- Memory records
 
-# 
+- Memory metadata
 
-# Runtime Certification
+- Memory lifecycle states
 
-# 
+- Memory queries
 
-# PASS
+- Memory statistics
 
-# 
+- Provider contracts
 
-# \--------------------------------------------------
+### SQLite Provider
 
-# LATEST VERIFIED STATE
+- Schema
 
-# \--------------------------------------------------
+- Serialization
 
-# 
+- Transactions
 
-# Latest Regression
+- Storage operations
 
-# 
+- Provider integration
 
-# 323 Passing Tests
+- Health verification
 
-# 
+### PostgreSQL Provider
 
-# Runtime
+- Schema
 
-# 
+- Serialization
 
-# Certified
+- Transactions
 
-# 
+- Storage operations
 
-# CLI
+- Provider integration
 
-# 
+- Health verification
 
-# Certified
+### Memory Infrastructure
 
-# 
+- Provider registry
 
-# Executive Platform
+- Provider factory
 
-# 
+- Provider capabilities
 
-# Certified
+- Provider selection
 
-# 
+- Health checks
 
-# AI Platform
+- Transaction abstraction
 
-# 
+- Serialization abstraction
 
-# Certified
+- Runtime integration
 
-# 
+- Provider-independent access
 
-# Memory Platform
+Higher-level JAOS components must communicate with the Memory Platform through
 
-# 
+approved contracts.
 
-# Certified
+They must not depend directly on SQLite, PostgreSQL, or any future concrete
 
-# 
+storage provider.
 
-# SQLite Provider
+SQLite and PostgreSQL remain interchangeable provider implementations behind
 
-# 
+the Memory Platform boundary.
 
-# Certified
+Phase 7 certification does not mean that all future Memory Platform production
 
-# 
+enhancements are finished.
 
-# PostgreSQL Provider
+Deferred production work remains scheduled after Phase 8 without invalidating
 
-# 
+the certified Phase 7 baseline.
 
-# Certified
+---
 
-# 
+## 6. Phase 8 — AI Intelligence Platform Status
 
-# Provider Registry
+Phase 8 is the active product phase.
 
-# 
+Release target:
 
-# Certified
+`v0.10.0-alpha`
 
-# 
+Milestone family:
 
-# Provider Factory
+`MS-0025`
 
-# 
+The authoritative Phase 8 milestone definitions are maintained in:
 
-# Certified
+`docs/project/PHASE8_MILESTONES.md`
 
-# 
+Current milestone status:
 
-# \--------------------------------------------------
+| Milestone | Current status |
 
-# CURRENT ARCHITECTURE
+|---|---|
 
-# \--------------------------------------------------
+| MS-0025A | COMPLETED |
 
-# 
+| MS-0025B | COMPLETED |
 
-# CLI
+| MS-0025C | COMPLETED |
 
-# 
+| MS-0025D | COMPLETED |
 
-# ↓
+| MS-0025E | ACTIVE — PAUSED FOR STABILIZATION |
 
-# 
+| MS-0025G | PENDING |
 
-# Executive Platform
+| MS-0025X | PENDING |
 
-# 
+| MS-0025F | PENDING CERTIFICATION |
 
-# ↓
+MS-0025E is:
 
-# 
+Reasoning and Planning Intelligence
 
-# Executive AI Gateway
+Phase 8 must resume from MS-0025E after stabilization certification.
 
-# 
+Previously completed Phase 8 work must not be restarted, discarded, or
 
-# ↓
+redesigned without an approved engineering decision.
 
-# 
+---
 
-# AI Platform
+## 7. Preserved Phase 8 Implementation
 
-# 
+The existing Phase 8 implementation must remain preserved throughout
 
-# ↓
+stabilization.
 
-# 
+Implemented or established areas include:
 
-# Memory Platform
+- Intelligence request models
 
-# 
+- Intelligence result models
 
-# ├── SQLite Provider
+- Intelligence identity models
 
-# 
+- Intelligence request types
 
-# ├── PostgreSQL Provider
+- Prompt models
 
-# 
+- Context-management foundations
 
-# ↓
+- Prompt-composition foundations
 
-# 
+- Conversation-engine foundations
 
-# Tool Platform
+- Conversation orchestration
 
-# 
+- Intelligence contracts
 
-# ↓
+- Intelligence component boundaries
 
-# 
+- Initial intelligence tests
 
-# Runtime Platform
+- Existing runtime-facing integration foundations
 
-# 
+Current in-progress scope includes:
 
-# \--------------------------------------------------
+- Reasoning contracts
 
-# IMPORTANT ARCHITECTURAL DECISIONS
+- Reasoning behavior
 
-# \--------------------------------------------------
+- Planning contracts
 
-# 
+- Planning behavior
 
-# The Memory Platform is provider-independent.
+- Reasoning and planning coordination
 
-# 
+- Test coverage for MS-0025E
 
-# Higher-level JAOS components communicate only with provider interfaces.
+Pending Phase 8 scope includes:
 
-# 
+- Agent and execution-proposal foundations
 
-# SQLite and PostgreSQL are interchangeable implementations.
+- AI Intelligence Platform composition
 
-# 
+- Runtime integration
 
-# Future storage providers must integrate through the Provider Registry and Provider Factory.
+- JAOS Shell integration
 
-# 
+- End-to-end testing
 
-# No higher-level component should directly depend on a specific storage backend.
+- Architecture and quality audits
 
-# 
+- Stabilization
 
-# \--------------------------------------------------
+- Documentation synchronization
 
-# CURRENT OBJECTIVE
+- Phase 8 certification
 
-# \--------------------------------------------------
+- `v0.10.0-alpha` release
 
-# 
+Stabilization work must inspect and validate the implementation without
 
-# Complete the remaining repository documentation.
+silently expanding its scope.
 
-# 
+---
 
-# Publish:
+## 8. Architecture Authority
 
-# 
+JAOS platform authority must remain preserved.
 
-# \- Architecture Audit
+### Runtime Platform
 
-# \- Technical Debt Review
+The Runtime Platform controls:
 
-# \- Architecture Decisions
+- Application lifecycle
 
-# \- Phase 7 Certification
+- Platform composition
 
-# 
+- Startup
 
-# Then:
+- Shutdown
 
-# 
+- Runtime health
 
-# \- Git Commit
+- Component initialization
 
-# \- Release Tag
+### Executive Platform
 
-# \- Push Release
+The Executive Platform remains the authority for:
 
-# 
+- System actions
 
-# \--------------------------------------------------
+- Task execution
 
-# NEXT DEVELOPMENT PHASE
+- Approval coordination
 
-# \--------------------------------------------------
+- Action governance
 
-# 
+- Execution outcomes
 
-# Phase 8 — AI Intelligence Layer
+### Tool Platform
 
-# 
+The Tool Platform remains the controlled boundary for:
 
-# Primary Objectives
+- Tool discovery
 
-# 
+- Tool registration
 
-# \- Conversation Engine
+- Tool invocation
 
-# \- Context Manager
+- Tool permissions
 
-# \- Reasoning Engine
+- Tool results
 
-# \- Planning Engine
+- Tool execution auditing
 
-# \- Multi-Step Task Execution
+### AI Platform
 
-# \- Agent Orchestration
+The AI Platform controls:
 
-# \- AI Context Management
+- AI provider access
 
-# \- Intelligent Prompt Composition
+- Provider registration
 
-# 
+- Provider selection
 
-# \--------------------------------------------------
+- Provider health
 
-# ENGINEERING RULES
+- AI request execution
 
-# \--------------------------------------------------
+- Provider-independent AI access
 
-# 
+### Memory Platform
 
-# \- Repository documentation is the permanent source of truth.
+The Memory Platform controls:
 
-# \- Read bootstrap documents before implementation.
+- Persistent-memory access
 
-# \- Preserve approved architecture.
+- Memory-provider selection
 
-# \- Complete-file rewrites only.
+- Memory transactions
 
-# \- Every phase ends with engineering certification.
+- Memory serialization
 
-# \- Documentation is completed before release.
+- Memory lifecycle
 
-# \- Releases require certification before tagging.
+- Memory storage and retrieval
 
-# \- Every architectural decision must be documented.
+### AI Intelligence Platform
 
-# \- No implementation begins before architecture approval.
+The AI Intelligence Platform may:
 
-# 
+- Interpret requests
 
-# \--------------------------------------------------
+- Compose context
 
-# SESSION START PROTOCOL
+- Compose prompts
 
-# \--------------------------------------------------
+- Manage conversations
 
-# 
+- Reason
 
-# Every future development session must read:
+- Plan
 
-# 
+- Rank alternatives
 
-# 1\. JAOS\_MANIFEST.md
+- Produce structured proposals
 
-# 2\. PROJECT\_BOOTSTRAP.md
+- Coordinate intelligence components
 
-# 3\. CONTINUATION\_CONTEXT.md
+The AI Intelligence Platform must not directly execute tools or bypass
 
-# 4\. PROJECT\_STATE.md
+permission boundaries.
 
-# 5\. CURRENT\_SPRINT.md
+Executable actions must pass through approved Executive and Tool Platform
 
-# 6\. NEXT\_ACTIONS.md
+authority.
 
-# 
+Intelligence components must depend on contracts rather than concrete
 
-# After reading these documents:
+providers.
 
-# 
+Significant decisions and proposed actions must remain auditable.
 
-# \- Resume from the documented checkpoint.
+---
 
-# \- Do not repeat completed implementation.
+## 9. Current Repository-Stabilization Sequence
 
-# \- Do not redesign approved architecture.
+The approved stabilization sequence is mandatory:
 
-# \- Verify current sprint before coding.
+| Step | Activity | Status |
 
-# \- Maintain documentation consistency.
+|---|---|---|
 
-# 
+| 1 | Repository State Audit | COMPLETED |
 
-# \--------------------------------------------------
+| 2 | Backup Checkpoint | COMPLETED |
 
-# CONTINUITY PROMISE
+| 3 | Documentation Synchronization | COMPLETED |
 
-# \--------------------------------------------------
+| 4 | Runtime Architecture Audit | IN PROGRESS |
 
-# 
+| 5 | Full Automated Testing | PENDING |
 
-# The repository is the authoritative engineering record for JAOS.
+| 6 | JAOS Shell Testing | PENDING |
 
-# 
+| 7 | Bug Fixing and Regression | PENDING |
 
-# Repository documentation always takes precedence over conversational history unless the Founder explicitly approves a documented change.
+| 8 | Stabilization Certification | PENDING |
 
-# 
+| 9 | Resume Phase 8 | PENDING |
 
-# Every release must update this continuation context so that any future engineer or AI can resume development immediately with minimal onboarding.
+The sequence must not be skipped or reordered without an approved engineering
 
-# 
+decision.
 
-# The objective is uninterrupted long-term development through disciplined engineering, comprehensive documentation, and certified milestones.
+Current activity:
 
+Step 4 — Runtime Architecture Audit
+
+Phase 8 must remain paused until Step 8 — Stabilization Certification passes.
+
+---
+
+## 10. Documentation Synchronization Checkpoint
+
+Step 3 — Documentation Synchronization is complete.
+
+The synchronized and validated authoritative documents are:
+
+- `JAOS_MANIFEST.md`
+
+- `docs/bootstrap/PROJECT_BOOTSTRAP.md`
+
+- `docs/bootstrap/CONTINUATION_CONTEXT.md`
+
+- `docs/project/CURRENT_SPRINT.md`
+
+- `docs/project/MILESTONES.md`
+
+- `docs/project/NEXT_ACTIONS.md`
+
+- `docs/project/PROJECT_STATE.md`
+
+- `docs/project/ROADMAP.md`
+
+Cross-document consistency checks passed.
+
+Repository safety checks confirm:
+
+- Exactly eight intended documentation files are modified.
+
+- No untracked files exist.
+
+- No staged files exist.
+
+- `git diff --check` passes.
+
+Documentation changes must remain unstaged until the complete stabilization
+
+checkpoint has been reviewed.
+
+---
+
+## 11. Repository and Backup State
+
+The repository-state audit is complete.
+
+The backup checkpoint is complete.
+
+The working repository must be treated as recoverable but actively modified
+
+throughout stabilization.
+
+Before each stabilization transition or repository change:
+
+- Inspect `git status`.
+
+- Inspect modified files.
+
+- Inspect staged files.
+
+- Inspect untracked files.
+
+- Run `git diff --check`.
+
+- Confirm that the next action is within the approved stabilization scope.
+
+Do not:
+
+- Delete repository work
+
+- Reset the branch
+
+- Rewrite history
+
+- Rebase
+
+- Merge
+
+- Pull
+
+- Force-push
+
+- Stage partially reviewed documents
+
+- Commit before checkpoint approval
+
+All existing Phase 8 implementation must remain preserved.
+
+---
+
+## 12. Testing and Certification State
+
+Historical test results must not be treated as current stabilization
+
+certification.
+
+The historical 323-test checkpoint statement is obsolete and must not be used as
+
+the current repository baseline.
+
+Relevant implementation and environment changes have occurred since that
+
+checkpoint.
+
+Current full automated regression status:
+
+`PENDING`
+
+Current runtime architecture audit status:
+
+`IN PROGRESS`
+
+Current JAOS Shell verification status:
+
+`PENDING`
+
+Current stabilization certification status:
+
+`PENDING`
+
+The authoritative current test count must be established during:
+
+Step 5 — Full Automated Testing
+
+Testing must include the applicable:
+
+- Syntax validation
+
+- Static validation
+
+- Unit tests
+
+- Integration tests
+
+- Full regression suite
+
+- Runtime startup
+
+- Runtime shutdown
+
+- Platform composition
+
+- Provider behavior
+
+- Failure paths
+
+- JAOS Shell behavior
+
+- Intelligence behavior
+
+- Regression confirmation
+
+Warnings, skipped tests, expected failures, and deferred defects must be
+
+reviewed and documented.
+
+No Phase 8 certification claim may be made until the current stabilization
+
+sequence passes.
+
+---
+
+## 13. Current Objective
+
+The current objective is:
+
+Complete Step 4 — Runtime Architecture Audit.
+
+This requires:
+
+1. Audit the runtime entry point and composition roots.
+
+2. Trace startup, lifecycle, and shutdown behavior.
+
+3. Verify platform boundaries, dependency direction, and ownership rules.
+
+4. Verify manager, registry, provider, tool, memory, executive, and intelligence
+
+   integration boundaries.
+
+5. Inspect failure paths and lifecycle safety.
+
+6. Compare the implementation with the governing architecture documents.
+
+7. Record architectural violations, risks, and technical debt with evidence.
+
+8. Review and approve the audit evidence before Step 5 begins.
+
+No implementation changes are authorized during this audit.
+
+---
+
+## 14. Exact Next Actions
+
+1. Confirm the repository safety checks remain clean.
+
+2. Inventory runtime entry points, composition roots, managers, and registries.
+
+3. Inspect imports and dependencies for architectural boundary violations.
+
+4. Trace runtime startup, platform composition, lifecycle, and shutdown behavior.
+
+5. Inspect Executive, AI, Memory, Tool, Provider, and Intelligence integration
+
+   surfaces.
+
+6. Record audit evidence and classify every confirmed finding.
+
+7. Review the complete Runtime Architecture Audit result.
+
+8. Complete Step 4 — Runtime Architecture Audit.
+
+9. Begin Step 5 — Full Automated Testing only after Step 4 is approved.
+
+Do not stage or commit the documentation checkpoint yet.
+
+Do not modify implementation code or resume Phase 8 implementation yet.
+
+---
+
+## 15. Phase 8 Resume Control
+
+Phase 8 resumes only after Step 8 — Stabilization Certification passes.
+
+The approved resume point is:
+
+MS-0025E — Reasoning and Planning Intelligence
+
+The approved resume order is:
+
+1. Resume MS-0025E — Reasoning and Planning Intelligence.
+
+2. Complete reasoning contracts and behavior.
+
+3. Complete planning contracts and behavior.
+
+4. Complete reasoning and planning coordination.
+
+5. Complete MS-0025E unit and integration testing.
+
+6. Complete MS-0025G — Agent and Execution Proposal Foundations.
+
+7. Complete MS-0025X — AI Intelligence Platform Composition.
+
+8. Complete runtime integration.
+
+9. Complete JAOS Shell integration.
+
+10. Complete MS-0025F — AI Intelligence End-to-End Certification.
+
+11. Synchronize Phase 8 documentation.
+
+12. Certify and release `v0.10.0-alpha`.
+
+13. Complete remaining Memory Platform production work.
+
+14. Begin Phase 9 — Workflow & Automation Platform.
+
+Completed Phase 8 implementation must not be repeated.
+
+---
+
+## 16. Remaining Memory Platform Production Work
+
+Phase 7 is certified, but additional production-oriented Memory Platform work
+
+remains scheduled after Phase 8.
+
+This may include approved work related to:
+
+- Cloud-ready PostgreSQL deployment
+
+- `pgvector` integration
+
+- Semantic and vector retrieval
+
+- S3-compatible object storage
+
+- Local and cloud synchronization
+
+- Backup and recovery
+
+- Retention policies
+
+- Privacy controls
+
+- Encryption
+
+- Provider migration
+
+- Production observability
+
+- Performance validation
+
+- Failure recovery
+
+- Cost-aware storage selection
+
+This deferred work must extend the certified Memory Platform through approved
+
+contracts.
+
+It must not create direct higher-level dependencies on a concrete storage
+
+provider.
+
+---
+
+## 17. Locked Roadmap Direction
+
+The JAOS roadmap contains 20 phases and remains locked.
+
+Current roadmap anchors include:
+
+- Phase 7 — Memory Platform
+
+- Phase 8 — AI Intelligence Platform
+
+- Phase 9 — Workflow & Automation Platform
+
+- Phase 19 — JAOS Experience Platform
+
+- Phase 20 — Production Certification & Public Release
+
+Phase 7 is complete.
+
+Phase 8 is active and temporarily paused for stabilization.
+
+Phase 9 and all later phases remain planned.
+
+JAOS must not publish `v1.0` before Phase 20 certification.
+
+Capabilities may not be silently removed, moved, or renumbered.
+
+Any approved roadmap change requires synchronized updates to:
+
+- `docs/project/ROADMAP.md`
+
+- `docs/project/MILESTONES.md`
+
+- `docs/project/PROJECT_STATE.md`
+
+- `docs/project/CURRENT_SPRINT.md`
+
+- `docs/project/NEXT_ACTIONS.md`
+
+- `JAOS_MANIFEST.md`
+
+- Bootstrap and continuation documents
+
+- Relevant architecture and requirements documents
+
+---
+
+## 18. Permanent Product Principles
+
+### Single-PC-First Development
+
+JAOS is currently developed and stabilized on one primary PC.
+
+Distributed and multi-device capabilities may be added in their approved
+
+phases, but they must not destabilize the single-PC engineering baseline.
+
+### Adaptive Resource Management
+
+JAOS must automatically detect and adapt to:
+
+- CPU
+
+- RAM
+
+- GPU
+
+- VRAM
+
+- NPU
+
+- Storage
+
+- Network
+
+- Battery
+
+- Thermal limits
+
+- Operating system
+
+- Connected accelerators
+
+- Connected robotics devices
+
+Hardware differences should affect:
+
+- Execution strategy
+
+- Model size
+
+- Quantization
+
+- Concurrency
+
+- Batching
+
+- Caching
+
+- Scheduling
+
+- Quality
+
+- Latency
+
+- Local placement
+
+- Cloud placement
+
+- Remote placement
+
+Core capabilities must not be removed merely because a system has lower
+
+specifications when another practical execution strategy exists.
+
+### Monitoring and Observability
+
+JAOS must monitor:
+
+- CPU usage
+
+- RAM usage
+
+- GPU usage
+
+- VRAM usage
+
+- Disk usage
+
+- Network behavior
+
+- Battery state
+
+- Temperature
+
+- Runtime health
+
+- Executive Platform health
+
+- AI provider health
+
+- Memory provider health
+
+- Tool Platform health
+
+- Intelligence Platform health
+
+- Failures
+
+- Performance trends
+
+- Anomalies
+
+### Cost Efficiency
+
+Cost efficiency is a first-class architecture requirement.
+
+JAOS must prefer suitable:
+
+- Open-source components
+
+- Local-first components
+
+- Provider-independent components
+
+- Self-hostable components
+
+- Free-tier services
+
+Paid services should be used when they provide justified value and remain
+
+within user-defined budgets.
+
+JAOS must support:
+
+- Cost-aware routing
+
+- Daily spending limits
+
+- Monthly spending limits
+
+- Provider quotas
+
+- Cost alerts
+
+- Cost forecasts
+
+- Automatic fallback
+
+- Caching
+
+- Quantization
+
+- Efficient scheduling
+
+- Hybrid local and cloud execution
+
+### Provider Independence
+
+JAOS must avoid unnecessary vendor lock-in.
+
+AI, memory, storage, tools, workflows, and infrastructure must depend on stable
+
+contracts wherever practical.
+
+### Security and Auditability
+
+JAOS actions must remain:
+
+- Permission-controlled
+
+- Explainable
+
+- Traceable
+
+- Auditable
+
+- Recoverable where practical
+
+---
+
+## 19. Reserved Technology Documentation
+
+The following document remains reserved:
+
+`docs/architecture/JAOS_TECHNOLOGY_BIBLE.md`
+
+It must not be created during the current repository-stabilization checkpoint.
+
+It should be created after the Memory and AI Intelligence Platforms are mature
+
+and before:
+
+- Phase 19 — JAOS Experience Platform
+
+- Phase 20 — Production Certification & Public Release
+
+The Technology Bible will document stable:
+
+- Platform architecture
+
+- Techniques
+
+- Technologies
+
+- AI concepts
+
+- Provider architecture
+
+- Security controls
+
+- Monitoring architecture
+
+- Resource-management architecture
+
+- Cost-management architecture
+
+- Memory architecture
+
+- Workflow architecture
+
+- Device and robotics integration
+
+- Deployment strategy
+
+- Production standards
+
+Creating it too early would cause it to describe rapidly changing architecture
+
+rather than the certified JAOS system.
+
+---
+
+## 20. Permanent End-to-End Engineering Lifecycle
+
+Every JAOS phase and implementation milestone follows this lifecycle:
+
+1. Requirements
+
+2. Architecture Design
+
+3. Implementation Planning
+
+4. Implementation
+
+5. Unit Testing
+
+6. Integration Testing
+
+7. Runtime Verification
+
+8. JAOS Shell Verification
+
+9. Bug Fixing
+
+10. Regression Testing
+
+11. Architecture Audit
+
+12. Code-Quality Audit
+
+13. Dependency Audit
+
+14. Technical-Debt Review
+
+15. Security and Performance Review
+
+16. Documentation Synchronization
+
+17. Certification
+
+18. Git Commit, Tag, and Push
+
+19. Next-Phase Planning
+
+No milestone or phase is complete merely because implementation has been
+
+written.
+
+All applicable architecture, testing, integration, runtime, documentation,
+
+audit, certification, and release gates must pass.
+
+Engineering quality takes precedence over development speed.
+
+---
+
+## 21. Engineering Rules
+
+Every JAOS engineering session must:
+
+- Read repository documentation before implementation.
+
+- Preserve the locked 20-phase roadmap.
+
+- Preserve approved platform boundaries.
+
+- Preserve certified releases.
+
+- Preserve completed Phase 8 work.
+
+- Use complete-file rewrites when changing files.
+
+- Provide CMD commands for the current Windows environment.
+
+- Work one controlled step at a time.
+
+- Wait for command output before advancing.
+
+- Validate every changed file.
+
+- Review test results rather than assuming success.
+
+- Record confirmed defects and technical debt.
+
+- Record significant architectural decisions.
+
+- Synchronize documentation before certification.
+
+- Leave the repository recoverable and resumable.
+
+During the current stabilization pause:
+
+- Do not add new functionality.
+
+- Do not redesign Phase 8.
+
+- Do not stage partially reviewed documents.
+
+- Do not commit before the documentation checkpoint is approved.
+
+- Do not skip stabilization steps.
+
+- Do not resume MS-0025E before certification.
+
+---
+
+## 22. Session Start Protocol
+
+Every future engineering session must read these documents in order:
+
+1. `JAOS_MANIFEST.md`
+
+2. `docs/bootstrap/PROJECT_BOOTSTRAP.md`
+
+3. `docs/bootstrap/CONTINUATION_CONTEXT.md`
+
+4. `docs/project/PROJECT_STATE.md`
+
+5. `docs/project/CURRENT_SPRINT.md`
+
+6. `docs/project/NEXT_ACTIONS.md`
+
+Then:
+
+1. Activate the approved virtual environment.
+
+2. Enter the repository root.
+
+3. Verify the active branch.
+
+4. Inspect `git status`.
+
+5. Inspect modified files.
+
+6. Inspect staged files.
+
+7. Inspect untracked files.
+
+8. Confirm the certified release.
+
+9. Confirm the development target.
+
+10. Confirm the current phase.
+
+11. Confirm the active milestone.
+
+12. Confirm the stabilization checkpoint.
+
+13. Read the relevant requirements and architecture documents.
+
+14. Execute only the documented next action.
+
+Expected working branch:
+
+`phase8-ai-intelligence`
+
+The branch must still be verified at session start rather than assumed.
+
+---
+
+## 23. Session End Protocol
+
+At the end of every engineering session:
+
+1. Record what was completed.
+
+2. Record what remains incomplete.
+
+3. Record the active phase and milestone.
+
+4. Record the exact next action.
+
+5. Record current test and runtime evidence.
+
+6. Record confirmed defects.
+
+7. Record technical debt.
+
+8. Synchronize affected documents.
+
+9. Inspect modified files.
+
+10. Inspect staged files.
+
+11. Inspect untracked files.
+
+12. Run `git diff --check`.
+
+13. Preserve all incomplete work.
+
+14. Leave the repository immediately resumable.
+
+No continuation record may claim a step is complete without supporting
+
+evidence.
+
+---
+
+## 24. Conflict and Uncertainty Handling
+
+If the repository state conflicts with documentation:
+
+1. Stop implementation.
+
+2. Preserve all files.
+
+3. Inspect Git status and history.
+
+4. Compare the relevant documents.
+
+5. Inspect the implementation and tests.
+
+6. Identify the authoritative evidence.
+
+7. Document the discrepancy.
+
+8. Resolve it through an approved synchronization change.
+
+9. Validate the result.
+
+10. Resume only from the corrected checkpoint.
+
+Do not guess when a discrepancy affects:
+
+- Release state
+
+- Phase state
+
+- Milestone state
+
+- Architecture authority
+
+- Public contracts
+
+- Test certification
+
+- Git history
+
+- Destructive repository actions
+
+---
+
+## 25. Current Continuation Summary
+
+Certified release:
+
+`v0.9.0-alpha`
+
+Development target:
+
+`v0.10.0-alpha`
+
+Current phase:
+
+Phase 8 — AI Intelligence Platform
+
+Current milestone:
+
+MS-0025E — Reasoning and Planning Intelligence
+
+Current execution state:
+
+Temporarily paused for repository stabilization
+
+Current activity:
+
+Step 4 — Runtime Architecture Audit
+
+Current audit scope:
+
+JAOS runtime architecture and platform composition
+
+Next stabilization activity:
+
+Step 5 — Full Automated Testing
+
+Phase 8 resume point:
+
+MS-0025E — Reasoning and Planning Intelligence
+
+No new implementation should begin until stabilization certification passes.
+
+---
+
+## 26. Continuity Promise
+
+A new human or AI engineering session must be able to resume JAOS development
+
+using only the Git repository and its documentation.
+
+The repository must remain:
+
+- Accurate
+
+- Recoverable
+
+- Auditable
+
+- Testable
+
+- Documented
+
+- Versioned
+
+- Immediately resumable
+
+Implementation, architecture, tests, documentation, audits, certifications, and
+
+Git history are equally important parts of the JAOS engineering system.
+
+The objective is to build a long-lived, maintainable, extensible, secure,
+
+hardware-adaptive, provider-independent, cost-efficient, production-grade
+
+Artificial Intelligence Operating System.
