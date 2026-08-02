@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.pylance",
+        "ms-python.debugpy",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "eamodio.gitlens",
+        "mhutchie.git-graph",
+        "usernamehw.errorlens",
+        "aaron-bond.better-comments",
+        "gruntfuggly.todo-tree",
+        "christian-kohler.path-intellisense",
+        "yzhang.markdown-all-in-one"
+    ]
+}

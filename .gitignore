@@ -22,8 +22,14 @@ repo_tree.txt
 *_files.txt
 tools_structure.txt
 
-# IDE
-.vscode/
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
+
+# JetBrains IDEs
 .idea/
 
 # OS
@@ -39,3 +45,5 @@ build/
 dist/
 *.egg-info/
 docs/_backups/
+# JAOS exports
+exports/

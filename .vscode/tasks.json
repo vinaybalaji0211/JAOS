@@ -1,0 +1,29 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run JAOS",
+            "type": "shell",
+            "command": "python run_jaos.py",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run All Tests",
+            "type": "shell",
+            "command": "pytest -v"
+        },
+        {
+            "label": "Run Intelligence Tests",
+            "type": "shell",
+            "command": "pytest tests\\tests\\intelligence -v"
+        },
+        {
+            "label": "Compile Intelligence Models",
+            "type": "shell",
+            "command": "python -m compileall jaos\\intelligence\\models"
+        }
+    ]
+}
