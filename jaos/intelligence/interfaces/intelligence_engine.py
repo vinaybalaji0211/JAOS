@@ -1,28 +1,50 @@
 """Primary engine contract for the JAOS AI Intelligence Platform."""
 
+from __future__ import annotations
+
 from abc import abstractmethod
 
 from jaos.intelligence.interfaces.intelligence_component import (
     IntelligenceComponent,
 )
-from jaos.intelligence.models.intelligence_request import IntelligenceRequest
-from jaos.intelligence.models.intelligence_result import IntelligenceResult
+from jaos.intelligence.models.intelligence_request import (
+    IntelligenceRequest,
+)
+from jaos.intelligence.models.intelligence_result import (
+    IntelligenceResult,
+)
 
 
 class IntelligenceEngine(IntelligenceComponent):
     """
-    Defines the primary request-processing boundary.
+    Defines the primary provider-independent contract for the JAOS
+    Intelligence Platform.
 
-    Implementations coordinate context, conversation, reasoning,
-    planning, agent orchestration, provider-backed AI generation, and
-    execution-proposal construction while preserving platform boundaries.
+    Implementations accept validated IntelligenceRequest instances,
+    coordinate the appropriate intelligence capabilities, and return a
+    structured IntelligenceResult.
+
+    This contract defines *what* an Intelligence Engine must provide,
+    not *how* processing is performed. Concrete implementations may
+    coordinate specialized intelligence components while preserving
+    platform boundaries and without performing direct execution.
     """
 
     @abstractmethod
-    def process_request(
+    async def process_request(
         self,
         request: IntelligenceRequest,
     ) -> IntelligenceResult:
-        """Process an intelligence request and return a structured result."""
+        """
+        Process an intelligence request.
+
+        Implementations transform a validated IntelligenceRequest into a
+        provider-independent IntelligenceResult while coordinating any
+        required intelligence capabilities.
+
+        Raises:
+            IntelligencePlatformError:
+                If the request cannot be processed.
+        """
 
         raise NotImplementedError
