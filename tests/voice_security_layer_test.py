@@ -1,6 +1,4 @@
-from brain.voice_security_layer import (
-    VoiceSecurityLayer
-)
+from brain.voice_security_layer import VoiceSecurityLayer
 
 security = VoiceSecurityLayer()
 

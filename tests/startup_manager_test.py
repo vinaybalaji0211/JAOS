@@ -1,6 +1,4 @@
-from system_services.startup_manager import (
-    StartupManager
-)
+from system_services.startup_manager import StartupManager
 
 manager = StartupManager()
 

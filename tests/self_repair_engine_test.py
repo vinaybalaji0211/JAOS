@@ -1,7 +1,4 @@
-from brain.self_repair_engine import (
-    SelfRepairEngine
-)
-
+from brain.self_repair_engine import SelfRepairEngine
 
 SelfRepairEngine.show_repair(
     "missing_file"

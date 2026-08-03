@@ -1,6 +1,4 @@
-from brain.knowledge_retrieval_engine import (
-    KnowledgeRetrievalEngine
-)
+from brain.knowledge_retrieval_engine import KnowledgeRetrievalEngine
 
 engine = KnowledgeRetrievalEngine()
 

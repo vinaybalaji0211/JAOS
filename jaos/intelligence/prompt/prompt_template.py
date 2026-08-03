@@ -9,7 +9,6 @@ from typing import Any
 
 from jaos.ai.provider.provider_config import AIProviderCapability
 
-
 _VERSION_PATTERN = re.compile(
     r"^\d+(?:\.\d+){1,2}(?:[-+][A-Za-z0-9.-]+)?$"
 )

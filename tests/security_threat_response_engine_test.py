@@ -1,6 +1,4 @@
-from brain.security_threat_response_engine import (
-    SecurityThreatResponseEngine
-)
+from brain.security_threat_response_engine import SecurityThreatResponseEngine
 
 engine = (
     SecurityThreatResponseEngine()

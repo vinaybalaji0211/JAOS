@@ -1,8 +1,8 @@
-from security.identity_manager import IdentityManager
+from security.audit_logger import AuditLogger
 from security.authentication_manager import AuthenticationManager
 from security.authorization_manager import AuthorizationManager
+from security.identity_manager import IdentityManager
 from security.permission_manager import PermissionManager
-from security.audit_logger import AuditLogger
 from security.security_monitor import SecurityMonitor
 
 print("\n===== SECURITY PLATFORM TEST =====\n")

@@ -1,7 +1,4 @@
-from brain.dynamic_agent_assignment_engine import (
-    DynamicAgentAssignmentEngine
-)
-
+from brain.dynamic_agent_assignment_engine import DynamicAgentAssignmentEngine
 
 DynamicAgentAssignmentEngine.show_assignments(
     "Gemini",

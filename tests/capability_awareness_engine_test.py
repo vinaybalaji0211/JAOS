@@ -1,6 +1,4 @@
-from brain.capability_awareness_engine import (
-    CapabilityAwarenessEngine
-)
+from brain.capability_awareness_engine import CapabilityAwarenessEngine
 
 engine = (
     CapabilityAwarenessEngine()

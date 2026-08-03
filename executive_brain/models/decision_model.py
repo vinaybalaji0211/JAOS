@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
-from typing import Optional
+
 from executive_brain.common.enums import LifecycleStatus
 
 
@@ -11,8 +11,8 @@ class DecisionModel:
     reason: str
     confidence: float = 1.0
     status: LifecycleStatus = LifecycleStatus.CREATED
-    related_intent_id: Optional[str] = None
-    related_context_snapshot_id: Optional[str] = None
+    related_intent_id: str | None = None
+    related_context_snapshot_id: str | None = None
 
     decision_id: str = field(
         default_factory=lambda: f"DEC-{uuid4()}"

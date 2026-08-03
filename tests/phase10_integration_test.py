@@ -1,14 +1,9 @@
-from brain.scheduler import Scheduler
-from brain.background_task_manager import (
-    BackgroundTaskManager
-)
+from brain.autonomous_task_executor import AutonomousTaskExecutor
+from brain.background_task_manager import BackgroundTaskManager
 from brain.event_system import EventSystem
 from brain.goal_scheduler import GoalScheduler
-from brain.autonomous_task_executor import (
-    AutonomousTaskExecutor
-)
 from brain.goal_stack import GoalStack
-
+from brain.scheduler import Scheduler
 
 print("\n=== PHASE 10 INTEGRATION TEST ===\n")
 

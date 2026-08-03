@@ -1,6 +1,4 @@
-from brain.agent_training_manager import (
-    AgentTrainingManager
-)
+from brain.agent_training_manager import AgentTrainingManager
 
 manager = (
     AgentTrainingManager()

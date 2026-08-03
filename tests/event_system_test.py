@@ -1,6 +1,5 @@
 from brain.event_system import EventSystem
 
-
 events = EventSystem()
 
 events.emit(

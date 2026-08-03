@@ -1,6 +1,4 @@
-from brain.self_test_framework import (
-    SelfTestFramework
-)
+from brain.self_test_framework import SelfTestFramework
 
 framework = SelfTestFramework()
 

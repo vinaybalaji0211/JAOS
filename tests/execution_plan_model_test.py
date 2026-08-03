@@ -1,5 +1,5 @@
-from executive_brain.models.execution_plan_model import ExecutionPlanModel
 from executive_brain.common.enums import LifecycleStatus
+from executive_brain.models.execution_plan_model import ExecutionPlanModel
 
 plan = ExecutionPlanModel(
     target_platform="PC_CONTROL",

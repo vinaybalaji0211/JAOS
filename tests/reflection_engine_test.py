@@ -1,7 +1,4 @@
-from brain.reflection_engine import (
-    ReflectionEngine
-)
-
+from brain.reflection_engine import ReflectionEngine
 
 engine = ReflectionEngine()
 

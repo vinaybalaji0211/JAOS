@@ -1,7 +1,4 @@
-from brain.screen_understanding import (
-    ScreenUnderstanding
-)
-
+from brain.screen_understanding import ScreenUnderstanding
 
 ScreenUnderstanding.show_analysis(
     ocr_text="Error: Module not found. Run command failed.",

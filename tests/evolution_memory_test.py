@@ -1,6 +1,4 @@
-from brain.evolution_memory import (
-    EvolutionMemory
-)
+from brain.evolution_memory import EvolutionMemory
 
 memory = EvolutionMemory()
 

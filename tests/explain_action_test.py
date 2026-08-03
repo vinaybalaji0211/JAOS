@@ -1,6 +1,5 @@
 from core.explain_action import ExplainAction
 
-
 explainer = ExplainAction()
 
 explainer.record(

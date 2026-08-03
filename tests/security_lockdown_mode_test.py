@@ -1,7 +1,4 @@
-from brain.security_lockdown_mode import (
-    SecurityLockdownMode
-)
-
+from brain.security_lockdown_mode import SecurityLockdownMode
 
 system = SecurityLockdownMode()
 

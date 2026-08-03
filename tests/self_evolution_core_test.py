@@ -1,6 +1,4 @@
-from brain.self_evolution_core import (
-    SelfEvolutionCore
-)
+from brain.self_evolution_core import SelfEvolutionCore
 
 core = SelfEvolutionCore()
 

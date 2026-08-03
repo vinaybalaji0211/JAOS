@@ -1,8 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
-from typing import Optional
-from executive_brain.common.enums import Priority, LifecycleStatus
+
+from executive_brain.common.enums import LifecycleStatus, Priority
 
 
 @dataclass
@@ -10,7 +10,7 @@ class GoalModel:
     goal_name: str
     priority: Priority = Priority.NORMAL
     status: LifecycleStatus = LifecycleStatus.CREATED
-    related_decision_id: Optional[str] = None
+    related_decision_id: str | None = None
     success_criteria: str = ""
     goal_id: str = field(default_factory=lambda: f"GOAL-{uuid4()}")
     created_at: datetime = field(default_factory=datetime.now)

@@ -49,7 +49,6 @@ from jaos.intelligence.prompt.prompt_composition_models import (
     PromptCompositionResult,
 )
 
-
 BASE_TIME = datetime(2026, 7, 20, 12, 0, tzinfo=timezone.utc)
 
 

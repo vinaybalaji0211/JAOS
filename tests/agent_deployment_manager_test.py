@@ -1,6 +1,4 @@
-from brain.agent_deployment_manager import (
-    AgentDeploymentManager
-)
+from brain.agent_deployment_manager import AgentDeploymentManager
 
 manager = (
     AgentDeploymentManager()

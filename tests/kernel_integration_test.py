@@ -1,12 +1,11 @@
 from kernel.jaos_kernel import JAOSKernel
-from kernel.kernel_service_registry import KernelServiceRegistry
 from kernel.kernel_event_bus import KernelEventBus
-from kernel.kernel_lifecycle_manager import KernelLifecycleManager
 from kernel.kernel_health_monitor import KernelHealthMonitor
-from kernel.kernel_router import KernelRouter
+from kernel.kernel_lifecycle_manager import KernelLifecycleManager
 from kernel.kernel_permission_gateway import KernelPermissionGateway
+from kernel.kernel_router import KernelRouter
+from kernel.kernel_service_registry import KernelServiceRegistry
 from kernel.runtime_context import RuntimeContext
-
 
 print("\n========== JAOS KERNEL TEST ==========\n")
 

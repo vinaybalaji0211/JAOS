@@ -1,6 +1,5 @@
 from brain.daemon_mode import DaemonMode
 
-
 daemon = DaemonMode()
 
 daemon.show_status()

@@ -1,6 +1,4 @@
-from brain.security_alert_manager import (
-    SecurityAlertManager
-)
+from brain.security_alert_manager import SecurityAlertManager
 
 manager = SecurityAlertManager()
 

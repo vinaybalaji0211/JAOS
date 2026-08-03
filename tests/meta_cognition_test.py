@@ -1,7 +1,4 @@
-from brain.meta_cognition import (
-    MetaCognition
-)
-
+from brain.meta_cognition import MetaCognition
 
 MetaCognition.show_report(
 

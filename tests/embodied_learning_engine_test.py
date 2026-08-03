@@ -1,6 +1,4 @@
-from brain.embodied_learning_engine import (
-    EmbodiedLearningEngine
-)
+from brain.embodied_learning_engine import EmbodiedLearningEngine
 
 engine = EmbodiedLearningEngine()
 

@@ -1,6 +1,4 @@
-from brain.intrusion_detection_engine import (
-    IntrusionDetectionEngine
-)
+from brain.intrusion_detection_engine import IntrusionDetectionEngine
 
 engine = (
     IntrusionDetectionEngine()

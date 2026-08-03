@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
-from typing import Optional
+
 from executive_brain.common.enums import LifecycleStatus
 
 
@@ -9,7 +9,7 @@ from executive_brain.common.enums import LifecycleStatus
 class ResultModel:
     success: bool
     message: str
-    related_execution_plan_id: Optional[str] = None
+    related_execution_plan_id: str | None = None
     status: LifecycleStatus = LifecycleStatus.COMPLETED
 
     result_id: str = field(

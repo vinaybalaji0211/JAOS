@@ -1,6 +1,4 @@
-from brain.knowledge_graph_core import (
-    KnowledgeGraphCore
-)
+from brain.knowledge_graph_core import KnowledgeGraphCore
 
 graph = KnowledgeGraphCore()
 

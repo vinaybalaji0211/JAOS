@@ -1,6 +1,4 @@
-from brain.autonomous_task_executor import (
-    AutonomousTaskExecutor
-)
+from brain.autonomous_task_executor import AutonomousTaskExecutor
 
 executor = AutonomousTaskExecutor()
 

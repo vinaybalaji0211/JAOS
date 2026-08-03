@@ -1,20 +1,12 @@
+from brain.brain_state_manager import BrainStateManager
+from brain.goal_tracker import GoalTracker
+from brain.hidden_requirement_detector import HiddenRequirementDetector
+from brain.proactive_suggestions import ProactiveSuggestions
+from brain.reasoning_trace_logger import ReasoningTraceLogger
+from brain.task_decomposer import TaskDecomposer
+from memory.memory_categories import MemoryCategories
 from memory.memory_manager import MemoryManager
 from memory.memory_search import MemorySearch
-from memory.memory_categories import MemoryCategories
-from brain.goal_tracker import GoalTracker
-from brain.task_decomposer import TaskDecomposer
-from brain.hidden_requirement_detector import (
-    HiddenRequirementDetector
-)
-from brain.proactive_suggestions import (
-    ProactiveSuggestions
-)
-from brain.brain_state_manager import (
-    BrainStateManager
-)
-from brain.reasoning_trace_logger import (
-    ReasoningTraceLogger
-)
 
 print("\n========== PHASE 3 INTEGRATION TEST ==========")
 

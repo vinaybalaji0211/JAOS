@@ -1,6 +1,4 @@
-from engineering.dependency_validator import (
-    DependencyValidator
-)
+from engineering.dependency_validator import DependencyValidator
 
 validator = DependencyValidator()
 

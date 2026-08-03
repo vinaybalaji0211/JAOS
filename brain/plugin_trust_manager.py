@@ -38,11 +38,7 @@ class PluginTrustManager:
                     permission
                 )
 
-        if status == "BLOCKED":
-
-            decision = "BLOCKED"
-
-        elif dangerous_found:
+        if status == "BLOCKED" or dangerous_found:
 
             decision = "BLOCKED"
 

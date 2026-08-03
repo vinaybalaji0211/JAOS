@@ -3,8 +3,8 @@
 import pytest
 
 from jaos.ai.prompt import (
-    PromptBuildRequest,
     PromptBuilder,
+    PromptBuildRequest,
     PromptSection,
     PromptSectionType,
 )

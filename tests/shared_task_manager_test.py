@@ -1,6 +1,4 @@
-from brain.shared_task_manager import (
-    SharedTaskManager
-)
+from brain.shared_task_manager import SharedTaskManager
 
 manager = (
     SharedTaskManager()

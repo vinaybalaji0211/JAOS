@@ -1,6 +1,4 @@
-from engineering.capability_truth_engine import (
-    CapabilityTruthEngine
-)
+from engineering.capability_truth_engine import CapabilityTruthEngine
 
 engine = CapabilityTruthEngine()
 

@@ -1,34 +1,11 @@
-from brain.cloud_memory_architecture import (
-    CloudMemoryArchitecture
-)
-
-from brain.cloud_memory_connector import (
-    CloudMemoryConnector
-)
-
-from brain.cloud_backup_engine import (
-    CloudBackupEngine
-)
-
-from brain.cloud_knowledge_sync_manager import (
-    CloudKnowledgeSyncManager
-)
-
-from brain.distributed_memory_system import (
-    DistributedMemorySystem
-)
-
-from brain.agent_memory_sync_manager import (
-    AgentMemorySyncManager
-)
-
-from brain.cloud_knowledge_synchronizer import (
-    CloudKnowledgeSynchronizer
-)
-
-from brain.cloud_recovery_manager import (
-    CloudRecoveryManager
-)
+from brain.agent_memory_sync_manager import AgentMemorySyncManager
+from brain.cloud_backup_engine import CloudBackupEngine
+from brain.cloud_knowledge_sync_manager import CloudKnowledgeSyncManager
+from brain.cloud_knowledge_synchronizer import CloudKnowledgeSynchronizer
+from brain.cloud_memory_architecture import CloudMemoryArchitecture
+from brain.cloud_memory_connector import CloudMemoryConnector
+from brain.cloud_recovery_manager import CloudRecoveryManager
+from brain.distributed_memory_system import DistributedMemorySystem
 
 print(
     "\n=== CLOUD MEMORY INTEGRATION TEST ===\n"

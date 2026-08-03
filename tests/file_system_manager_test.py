@@ -1,6 +1,4 @@
-from pc_control.file_system_manager import (
-    FileSystemManager
-)
+from pc_control.file_system_manager import FileSystemManager
 
 manager = FileSystemManager()
 

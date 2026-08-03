@@ -1,6 +1,4 @@
-from development.repository_manager import (
-    RepositoryManager
-)
+from development.repository_manager import RepositoryManager
 
 manager = RepositoryManager()
 

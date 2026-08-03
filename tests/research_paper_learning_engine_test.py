@@ -1,6 +1,4 @@
-from brain.research_paper_learning_engine import (
-    ResearchPaperLearningEngine
-)
+from brain.research_paper_learning_engine import ResearchPaperLearningEngine
 
 engine = (
     ResearchPaperLearningEngine()

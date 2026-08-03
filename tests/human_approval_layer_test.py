@@ -1,7 +1,4 @@
-from brain.human_approval_layer import (
-    HumanApprovalLayer
-)
-
+from brain.human_approval_layer import HumanApprovalLayer
 
 HumanApprovalLayer.show_request(
     "RUN_DIAGNOSTICS",

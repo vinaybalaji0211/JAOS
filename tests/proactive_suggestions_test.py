@@ -1,7 +1,4 @@
-from brain.proactive_suggestions import (
-    ProactiveSuggestions
-)
-
+from brain.proactive_suggestions import ProactiveSuggestions
 
 context = (
 

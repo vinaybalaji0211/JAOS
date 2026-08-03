@@ -1,6 +1,6 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 
 from logs.logger import logger
 
@@ -12,55 +12,37 @@ class BehaviorTracker:
     @staticmethod
     def record_behavior(behavior):
 
-        os.makedirs(
-            "data/behavior",
-            exist_ok=True
-        )
+        os.makedirs("data/behavior", exist_ok=True)
 
         behaviors = BehaviorTracker.get_behaviors()
 
         behaviors.append(
             {
-                "timestamp": datetime.now().strftime(
-                    "%Y-%m-%d %H:%M:%S"
-                ),
-                "behavior": behavior
+                "timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
+                "behavior": behavior,
             }
         )
 
-        with open(
-                BehaviorTracker.FILE_PATH,
-                "w",
-                encoding="utf-8") as file:
+        with open(BehaviorTracker.FILE_PATH, "w", encoding="utf-8") as file:
 
-            json.dump(
-                behaviors,
-                file,
-                indent=4
-            )
+            json.dump(behaviors, file, indent=4)
 
-        logger.info(
-            f"Behavior recorded: {behavior}"
-        )
+        logger.info(f"Behavior recorded: {behavior}")
 
     @staticmethod
     def get_behaviors():
 
-        if not os.path.exists(
-                BehaviorTracker.FILE_PATH):
+        if not os.path.exists(BehaviorTracker.FILE_PATH):
 
             return []
 
-        with open(
-                BehaviorTracker.FILE_PATH,
-                "r",
-                encoding="utf-8") as file:
+        with open(BehaviorTracker.FILE_PATH, "r", encoding="utf-8") as file:
 
             try:
 
                 return json.load(file)
 
-            except:
+            except (json.JSONDecodeError, OSError):
 
                 return []
 
@@ -77,10 +59,6 @@ class BehaviorTracker:
 
         else:
 
-            for index, item in enumerate(
-                    behaviors,
-                    start=1):
+            for index, item in enumerate(behaviors, start=1):
 
-                print(
-                    f"{index}. [{item['timestamp']}] {item['behavior']}"
-                )
+                print(f"{index}. [{item['timestamp']}] {item['behavior']}")

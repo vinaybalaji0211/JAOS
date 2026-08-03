@@ -1,6 +1,4 @@
-from infrastructure.multi_provider_task_composer import (
-    MultiProviderTaskComposer
-)
+from infrastructure.multi_provider_task_composer import MultiProviderTaskComposer
 
 composer = MultiProviderTaskComposer()
 

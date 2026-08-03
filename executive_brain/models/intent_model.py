@@ -1,7 +1,8 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
-from executive_brain.common.enums import Priority, LifecycleStatus
+
+from executive_brain.common.enums import LifecycleStatus, Priority
 
 
 @dataclass

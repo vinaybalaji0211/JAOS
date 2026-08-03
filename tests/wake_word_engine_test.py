@@ -1,6 +1,5 @@
 from brain.wake_word_engine import WakeWordEngine
 
-
 engine = WakeWordEngine()
 
 engine.show_status()

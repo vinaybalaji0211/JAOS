@@ -1,6 +1,4 @@
-from infrastructure.database_intelligence import (
-    DatabaseIntelligence
-)
+from infrastructure.database_intelligence import DatabaseIntelligence
 
 database = DatabaseIntelligence()
 

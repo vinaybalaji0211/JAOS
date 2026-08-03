@@ -1,9 +1,9 @@
 from knowledge.document_manager import DocumentManager
 from knowledge.knowledge_base import KnowledgeBase
-from knowledge.research_manager import ResearchManager
-from knowledge.ocr_manager import OCRManager
 from knowledge.knowledge_graph import KnowledgeGraph
 from knowledge.learning_synchronizer import LearningSynchronizer
+from knowledge.ocr_manager import OCRManager
+from knowledge.research_manager import ResearchManager
 
 print("\n===== KNOWLEDGE PLATFORM TEST =====\n")
 

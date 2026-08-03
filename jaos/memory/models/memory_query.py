@@ -1,7 +1,6 @@
 """Memory query model for the JAOS Memory Platform."""
 
 from dataclasses import dataclass
-from typing import Optional
 
 from jaos.memory.models.memory_identity import MemoryIdentity
 from jaos.memory.models.memory_scope import MemoryScope
@@ -14,8 +13,8 @@ class MemoryQuery:
 
     query_text: str
     memory_types: tuple[MemoryType, ...] = ()
-    scope: Optional[MemoryScope] = None
-    identity: Optional[MemoryIdentity] = None
+    scope: MemoryScope | None = None
+    identity: MemoryIdentity | None = None
     minimum_importance: float = 0.0
     minimum_confidence: float = 0.0
     max_results: int = 10

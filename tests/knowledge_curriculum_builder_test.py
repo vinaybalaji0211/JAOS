@@ -1,6 +1,4 @@
-from brain.knowledge_curriculum_builder import (
-    KnowledgeCurriculumBuilder
-)
+from brain.knowledge_curriculum_builder import KnowledgeCurriculumBuilder
 
 builder = (
     KnowledgeCurriculumBuilder()

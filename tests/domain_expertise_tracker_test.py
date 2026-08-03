@@ -1,6 +1,4 @@
-from brain.domain_expertise_tracker import (
-    DomainExpertiseTracker
-)
+from brain.domain_expertise_tracker import DomainExpertiseTracker
 
 tracker = (
     DomainExpertiseTracker()

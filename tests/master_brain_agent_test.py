@@ -1,6 +1,4 @@
-from brain.master_brain_agent import (
-    MasterBrainAgent
-)
+from brain.master_brain_agent import MasterBrainAgent
 
 brain = MasterBrainAgent()
 

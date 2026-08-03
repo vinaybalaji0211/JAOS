@@ -1,6 +1,4 @@
-from brain.conversation_quality_analyzer import (
-    ConversationQualityAnalyzer
-)
+from brain.conversation_quality_analyzer import ConversationQualityAnalyzer
 
 analyzer = ConversationQualityAnalyzer()
 

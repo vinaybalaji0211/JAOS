@@ -1,6 +1,4 @@
-from brain.voice_system import (
-    VoiceSystem
-)
+from brain.voice_system import VoiceSystem
 
 voice = VoiceSystem()
 

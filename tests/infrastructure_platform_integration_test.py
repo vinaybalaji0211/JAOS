@@ -1,34 +1,15 @@
+from infrastructure.ai_provider_manager import AIProviderManager
+from infrastructure.api_intelligence_manager import APIIntelligenceManager
+from infrastructure.cost_performance_optimizer import CostPerformanceOptimizer
+from infrastructure.database_intelligence import DatabaseIntelligence
 from infrastructure.infrastructure_intelligence_core import (
-    InfrastructureIntelligenceCore
+    InfrastructureIntelligenceCore,
 )
-
-from infrastructure.ai_provider_manager import (
-    AIProviderManager
-)
-
 from infrastructure.intelligent_resource_orchestrator import (
-    IntelligentResourceOrchestrator
+    IntelligentResourceOrchestrator,
 )
-
-from infrastructure.multi_provider_task_composer import (
-    MultiProviderTaskComposer
-)
-
-from infrastructure.api_intelligence_manager import (
-    APIIntelligenceManager
-)
-
-from infrastructure.storage_intelligence import (
-    StorageIntelligence
-)
-
-from infrastructure.database_intelligence import (
-    DatabaseIntelligence
-)
-
-from infrastructure.cost_performance_optimizer import (
-    CostPerformanceOptimizer
-)
+from infrastructure.multi_provider_task_composer import MultiProviderTaskComposer
+from infrastructure.storage_intelligence import StorageIntelligence
 
 print("\n===== INFRASTRUCTURE PLATFORM TEST =====\n")
 

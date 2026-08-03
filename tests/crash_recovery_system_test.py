@@ -1,7 +1,4 @@
-from brain.crash_recovery_system import (
-    CrashRecoverySystem
-)
-
+from brain.crash_recovery_system import CrashRecoverySystem
 
 CrashRecoverySystem.save_checkpoint(
     last_state="ACTIVE",

@@ -8,13 +8,13 @@ Validates and formats prompt messages into provider-ready prompts.
 
 from __future__ import annotations
 
-from executive_brain.ai.providers.ai_provider_models import AIProviderRequest
 from executive_brain.ai.prompt.prompt_models import (
     PromptMessage,
     PromptRequest,
     PromptResponse,
     PromptRole,
 )
+from executive_brain.ai.providers.ai_provider_models import AIProviderRequest
 
 
 class PromptEngine:

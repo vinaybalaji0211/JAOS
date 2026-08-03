@@ -1,7 +1,4 @@
-from brain.learning_manager import (
-    LearningManager
-)
-
+from brain.learning_manager import LearningManager
 
 manager = LearningManager()
 

@@ -1,7 +1,4 @@
-from brain.improvement_recommendation_engine import (
-    ImprovementRecommendationEngine
-)
-
+from brain.improvement_recommendation_engine import ImprovementRecommendationEngine
 
 ImprovementRecommendationEngine.show_recommendations(
     weaknesses=[

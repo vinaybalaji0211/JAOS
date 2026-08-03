@@ -1,6 +1,4 @@
-from brain.cloud_knowledge_sync_manager import (
-    CloudKnowledgeSyncManager
-)
+from brain.cloud_knowledge_sync_manager import CloudKnowledgeSyncManager
 
 manager = (
     CloudKnowledgeSyncManager()

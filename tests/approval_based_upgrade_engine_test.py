@@ -1,6 +1,4 @@
-from brain.approval_based_upgrade_engine import (
-    ApprovalBasedUpgradeEngine
-)
+from brain.approval_based_upgrade_engine import ApprovalBasedUpgradeEngine
 
 engine = ApprovalBasedUpgradeEngine()
 

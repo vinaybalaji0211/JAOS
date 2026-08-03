@@ -1,6 +1,4 @@
-from brain.capability_restrictions import (
-    CapabilityRestrictions
-)
+from brain.capability_restrictions import CapabilityRestrictions
 
 CapabilityRestrictions.show_level(
     "READ_MEMORY"

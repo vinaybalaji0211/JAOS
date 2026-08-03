@@ -2,8 +2,8 @@ import json
 import os
 from datetime import datetime
 
-from memory.long_term_memory import LongTermMemory
 from logs.logger import logger
+from memory.long_term_memory import LongTermMemory
 
 
 class MemoryExport:

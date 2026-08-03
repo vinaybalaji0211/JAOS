@@ -1,26 +1,9 @@
-from brain.tool_core import (
-    ToolCore
-)
-
-from brain.tool_registry import (
-    ToolRegistry
-)
-
-from brain.tool_permission_manager import (
-    ToolPermissionManager
-)
-
-from brain.action_execution_engine import (
-    ActionExecutionEngine
-)
-
-from brain.tool_routing_engine import (
-    ToolRoutingEngine
-)
-
-from brain.tool_audit_logger import (
-    ToolAuditLogger
-)
+from brain.action_execution_engine import ActionExecutionEngine
+from brain.tool_audit_logger import ToolAuditLogger
+from brain.tool_core import ToolCore
+from brain.tool_permission_manager import ToolPermissionManager
+from brain.tool_registry import ToolRegistry
+from brain.tool_routing_engine import ToolRoutingEngine
 
 print(
     "\n=== TOOL & ACTION INTEGRATION TEST ===\n"

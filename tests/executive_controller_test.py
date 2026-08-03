@@ -1,7 +1,4 @@
-from brain.executive_controller import (
-    ExecutiveController
-)
-
+from brain.executive_controller import ExecutiveController
 
 controller = ExecutiveController()
 

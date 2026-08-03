@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from threading import RLock
 from time import perf_counter
-from typing import TYPE_CHECKING, Any
+from typing import Any
 
 from psycopg import Connection
 from psycopg.errors import UniqueViolation
@@ -21,12 +21,6 @@ from jaos.memory.providers.postgres_serializer import (
 )
 from jaos.memory.storage.memory_store import MemoryStore
 from jaos.memory.storage.memory_transaction import MemoryTransaction
-
-if TYPE_CHECKING:
-    from jaos.memory.providers.postgres_transaction import (
-        PostgreSQLTransaction,
-    )
-
 
 INSERT_MEMORY = """
 INSERT INTO memories (

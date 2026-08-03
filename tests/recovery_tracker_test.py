@@ -1,6 +1,5 @@
 from core.recovery_tracker import RecoveryTracker
 
-
 tracker = RecoveryTracker()
 
 tracker.record_event(

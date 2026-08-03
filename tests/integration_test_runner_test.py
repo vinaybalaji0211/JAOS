@@ -1,6 +1,4 @@
-from engineering.integration_test_runner import (
-    IntegrationTestRunner
-)
+from engineering.integration_test_runner import IntegrationTestRunner
 
 runner = IntegrationTestRunner()
 

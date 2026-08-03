@@ -1,6 +1,4 @@
-from brain.conversation_context_tracker import (
-    ConversationContextTracker
-)
+from brain.conversation_context_tracker import ConversationContextTracker
 
 tracker = ConversationContextTracker()
 

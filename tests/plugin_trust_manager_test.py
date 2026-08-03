@@ -1,7 +1,4 @@
-from brain.plugin_trust_manager import (
-    PluginTrustManager
-)
-
+from brain.plugin_trust_manager import PluginTrustManager
 
 trusted_plugin = {
     "name": "Weather Plugin",

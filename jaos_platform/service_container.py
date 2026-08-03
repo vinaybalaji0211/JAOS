@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-from logs.logger import logger
 from jaos_platform.service_descriptor import ServiceDescriptor
 from jaos_platform.service_lifetime import ServiceLifetime
+from logs.logger import logger
 
 
 class ServiceContainer:

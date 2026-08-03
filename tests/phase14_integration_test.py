@@ -1,9 +1,9 @@
-from brain.executive_controller import ExecutiveController
 from brain.attention_manager import AttentionManager
-from brain.priority_engine import PriorityEngine
-from brain.goal_manager import GoalManager
-from brain.decision_engine import DecisionEngine
 from brain.context_manager import ContextManager
+from brain.decision_engine import DecisionEngine
+from brain.executive_controller import ExecutiveController
+from brain.goal_manager import GoalManager
+from brain.priority_engine import PriorityEngine
 
 print("\n=== PHASE 14 INTEGRATION TEST ===\n")
 

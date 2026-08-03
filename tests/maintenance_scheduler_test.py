@@ -1,6 +1,5 @@
 from brain.maintenance_scheduler import MaintenanceScheduler
 
-
 scheduler = MaintenanceScheduler()
 
 scheduler.schedule(

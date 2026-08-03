@@ -17,10 +17,9 @@ Non-Responsibilities:
     - Memory ranking
 """
 
-from jaos_platform.base_platform_service import BasePlatformService
-
-from executive_brain.memory.working_memory import WorkingMemory
 from executive_brain.memory.memory_registry import MemoryRegistry
+from executive_brain.memory.working_memory import WorkingMemory
+from jaos_platform.base_platform_service import BasePlatformService
 
 
 class MemoryManager(BasePlatformService):

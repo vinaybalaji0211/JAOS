@@ -1,6 +1,5 @@
 from brain.memory_agent import MemoryAgent
 
-
 agent = MemoryAgent()
 
 agent.store_memory(

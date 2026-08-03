@@ -1,6 +1,4 @@
-from knowledge.document_manager import (
-    DocumentManager
-)
+from knowledge.document_manager import DocumentManager
 
 manager = DocumentManager()
 

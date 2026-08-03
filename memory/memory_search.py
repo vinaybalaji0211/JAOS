@@ -1,5 +1,5 @@
-from memory.long_term_memory import LongTermMemory
 from logs.logger import logger
+from memory.long_term_memory import LongTermMemory
 
 
 class MemorySearch:

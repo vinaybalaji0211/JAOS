@@ -1,6 +1,5 @@
 from brain.behavior_tracker import BehaviorTracker
 
-
 BehaviorTracker.record_behavior(
     "User continues JARVIS project step-by-step"
 )

@@ -1,15 +1,15 @@
-from engineering.project_structure_validator import ProjectStructureValidator
-from engineering.module_registry import ModuleRegistry
-from engineering.platform_registry import PlatformRegistry
-from engineering.package_registry import PackageRegistry
-from engineering.dependency_validator import DependencyValidator
-from engineering.import_validator import ImportValidator
-from engineering.configuration_validator import ConfigurationValidator
-from engineering.startup_validator import StartupValidator
-from engineering.integration_test_runner import IntegrationTestRunner
-from engineering.platform_health_dashboard import PlatformHealthDashboard
 from engineering.capability_truth_engine import CapabilityTruthEngine
+from engineering.configuration_validator import ConfigurationValidator
+from engineering.dependency_validator import DependencyValidator
 from engineering.engineering_report_generator import EngineeringReportGenerator
+from engineering.import_validator import ImportValidator
+from engineering.integration_test_runner import IntegrationTestRunner
+from engineering.module_registry import ModuleRegistry
+from engineering.package_registry import PackageRegistry
+from engineering.platform_health_dashboard import PlatformHealthDashboard
+from engineering.platform_registry import PlatformRegistry
+from engineering.project_structure_validator import ProjectStructureValidator
+from engineering.startup_validator import StartupValidator
 
 print("\n========== ENGINEERING PLATFORM TEST ==========\n")
 

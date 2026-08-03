@@ -1,6 +1,5 @@
 from brain.user_profile import UserProfile
 
-
 profile = {
 
     "name": "Vinay",

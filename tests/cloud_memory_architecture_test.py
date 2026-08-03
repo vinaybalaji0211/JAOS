@@ -1,6 +1,4 @@
-from brain.cloud_memory_architecture import (
-    CloudMemoryArchitecture
-)
+from brain.cloud_memory_architecture import CloudMemoryArchitecture
 
 memory = (
     CloudMemoryArchitecture()

@@ -1,7 +1,4 @@
-from brain.autonomous_maintenance_planner import (
-    AutonomousMaintenancePlanner
-)
-
+from brain.autonomous_maintenance_planner import AutonomousMaintenancePlanner
 
 AutonomousMaintenancePlanner.show_plan(
     health_status="CRITICAL",

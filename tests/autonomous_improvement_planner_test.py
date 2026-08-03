@@ -1,7 +1,4 @@
-from brain.autonomous_improvement_planner import (
-    AutonomousImprovementPlanner
-)
-
+from brain.autonomous_improvement_planner import AutonomousImprovementPlanner
 
 AutonomousImprovementPlanner.show_plan(
 

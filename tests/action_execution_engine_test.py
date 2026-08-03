@@ -1,6 +1,4 @@
-from brain.action_execution_engine import (
-    ActionExecutionEngine
-)
+from brain.action_execution_engine import ActionExecutionEngine
 
 engine = (
     ActionExecutionEngine()

@@ -1,6 +1,4 @@
-from brain.distributed_memory_system import (
-    DistributedMemorySystem
-)
+from brain.distributed_memory_system import DistributedMemorySystem
 
 memory = (
     DistributedMemorySystem()

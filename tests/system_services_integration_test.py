@@ -1,10 +1,10 @@
-from system_services.startup_manager import StartupManager
-from system_services.configuration_manager import ConfigurationManager
-from system_services.scheduler import Scheduler
+from system_services.backup_manager import BackupManager
 from system_services.cache_manager import CacheManager
 from system_services.cleanup_manager import CleanupManager
+from system_services.configuration_manager import ConfigurationManager
+from system_services.scheduler import Scheduler
+from system_services.startup_manager import StartupManager
 from system_services.update_manager import UpdateManager
-from system_services.backup_manager import BackupManager
 
 print("\n===== SYSTEM SERVICES TEST =====\n")
 

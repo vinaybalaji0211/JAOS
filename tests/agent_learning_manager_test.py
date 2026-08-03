@@ -1,6 +1,4 @@
-from brain.agent_learning_manager import (
-    AgentLearningManager
-)
+from brain.agent_learning_manager import AgentLearningManager
 
 manager = AgentLearningManager()
 

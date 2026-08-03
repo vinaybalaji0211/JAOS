@@ -1,6 +1,4 @@
-from pc_control.application_manager import (
-    ApplicationManager
-)
+from pc_control.application_manager import ApplicationManager
 
 manager = ApplicationManager()
 

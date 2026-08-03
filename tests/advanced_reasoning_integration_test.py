@@ -1,26 +1,9 @@
-from brain.advanced_reasoning_core import (
-    AdvancedReasoningCore
-)
-
-from brain.multi_step_reasoning_engine import (
-    MultiStepReasoningEngine
-)
-
-from brain.decision_analysis_engine import (
-    DecisionAnalysisEngine
-)
-
-from brain.strategic_planning_engine import (
-    StrategicPlanningEngine
-)
-
-from brain.hypothesis_generation_engine import (
-    HypothesisGenerationEngine
-)
-
-from brain.reflective_reasoning_engine import (
-    ReflectiveReasoningEngine
-)
+from brain.advanced_reasoning_core import AdvancedReasoningCore
+from brain.decision_analysis_engine import DecisionAnalysisEngine
+from brain.hypothesis_generation_engine import HypothesisGenerationEngine
+from brain.multi_step_reasoning_engine import MultiStepReasoningEngine
+from brain.reflective_reasoning_engine import ReflectiveReasoningEngine
+from brain.strategic_planning_engine import StrategicPlanningEngine
 
 print("\n=== ADVANCED REASONING TEST ===\n")
 

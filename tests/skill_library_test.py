@@ -1,6 +1,4 @@
-from brain.skill_library import (
-    SkillLibrary
-)
+from brain.skill_library import SkillLibrary
 
 library = SkillLibrary()
 

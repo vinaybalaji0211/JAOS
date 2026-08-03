@@ -1,6 +1,4 @@
-from brain.cloud_backup_engine import (
-    CloudBackupEngine
-)
+from brain.cloud_backup_engine import CloudBackupEngine
 
 engine = CloudBackupEngine()
 

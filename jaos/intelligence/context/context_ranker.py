@@ -7,7 +7,6 @@ from typing import Any
 
 from jaos.intelligence.models import ContextItem, ContextTrustLevel
 
-
 TRUST_SCORES: dict[ContextTrustLevel, float] = {
     ContextTrustLevel.TRUSTED_SYSTEM: 1.0,
     ContextTrustLevel.TRUSTED_INTERNAL: 0.9,

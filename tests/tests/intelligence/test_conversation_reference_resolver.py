@@ -22,7 +22,6 @@ from jaos.intelligence.conversation.conversation_reference_resolver import (
     ConversationReferenceResolver,
 )
 
-
 BASE_TIME = datetime(2026, 7, 20, 12, 0, tzinfo=timezone.utc)
 
 

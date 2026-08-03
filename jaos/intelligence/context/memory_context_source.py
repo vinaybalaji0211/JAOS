@@ -29,7 +29,6 @@ from jaos.memory.models.memory_scope import MemoryScope
 from jaos.memory.models.memory_type import MemoryType
 from jaos.memory.storage.memory_search_engine import MemorySearchEngine
 
-
 INTELLIGENCE_TO_MEMORY_SCOPE: dict[
     IntelligenceScope,
     MemoryScope,

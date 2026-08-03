@@ -1,6 +1,4 @@
-from workflow.retry_recovery_engine import (
-    RetryRecoveryEngine
-)
+from workflow.retry_recovery_engine import RetryRecoveryEngine
 
 engine = RetryRecoveryEngine()
 

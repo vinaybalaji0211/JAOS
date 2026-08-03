@@ -1,6 +1,4 @@
-from brain.security_intelligence_engine import (
-    SecurityIntelligenceEngine
-)
+from brain.security_intelligence_engine import SecurityIntelligenceEngine
 
 engine = (
     SecurityIntelligenceEngine()

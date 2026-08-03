@@ -1,6 +1,4 @@
-from system_services.configuration_manager import (
-    ConfigurationManager
-)
+from system_services.configuration_manager import ConfigurationManager
 
 config = ConfigurationManager()
 

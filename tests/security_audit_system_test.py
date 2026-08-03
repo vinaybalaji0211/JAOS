@@ -1,7 +1,4 @@
-from brain.security_audit_system import (
-    SecurityAuditSystem
-)
-
+from brain.security_audit_system import SecurityAuditSystem
 
 audit = SecurityAuditSystem()
 

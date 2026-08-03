@@ -1,6 +1,4 @@
-from brain.human_memory_layer import (
-    HumanMemoryLayer
-)
+from brain.human_memory_layer import HumanMemoryLayer
 
 memory = HumanMemoryLayer()
 

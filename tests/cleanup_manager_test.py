@@ -1,6 +1,4 @@
-from system_services.cleanup_manager import (
-    CleanupManager
-)
+from system_services.cleanup_manager import CleanupManager
 
 cleanup = CleanupManager()
 

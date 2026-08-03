@@ -1,19 +1,17 @@
-from brain.master_brain_agent import MasterBrainAgent
+from brain.agent_coordinator import AgentCoordinator
 from brain.agent_registry import AgentRegistry
 from brain.ai_provider_manager import AIProviderManager
-from brain.dynamic_agent_assignment_engine import DynamicAgentAssignmentEngine
-from brain.agent_coordinator import AgentCoordinator
-
-from brain.coding_agent import CodingAgent
-from brain.research_agent import ResearchAgent
-from brain.memory_agent import MemoryAgent
-from brain.document_agent import DocumentAgent
-from brain.email_agent import EmailAgent
 from brain.calendar_agent import CalendarAgent
+from brain.coding_agent import CodingAgent
+from brain.document_agent import DocumentAgent
+from brain.dynamic_agent_assignment_engine import DynamicAgentAssignmentEngine
+from brain.email_agent import EmailAgent
+from brain.master_brain_agent import MasterBrainAgent
+from brain.memory_agent import MemoryAgent
 from brain.pc_control_agent import PCControlAgent
-from brain.vision_agent import VisionAgent
+from brain.research_agent import ResearchAgent
 from brain.security_agent import SecurityAgent
-
+from brain.vision_agent import VisionAgent
 
 print("\n=== PHASE 16 INTEGRATION TEST ===\n")
 

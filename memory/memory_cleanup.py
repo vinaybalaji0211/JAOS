@@ -1,9 +1,9 @@
 import json
 import os
 
+from logs.logger import logger
 from memory.long_term_memory import LongTermMemory
 from memory.memory_importance import MemoryImportance
-from logs.logger import logger
 
 
 class MemoryCleanup:

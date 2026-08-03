@@ -1,7 +1,4 @@
-from brain.multi_provider_collaboration import (
-    MultiProviderCollaboration
-)
-
+from brain.multi_provider_collaboration import MultiProviderCollaboration
 
 MultiProviderCollaboration.show_collaboration(
     [

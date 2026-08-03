@@ -1,6 +1,4 @@
-from brain.knowledge_validation_engine import (
-    KnowledgeValidationEngine
-)
+from brain.knowledge_validation_engine import KnowledgeValidationEngine
 
 engine = (
     KnowledgeValidationEngine()

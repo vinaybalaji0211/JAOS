@@ -1,6 +1,4 @@
-from knowledge.learning_synchronizer import (
-    LearningSynchronizer
-)
+from knowledge.learning_synchronizer import LearningSynchronizer
 
 sync = LearningSynchronizer()
 

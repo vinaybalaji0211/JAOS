@@ -1,7 +1,4 @@
-from brain.knowledge_domain_manager import (
-    KnowledgeDomainManager
-)
-
+from brain.knowledge_domain_manager import KnowledgeDomainManager
 
 manager = KnowledgeDomainManager()
 

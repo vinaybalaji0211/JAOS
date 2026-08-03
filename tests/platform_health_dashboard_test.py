@@ -1,6 +1,4 @@
-from engineering.platform_health_dashboard import (
-    PlatformHealthDashboard
-)
+from engineering.platform_health_dashboard import PlatformHealthDashboard
 
 dashboard = PlatformHealthDashboard()
 

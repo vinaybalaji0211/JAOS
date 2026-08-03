@@ -1,6 +1,4 @@
-from workflow.dependency_manager import (
-    DependencyManager
-)
+from workflow.dependency_manager import DependencyManager
 
 manager = DependencyManager()
 

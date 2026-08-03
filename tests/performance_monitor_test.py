@@ -2,7 +2,6 @@ import time
 
 from core.performance_monitor import PerformanceMonitor
 
-
 monitor = PerformanceMonitor()
 
 monitor.start_timer()

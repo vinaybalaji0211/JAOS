@@ -1,7 +1,4 @@
-from brain.response_timing_engine import (
-    ResponseTimingEngine
-)
-
+from brain.response_timing_engine import ResponseTimingEngine
 
 ResponseTimingEngine.show_decision(
     voice_activity="SPEAKING",

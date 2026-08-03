@@ -1,6 +1,4 @@
-from brain.tool_permission_manager import (
-    ToolPermissionManager
-)
+from brain.tool_permission_manager import ToolPermissionManager
 
 manager = (
     ToolPermissionManager()

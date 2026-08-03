@@ -1,7 +1,4 @@
-from brain.command_risk_scanner import (
-    CommandRiskScanner
-)
-
+from brain.command_risk_scanner import CommandRiskScanner
 
 CommandRiskScanner.show_scan(
     "dir"

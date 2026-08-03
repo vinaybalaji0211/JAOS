@@ -7,8 +7,8 @@ from threading import RLock
 from typing import Any
 
 from jaos.ai.prompt import (
-    PromptBuildRequest,
     PromptBuilder,
+    PromptBuildRequest,
     PromptSection,
     PromptSectionType,
 )
@@ -50,7 +50,6 @@ from jaos.intelligence.prompt.prompt_template import (
 from jaos.intelligence.prompt.prompt_template_registry import (
     PromptTemplateRegistry,
 )
-
 
 _SYSTEM_PRIORITY = 10
 _IDENTITY_PRIORITY = 20

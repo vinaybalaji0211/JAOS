@@ -1,6 +1,4 @@
-from brain.curiosity_engine import (
-    CuriosityEngine
-)
+from brain.curiosity_engine import CuriosityEngine
 
 engine = CuriosityEngine()
 

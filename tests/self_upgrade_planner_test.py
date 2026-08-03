@@ -1,6 +1,4 @@
-from brain.self_upgrade_planner import (
-    SelfUpgradePlanner
-)
+from brain.self_upgrade_planner import SelfUpgradePlanner
 
 planner = SelfUpgradePlanner()
 

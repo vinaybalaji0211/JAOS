@@ -1,6 +1,4 @@
-from brain.agent_lifecycle_manager import (
-    AgentLifecycleManager
-)
+from brain.agent_lifecycle_manager import AgentLifecycleManager
 
 manager = (
     AgentLifecycleManager()

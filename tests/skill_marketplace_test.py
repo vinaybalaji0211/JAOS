@@ -1,6 +1,4 @@
-from brain.skill_marketplace import (
-    SkillMarketplace
-)
+from brain.skill_marketplace import SkillMarketplace
 
 market = SkillMarketplace()
 

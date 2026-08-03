@@ -1,6 +1,4 @@
-from security.authentication_manager import (
-    AuthenticationManager
-)
+from security.authentication_manager import AuthenticationManager
 
 manager = AuthenticationManager()
 

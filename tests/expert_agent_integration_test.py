@@ -1,26 +1,9 @@
-from brain.expert_agent_generator import (
-    ExpertAgentGenerator
-)
-
-from brain.agent_blueprint_designer import (
-    AgentBlueprintDesigner
-)
-
-from brain.agent_training_manager import (
-    AgentTrainingManager
-)
-
-from brain.agent_deployment_manager import (
-    AgentDeploymentManager
-)
-
-from brain.agent_lifecycle_manager import (
-    AgentLifecycleManager
-)
-
-from brain.autonomous_agent_creation_planner import (
-    AutonomousAgentCreationPlanner
-)
+from brain.agent_blueprint_designer import AgentBlueprintDesigner
+from brain.agent_deployment_manager import AgentDeploymentManager
+from brain.agent_lifecycle_manager import AgentLifecycleManager
+from brain.agent_training_manager import AgentTrainingManager
+from brain.autonomous_agent_creation_planner import AutonomousAgentCreationPlanner
+from brain.expert_agent_generator import ExpertAgentGenerator
 
 print(
     "\n=== EXPERT AGENT INTEGRATION TEST ===\n"

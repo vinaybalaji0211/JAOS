@@ -1,11 +1,9 @@
-from brain.health_monitor import HealthMonitor
-from brain.error_recovery_engine import ErrorRecoveryEngine
+from brain.autonomous_maintenance_planner import AutonomousMaintenancePlanner
 from brain.crash_recovery_system import CrashRecoverySystem
-from brain.self_repair_engine import SelfRepairEngine
+from brain.error_recovery_engine import ErrorRecoveryEngine
+from brain.health_monitor import HealthMonitor
 from brain.resource_recovery_engine import ResourceRecoveryEngine
-from brain.autonomous_maintenance_planner import (
-    AutonomousMaintenancePlanner
-)
+from brain.self_repair_engine import SelfRepairEngine
 
 print("\n=== PHASE 8 INTEGRATION TEST ===\n")
 

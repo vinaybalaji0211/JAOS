@@ -1,6 +1,4 @@
-from brain.upgrade_impact_predictor import (
-    UpgradeImpactPredictor
-)
+from brain.upgrade_impact_predictor import UpgradeImpactPredictor
 
 predictor = UpgradeImpactPredictor()
 

@@ -1,6 +1,4 @@
-from knowledge.research_manager import (
-    ResearchManager
-)
+from knowledge.research_manager import ResearchManager
 
 manager = ResearchManager()
 

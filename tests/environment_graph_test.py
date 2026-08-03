@@ -1,6 +1,4 @@
-from brain.environment_graph import (
-    EnvironmentGraph
-)
+from brain.environment_graph import EnvironmentGraph
 
 graph = EnvironmentGraph()
 

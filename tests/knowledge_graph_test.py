@@ -1,6 +1,4 @@
-from knowledge.knowledge_graph import (
-    KnowledgeGraph
-)
+from knowledge.knowledge_graph import KnowledgeGraph
 
 graph = KnowledgeGraph()
 

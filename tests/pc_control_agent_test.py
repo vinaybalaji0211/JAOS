@@ -1,6 +1,4 @@
-from brain.pc_control_agent import (
-    PCControlAgent
-)
+from brain.pc_control_agent import PCControlAgent
 
 agent = PCControlAgent()
 

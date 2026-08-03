@@ -1,6 +1,4 @@
-from pc_control.window_manager import (
-    WindowManager
-)
+from pc_control.window_manager import WindowManager
 
 manager = WindowManager()
 

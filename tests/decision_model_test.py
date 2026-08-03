@@ -1,5 +1,5 @@
-from executive_brain.models.decision_model import DecisionModel
 from executive_brain.common.enums import LifecycleStatus
+from executive_brain.models.decision_model import DecisionModel
 
 decision = DecisionModel(
     decision_type="USE_MEMORY",

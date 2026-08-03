@@ -1,6 +1,5 @@
 from brain.auto_provider_installer import AutoProviderInstaller
 
-
 AutoProviderInstaller.install_provider(
     "perplexity",
     "cloud",

@@ -1,7 +1,4 @@
-from brain.confidence_estimator import (
-    ConfidenceEstimator
-)
-
+from brain.confidence_estimator import ConfidenceEstimator
 
 ConfidenceEstimator.show_confidence(
 

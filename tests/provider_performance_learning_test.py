@@ -1,6 +1,4 @@
-from brain.provider_performance_learning import (
-    ProviderPerformanceLearning
-)
+from brain.provider_performance_learning import ProviderPerformanceLearning
 
 learning = (
     ProviderPerformanceLearning()

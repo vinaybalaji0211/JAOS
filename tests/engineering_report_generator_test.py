@@ -1,6 +1,4 @@
-from engineering.engineering_report_generator import (
-    EngineeringReportGenerator
-)
+from engineering.engineering_report_generator import EngineeringReportGenerator
 
 report = EngineeringReportGenerator()
 

@@ -1,6 +1,4 @@
-from brain.self_evaluation_engine import (
-    SelfEvaluationEngine
-)
+from brain.self_evaluation_engine import SelfEvaluationEngine
 
 engine = SelfEvaluationEngine()
 

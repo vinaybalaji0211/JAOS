@@ -1,6 +1,4 @@
-from brain.upgrade_recommendation_engine import (
-    UpgradeRecommendationEngine
-)
+from brain.upgrade_recommendation_engine import UpgradeRecommendationEngine
 
 engine = UpgradeRecommendationEngine()
 

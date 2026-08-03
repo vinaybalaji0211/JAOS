@@ -1,6 +1,4 @@
-from pc_control.browser_controller import (
-    BrowserController
-)
+from pc_control.browser_controller import BrowserController
 
 browser = BrowserController()
 

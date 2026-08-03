@@ -23,11 +23,7 @@ class DigitalTwin:
 
             result = "HIGH_RISK"
 
-        elif confidence < 60:
-
-            result = "NEEDS_ADJUSTMENT"
-
-        elif prediction_count > 3:
+        elif confidence < 60 or prediction_count > 3:
 
             result = "NEEDS_ADJUSTMENT"
 

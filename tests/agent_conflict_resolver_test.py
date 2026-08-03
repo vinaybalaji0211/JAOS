@@ -1,6 +1,4 @@
-from brain.agent_conflict_resolver import (
-    AgentConflictResolver
-)
+from brain.agent_conflict_resolver import AgentConflictResolver
 
 resolver = (
     AgentConflictResolver()

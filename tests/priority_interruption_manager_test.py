@@ -1,6 +1,4 @@
-from brain.priority_interruption_manager import (
-    PriorityInterruptionManager
-)
+from brain.priority_interruption_manager import PriorityInterruptionManager
 
 PriorityInterruptionManager.show_decision(
     current_priority=70,

@@ -1,7 +1,7 @@
 import pytest
 
-from executive_brain.managers.registry_manager import RegistryManager
 from executive_brain.managers.planning_manager import PlanningManager
+from executive_brain.managers.registry_manager import RegistryManager
 from executive_brain.models.execution_plan_model import ExecutionPlanModel
 
 

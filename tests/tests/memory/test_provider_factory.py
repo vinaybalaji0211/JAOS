@@ -25,7 +25,6 @@ from jaos.memory.providers.sqlite_provider import SQLiteProvider
 from jaos.memory.providers.sqlite_store import SQLiteStore
 from jaos.memory.storage.memory_store import MemoryStore
 
-
 POSTGRES_CONNECTION_STRING = (
     "postgresql://jaos:secret@localhost:5432/jaos_test"
 )

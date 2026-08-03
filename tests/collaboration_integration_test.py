@@ -1,26 +1,9 @@
-from brain.agent_collaboration_core import (
-    AgentCollaborationCore
-)
-
-from brain.shared_task_manager import (
-    SharedTaskManager
-)
-
-from brain.agent_communication_bus import (
-    AgentCommunicationBus
-)
-
-from brain.task_delegation_engine import (
-    TaskDelegationEngine
-)
-
-from brain.consensus_engine import (
-    ConsensusEngine
-)
-
-from brain.multi_agent_coordinator import (
-    MultiAgentCoordinator
-)
+from brain.agent_collaboration_core import AgentCollaborationCore
+from brain.agent_communication_bus import AgentCommunicationBus
+from brain.consensus_engine import ConsensusEngine
+from brain.multi_agent_coordinator import MultiAgentCoordinator
+from brain.shared_task_manager import SharedTaskManager
+from brain.task_delegation_engine import TaskDelegationEngine
 
 print(
     "\n=== AGENT COLLABORATION INTEGRATION TEST ===\n"

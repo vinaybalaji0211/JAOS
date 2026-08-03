@@ -1,7 +1,4 @@
-from brain.cognitive_load_manager import (
-    CognitiveLoadManager
-)
-
+from brain.cognitive_load_manager import CognitiveLoadManager
 
 CognitiveLoadManager.show_load(
     active_tasks=2,

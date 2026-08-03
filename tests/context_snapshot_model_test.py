@@ -1,6 +1,4 @@
-from executive_brain.models.context_snapshot_model import (
-    ContextSnapshotModel
-)
+from executive_brain.models.context_snapshot_model import ContextSnapshotModel
 
 snapshot = ContextSnapshotModel(
     current_user="Vinay",

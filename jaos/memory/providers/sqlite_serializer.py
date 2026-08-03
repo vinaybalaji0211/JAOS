@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from datetime import datetime
 from enum import Enum
 from sqlite3 import Row
-from typing import Any, Mapping
+from typing import Any
 
 from jaos.memory.models.memory_identity import MemoryIdentity
 from jaos.memory.models.memory_lifecycle_state import (

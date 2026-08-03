@@ -1,6 +1,5 @@
 from brain.coding_agent import CodingAgent
 
-
 agent = CodingAgent()
 
 agent.show_capabilities()

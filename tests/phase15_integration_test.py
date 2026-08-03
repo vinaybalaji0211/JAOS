@@ -1,21 +1,20 @@
-from brain.voice_core import VoiceCore
-from brain.voice_session_manager import VoiceSessionManager
-from brain.wake_word_engine import WakeWordEngine
-from brain.wake_word_confidence_engine import WakeWordConfidenceEngine
-from brain.conversation_manager import ConversationManager
-from brain.interruption_handler import InterruptionHandler
-from brain.emotion_tone_engine import EmotionToneEngine
-from brain.noise_filter import NoiseFilter
 from brain.audio_quality_analyzer import AudioQualityAnalyzer
-from brain.voice_activity_detector import VoiceActivityDetector
-from brain.response_timing_engine import ResponseTimingEngine
-from brain.voice_memory_bridge import VoiceMemoryBridge
-from brain.speaker_identification import SpeakerIdentification
-from brain.voice_authorization_engine import VoiceAuthorizationEngine
-from brain.voice_security_layer import VoiceSecurityLayer
+from brain.conversation_manager import ConversationManager
+from brain.emotion_tone_engine import EmotionToneEngine
+from brain.interruption_handler import InterruptionHandler
 from brain.multi_microphone_support import MultiMicrophoneSupport
+from brain.noise_filter import NoiseFilter
+from brain.response_timing_engine import ResponseTimingEngine
+from brain.speaker_identification import SpeakerIdentification
+from brain.voice_activity_detector import VoiceActivityDetector
+from brain.voice_authorization_engine import VoiceAuthorizationEngine
 from brain.voice_command_prioritizer import VoiceCommandPrioritizer
-
+from brain.voice_core import VoiceCore
+from brain.voice_memory_bridge import VoiceMemoryBridge
+from brain.voice_security_layer import VoiceSecurityLayer
+from brain.voice_session_manager import VoiceSessionManager
+from brain.wake_word_confidence_engine import WakeWordConfidenceEngine
+from brain.wake_word_engine import WakeWordEngine
 
 print("\n=== PHASE 15 INTEGRATION TEST ===\n")
 

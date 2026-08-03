@@ -1,6 +1,4 @@
-from security.identity_manager import (
-    IdentityManager
-)
+from security.identity_manager import IdentityManager
 
 manager = IdentityManager()
 

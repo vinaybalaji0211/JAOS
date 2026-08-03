@@ -1,7 +1,4 @@
-from brain.provider_transparency import (
-    ProviderTransparency
-)
-
+from brain.provider_transparency import ProviderTransparency
 
 transparency = ProviderTransparency()
 

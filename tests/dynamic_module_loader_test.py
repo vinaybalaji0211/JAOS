@@ -1,6 +1,4 @@
-from brain.dynamic_module_loader import (
-    DynamicModuleLoader
-)
+from brain.dynamic_module_loader import DynamicModuleLoader
 
 loader = DynamicModuleLoader()
 

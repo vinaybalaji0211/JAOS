@@ -1,6 +1,4 @@
-from brain.agent_performance_analyzer import (
-    AgentPerformanceAnalyzer
-)
+from brain.agent_performance_analyzer import AgentPerformanceAnalyzer
 
 analyzer = AgentPerformanceAnalyzer()
 

@@ -1,7 +1,4 @@
-from brain.background_executive_observer import (
-    BackgroundExecutiveObserver
-)
-
+from brain.background_executive_observer import BackgroundExecutiveObserver
 
 observer = BackgroundExecutiveObserver()
 

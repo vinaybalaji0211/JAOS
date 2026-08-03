@@ -1,6 +1,5 @@
 from memory.memory_manager import MemoryManager
 
-
 manager = MemoryManager()
 
 manager.remember_short_term(

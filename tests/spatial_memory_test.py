@@ -1,6 +1,5 @@
 from brain.spatial_memory import SpatialMemory
 
-
 memory = SpatialMemory()
 
 memory.remember_location(

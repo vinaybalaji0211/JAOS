@@ -1,6 +1,4 @@
-from communication.communication_hub import (
-    CommunicationHub
-)
+from communication.communication_hub import CommunicationHub
 
 hub = CommunicationHub()
 

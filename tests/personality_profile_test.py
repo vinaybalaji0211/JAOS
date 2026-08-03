@@ -1,6 +1,4 @@
-from brain.personality_profile import (
-    PersonalityProfile
-)
+from brain.personality_profile import PersonalityProfile
 
 personality = PersonalityProfile()
 

@@ -1,6 +1,4 @@
-from pc_control.terminal_controller import (
-    TerminalController
-)
+from pc_control.terminal_controller import TerminalController
 
 terminal = TerminalController()
 

@@ -1,6 +1,5 @@
 from brain.context_manager import ContextManager
 
-
 context = ContextManager()
 
 context.update_context(

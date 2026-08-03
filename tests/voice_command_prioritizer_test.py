@@ -1,7 +1,4 @@
-from brain.voice_command_prioritizer import (
-    VoiceCommandPrioritizer
-)
-
+from brain.voice_command_prioritizer import VoiceCommandPrioritizer
 
 prioritizer = VoiceCommandPrioritizer()
 

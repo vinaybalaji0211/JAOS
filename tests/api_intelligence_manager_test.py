@@ -1,6 +1,4 @@
-from infrastructure.api_intelligence_manager import (
-    APIIntelligenceManager
-)
+from infrastructure.api_intelligence_manager import APIIntelligenceManager
 
 manager = APIIntelligenceManager()
 

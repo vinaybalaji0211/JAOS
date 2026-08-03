@@ -1,6 +1,5 @@
 from brain.goal_progress_tracker import GoalProgressTracker
 
-
 tracker = GoalProgressTracker()
 
 tracker.add_goal(

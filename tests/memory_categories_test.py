@@ -1,6 +1,5 @@
 from memory.memory_categories import MemoryCategories
 
-
 memory_1 = "Phase 3 architecture completed"
 
 memory_2 = "User prefers step-by-step guidance"

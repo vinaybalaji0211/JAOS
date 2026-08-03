@@ -1,6 +1,4 @@
-from brain.reflective_reasoning_engine import (
-    ReflectiveReasoningEngine
-)
+from brain.reflective_reasoning_engine import ReflectiveReasoningEngine
 
 engine = (
     ReflectiveReasoningEngine()

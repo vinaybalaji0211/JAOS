@@ -1,6 +1,4 @@
-from brain.continuous_learning_engine import (
-    ContinuousLearningEngine
-)
+from brain.continuous_learning_engine import ContinuousLearningEngine
 
 engine = (
     ContinuousLearningEngine()

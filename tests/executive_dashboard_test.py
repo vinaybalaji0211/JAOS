@@ -1,6 +1,5 @@
 from brain.executive_dashboard import ExecutiveDashboard
 
-
 ExecutiveDashboard.show(
     goal="Build Iron-Man-level JARVIS",
     task="Executive Brain",

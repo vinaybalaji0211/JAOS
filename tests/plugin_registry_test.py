@@ -1,6 +1,5 @@
 from brain.plugin_registry import PluginRegistry
 
-
 registry = PluginRegistry()
 
 registry.register_plugin(

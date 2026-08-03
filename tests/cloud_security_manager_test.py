@@ -1,6 +1,4 @@
-from brain.cloud_security_manager import (
-    CloudSecurityManager
-)
+from brain.cloud_security_manager import CloudSecurityManager
 
 manager = CloudSecurityManager()
 

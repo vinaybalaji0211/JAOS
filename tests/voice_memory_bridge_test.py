@@ -1,6 +1,4 @@
-from brain.voice_memory_bridge import (
-    VoiceMemoryBridge
-)
+from brain.voice_memory_bridge import VoiceMemoryBridge
 
 bridge = VoiceMemoryBridge()
 

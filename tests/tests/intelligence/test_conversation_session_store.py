@@ -19,7 +19,6 @@ from jaos.intelligence.conversation.in_memory_conversation_session_store import 
     InMemoryConversationSessionStore,
 )
 
-
 BASE_TIME = datetime(2026, 7, 20, 12, 0, tzinfo=timezone.utc)
 
 

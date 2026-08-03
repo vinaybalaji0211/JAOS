@@ -1,6 +1,4 @@
-from brain.hypothesis_generation_engine import (
-    HypothesisGenerationEngine
-)
+from brain.hypothesis_generation_engine import HypothesisGenerationEngine
 
 engine = (
     HypothesisGenerationEngine()

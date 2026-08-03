@@ -1,6 +1,5 @@
 from brain.goal_scheduler import GoalScheduler
 
-
 scheduler = GoalScheduler()
 
 scheduler.schedule_goal(

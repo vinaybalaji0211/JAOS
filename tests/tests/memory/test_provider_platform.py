@@ -18,7 +18,6 @@ from pathlib import Path
 
 import pytest
 
-from jaos.memory.storage.memory_store import MemoryStore
 from jaos.memory.providers.memory_provider import MemoryProvider
 from jaos.memory.providers.provider_capabilities import (
     ProviderCapabilities,
@@ -33,6 +32,7 @@ from jaos.memory.providers.provider_factory import ProviderFactory
 from jaos.memory.providers.provider_registry import ProviderRegistry
 from jaos.memory.providers.sqlite_provider import SQLiteProvider
 from jaos.memory.providers.sqlite_store import SQLiteStore
+from jaos.memory.storage.memory_store import MemoryStore
 
 
 class TestProviderCapabilities:

@@ -1,6 +1,4 @@
-from brain.gui_agent import (
-    GUIAgent
-)
+from brain.gui_agent import GUIAgent
 
 agent = GUIAgent()
 

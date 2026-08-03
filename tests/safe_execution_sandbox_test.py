@@ -1,7 +1,4 @@
-from brain.safe_execution_sandbox import (
-    SafeExecutionSandbox
-)
-
+from brain.safe_execution_sandbox import SafeExecutionSandbox
 
 SafeExecutionSandbox.show_level(
     "RUN_DIAGNOSTICS"

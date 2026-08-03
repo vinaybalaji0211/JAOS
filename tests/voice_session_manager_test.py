@@ -1,6 +1,5 @@
 from brain.voice_session_manager import VoiceSessionManager
 
-
 session = VoiceSessionManager()
 
 session.start_session(

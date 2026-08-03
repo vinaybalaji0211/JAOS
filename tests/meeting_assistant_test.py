@@ -1,6 +1,4 @@
-from communication.meeting_assistant import (
-    MeetingAssistant
-)
+from communication.meeting_assistant import MeetingAssistant
 
 assistant = MeetingAssistant()
 

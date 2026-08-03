@@ -1,6 +1,4 @@
-from brain.embodied_intelligence_core import (
-    EmbodiedIntelligenceCore
-)
+from brain.embodied_intelligence_core import EmbodiedIntelligenceCore
 
 core = EmbodiedIntelligenceCore()
 

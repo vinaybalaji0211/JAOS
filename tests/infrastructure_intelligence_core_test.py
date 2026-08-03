@@ -1,5 +1,5 @@
 from infrastructure.infrastructure_intelligence_core import (
-    InfrastructureIntelligenceCore
+    InfrastructureIntelligenceCore,
 )
 
 core = (

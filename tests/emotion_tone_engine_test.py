@@ -1,7 +1,4 @@
-from brain.emotion_tone_engine import (
-    EmotionToneEngine
-)
-
+from brain.emotion_tone_engine import EmotionToneEngine
 
 EmotionToneEngine.show_tone(
     "system success",

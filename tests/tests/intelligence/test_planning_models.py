@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import json
 from dataclasses import FrozenInstanceError
-from datetime import datetime
 
 import pytest
 

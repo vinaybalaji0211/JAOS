@@ -1,6 +1,5 @@
 from core.session_manager import SessionManager
 
-
 session = SessionManager()
 
 session.add_event(

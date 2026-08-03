@@ -1,6 +1,4 @@
-from brain.tool_core import (
-    ToolCore
-)
+from brain.tool_core import ToolCore
 
 core = ToolCore()
 

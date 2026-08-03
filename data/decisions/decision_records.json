@@ -142,5 +142,521 @@
         "decision": "Use Reasoning Engine",
         "reason": "The plan needs high-level reasoning before validation",
         "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:40:21",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:40:21",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:42:43",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:42:43",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:43:15",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:43:15",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:43:52",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:43:52",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:45:49",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:45:49",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:52:05",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 21:52:05",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:05:29",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:05:29",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:05:29",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:05:29",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:05:31",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:05:31",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:06:21",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:06:21",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:29:01",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:29:01",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:30:44",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 22:30:44",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 17:03:23",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 17:03:23",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 17:58:28",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 17:58:28",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 17:59:24",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 17:59:24",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:00:11",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:00:11",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:00:55",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:00:55",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:02:41",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:02:41",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:03:54",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:03:54",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:07:40",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:07:40",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:08:28",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:08:28",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:09:26",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:09:26",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:10:20",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:10:20",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:11:28",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:11:28",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:14:08",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:14:08",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:15:20",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:15:20",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:19:16",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:19:16",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:20:29",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:20:29",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:22:02",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:22:02",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:23:47",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:23:47",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:23:54",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:23:54",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:28:34",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:28:34",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:30:03",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:30:03",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:30:11",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:30:11",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:30:37",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:30:37",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:38:10",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:38:10",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:39:53",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:39:53",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:40:59",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:40:59",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:41:14",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:41:14",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:41:24",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:41:24",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:42:03",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:42:03",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:42:15",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:42:15",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:45:19",
+        "decision": "Use Planner Engine",
+        "reason": "The user gave a goal that requires step-by-step planning",
+        "confidence": "HIGH"
+    },
+    {
+        "timestamp": "2026-08-03 18:45:19",
+        "decision": "Use Reasoning Engine",
+        "reason": "The plan needs high-level reasoning before validation",
+        "confidence": "HIGH"
     }
 ]

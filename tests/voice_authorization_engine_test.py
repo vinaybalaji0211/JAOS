@@ -1,6 +1,4 @@
-from brain.voice_authorization_engine import (
-    VoiceAuthorizationEngine
-)
+from brain.voice_authorization_engine import VoiceAuthorizationEngine
 
 engine = VoiceAuthorizationEngine()
 

@@ -1,6 +1,5 @@
 from brain.goal_stack import GoalStack
 
-
 stack = GoalStack()
 
 stack.add_goal(

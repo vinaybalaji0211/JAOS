@@ -1,6 +1,4 @@
-from dashboard.platform_status_dashboard import (
-    PlatformStatusDashboard
-)
+from dashboard.platform_status_dashboard import PlatformStatusDashboard
 
 dashboard = PlatformStatusDashboard()
 

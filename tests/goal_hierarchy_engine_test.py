@@ -1,7 +1,4 @@
-from brain.goal_hierarchy_engine import (
-    GoalHierarchyEngine
-)
-
+from brain.goal_hierarchy_engine import GoalHierarchyEngine
 
 engine = GoalHierarchyEngine()
 

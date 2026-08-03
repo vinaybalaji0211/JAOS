@@ -9,10 +9,7 @@ class ResponseTimingEngine:
             silence_duration,
             interruption_detected=False):
 
-        if interruption_detected:
-            decision = "WAIT"
-
-        elif voice_activity == "SPEAKING":
+        if interruption_detected or voice_activity == "SPEAKING":
             decision = "WAIT"
 
         elif voice_activity == "POSSIBLE_SPEECH":

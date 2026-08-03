@@ -1,6 +1,4 @@
-from brain.self_code_generator import (
-    SelfCodeGenerator
-)
+from brain.self_code_generator import SelfCodeGenerator
 
 generator = SelfCodeGenerator()
 

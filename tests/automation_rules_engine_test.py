@@ -1,6 +1,4 @@
-from workflow.automation_rules_engine import (
-    AutomationRulesEngine
-)
+from workflow.automation_rules_engine import AutomationRulesEngine
 
 engine = AutomationRulesEngine()
 

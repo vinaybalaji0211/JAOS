@@ -1,6 +1,4 @@
-from brain.agent_blueprint_designer import (
-    AgentBlueprintDesigner
-)
+from brain.agent_blueprint_designer import AgentBlueprintDesigner
 
 designer = (
     AgentBlueprintDesigner()

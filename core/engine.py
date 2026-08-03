@@ -1,19 +1,19 @@
-from logs.logger import logger
-from core.module_loader import ModuleLoader
-from core.event_system import EventSystem
-from core.error_handler import ErrorHandler
-from core.health_monitor import HealthMonitor
-from core.snapshot_manager import SnapshotManager
-from core.recovery_manager import RecoveryManager
 from core.action_history import ActionHistory
-from core.plugin_manager import PluginManager
-from core.diagnostics import Diagnostics
-from core.status_manager import StatusManager
-from core.config_manager import ConfigManager
 from core.command_system import CommandSystem
+from core.config_manager import ConfigManager
+from core.diagnostics import Diagnostics
+from core.error_handler import ErrorHandler
+from core.event_system import EventSystem
+from core.health_monitor import HealthMonitor
+from core.module_loader import ModuleLoader
+from core.plugin_manager import PluginManager
+from core.recovery_manager import RecoveryManager
+from core.snapshot_manager import SnapshotManager
+from core.status_manager import StatusManager
 from core.version_manager import VersionManager
-from tests.test_runner import TestRunner
 from jaos_platform.platform_runtime import PlatformRuntime
+from logs.logger import logger
+from tests.test_runner import TestRunner
 
 
 class JarvisEngine:

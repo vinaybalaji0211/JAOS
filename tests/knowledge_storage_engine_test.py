@@ -1,6 +1,4 @@
-from brain.knowledge_storage_engine import (
-    KnowledgeStorageEngine
-)
+from brain.knowledge_storage_engine import KnowledgeStorageEngine
 
 engine = KnowledgeStorageEngine()
 

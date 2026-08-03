@@ -1,6 +1,4 @@
-from brain.unsupported_request_logger import (
-    UnsupportedRequestLogger
-)
+from brain.unsupported_request_logger import UnsupportedRequestLogger
 
 logger = (
     UnsupportedRequestLogger()

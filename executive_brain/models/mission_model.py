@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
-from typing import Optional
+
 from executive_brain.common.enums import LifecycleStatus
 
 
@@ -12,7 +12,7 @@ class MissionModel:
     progress: float = 0.0
     current_step: int = 0
     total_steps: int = 0
-    related_goal_id: Optional[str] = None
+    related_goal_id: str | None = None
     steps: list = field(default_factory=list)
     mission_id: str = field(default_factory=lambda: f"MIS-{uuid4()}")
     created_at: datetime = field(default_factory=datetime.now)

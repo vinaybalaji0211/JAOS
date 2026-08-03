@@ -1,6 +1,4 @@
-from brain.knowledge_acquisition_core import (
-    KnowledgeAcquisitionCore
-)
+from brain.knowledge_acquisition_core import KnowledgeAcquisitionCore
 
 core = (
     KnowledgeAcquisitionCore()

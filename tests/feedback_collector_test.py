@@ -1,6 +1,4 @@
-from brain.feedback_collector import (
-    FeedbackCollector
-)
+from brain.feedback_collector import FeedbackCollector
 
 collector = FeedbackCollector()
 

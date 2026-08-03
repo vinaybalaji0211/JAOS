@@ -1,6 +1,4 @@
-from communication.conversation_manager import (
-    ConversationManager
-)
+from communication.conversation_manager import ConversationManager
 
 manager = ConversationManager()
 

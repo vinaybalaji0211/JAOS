@@ -1,6 +1,4 @@
-from brain.application_skill_learner import (
-    ApplicationSkillLearner
-)
+from brain.application_skill_learner import ApplicationSkillLearner
 
 learner = ApplicationSkillLearner()
 

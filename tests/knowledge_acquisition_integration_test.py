@@ -1,26 +1,9 @@
-from brain.knowledge_acquisition_core import (
-    KnowledgeAcquisitionCore
-)
-
-from brain.resource_discovery_engine import (
-    ResourceDiscoveryEngine
-)
-
-from brain.web_learning_engine import (
-    WebLearningEngine
-)
-
-from brain.research_paper_learning_engine import (
-    ResearchPaperLearningEngine
-)
-
-from brain.knowledge_validation_engine import (
-    KnowledgeValidationEngine
-)
-
-from brain.knowledge_extraction_engine import (
-    KnowledgeExtractionEngine
-)
+from brain.knowledge_acquisition_core import KnowledgeAcquisitionCore
+from brain.knowledge_extraction_engine import KnowledgeExtractionEngine
+from brain.knowledge_validation_engine import KnowledgeValidationEngine
+from brain.research_paper_learning_engine import ResearchPaperLearningEngine
+from brain.resource_discovery_engine import ResourceDiscoveryEngine
+from brain.web_learning_engine import WebLearningEngine
 
 print(
     "\n=== KNOWLEDGE ACQUISITION INTEGRATION TEST ===\n"

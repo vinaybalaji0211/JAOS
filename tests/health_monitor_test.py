@@ -1,6 +1,4 @@
-from brain.health_monitor import (
-    HealthMonitor
-)
+from brain.health_monitor import HealthMonitor
 
 monitor = HealthMonitor()
 

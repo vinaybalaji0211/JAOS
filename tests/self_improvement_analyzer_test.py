@@ -1,6 +1,4 @@
-from brain.self_improvement_analyzer import (
-    SelfImprovementAnalyzer
-)
+from brain.self_improvement_analyzer import SelfImprovementAnalyzer
 
 analyzer = SelfImprovementAnalyzer()
 

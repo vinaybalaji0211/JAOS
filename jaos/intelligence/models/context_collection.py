@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Iterable
 
 from jaos.intelligence.models.context import Context
 from jaos.intelligence.models.context_priority import ContextPriority
@@ -117,7 +117,7 @@ class ContextCollection:
     def from_iterable(
         cls,
         contexts: Iterable[Context],
-    ) -> "ContextCollection":
+    ) -> ContextCollection:
         """Construct a collection from any iterable."""
 
         return cls(tuple(contexts))

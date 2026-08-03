@@ -1,6 +1,4 @@
-from kernel.kernel_health_monitor import (
-    KernelHealthMonitor
-)
+from kernel.kernel_health_monitor import KernelHealthMonitor
 
 monitor = KernelHealthMonitor()
 

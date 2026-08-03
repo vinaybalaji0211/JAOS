@@ -1,6 +1,4 @@
-from brain.multi_microphone_support import (
-    MultiMicrophoneSupport
-)
+from brain.multi_microphone_support import MultiMicrophoneSupport
 
 system = MultiMicrophoneSupport()
 

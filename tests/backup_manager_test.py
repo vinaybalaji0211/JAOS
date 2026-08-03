@@ -1,6 +1,4 @@
-from system_services.backup_manager import (
-    BackupManager
-)
+from system_services.backup_manager import BackupManager
 
 manager = BackupManager()
 

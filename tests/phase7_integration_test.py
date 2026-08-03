@@ -1,9 +1,8 @@
 from brain.conversation_manager import ConversationManager
-from brain.personality_profile import PersonalityProfile
 from brain.emotion_model import EmotionModel
-from brain.voice_system import VoiceSystem
 from brain.human_memory_layer import HumanMemoryLayer
-
+from brain.personality_profile import PersonalityProfile
+from brain.voice_system import VoiceSystem
 
 print("\n=== PHASE 7 INTEGRATION TEST ===\n")
 

@@ -16,7 +16,6 @@ from jaos.intelligence import (
     ReasoningEngine,
 )
 
-
 INTERFACE_TYPES = (
     IntelligenceComponent,
     IntelligenceContextManager,

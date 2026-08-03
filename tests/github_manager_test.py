@@ -1,6 +1,4 @@
-from development.github_manager import (
-    GitHubManager
-)
+from development.github_manager import GitHubManager
 
 github = GitHubManager()
 

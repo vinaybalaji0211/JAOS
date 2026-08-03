@@ -1,6 +1,4 @@
-from brain.consensus_engine import (
-    ConsensusEngine
-)
+from brain.consensus_engine import ConsensusEngine
 
 engine = (
     ConsensusEngine()

@@ -1,6 +1,4 @@
-from brain.vision_manager import (
-    VisionManager
-)
+from brain.vision_manager import VisionManager
 
 vision = VisionManager()
 

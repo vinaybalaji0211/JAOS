@@ -1,6 +1,5 @@
 from brain.goal_conflict_resolver import GoalConflictResolver
 
-
 goal_a = {
     "name": "Train model",
     "resource": "GPU",

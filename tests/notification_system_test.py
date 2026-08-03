@@ -1,6 +1,5 @@
 from core.notification_system import NotificationSystem
 
-
 notifications = NotificationSystem()
 
 notifications.notify(

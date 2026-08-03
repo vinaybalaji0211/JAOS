@@ -1,6 +1,4 @@
-from brain.voice_activity_detector import (
-    VoiceActivityDetector
-)
+from brain.voice_activity_detector import VoiceActivityDetector
 
 VoiceActivityDetector.show_state(5)
 

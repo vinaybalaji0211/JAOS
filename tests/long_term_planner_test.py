@@ -1,6 +1,5 @@
 from brain.long_term_planner import LongTermPlanner
 
-
 planner = LongTermPlanner()
 
 planner.add_plan(

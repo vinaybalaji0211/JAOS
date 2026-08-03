@@ -1,6 +1,4 @@
-from brain.emotion_model import (
-    EmotionModel
-)
+from brain.emotion_model import EmotionModel
 
 emotion = EmotionModel()
 

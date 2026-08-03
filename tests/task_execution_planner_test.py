@@ -1,6 +1,4 @@
-from brain.task_execution_planner import (
-    TaskExecutionPlanner
-)
+from brain.task_execution_planner import TaskExecutionPlanner
 
 planner = TaskExecutionPlanner()
 

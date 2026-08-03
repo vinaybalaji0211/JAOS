@@ -20,7 +20,6 @@ from jaos.intelligence.models import (
     IntelligenceRequest,
 )
 
-
 SessionResolver = Callable[[str], ConversationSession | None]
 
 

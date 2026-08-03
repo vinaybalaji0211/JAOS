@@ -2,7 +2,6 @@
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Optional
 
 
 @dataclass(frozen=True, slots=True)
@@ -10,7 +9,7 @@ class MemoryStatistics:
     """Tracks access-related statistics for a memory record."""
 
     access_count: int = 0
-    last_accessed_at: Optional[datetime] = None
+    last_accessed_at: datetime | None = None
 
     def __post_init__(self) -> None:
         """Validate statistics invariants."""

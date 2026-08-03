@@ -1,6 +1,4 @@
-from brain.feature_request_intelligence import (
-    FeatureRequestIntelligence
-)
+from brain.feature_request_intelligence import FeatureRequestIntelligence
 
 engine = FeatureRequestIntelligence()
 

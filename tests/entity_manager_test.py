@@ -1,6 +1,4 @@
-from brain.entity_manager import (
-    EntityManager
-)
+from brain.entity_manager import EntityManager
 
 manager = EntityManager()
 

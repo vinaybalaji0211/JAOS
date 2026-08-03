@@ -1,6 +1,4 @@
-from brain.emergency_override_handler import (
-    EmergencyOverrideHandler
-)
+from brain.emergency_override_handler import EmergencyOverrideHandler
 
 handler = EmergencyOverrideHandler()
 

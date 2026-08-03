@@ -1,6 +1,5 @@
 from core.permission_system import PermissionSystem
 
-
 permissions = PermissionSystem()
 
 permissions.show_permissions()

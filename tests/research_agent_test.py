@@ -1,6 +1,5 @@
 from brain.research_agent import ResearchAgent
 
-
 agent = ResearchAgent()
 
 agent.show_capabilities()

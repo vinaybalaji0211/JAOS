@@ -1,6 +1,5 @@
 from brain.camera_awareness import CameraAwareness
 
-
 camera = CameraAwareness()
 
 camera.show_status()

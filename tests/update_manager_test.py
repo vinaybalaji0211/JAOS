@@ -1,6 +1,4 @@
-from system_services.update_manager import (
-    UpdateManager
-)
+from system_services.update_manager import UpdateManager
 
 manager = UpdateManager()
 

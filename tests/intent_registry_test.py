@@ -1,7 +1,6 @@
-from executive_brain.common.enums import Priority, LifecycleStatus
+from executive_brain.common.enums import LifecycleStatus, Priority
 from executive_brain.models.intent_model import IntentModel
 from executive_brain.registries.intent_registry import IntentRegistry
-
 
 registry = IntentRegistry()
 

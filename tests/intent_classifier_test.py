@@ -1,7 +1,4 @@
-from brain.intent_classifier import (
-    IntentClassifier
-)
-
+from brain.intent_classifier import IntentClassifier
 
 IntentClassifier.show_intent(
     "Build an independent AI operating system"

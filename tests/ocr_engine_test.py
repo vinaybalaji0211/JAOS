@@ -1,6 +1,5 @@
 from brain.ocr_engine import OCREngine
 
-
 ocr = OCREngine()
 
 ocr.show_status()

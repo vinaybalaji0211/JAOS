@@ -1,6 +1,4 @@
-from brain.knowledge_gap_mapper import (
-    KnowledgeGapMapper
-)
+from brain.knowledge_gap_mapper import KnowledgeGapMapper
 
 mapper = KnowledgeGapMapper()
 

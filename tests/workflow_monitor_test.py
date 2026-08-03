@@ -1,6 +1,4 @@
-from workflow.workflow_monitor import (
-    WorkflowMonitor
-)
+from workflow.workflow_monitor import WorkflowMonitor
 
 monitor = WorkflowMonitor()
 

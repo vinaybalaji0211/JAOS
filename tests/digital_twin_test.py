@@ -1,6 +1,5 @@
 from brain.digital_twin import DigitalTwin
 
-
 DigitalTwin.show_simulation(
     plan_steps=[
         "Understand task",

@@ -1,6 +1,5 @@
 from brain.decision_record import DecisionRecord
 
-
 DecisionRecord.record(
     "Use Planner Engine",
     "The user gave a goal that requires step-by-step planning",

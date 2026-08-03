@@ -1,6 +1,4 @@
-from dashboard.notification_center import (
-    NotificationCenter
-)
+from dashboard.notification_center import NotificationCenter
 
 center = NotificationCenter()
 

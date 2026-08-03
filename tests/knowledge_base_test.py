@@ -1,6 +1,4 @@
-from knowledge.knowledge_base import (
-    KnowledgeBase
-)
+from knowledge.knowledge_base import KnowledgeBase
 
 kb = KnowledgeBase()
 

@@ -1,7 +1,4 @@
-from brain.knowledge_conflict_detector import (
-    KnowledgeConflictDetector
-)
-
+from brain.knowledge_conflict_detector import KnowledgeConflictDetector
 
 conflict_pairs = [
 

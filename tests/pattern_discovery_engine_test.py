@@ -1,6 +1,4 @@
-from brain.pattern_discovery_engine import (
-    PatternDiscoveryEngine
-)
+from brain.pattern_discovery_engine import PatternDiscoveryEngine
 
 events = [
 

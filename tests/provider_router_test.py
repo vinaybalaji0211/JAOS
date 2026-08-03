@@ -1,6 +1,5 @@
 from brain.provider_router import ProviderRouter
 
-
 router = ProviderRouter()
 
 router.show_providers()

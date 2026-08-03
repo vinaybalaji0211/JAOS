@@ -1,7 +1,4 @@
-from brain.secrets_manager import (
-    SecretsManager
-)
-
+from brain.secrets_manager import SecretsManager
 
 manager = SecretsManager()
 

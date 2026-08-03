@@ -1,6 +1,4 @@
-from brain.error_recovery_engine import (
-    ErrorRecoveryEngine
-)
+from brain.error_recovery_engine import ErrorRecoveryEngine
 
 engine = ErrorRecoveryEngine()
 

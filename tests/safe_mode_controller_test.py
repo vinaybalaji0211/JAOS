@@ -1,6 +1,4 @@
-from brain.safe_mode_controller import (
-    SafeModeController
-)
+from brain.safe_mode_controller import SafeModeController
 
 controller = (
     SafeModeController()

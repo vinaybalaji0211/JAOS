@@ -1,6 +1,4 @@
-from brain.multi_agent_coordinator import (
-    MultiAgentCoordinator
-)
+from brain.multi_agent_coordinator import MultiAgentCoordinator
 
 coordinator = (
     MultiAgentCoordinator()

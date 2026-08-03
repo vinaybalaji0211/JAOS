@@ -1,6 +1,4 @@
-from brain.resource_discovery_engine import (
-    ResourceDiscoveryEngine
-)
+from brain.resource_discovery_engine import ResourceDiscoveryEngine
 
 engine = (
     ResourceDiscoveryEngine()

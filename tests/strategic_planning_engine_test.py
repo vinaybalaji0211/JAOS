@@ -1,6 +1,4 @@
-from brain.strategic_planning_engine import (
-    StrategicPlanningEngine
-)
+from brain.strategic_planning_engine import StrategicPlanningEngine
 
 engine = (
     StrategicPlanningEngine()

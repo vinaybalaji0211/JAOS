@@ -1,6 +1,4 @@
-from engineering.platform_registry import (
-    PlatformRegistry
-)
+from engineering.platform_registry import PlatformRegistry
 
 registry = PlatformRegistry()
 

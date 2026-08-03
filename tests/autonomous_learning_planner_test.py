@@ -1,6 +1,4 @@
-from brain.autonomous_learning_planner import (
-    AutonomousLearningPlanner
-)
+from brain.autonomous_learning_planner import AutonomousLearningPlanner
 
 planner = (
     AutonomousLearningPlanner()

@@ -1,6 +1,5 @@
 from core.capability_registry import CapabilityRegistry
 
-
 registry = CapabilityRegistry()
 
 registry.register_capability(

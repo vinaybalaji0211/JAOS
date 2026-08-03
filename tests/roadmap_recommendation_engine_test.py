@@ -1,6 +1,4 @@
-from brain.roadmap_recommendation_engine import (
-    RoadmapRecommendationEngine
-)
+from brain.roadmap_recommendation_engine import RoadmapRecommendationEngine
 
 engine = (
     RoadmapRecommendationEngine()

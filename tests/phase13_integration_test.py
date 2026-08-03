@@ -1,17 +1,9 @@
-from brain.daemon_mode import DaemonMode
+from brain.automatic_recovery import AutomaticRecovery
+from brain.background_executive_observer import BackgroundExecutiveObserver
 from brain.continuous_monitor import ContinuousMonitor
-from brain.background_executive_observer import (
-    BackgroundExecutiveObserver
-)
-from brain.maintenance_scheduler import (
-    MaintenanceScheduler
-)
-from brain.memory_consolidation import (
-    MemoryConsolidation
-)
-from brain.automatic_recovery import (
-    AutomaticRecovery
-)
+from brain.daemon_mode import DaemonMode
+from brain.maintenance_scheduler import MaintenanceScheduler
+from brain.memory_consolidation import MemoryConsolidation
 
 print("\n=== PHASE 13 INTEGRATION TEST ===\n")
 

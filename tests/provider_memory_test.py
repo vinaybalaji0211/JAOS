@@ -1,6 +1,5 @@
 from brain.provider_memory import ProviderMemory
 
-
 ProviderMemory.record_result(
     "openai",
     "coding",

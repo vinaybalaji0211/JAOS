@@ -1,6 +1,5 @@
 from brain.reasoning_trace_logger import ReasoningTraceLogger
 
-
 ReasoningTraceLogger.record(
     "Use memory search",
     "The user asked about previous project progress"

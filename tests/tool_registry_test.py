@@ -1,6 +1,4 @@
-from brain.tool_registry import (
-    ToolRegistry
-)
+from brain.tool_registry import ToolRegistry
 
 registry = (
     ToolRegistry()

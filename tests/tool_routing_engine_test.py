@@ -1,6 +1,4 @@
-from brain.tool_routing_engine import (
-    ToolRoutingEngine
-)
+from brain.tool_routing_engine import ToolRoutingEngine
 
 router = (
     ToolRoutingEngine()

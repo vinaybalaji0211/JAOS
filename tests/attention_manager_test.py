@@ -1,7 +1,4 @@
-from brain.attention_manager import (
-    AttentionManager
-)
-
+from brain.attention_manager import AttentionManager
 
 attention = AttentionManager()
 

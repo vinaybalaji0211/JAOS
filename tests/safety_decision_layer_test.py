@@ -1,7 +1,4 @@
-from brain.safety_decision_layer import (
-    SafetyDecisionLayer
-)
-
+from brain.safety_decision_layer import SafetyDecisionLayer
 
 print("\nSafe Task")
 

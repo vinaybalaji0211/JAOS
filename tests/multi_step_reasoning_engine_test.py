@@ -1,6 +1,4 @@
-from brain.multi_step_reasoning_engine import (
-    MultiStepReasoningEngine
-)
+from brain.multi_step_reasoning_engine import MultiStepReasoningEngine
 
 engine = MultiStepReasoningEngine()
 

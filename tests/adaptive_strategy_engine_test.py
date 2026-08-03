@@ -1,6 +1,4 @@
-from brain.adaptive_strategy_engine import (
-    AdaptiveStrategyEngine
-)
+from brain.adaptive_strategy_engine import AdaptiveStrategyEngine
 
 engine = AdaptiveStrategyEngine()
 

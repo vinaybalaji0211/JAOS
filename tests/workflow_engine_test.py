@@ -1,6 +1,4 @@
-from workflow.workflow_engine import (
-    WorkflowEngine
-)
+from workflow.workflow_engine import WorkflowEngine
 
 engine = WorkflowEngine()
 

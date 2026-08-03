@@ -1,6 +1,4 @@
-from kernel.kernel_permission_gateway import (
-    KernelPermissionGateway
-)
+from kernel.kernel_permission_gateway import KernelPermissionGateway
 
 gateway = KernelPermissionGateway()
 

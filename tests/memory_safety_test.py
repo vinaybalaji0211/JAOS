@@ -1,6 +1,5 @@
 from memory.memory_safety import MemorySafety
 
-
 memory_1 = (
 
     "Phase 3 architecture completed"

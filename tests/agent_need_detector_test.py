@@ -1,6 +1,4 @@
-from brain.agent_need_detector import (
-    AgentNeedDetector
-)
+from brain.agent_need_detector import AgentNeedDetector
 
 detector = AgentNeedDetector()
 

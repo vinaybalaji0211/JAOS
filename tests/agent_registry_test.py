@@ -1,6 +1,5 @@
 from brain.agent_registry import AgentRegistry
 
-
 registry = AgentRegistry()
 
 registry.register_agent(

@@ -1,6 +1,5 @@
 from brain.decision_engine import DecisionEngine
 
-
 options = [
     {
         "name": "Use OpenAI",

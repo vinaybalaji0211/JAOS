@@ -1,6 +1,4 @@
-from brain.agent_memory_sync_manager import (
-    AgentMemorySyncManager
-)
+from brain.agent_memory_sync_manager import AgentMemorySyncManager
 
 manager = (
     AgentMemorySyncManager()

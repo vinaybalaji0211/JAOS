@@ -1,6 +1,5 @@
 from brain.skill_system import SkillSystem
 
-
 skills = SkillSystem()
 
 skills.install_skill(

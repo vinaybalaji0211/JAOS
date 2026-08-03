@@ -1,6 +1,4 @@
-from brain.task_delegation_engine import (
-    TaskDelegationEngine
-)
+from brain.task_delegation_engine import TaskDelegationEngine
 
 engine = (
     TaskDelegationEngine()

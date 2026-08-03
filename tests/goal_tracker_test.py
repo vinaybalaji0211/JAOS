@@ -1,6 +1,5 @@
 from brain.goal_tracker import GoalTracker
 
-
 GoalTracker.add_goal(
     "Build JARVIS OS as an independent 24/7 AI Operating System"
 )

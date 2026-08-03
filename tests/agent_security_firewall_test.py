@@ -1,6 +1,4 @@
-from brain.agent_security_firewall import (
-    AgentSecurityFirewall
-)
+from brain.agent_security_firewall import AgentSecurityFirewall
 
 firewall = AgentSecurityFirewall()
 

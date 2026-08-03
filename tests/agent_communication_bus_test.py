@@ -1,6 +1,4 @@
-from brain.agent_communication_bus import (
-    AgentCommunicationBus
-)
+from brain.agent_communication_bus import AgentCommunicationBus
 
 bus = AgentCommunicationBus()
 

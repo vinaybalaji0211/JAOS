@@ -1,7 +1,4 @@
-from brain.author_approval_lock import (
-    AuthorApprovalLock
-)
-
+from brain.author_approval_lock import AuthorApprovalLock
 
 AuthorApprovalLock.show_access(
     requester="Vinay",

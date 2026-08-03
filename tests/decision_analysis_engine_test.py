@@ -1,6 +1,4 @@
-from brain.decision_analysis_engine import (
-    DecisionAnalysisEngine
-)
+from brain.decision_analysis_engine import DecisionAnalysisEngine
 
 engine = (
     DecisionAnalysisEngine()

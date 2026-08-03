@@ -13,10 +13,10 @@ from jaos.ai.prompt.prompt_models import (
 
 __all__ = [
     "CompiledPrompt",
+    "PromptBuildRequest",
     "PromptBuilder",
     "PromptContributor",
     "PromptManager",
-    "PromptBuildRequest",
     "PromptSection",
     "PromptSectionType",
     "StaticPromptContributor",

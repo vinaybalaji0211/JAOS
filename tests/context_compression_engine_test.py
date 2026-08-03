@@ -1,6 +1,4 @@
-from brain.context_compression_engine import (
-    ContextCompressionEngine
-)
+from brain.context_compression_engine import ContextCompressionEngine
 
 context = [
     "Step 76 complete",

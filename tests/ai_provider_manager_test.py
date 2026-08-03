@@ -1,6 +1,4 @@
-from infrastructure.ai_provider_manager import (
-    AIProviderManager
-)
+from infrastructure.ai_provider_manager import AIProviderManager
 
 manager = AIProviderManager()
 

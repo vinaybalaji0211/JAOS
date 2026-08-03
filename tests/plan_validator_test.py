@@ -1,6 +1,5 @@
 from brain.plan_validator import PlanValidator
 
-
 plan = [
     "Understand the task",
     "Break task into steps",

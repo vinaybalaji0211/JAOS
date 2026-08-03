@@ -1,15 +1,14 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Optional
 
 
 @dataclass
 class WorkingMemory:
-    current_user_request: Optional[str] = None
-    current_mission_id: Optional[str] = None
-    current_execution_plan_id: Optional[str] = None
-    current_decision_id: Optional[str] = None
-    current_result_id: Optional[str] = None
+    current_user_request: str | None = None
+    current_mission_id: str | None = None
+    current_execution_plan_id: str | None = None
+    current_decision_id: str | None = None
+    current_result_id: str | None = None
     active_context: dict = field(default_factory=dict)
     updated_at: datetime = field(default_factory=datetime.now)
 

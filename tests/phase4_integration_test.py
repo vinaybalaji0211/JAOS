@@ -1,15 +1,14 @@
-from brain.risk_evaluator import RiskEvaluator
-from brain.reality_awareness_layer import RealityAwarenessLayer
-from brain.resource_awareness_engine import ResourceAwarenessEngine
-from brain.time_awareness_layer import TimeAwarenessLayer
-from brain.supervisor_agent import SupervisorAgent
-from brain.knowledge_conflict_detector import KnowledgeConflictDetector
 from brain.confidence_estimator import ConfidenceEstimator
-from brain.safety_decision_layer import SafetyDecisionLayer
-from brain.reflection_engine import ReflectionEngine
 from brain.feedback_collector import FeedbackCollector
+from brain.knowledge_conflict_detector import KnowledgeConflictDetector
 from brain.meta_cognition import MetaCognition
-
+from brain.reality_awareness_layer import RealityAwarenessLayer
+from brain.reflection_engine import ReflectionEngine
+from brain.resource_awareness_engine import ResourceAwarenessEngine
+from brain.risk_evaluator import RiskEvaluator
+from brain.safety_decision_layer import SafetyDecisionLayer
+from brain.supervisor_agent import SupervisorAgent
+from brain.time_awareness_layer import TimeAwarenessLayer
 
 print("\n=== PHASE 4 INTEGRATION TEST ===")
 

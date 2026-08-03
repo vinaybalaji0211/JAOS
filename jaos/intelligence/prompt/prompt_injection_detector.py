@@ -6,7 +6,6 @@ import re
 from dataclasses import dataclass
 from typing import Any
 
-
 _INJECTION_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     (
         "ignore_previous_instructions",

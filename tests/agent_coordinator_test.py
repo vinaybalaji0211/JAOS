@@ -1,6 +1,5 @@
 from brain.agent_coordinator import AgentCoordinator
 
-
 coordinator = AgentCoordinator()
 
 coordinator.assign_task(

@@ -1,6 +1,5 @@
 from brain.agent_marketplace import AgentMarketplace
 
-
 market = AgentMarketplace()
 
 market.add_agent("Coder Agent", "1.0", "coding")

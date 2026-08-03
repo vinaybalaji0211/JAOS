@@ -1,10 +1,10 @@
 from pc_control.application_manager import ApplicationManager
-from pc_control.window_manager import WindowManager
-from pc_control.file_system_manager import FileSystemManager
-from pc_control.terminal_controller import TerminalController
 from pc_control.browser_controller import BrowserController
-from pc_control.system_monitor import SystemMonitor
+from pc_control.file_system_manager import FileSystemManager
 from pc_control.notification_manager import NotificationManager
+from pc_control.system_monitor import SystemMonitor
+from pc_control.terminal_controller import TerminalController
+from pc_control.window_manager import WindowManager
 
 print("\n===== PC CONTROL PLATFORM TEST =====\n")
 

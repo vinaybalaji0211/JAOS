@@ -1,6 +1,5 @@
 from brain.voice_core import VoiceCore
 
-
 voice = VoiceCore()
 
 voice.enable_voice()

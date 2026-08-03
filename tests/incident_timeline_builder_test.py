@@ -1,6 +1,4 @@
-from brain.incident_timeline_builder import (
-    IncidentTimelineBuilder
-)
+from brain.incident_timeline_builder import IncidentTimelineBuilder
 
 builder = (
     IncidentTimelineBuilder()

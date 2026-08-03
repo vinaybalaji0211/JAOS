@@ -1,6 +1,4 @@
-from brain.cloud_knowledge_synchronizer import (
-    CloudKnowledgeSynchronizer
-)
+from brain.cloud_knowledge_synchronizer import CloudKnowledgeSynchronizer
 
 sync = (
     CloudKnowledgeSynchronizer()

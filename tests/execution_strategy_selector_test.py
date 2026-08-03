@@ -1,7 +1,4 @@
-from brain.execution_strategy_selector import (
-    ExecutionStrategySelector
-)
-
+from brain.execution_strategy_selector import ExecutionStrategySelector
 
 ExecutionStrategySelector.show_strategy(
     task_count=2,

@@ -1,5 +1,5 @@
-from memory.memory_search import MemorySearch
 from logs.logger import logger
+from memory.memory_search import MemorySearch
 
 
 class MemoryReuse:

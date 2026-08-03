@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from uuid import uuid4
-from typing import Optional
+
 from executive_brain.common.enums import LifecycleStatus
 
 
@@ -10,7 +10,7 @@ class ExecutionPlanModel:
     target_platform: str
     target_service: str
     status: LifecycleStatus = LifecycleStatus.CREATED
-    related_mission_id: Optional[str] = None
+    related_mission_id: str | None = None
 
     execution_plan_id: str = field(
         default_factory=lambda: f"PLAN-{uuid4()}"

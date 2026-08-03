@@ -1,14 +1,13 @@
+from brain.agent_marketplace import AgentMarketplace
+from brain.author_approval_lock import AuthorApprovalLock
+from brain.command_risk_scanner import CommandRiskScanner
+from brain.dependency_manager import DependencyManager
+from brain.intrusion_alert_system import IntrusionAlertSystem
 from brain.plugin_manager import PluginManager
 from brain.plugin_registry import PluginRegistry
 from brain.plugin_trust_manager import PluginTrustManager
-from brain.command_risk_scanner import CommandRiskScanner
-from brain.author_approval_lock import AuthorApprovalLock
-from brain.intrusion_alert_system import IntrusionAlertSystem
 from brain.security_lockdown_mode import SecurityLockdownMode
 from brain.skill_marketplace import SkillMarketplace
-from brain.agent_marketplace import AgentMarketplace
-from brain.dependency_manager import DependencyManager
-
 
 print("\n=== PHASE 12 INTEGRATION TEST ===\n")
 

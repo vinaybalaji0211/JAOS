@@ -1,6 +1,4 @@
-from brain.speaker_identification import (
-    SpeakerIdentification
-)
+from brain.speaker_identification import SpeakerIdentification
 
 system = SpeakerIdentification()
 

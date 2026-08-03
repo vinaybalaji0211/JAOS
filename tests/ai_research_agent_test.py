@@ -1,6 +1,5 @@
 from brain.ai_research_agent import AIResearchAgent
 
-
 AIResearchAgent.show_models()
 
 print("\nCoding Recommendation:")

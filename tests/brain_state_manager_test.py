@@ -1,7 +1,4 @@
-from brain.brain_state_manager import (
-    BrainStateManager
-)
-
+from brain.brain_state_manager import BrainStateManager
 
 brain = BrainStateManager()
 

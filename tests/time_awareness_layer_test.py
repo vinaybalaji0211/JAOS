@@ -1,6 +1,3 @@
-from brain.time_awareness_layer import (
-    TimeAwarenessLayer
-)
-
+from brain.time_awareness_layer import TimeAwarenessLayer
 
 TimeAwarenessLayer.show_time()

@@ -1,6 +1,4 @@
-from brain.agent_collaboration_engine import (
-    AgentCollaborationEngine
-)
+from brain.agent_collaboration_engine import AgentCollaborationEngine
 
 engine = AgentCollaborationEngine()
 

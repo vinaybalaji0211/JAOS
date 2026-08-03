@@ -1,12 +1,6 @@
+from brain.resource_awareness_engine import ResourceAwarenessEngine
+from brain.time_awareness_layer import TimeAwarenessLayer
 from logs.logger import logger
-
-from brain.resource_awareness_engine import (
-    ResourceAwarenessEngine
-)
-
-from brain.time_awareness_layer import (
-    TimeAwarenessLayer
-)
 
 
 class SupervisorAgent:

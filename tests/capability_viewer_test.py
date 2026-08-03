@@ -1,6 +1,4 @@
-from dashboard.capability_viewer import (
-    CapabilityViewer
-)
+from dashboard.capability_viewer import CapabilityViewer
 
 viewer = CapabilityViewer()
 

@@ -1,6 +1,4 @@
-from brain.version_capability_registry import (
-    VersionCapabilityRegistry
-)
+from brain.version_capability_registry import VersionCapabilityRegistry
 
 registry = (
     VersionCapabilityRegistry()

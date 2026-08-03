@@ -1,7 +1,6 @@
 from memory.long_term_memory import LongTermMemory
 from memory.memory_cleanup import MemoryCleanup
 
-
 LongTermMemory.add(
     "User opened VS Code"
 )

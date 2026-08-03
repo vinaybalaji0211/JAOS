@@ -1,6 +1,4 @@
-from brain.cognitive_state import (
-    CognitiveState
-)
+from brain.cognitive_state import CognitiveState
 
 state = CognitiveState()
 

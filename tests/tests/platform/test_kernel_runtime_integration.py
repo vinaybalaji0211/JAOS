@@ -1,5 +1,5 @@
-from kernel.jaos_kernel import JAOSKernel
 from jaos_platform.platform_runtime import PlatformRuntime
+from kernel.jaos_kernel import JAOSKernel
 
 
 def test_kernel_owns_platform_runtime():

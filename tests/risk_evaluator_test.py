@@ -1,6 +1,5 @@
 from brain.risk_evaluator import RiskEvaluator
 
-
 RiskEvaluator.show_risk(
     [
         "read_file",

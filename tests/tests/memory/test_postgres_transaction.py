@@ -91,11 +91,10 @@ def test_context_manager_rolls_back_after_exception() -> None:
     with pytest.raises(
         ValueError,
         match="operation failed",
-    ):
-        with transaction:
-            raise ValueError(
-                "operation failed"
-            )
+    ), transaction:
+        raise ValueError(
+            "operation failed"
+        )
 
     store._start_transaction.assert_called_once_with()
     store._commit_transaction.assert_not_called()

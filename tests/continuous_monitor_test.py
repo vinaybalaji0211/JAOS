@@ -1,7 +1,4 @@
-from brain.continuous_monitor import (
-    ContinuousMonitor
-)
-
+from brain.continuous_monitor import ContinuousMonitor
 
 monitor = ContinuousMonitor()
 

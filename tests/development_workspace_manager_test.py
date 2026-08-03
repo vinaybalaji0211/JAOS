@@ -1,6 +1,4 @@
-from development.development_workspace_manager import (
-    DevelopmentWorkspaceManager
-)
+from development.development_workspace_manager import DevelopmentWorkspaceManager
 
 manager = DevelopmentWorkspaceManager()
 

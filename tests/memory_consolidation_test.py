@@ -1,6 +1,5 @@
 from brain.memory_consolidation import MemoryConsolidation
 
-
 memory = MemoryConsolidation()
 
 memory.add_short_term(

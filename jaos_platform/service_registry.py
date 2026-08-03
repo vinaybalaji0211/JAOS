@@ -1,8 +1,7 @@
 from __future__ import annotations
 
-from logs.logger import logger
-
 from jaos_platform.service_metadata import ServiceMetadata
+from logs.logger import logger
 
 
 class ServiceRegistry:

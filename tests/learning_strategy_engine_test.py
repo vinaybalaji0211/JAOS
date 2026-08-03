@@ -1,7 +1,4 @@
-from brain.learning_strategy_engine import (
-    LearningStrategyEngine
-)
-
+from brain.learning_strategy_engine import LearningStrategyEngine
 
 recommendations = [
     "Improve weak area: Threat monitoring",

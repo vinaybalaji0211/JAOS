@@ -1,14 +1,13 @@
-from brain.knowledge_graph_core import KnowledgeGraphCore
-from brain.knowledge_domain_manager import KnowledgeDomainManager
 from brain.entity_manager import EntityManager
-from brain.relationship_manager import RelationshipManager
-from brain.knowledge_storage_engine import KnowledgeStorageEngine
-from brain.knowledge_retrieval_engine import KnowledgeRetrievalEngine
-from brain.knowledge_validation_engine import KnowledgeValidationEngine
 from brain.knowledge_acquisition_engine import KnowledgeAcquisitionEngine
+from brain.knowledge_domain_manager import KnowledgeDomainManager
 from brain.knowledge_gap_mapper import KnowledgeGapMapper
+from brain.knowledge_graph_core import KnowledgeGraphCore
 from brain.knowledge_importance_scorer import KnowledgeImportanceScorer
-
+from brain.knowledge_retrieval_engine import KnowledgeRetrievalEngine
+from brain.knowledge_storage_engine import KnowledgeStorageEngine
+from brain.knowledge_validation_engine import KnowledgeValidationEngine
+from brain.relationship_manager import RelationshipManager
 
 print("\n=== PHASE 17 INTEGRATION TEST ===\n")
 

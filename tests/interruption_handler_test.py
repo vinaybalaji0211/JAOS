@@ -1,7 +1,4 @@
-from brain.interruption_handler import (
-    InterruptionHandler
-)
-
+from brain.interruption_handler import InterruptionHandler
 
 handler = InterruptionHandler()
 

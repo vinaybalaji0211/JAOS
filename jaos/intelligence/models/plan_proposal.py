@@ -12,7 +12,6 @@ from jaos.intelligence.models.proposal_status import ProposalStatus
 from jaos.intelligence.models.proposed_plan_step import ProposedPlanStep
 from jaos.intelligence.models.risk_level import RiskLevel
 
-
 _RISK_ORDER = {
     RiskLevel.NONE: 0,
     RiskLevel.LOW: 1,

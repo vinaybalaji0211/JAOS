@@ -1,6 +1,4 @@
-from brain.screen_workflow_recorder import (
-    ScreenWorkflowRecorder
-)
+from brain.screen_workflow_recorder import ScreenWorkflowRecorder
 
 recorder = ScreenWorkflowRecorder()
 

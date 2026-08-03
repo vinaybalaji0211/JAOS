@@ -1,13 +1,13 @@
-from brain.self_improvement_analyzer import SelfImprovementAnalyzer
-from brain.upgrade_recommendation_engine import UpgradeRecommendationEngine
-from brain.upgrade_impact_predictor import UpgradeImpactPredictor
-from brain.self_evolution_core import SelfEvolutionCore
-from brain.self_upgrade_planner import SelfUpgradePlanner
-from brain.self_code_generator import SelfCodeGenerator
-from brain.self_test_framework import SelfTestFramework
 from brain.approval_based_upgrade_engine import ApprovalBasedUpgradeEngine
-from brain.rollback_manager import RollbackManager
 from brain.evolution_memory import EvolutionMemory
+from brain.rollback_manager import RollbackManager
+from brain.self_code_generator import SelfCodeGenerator
+from brain.self_evolution_core import SelfEvolutionCore
+from brain.self_improvement_analyzer import SelfImprovementAnalyzer
+from brain.self_test_framework import SelfTestFramework
+from brain.self_upgrade_planner import SelfUpgradePlanner
+from brain.upgrade_impact_predictor import UpgradeImpactPredictor
+from brain.upgrade_recommendation_engine import UpgradeRecommendationEngine
 
 print("\n=== PHASE 19 INTEGRATION TEST ===\n")
 

@@ -1,5 +1,5 @@
-from logs.logger import logger
 from jaos_platform.platform_runtime import PlatformRuntime
+from logs.logger import logger
 
 
 class JAOSKernel:

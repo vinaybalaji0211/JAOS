@@ -1,7 +1,4 @@
-from brain.provider_recommendation import (
-    ProviderRecommendation
-)
-
+from brain.provider_recommendation import ProviderRecommendation
 
 ProviderRecommendation.show_recommendation(
     "coding"

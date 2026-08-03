@@ -1,7 +1,4 @@
-from brain.experience_summarizer import (
-    ExperienceSummarizer
-)
-
+from brain.experience_summarizer import ExperienceSummarizer
 
 experiences = [
     {

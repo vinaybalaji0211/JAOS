@@ -2,11 +2,11 @@ import pytest
 
 from executive_brain.managers.registry_manager import RegistryManager
 from executive_brain.models.result_model import ResultModel
-from executive_brain.registries.intent_registry import IntentRegistry
 from executive_brain.registries.decision_registry import DecisionRegistry
-from executive_brain.registries.goal_registry import GoalRegistry
-from executive_brain.registries.mission_registry import MissionRegistry
 from executive_brain.registries.execution_plan_registry import ExecutionPlanRegistry
+from executive_brain.registries.goal_registry import GoalRegistry
+from executive_brain.registries.intent_registry import IntentRegistry
+from executive_brain.registries.mission_registry import MissionRegistry
 from executive_brain.registries.result_registry import ResultRegistry
 
 

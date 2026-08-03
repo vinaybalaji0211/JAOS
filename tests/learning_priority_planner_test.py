@@ -1,6 +1,4 @@
-from brain.learning_priority_planner import (
-    LearningPriorityPlanner
-)
+from brain.learning_priority_planner import LearningPriorityPlanner
 
 planner = (
     LearningPriorityPlanner()

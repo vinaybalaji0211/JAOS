@@ -1,7 +1,4 @@
-from brain.automatic_recovery import (
-    AutomaticRecovery
-)
-
+from brain.automatic_recovery import AutomaticRecovery
 
 recovery = AutomaticRecovery()
 

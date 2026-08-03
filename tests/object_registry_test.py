@@ -1,6 +1,4 @@
-from brain.object_registry import (
-    ObjectRegistry
-)
+from brain.object_registry import ObjectRegistry
 
 registry = ObjectRegistry()
 

@@ -1,6 +1,4 @@
-from brain.wake_word_confidence_engine import (
-    WakeWordConfidenceEngine
-)
+from brain.wake_word_confidence_engine import WakeWordConfidenceEngine
 
 WakeWordConfidenceEngine.show_confidence(
     detected=True,

@@ -1,6 +1,5 @@
-from executive_brain.models.goal_model import GoalModel
 from executive_brain.common.enums import Priority
-
+from executive_brain.models.goal_model import GoalModel
 
 goal = GoalModel(
     goal_name="VS Code Running",

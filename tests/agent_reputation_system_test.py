@@ -1,6 +1,4 @@
-from brain.agent_reputation_system import (
-    AgentReputationSystem
-)
+from brain.agent_reputation_system import AgentReputationSystem
 
 system = (
     AgentReputationSystem()

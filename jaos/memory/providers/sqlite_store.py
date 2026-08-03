@@ -4,7 +4,6 @@ import sqlite3
 from pathlib import Path
 from threading import RLock
 from time import perf_counter
-from typing import TYPE_CHECKING
 
 from jaos.memory.models.memory_filter import MemoryFilter
 from jaos.memory.models.memory_query import MemoryQuery
@@ -19,12 +18,6 @@ from jaos.memory.providers.sqlite_serializer import (
 )
 from jaos.memory.storage.memory_store import MemoryStore
 from jaos.memory.storage.memory_transaction import MemoryTransaction
-
-if TYPE_CHECKING:
-    from jaos.memory.providers.sqlite_transaction import (
-        SQLiteTransaction,
-    )
-
 
 INSERT_MEMORY = """
 INSERT INTO memories (

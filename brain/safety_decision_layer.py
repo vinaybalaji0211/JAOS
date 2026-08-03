@@ -11,11 +11,7 @@ class SafetyDecisionLayer:
             feasible,
             resources_ok):
 
-        if risk_level == "BLOCKED":
-
-            decision = "BLOCK"
-
-        elif (
+        if risk_level == "BLOCKED" or (
                 confidence < 40
                 or conflict_count >= 3
                 or not feasible):

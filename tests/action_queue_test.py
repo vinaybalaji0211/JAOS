@@ -1,6 +1,5 @@
 from core.action_queue import ActionQueue
 
-
 queue = ActionQueue()
 
 queue.add_action(

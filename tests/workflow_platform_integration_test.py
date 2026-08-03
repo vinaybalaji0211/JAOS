@@ -1,10 +1,10 @@
-from workflow.workflow_engine import WorkflowEngine
-from workflow.task_manager import TaskManager
-from workflow.task_queue import TaskQueue
-from workflow.scheduler import Scheduler
+from workflow.automation_rules_engine import AutomationRulesEngine
 from workflow.dependency_manager import DependencyManager
 from workflow.retry_recovery_engine import RetryRecoveryEngine
-from workflow.automation_rules_engine import AutomationRulesEngine
+from workflow.scheduler import Scheduler
+from workflow.task_manager import TaskManager
+from workflow.task_queue import TaskQueue
+from workflow.workflow_engine import WorkflowEngine
 from workflow.workflow_monitor import WorkflowMonitor
 
 print("\n===== WORKFLOW PLATFORM TEST =====\n")

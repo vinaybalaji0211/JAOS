@@ -1,6 +1,4 @@
-from brain.environment_understanding_engine import (
-    EnvironmentUnderstandingEngine
-)
+from brain.environment_understanding_engine import EnvironmentUnderstandingEngine
 
 engine = EnvironmentUnderstandingEngine()
 

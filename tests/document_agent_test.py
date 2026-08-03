@@ -1,6 +1,4 @@
-from brain.document_agent import (
-    DocumentAgent
-)
+from brain.document_agent import DocumentAgent
 
 agent = DocumentAgent()
 

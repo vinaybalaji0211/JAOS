@@ -1,6 +1,4 @@
-from development.vscode_manager import (
-    VSCodeManager
-)
+from development.vscode_manager import VSCodeManager
 
 manager = VSCodeManager()
 

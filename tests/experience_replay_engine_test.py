@@ -1,7 +1,4 @@
-from brain.experience_replay_engine import (
-    ExperienceReplayEngine
-)
-
+from brain.experience_replay_engine import ExperienceReplayEngine
 
 experiences = [
 

@@ -29,6 +29,7 @@ from jaos.tools.tool_registry import (
 )
 
 __all__ = [
+    "ToolAlreadyRegisteredError",
     "ToolApprovalError",
     "ToolApprovalLevel",
     "ToolApprovalManager",
@@ -41,14 +42,13 @@ __all__ = [
     "ToolInterface",
     "ToolManager",
     "ToolMetadata",
-    "ToolRequest",
-    "ToolResult",
-    "ToolRiskLevel",
-    "ToolStatus",
+    "ToolNotFoundError",
     "ToolPermissionError",
     "ToolPermissionManager",
     "ToolRegistry",
     "ToolRegistryError",
-    "ToolAlreadyRegisteredError",
-    "ToolNotFoundError",
+    "ToolRequest",
+    "ToolResult",
+    "ToolRiskLevel",
+    "ToolStatus",
 ]

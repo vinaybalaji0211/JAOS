@@ -1,6 +1,4 @@
-from brain.visual_memory import (
-    VisualMemory
-)
+from brain.visual_memory import VisualMemory
 
 memory = VisualMemory()
 

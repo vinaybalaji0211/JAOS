@@ -1,6 +1,4 @@
-from brain.rollback_manager import (
-    RollbackManager
-)
+from brain.rollback_manager import RollbackManager
 
 manager = RollbackManager()
 

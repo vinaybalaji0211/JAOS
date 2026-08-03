@@ -1,6 +1,5 @@
 from brain.goal_hierarchy_manager import GoalHierarchyManager
 
-
 manager = GoalHierarchyManager()
 
 manager.add_goal("Build Iron-Man-level JARVIS")

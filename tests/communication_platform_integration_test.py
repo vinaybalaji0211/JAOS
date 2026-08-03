@@ -1,8 +1,8 @@
-from communication.email_manager import EmailManager
 from communication.calendar_manager import CalendarManager
-from communication.contacts_manager import ContactsManager
 from communication.communication_hub import CommunicationHub
+from communication.contacts_manager import ContactsManager
 from communication.conversation_manager import ConversationManager
+from communication.email_manager import EmailManager
 from communication.meeting_assistant import MeetingAssistant
 
 print("\n===== COMMUNICATION PLATFORM TEST =====\n")

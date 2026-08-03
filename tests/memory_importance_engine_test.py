@@ -1,7 +1,4 @@
-from brain.memory_importance_engine import (
-    MemoryImportanceEngine
-)
-
+from brain.memory_importance_engine import MemoryImportanceEngine
 
 MemoryImportanceEngine.show_evaluation(
     "Security Threat Response Engine is roadmap locked",

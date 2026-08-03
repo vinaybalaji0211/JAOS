@@ -1,6 +1,5 @@
 from executive_brain.registries.base_registry import BaseRegistry
 
-
 registry = BaseRegistry()
 
 registry.add(

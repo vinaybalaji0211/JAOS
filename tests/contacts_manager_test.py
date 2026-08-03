@@ -1,6 +1,4 @@
-from communication.contacts_manager import (
-    ContactsManager
-)
+from communication.contacts_manager import ContactsManager
 
 contacts = ContactsManager()
 

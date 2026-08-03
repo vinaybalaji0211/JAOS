@@ -1,6 +1,4 @@
-from brain.web_learning_engine import (
-    WebLearningEngine
-)
+from brain.web_learning_engine import WebLearningEngine
 
 engine = (
     WebLearningEngine()

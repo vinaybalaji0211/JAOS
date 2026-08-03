@@ -1,6 +1,4 @@
-from kernel.kernel_lifecycle_manager import (
-    KernelLifecycleManager
-)
+from kernel.kernel_lifecycle_manager import KernelLifecycleManager
 
 manager = KernelLifecycleManager()
 

@@ -1,7 +1,4 @@
-from brain.supervisor_agent import (
-    SupervisorAgent
-)
-
+from brain.supervisor_agent import SupervisorAgent
 
 jarvis = SupervisorAgent()
 

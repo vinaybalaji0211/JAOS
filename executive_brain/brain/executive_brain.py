@@ -18,15 +18,14 @@ Non-Responsibilities:
     - Real tool execution
 """
 
-from jaos_platform.platform_runtime import PlatformRuntime
-
-from executive_brain.managers.registry_manager import RegistryManager
-from executive_brain.managers.planning_manager import PlanningManager
 from executive_brain.managers.decision_manager import DecisionManager
-from executive_brain.managers.mission_manager import MissionManager
 from executive_brain.managers.execution_manager import ExecutionManager
+from executive_brain.managers.mission_manager import MissionManager
+from executive_brain.managers.planning_manager import PlanningManager
+from executive_brain.managers.registry_manager import RegistryManager
 from executive_brain.managers.result_manager import ResultManager
 from executive_brain.memory.memory_manager import MemoryManager
+from jaos_platform.platform_runtime import PlatformRuntime
 
 
 class ExecutiveBrain:

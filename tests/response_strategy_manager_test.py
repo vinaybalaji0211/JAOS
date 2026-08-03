@@ -1,6 +1,4 @@
-from brain.response_strategy_manager import (
-    ResponseStrategyManager
-)
+from brain.response_strategy_manager import ResponseStrategyManager
 
 manager = ResponseStrategyManager()
 

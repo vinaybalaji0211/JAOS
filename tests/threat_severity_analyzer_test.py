@@ -1,6 +1,4 @@
-from brain.threat_severity_analyzer import (
-    ThreatSeverityAnalyzer
-)
+from brain.threat_severity_analyzer import ThreatSeverityAnalyzer
 
 analyzer = (
     ThreatSeverityAnalyzer()

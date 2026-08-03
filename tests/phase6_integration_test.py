@@ -1,15 +1,10 @@
-from brain.learning_manager import LearningManager
-from brain.experience_replay_engine import ExperienceReplayEngine
-from brain.pattern_discovery_engine import PatternDiscoveryEngine
-from brain.provider_performance_learning import (
-    ProviderPerformanceLearning
-)
-from brain.strategy_optimizer import StrategyOptimizer
+from brain.autonomous_improvement_planner import AutonomousImprovementPlanner
 from brain.curiosity_engine import CuriosityEngine
-from brain.autonomous_improvement_planner import (
-    AutonomousImprovementPlanner
-)
-
+from brain.experience_replay_engine import ExperienceReplayEngine
+from brain.learning_manager import LearningManager
+from brain.pattern_discovery_engine import PatternDiscoveryEngine
+from brain.provider_performance_learning import ProviderPerformanceLearning
+from brain.strategy_optimizer import StrategyOptimizer
 
 print("\n=== PHASE 6 INTEGRATION TEST ===\n")
 

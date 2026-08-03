@@ -1,6 +1,4 @@
-from workflow.task_manager import (
-    TaskManager
-)
+from workflow.task_manager import TaskManager
 
 manager = TaskManager()
 

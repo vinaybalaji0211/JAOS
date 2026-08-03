@@ -1,6 +1,4 @@
-from infrastructure.storage_intelligence import (
-    StorageIntelligence
-)
+from infrastructure.storage_intelligence import StorageIntelligence
 
 storage = StorageIntelligence()
 

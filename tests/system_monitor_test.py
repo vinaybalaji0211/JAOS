@@ -1,6 +1,4 @@
-from pc_control.system_monitor import (
-    SystemMonitor
-)
+from pc_control.system_monitor import SystemMonitor
 
 monitor = SystemMonitor()
 

@@ -1,7 +1,4 @@
-from brain.capability_gap_detector import (
-    CapabilityGapDetector
-)
-
+from brain.capability_gap_detector import CapabilityGapDetector
 
 missing_capabilities = [
     "vision",

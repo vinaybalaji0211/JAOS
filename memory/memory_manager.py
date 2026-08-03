@@ -1,6 +1,6 @@
-from memory.short_term_memory import ShortTermMemory
-from memory.long_term_memory import LongTermMemory
 from logs.logger import logger
+from memory.long_term_memory import LongTermMemory
+from memory.short_term_memory import ShortTermMemory
 
 
 class MemoryManager:

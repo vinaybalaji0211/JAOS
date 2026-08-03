@@ -3,13 +3,13 @@ from collections.abc import Generator
 from jaos.ai.provider import (
     AIProvider,
     AIProviderCapabilities,
+    AIProviderGenerationError,
     AIProviderHealth,
     AIProviderHealthStatus,
     AIProviderInfo,
+    AIProviderNotInitializedError,
     AIRequest,
     AIResponse,
-    AIProviderGenerationError,
-    AIProviderNotInitializedError,
 )
 
 

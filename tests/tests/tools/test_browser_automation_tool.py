@@ -2,12 +2,12 @@ import webbrowser
 
 import pytest
 
+from executive_brain.tools.browser.browser_automation_tool import (
+    BrowserAutomationTool,
+)
 from executive_brain.tools.core.tool_models import (
     ToolRequest,
     ToolStatus,
-)
-from executive_brain.tools.browser.browser_automation_tool import (
-    BrowserAutomationTool,
 )
 
 

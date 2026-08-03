@@ -1,7 +1,4 @@
-from brain.task_priority_manager import (
-    TaskPriorityManager
-)
-
+from brain.task_priority_manager import TaskPriorityManager
 
 tasks = [
     {

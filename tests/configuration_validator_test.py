@@ -1,6 +1,4 @@
-from engineering.configuration_validator import (
-    ConfigurationValidator
-)
+from engineering.configuration_validator import ConfigurationValidator
 
 validator = ConfigurationValidator()
 

@@ -1,6 +1,4 @@
-from dashboard.system_health_dashboard import (
-    SystemHealthDashboard
-)
+from dashboard.system_health_dashboard import SystemHealthDashboard
 
 dashboard = SystemHealthDashboard()
 

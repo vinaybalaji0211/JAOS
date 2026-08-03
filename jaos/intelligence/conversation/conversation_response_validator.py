@@ -8,7 +8,6 @@ from jaos.ai.provider.models import AIResponse
 from jaos.ai.response.response_models import ParsedResponse
 from jaos.intelligence.exceptions import IntelligenceConversationError
 
-
 ConversationResponse = TypeVar(
     "ConversationResponse",
     AIResponse,

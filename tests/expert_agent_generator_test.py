@@ -1,6 +1,4 @@
-from brain.expert_agent_generator import (
-    ExpertAgentGenerator
-)
+from brain.expert_agent_generator import ExpertAgentGenerator
 
 generator = (
     ExpertAgentGenerator()

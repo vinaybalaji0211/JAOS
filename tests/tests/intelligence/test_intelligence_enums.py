@@ -18,7 +18,6 @@ from jaos.intelligence import (
     RiskLevel,
 )
 
-
 ENUM_CASES = (
     (
         AgentAvailabilityState,

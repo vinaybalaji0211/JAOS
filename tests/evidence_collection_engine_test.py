@@ -1,6 +1,4 @@
-from brain.evidence_collection_engine import (
-    EvidenceCollectionEngine
-)
+from brain.evidence_collection_engine import EvidenceCollectionEngine
 
 engine = (
     EvidenceCollectionEngine()

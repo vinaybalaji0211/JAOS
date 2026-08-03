@@ -1,10 +1,9 @@
-from brain.vision_manager import VisionManager
+from brain.camera_awareness import CameraAwareness
+from brain.gui_agent import GUIAgent
 from brain.ocr_engine import OCREngine
 from brain.screen_understanding import ScreenUnderstanding
-from brain.gui_agent import GUIAgent
-from brain.camera_awareness import CameraAwareness
+from brain.vision_manager import VisionManager
 from brain.visual_memory import VisualMemory
-
 
 print("\n=== PHASE 9 INTEGRATION TEST ===\n")
 

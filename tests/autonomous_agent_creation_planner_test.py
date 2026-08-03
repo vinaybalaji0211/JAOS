@@ -1,6 +1,4 @@
-from brain.autonomous_agent_creation_planner import (
-    AutonomousAgentCreationPlanner
-)
+from brain.autonomous_agent_creation_planner import AutonomousAgentCreationPlanner
 
 planner = (
     AutonomousAgentCreationPlanner()

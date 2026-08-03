@@ -1,6 +1,4 @@
-from system_services.cache_manager import (
-    CacheManager
-)
+from system_services.cache_manager import CacheManager
 
 cache = CacheManager()
 

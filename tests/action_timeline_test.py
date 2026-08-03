@@ -1,6 +1,4 @@
-from dashboard.action_timeline import (
-    ActionTimeline
-)
+from dashboard.action_timeline import ActionTimeline
 
 timeline = ActionTimeline()
 

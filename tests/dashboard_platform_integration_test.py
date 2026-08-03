@@ -1,8 +1,8 @@
-from dashboard.mission_control import MissionControl
-from dashboard.platform_status_dashboard import PlatformStatusDashboard
-from dashboard.capability_viewer import CapabilityViewer
-from dashboard.notification_center import NotificationCenter
 from dashboard.action_timeline import ActionTimeline
+from dashboard.capability_viewer import CapabilityViewer
+from dashboard.mission_control import MissionControl
+from dashboard.notification_center import NotificationCenter
+from dashboard.platform_status_dashboard import PlatformStatusDashboard
 from dashboard.system_health_dashboard import SystemHealthDashboard
 
 print("\n===== DASHBOARD PLATFORM TEST =====\n")

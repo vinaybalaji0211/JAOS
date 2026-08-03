@@ -1,6 +1,5 @@
 from brain.strategy_optimizer import StrategyOptimizer
 
-
 StrategyOptimizer.show_decision(
     success_count=5,
     failure_count=1,

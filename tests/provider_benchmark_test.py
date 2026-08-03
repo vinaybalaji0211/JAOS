@@ -1,6 +1,5 @@
-from brain.provider_memory import ProviderMemory
 from brain.provider_benchmark import ProviderBenchmark
-
+from brain.provider_memory import ProviderMemory
 
 ProviderMemory.record_result(
     "openai",

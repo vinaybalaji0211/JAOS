@@ -1,7 +1,4 @@
-from brain.capability_matching_engine import (
-    CapabilityMatchingEngine
-)
-
+from brain.capability_matching_engine import CapabilityMatchingEngine
 
 required_capabilities = [
     "planning",

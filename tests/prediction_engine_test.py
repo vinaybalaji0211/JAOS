@@ -1,6 +1,5 @@
 from brain.prediction_engine import PredictionEngine
 
-
 PredictionEngine.show_predictions(
     resources_ok=False,
     capability_available=False,

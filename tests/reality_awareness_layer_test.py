@@ -1,7 +1,4 @@
-from brain.reality_awareness_layer import (
-    RealityAwarenessLayer
-)
-
+from brain.reality_awareness_layer import RealityAwarenessLayer
 
 RealityAwarenessLayer.show_assessment(
 

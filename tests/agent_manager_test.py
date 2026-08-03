@@ -1,6 +1,5 @@
 from core.agent_manager import AgentManager
 
-
 manager = AgentManager()
 
 manager.register_agent(

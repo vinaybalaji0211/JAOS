@@ -1,6 +1,4 @@
-from brain.knowledge_acquisition_engine import (
-    KnowledgeAcquisitionEngine
-)
+from brain.knowledge_acquisition_engine import KnowledgeAcquisitionEngine
 
 engine = KnowledgeAcquisitionEngine()
 

@@ -1,7 +1,4 @@
-from brain.permission_firewall import (
-    PermissionFirewall
-)
-
+from brain.permission_firewall import PermissionFirewall
 
 PermissionFirewall.show_decision(
     "READ_MEMORY"

@@ -1,26 +1,9 @@
-from brain.autonomous_learning_planner import (
-    AutonomousLearningPlanner
-)
-
-from brain.knowledge_curriculum_builder import (
-    KnowledgeCurriculumBuilder
-)
-
-from brain.continuous_learning_engine import (
-    ContinuousLearningEngine
-)
-
-from brain.domain_expertise_tracker import (
-    DomainExpertiseTracker
-)
-
-from brain.learning_priority_planner import (
-    LearningPriorityPlanner
-)
-
-from brain.capability_discovery_engine import (
-    CapabilityDiscoveryEngine
-)
+from brain.autonomous_learning_planner import AutonomousLearningPlanner
+from brain.capability_discovery_engine import CapabilityDiscoveryEngine
+from brain.continuous_learning_engine import ContinuousLearningEngine
+from brain.domain_expertise_tracker import DomainExpertiseTracker
+from brain.knowledge_curriculum_builder import KnowledgeCurriculumBuilder
+from brain.learning_priority_planner import LearningPriorityPlanner
 
 print(
     "\n=== AUTONOMOUS LEARNING INTEGRATION TEST ===\n"

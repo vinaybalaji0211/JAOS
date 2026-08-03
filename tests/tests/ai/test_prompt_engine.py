@@ -1,12 +1,12 @@
 import pytest
 
-from executive_brain.ai.providers.ai_provider_models import AIProviderRequest
 from executive_brain.ai.prompt.prompt_engine import PromptEngine
 from executive_brain.ai.prompt.prompt_models import (
     PromptMessage,
     PromptRequest,
     PromptRole,
 )
+from executive_brain.ai.providers.ai_provider_models import AIProviderRequest
 
 
 def test_build_prompt_with_single_user_message():

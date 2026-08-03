@@ -14,7 +14,6 @@ from jaos.memory.providers.database_constants import (
     SQLITE_TEMP_STORE,
 )
 
-
 CREATE_SCHEMA_METADATA_TABLE = """
 CREATE TABLE IF NOT EXISTS schema_metadata (
     key TEXT PRIMARY KEY,

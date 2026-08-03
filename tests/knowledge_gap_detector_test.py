@@ -1,6 +1,4 @@
-from brain.knowledge_gap_detector import (
-    KnowledgeGapDetector
-)
+from brain.knowledge_gap_detector import KnowledgeGapDetector
 
 detector = KnowledgeGapDetector()
 

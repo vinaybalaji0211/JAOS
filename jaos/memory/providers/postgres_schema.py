@@ -19,7 +19,6 @@ from jaos.memory.providers.database_constants import (
     SCHEMA_VERSION,
 )
 
-
 CREATE_SCHEMA_METADATA_TABLE = """
 CREATE TABLE IF NOT EXISTS schema_metadata (
     key TEXT PRIMARY KEY,

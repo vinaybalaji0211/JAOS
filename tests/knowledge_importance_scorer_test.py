@@ -1,6 +1,4 @@
-from brain.knowledge_importance_scorer import (
-    KnowledgeImportanceScorer
-)
+from brain.knowledge_importance_scorer import KnowledgeImportanceScorer
 
 KnowledgeImportanceScorer.show_score(
     "Security Threat Response Engine"

@@ -1,6 +1,4 @@
-from brain.cloud_memory_connector import (
-    CloudMemoryConnector
-)
+from brain.cloud_memory_connector import CloudMemoryConnector
 
 connector = (
     CloudMemoryConnector()

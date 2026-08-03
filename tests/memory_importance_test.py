@@ -1,6 +1,5 @@
 from memory.memory_importance import MemoryImportance
 
-
 memory_1 = (
 
     "Phase 3 goal completed successfully"

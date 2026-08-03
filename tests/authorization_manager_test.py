@@ -1,6 +1,4 @@
-from security.authorization_manager import (
-    AuthorizationManager
-)
+from security.authorization_manager import AuthorizationManager
 
 manager = AuthorizationManager()
 

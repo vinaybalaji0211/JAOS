@@ -1,6 +1,4 @@
-from brain.tool_audit_logger import (
-    ToolAuditLogger
-)
+from brain.tool_audit_logger import ToolAuditLogger
 
 audit = (
     ToolAuditLogger()

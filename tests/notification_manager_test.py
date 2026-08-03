@@ -1,6 +1,4 @@
-from pc_control.notification_manager import (
-    NotificationManager
-)
+from pc_control.notification_manager import NotificationManager
 
 manager = NotificationManager()
 

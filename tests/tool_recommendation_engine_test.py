@@ -1,7 +1,4 @@
-from brain.tool_recommendation_engine import (
-    ToolRecommendationEngine
-)
-
+from brain.tool_recommendation_engine import ToolRecommendationEngine
 
 missing_capabilities = [
 

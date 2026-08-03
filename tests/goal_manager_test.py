@@ -1,6 +1,5 @@
 from brain.goal_manager import GoalManager
 
-
 manager = GoalManager()
 
 manager.add_goal(

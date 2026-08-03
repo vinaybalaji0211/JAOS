@@ -1,5 +1,5 @@
 from infrastructure.intelligent_resource_orchestrator import (
-    IntelligentResourceOrchestrator
+    IntelligentResourceOrchestrator,
 )
 
 iro = IntelligentResourceOrchestrator()

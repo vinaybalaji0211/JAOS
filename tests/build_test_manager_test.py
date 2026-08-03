@@ -1,6 +1,4 @@
-from development.build_test_manager import (
-    BuildTestManager
-)
+from development.build_test_manager import BuildTestManager
 
 manager = BuildTestManager()
 

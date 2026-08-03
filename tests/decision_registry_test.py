@@ -2,7 +2,6 @@ from executive_brain.common.enums import LifecycleStatus
 from executive_brain.models.decision_model import DecisionModel
 from executive_brain.registries.decision_registry import DecisionRegistry
 
-
 registry = DecisionRegistry()
 
 decision = DecisionModel(

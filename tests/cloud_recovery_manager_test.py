@@ -1,6 +1,4 @@
-from brain.cloud_recovery_manager import (
-    CloudRecoveryManager
-)
+from brain.cloud_recovery_manager import CloudRecoveryManager
 
 manager = (
     CloudRecoveryManager()

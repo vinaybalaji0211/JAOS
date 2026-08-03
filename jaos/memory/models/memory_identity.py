@@ -1,7 +1,6 @@
 """Memory identity model for the JAOS Memory Platform."""
 
 from dataclasses import dataclass
-from typing import Optional
 
 from jaos.memory.models.memory_scope import MemoryScope
 
@@ -11,7 +10,7 @@ class MemoryIdentity:
     """Associates a memory with an approved visibility scope and identifier."""
 
     scope: MemoryScope
-    identity_id: Optional[str] = None
+    identity_id: str | None = None
 
     def __post_init__(self) -> None:
         """Validate identity invariants."""

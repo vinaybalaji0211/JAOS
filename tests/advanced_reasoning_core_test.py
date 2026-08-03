@@ -1,6 +1,4 @@
-from brain.advanced_reasoning_core import (
-    AdvancedReasoningCore
-)
+from brain.advanced_reasoning_core import AdvancedReasoningCore
 
 core = AdvancedReasoningCore()
 

@@ -1,15 +1,11 @@
-from brain.embodied_intelligence_core import EmbodiedIntelligenceCore
 from brain.application_skill_learner import ApplicationSkillLearner
-from brain.screen_workflow_recorder import ScreenWorkflowRecorder
-from brain.task_execution_planner import TaskExecutionPlanner
 from brain.autonomous_task_executor import AutonomousTaskExecutor
-from brain.environment_understanding_engine import (
-    EnvironmentUnderstandingEngine
-)
+from brain.embodied_intelligence_core import EmbodiedIntelligenceCore
+from brain.embodied_learning_engine import EmbodiedLearningEngine
+from brain.environment_understanding_engine import EnvironmentUnderstandingEngine
+from brain.screen_workflow_recorder import ScreenWorkflowRecorder
 from brain.skill_library import SkillLibrary
-from brain.embodied_learning_engine import (
-    EmbodiedLearningEngine
-)
+from brain.task_execution_planner import TaskExecutionPlanner
 
 print("\n=== PHASE 18 INTEGRATION TEST ===\n")
 

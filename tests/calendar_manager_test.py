@@ -1,6 +1,4 @@
-from communication.calendar_manager import (
-    CalendarManager
-)
+from communication.calendar_manager import CalendarManager
 
 calendar = CalendarManager()
 

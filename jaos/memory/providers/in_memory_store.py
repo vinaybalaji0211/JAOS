@@ -7,10 +7,10 @@ from jaos.memory.models.memory_filter import MemoryFilter
 from jaos.memory.models.memory_query import MemoryQuery
 from jaos.memory.models.memory_record import MemoryRecord
 from jaos.memory.models.memory_result import MemoryResult
-from jaos.memory.storage.memory_store import MemoryStore
 from jaos.memory.providers.in_memory_transaction import (
     InMemoryTransaction,
 )
+from jaos.memory.storage.memory_store import MemoryStore
 from jaos.memory.storage.memory_transaction import MemoryTransaction
 
 

@@ -1,6 +1,4 @@
-from brain.background_task_manager import (
-    BackgroundTaskManager
-)
+from brain.background_task_manager import BackgroundTaskManager
 
 manager = BackgroundTaskManager()
 

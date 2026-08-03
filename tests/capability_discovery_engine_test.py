@@ -1,6 +1,4 @@
-from brain.capability_discovery_engine import (
-    CapabilityDiscoveryEngine
-)
+from brain.capability_discovery_engine import CapabilityDiscoveryEngine
 
 engine = (
     CapabilityDiscoveryEngine()

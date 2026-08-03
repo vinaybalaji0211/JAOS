@@ -1,7 +1,4 @@
-from brain.agent_creation_manager import (
-    AgentCreationManager
-)
-
+from brain.agent_creation_manager import AgentCreationManager
 
 manager = AgentCreationManager()
 

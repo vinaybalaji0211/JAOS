@@ -1,6 +1,4 @@
-from kernel.kernel_service_registry import (
-    KernelServiceRegistry
-)
+from kernel.kernel_service_registry import KernelServiceRegistry
 
 registry = KernelServiceRegistry()
 

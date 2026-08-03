@@ -1,22 +1,8 @@
-from brain.capability_awareness_engine import (
-    CapabilityAwarenessEngine
-)
-
-from brain.version_capability_registry import (
-    VersionCapabilityRegistry
-)
-
-from brain.unsupported_request_logger import (
-    UnsupportedRequestLogger
-)
-
-from brain.feature_request_intelligence import (
-    FeatureRequestIntelligence
-)
-
-from brain.roadmap_recommendation_engine import (
-    RoadmapRecommendationEngine
-)
+from brain.capability_awareness_engine import CapabilityAwarenessEngine
+from brain.feature_request_intelligence import FeatureRequestIntelligence
+from brain.roadmap_recommendation_engine import RoadmapRecommendationEngine
+from brain.unsupported_request_logger import UnsupportedRequestLogger
+from brain.version_capability_registry import VersionCapabilityRegistry
 
 print("\n===== CAPABILITY PLATFORM TEST =====\n")
 

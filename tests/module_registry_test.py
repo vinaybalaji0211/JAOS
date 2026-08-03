@@ -1,6 +1,4 @@
-from engineering.module_registry import (
-    ModuleRegistry
-)
+from engineering.module_registry import ModuleRegistry
 
 registry = ModuleRegistry()
 

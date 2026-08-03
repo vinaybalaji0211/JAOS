@@ -1,6 +1,4 @@
-from brain.agent_collaboration_core import (
-    AgentCollaborationCore
-)
+from brain.agent_collaboration_core import AgentCollaborationCore
 
 core = AgentCollaborationCore()
 

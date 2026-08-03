@@ -1,13 +1,9 @@
+from development.build_test_manager import BuildTestManager
+from development.development_workspace_manager import DevelopmentWorkspaceManager
 from development.git_manager import GitManager
 from development.github_manager import GitHubManager
 from development.repository_manager import RepositoryManager
 from development.vscode_manager import VSCodeManager
-from development.development_workspace_manager import (
-    DevelopmentWorkspaceManager
-)
-from development.build_test_manager import (
-    BuildTestManager
-)
 
 print("\n===== DEVELOPMENT PLATFORM TEST =====\n")
 

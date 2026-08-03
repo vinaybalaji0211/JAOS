@@ -1,6 +1,4 @@
-from brain.relationship_manager import (
-    RelationshipManager
-)
+from brain.relationship_manager import RelationshipManager
 
 manager = RelationshipManager()
 

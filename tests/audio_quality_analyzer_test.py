@@ -1,6 +1,4 @@
-from brain.audio_quality_analyzer import (
-    AudioQualityAnalyzer
-)
+from brain.audio_quality_analyzer import AudioQualityAnalyzer
 
 AudioQualityAnalyzer.show_quality(
     signal_strength=80,

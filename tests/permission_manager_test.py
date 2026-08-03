@@ -1,6 +1,4 @@
-from security.permission_manager import (
-    PermissionManager
-)
+from security.permission_manager import PermissionManager
 
 manager = PermissionManager()
 

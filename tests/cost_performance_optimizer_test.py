@@ -1,6 +1,4 @@
-from infrastructure.cost_performance_optimizer import (
-    CostPerformanceOptimizer
-)
+from infrastructure.cost_performance_optimizer import CostPerformanceOptimizer
 
 optimizer = CostPerformanceOptimizer()
 
