@@ -18,6 +18,9 @@ from jaos.intelligence.models.conversation_session_state import (
 )
 from jaos.intelligence.models.conversation_turn import ConversationTurn
 from jaos.intelligence.models.execution_proposal import ExecutionProposal
+from jaos.intelligence.models.failure_behavior import (
+    FailureBehavior,
+)
 from jaos.intelligence.models.intelligence_context_type import (
     IntelligenceContextType,
 )
@@ -34,6 +37,9 @@ from jaos.intelligence.models.intelligence_result_status import (
 )
 from jaos.intelligence.models.intelligence_scope import IntelligenceScope
 from jaos.intelligence.models.plan_proposal import PlanProposal
+from jaos.intelligence.models.planning_configuration import (
+    PlanningConfiguration,
+)
 from jaos.intelligence.models.planning_request import PlanningRequest
 from jaos.intelligence.models.proposal_status import ProposalStatus
 from jaos.intelligence.models.proposed_plan_step import ProposedPlanStep
@@ -57,6 +63,7 @@ __all__ = [
     "ConversationSessionState",
     "ConversationTurn",
     "ExecutionProposal",
+    "FailureBehavior",
     "IntelligenceContextType",
     "IntelligenceIdentity",
     "IntelligenceRequest",
@@ -65,6 +72,7 @@ __all__ = [
     "IntelligenceResultStatus",
     "IntelligenceScope",
     "PlanProposal",
+    "PlanningConfiguration",
     "PlanningRequest",
     "ProposalStatus",
     "ProposedPlanStep",

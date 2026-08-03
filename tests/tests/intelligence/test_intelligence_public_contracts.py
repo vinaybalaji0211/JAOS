@@ -25,6 +25,7 @@ from jaos.intelligence import (
     ConversationSessionState,
     ConversationTurn,
     ExecutionProposal,
+    FailureBehavior,
     IntelligenceApprovalRequiredError,
     IntelligenceContextType,
     IntelligenceIdentity,
@@ -33,8 +34,9 @@ from jaos.intelligence import (
     IntelligenceResult,
     IntelligenceResultStatus,
     IntelligenceScope,
-    PlanProposal,
+    PlanningConfiguration,
     PlanningRequest,
+    PlanProposal,
     ProposalStatus,
     ProposedPlanStep,
     ReasoningAssumption,
@@ -125,15 +127,17 @@ def build_serializable_models() -> tuple[Any, ...]:
         success_condition="Approved context is available",
         permission_requirements=("memory.read",),
         risk_level=RiskLevel.LOW,
+        failure_behavior=FailureBehavior.STOP,
     )
 
     planning_request = PlanningRequest(
         request_id=request.request_id,
+        planning_id="planning-001",
         goal="Produce a JAOS platform overview",
         identity=identity,
         reasoning_result=reasoning_result,
-        context_bundle=context_bundle,
-        available_capabilities=("knowledge.search",),
+        configuration=PlanningConfiguration(),
+        success_criteria=("The response is accurate and structured",),
     )
 
     plan_proposal = PlanProposal(
@@ -218,21 +222,28 @@ def build_serializable_models() -> tuple[Any, ...]:
 
 
 def test_public_exports_are_unique_and_ordered() -> None:
-    assert len(intelligence_api.__all__) == 83
-    assert len(intelligence_api.__all__) == len(
-        set(intelligence_api.__all__)
-    )
-    assert intelligence_api.__all__ == sorted(
-        intelligence_api.__all__
-    )
+    """Verify the Intelligence Platform public API contract."""
+
+    assert len(intelligence_api.__all__) == 85
+
+    assert len(intelligence_api.__all__) == len(set(intelligence_api.__all__))
+
+    assert intelligence_api.__all__ == sorted(intelligence_api.__all__)
 
 
 def test_all_public_exports_are_accessible() -> None:
+    """Every public export must exist."""
+
     for export_name in intelligence_api.__all__:
-        assert hasattr(intelligence_api, export_name)
+        assert hasattr(
+            intelligence_api,
+            export_name,
+        )
 
 
 def test_public_api_matches_package_exports() -> None:
+    """The package exports should equal the union of subpackages."""
+
     package_exports = (
         set(models_api.__all__)
         | set(exceptions_api.__all__)
@@ -245,7 +256,9 @@ def test_public_api_matches_package_exports() -> None:
 
 
 def test_package_export_counts() -> None:
-    assert len(models_api.__all__) == 29
+    """Verify each public package exposes the expected symbols."""
+
+    assert len(models_api.__all__) == 31
     assert len(exceptions_api.__all__) == 12
     assert len(interfaces_api.__all__) == 10
     assert len(context_api.__all__) == 18
@@ -253,23 +266,43 @@ def test_package_export_counts() -> None:
 
 
 def test_domain_models_are_json_serializable() -> None:
+    """Every representative model should serialize cleanly."""
+
     for model in build_serializable_models():
         serialized = model.to_dict()
-        encoded = json.dumps(serialized, sort_keys=True)
 
-        assert isinstance(serialized, dict)
-        assert isinstance(encoded, str)
+        encoded = json.dumps(
+            serialized,
+            sort_keys=True,
+        )
+
+        assert isinstance(
+            serialized,
+            dict,
+        )
+
+        assert isinstance(
+            encoded,
+            str,
+        )
+
         assert encoded
 
 
 def test_context_policy_is_json_serializable() -> None:
+    """ContextPolicy should serialize deterministically."""
+
     policy = ContextPolicy(
         max_tokens=1024,
         max_items=20,
         minimum_relevance=0.25,
     )
 
-    encoded = json.dumps(policy.to_dict(), sort_keys=True)
+    encoded = json.dumps(
+        policy.to_dict(),
+        sort_keys=True,
+    )
+
     decoded = json.loads(encoded)
 
     assert decoded["max_tokens"] == 1024
@@ -278,6 +311,8 @@ def test_context_policy_is_json_serializable() -> None:
 
 
 def test_enum_values_are_json_serializable() -> None:
+    """All public enums should serialize using their values."""
+
     enum_types = (
         AgentAvailabilityState,
         AgentHealthState,
@@ -293,24 +328,73 @@ def test_enum_values_are_json_serializable() -> None:
         RiskLevel,
     )
 
-    values = [
-        member.value
-        for enum_type in enum_types
-        for member in enum_type
-    ]
+    values = [member.value for enum_type in enum_types for member in enum_type]
 
     assert json.loads(json.dumps(values)) == values
 
 
 def test_structured_errors_are_json_serializable() -> None:
+    """Structured Intelligence exceptions must serialize correctly."""
+
     error = IntelligenceApprovalRequiredError(
         "Approval required",
         request_id="request-001",
         details={"permission": "memory.write"},
     )
 
-    encoded = json.dumps(error.to_dict(), sort_keys=True)
+    encoded = json.dumps(
+        error.to_dict(),
+        sort_keys=True,
+    )
+
     decoded = json.loads(encoded)
 
     assert decoded["error_code"] == "intelligence_approval_required"
+
     assert decoded["request_id"] == "request-001"
+
+    assert decoded["details"] == {
+        "permission": "memory.write",
+    }
+
+
+def test_every_public_model_supports_to_dict() -> None:
+    """Every representative public model should expose to_dict()."""
+
+    for model in build_serializable_models():
+
+        assert hasattr(
+            model,
+            "to_dict",
+        )
+
+        serialized = model.to_dict()
+
+        assert isinstance(
+            serialized,
+            dict,
+        )
+
+
+def test_public_api_contains_new_planning_exports() -> None:
+    """Verify recently-added planning exports remain public."""
+
+    assert "FailureBehavior" in intelligence_api.__all__
+
+    assert "PlanningConfiguration" in intelligence_api.__all__
+
+
+def test_public_api_exports_are_sorted() -> None:
+    """Public exports must remain alphabetically ordered."""
+
+    exports = intelligence_api.__all__
+
+    assert exports == sorted(exports)
+
+
+def test_public_api_exports_are_unique() -> None:
+    """Public exports must not contain duplicates."""
+
+    exports = intelligence_api.__all__
+
+    assert len(exports) == len(set(exports))

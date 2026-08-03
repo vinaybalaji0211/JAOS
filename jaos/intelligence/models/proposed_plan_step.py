@@ -4,6 +4,9 @@ from dataclasses import dataclass, field
 from typing import Any
 from uuid import uuid4
 
+from jaos.intelligence.models.failure_behavior import (
+    FailureBehavior,
+)
 from jaos.intelligence.models.risk_level import RiskLevel
 
 
@@ -21,17 +24,13 @@ def _normalize_string_tuple(
     try:
         items = tuple(values)
     except TypeError as exc:
-        raise TypeError(
-            f"{field_name} must be a collection of strings"
-        ) from exc
+        raise TypeError(f"{field_name} must be a collection of strings") from exc
 
     normalized: list[str] = []
 
     for item in items:
         if not isinstance(item, str) or not item.strip():
-            raise ValueError(
-                f"{field_name} must contain only non-empty strings"
-            )
+            raise ValueError(f"{field_name} must contain only non-empty strings")
 
         value = item.strip()
 
@@ -59,7 +58,7 @@ class ProposedPlanStep:
     input_references: tuple[str, ...] = ()
     permission_requirements: tuple[str, ...] = ()
     risk_level: RiskLevel = RiskLevel.NONE
-    failure_behavior: str = "stop"
+    failure_behavior: FailureBehavior = FailureBehavior.STOP
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
@@ -76,9 +75,7 @@ class ProposedPlanStep:
 
         for field_name, value in required_strings.items():
             if not isinstance(value, str) or not value.strip():
-                raise ValueError(
-                    f"{field_name} must be a non-empty string"
-                )
+                raise ValueError(f"{field_name} must be a non-empty string")
 
         if isinstance(self.step_order, bool) or not isinstance(
             self.step_order,
@@ -89,18 +86,13 @@ class ProposedPlanStep:
         if self.step_order <= 0:
             raise ValueError("step_order must be greater than zero")
 
-        if (
-            self.suggested_tool_category is not None
-            and not isinstance(self.suggested_tool_category, str)
+        if self.suggested_tool_category is not None and not isinstance(
+            self.suggested_tool_category, str
         ):
-            raise TypeError(
-                "suggested_tool_category must be a string or None"
-            )
+            raise TypeError("suggested_tool_category must be a string or None")
 
         if not isinstance(self.risk_level, RiskLevel):
-            raise TypeError(
-                "risk_level must be an instance of RiskLevel"
-            )
+            raise TypeError("risk_level must be an instance of RiskLevel")
 
         if not isinstance(self.metadata, dict):
             raise TypeError("metadata must be a dictionary")
@@ -112,9 +104,7 @@ class ProposedPlanStep:
         )
 
         if step_id in dependencies:
-            raise ValueError(
-                "a proposed plan step cannot depend on itself"
-            )
+            raise ValueError("a proposed plan step cannot depend on itself")
 
         suggested_tool_category = (
             self.suggested_tool_category.strip().lower()
@@ -185,9 +175,7 @@ class ProposedPlanStep:
             "suggested_tool_category": self.suggested_tool_category,
             "input_references": list(self.input_references),
             "expected_output": self.expected_output,
-            "permission_requirements": list(
-                self.permission_requirements
-            ),
+            "permission_requirements": list(self.permission_requirements),
             "risk_level": self.risk_level.value,
             "success_condition": self.success_condition,
             "failure_behavior": self.failure_behavior,
