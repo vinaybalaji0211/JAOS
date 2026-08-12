@@ -1,14 +1,14 @@
 # Bug Fixing and Regression Report
 
 Version: 1.0
-Status: IN PROGRESS — D1 VERIFIED
+Status: IN PROGRESS — D1 AND D2 VERIFIED
 Stabilization Step: Step 7 of 9
 Owner: Vinay B
 Maintainer: JAOS Engineering
 Date: 2026-08-12
 Branch: phase8-ai-intelligence
 Step 7 Entry Commit: 2098be4
-Current HEAD: 8fb08cf
+Current HEAD: 76d9113
 Phase 8 Status: PAUSED
 MS-0025E Status: PAUSED
 
@@ -43,6 +43,7 @@ Recorded checkpoints:
 | `786abb3` | Steps 4 through 6 certification |
 | `2098be4` | Step 7 entry |
 | `8fb08cf` | D1 runtime version alignment |
+| `76d9113` | D2 Memory Platform identity wording |
 
 ---
 
@@ -78,10 +79,10 @@ Recorded checkpoints:
 | SHT-002 | PLANNED FIX with RAA-005 | FIX IN STEP 7 | Provider shutdown | Same cluster as RAA-005 |
 | SHT-003 | PLANNED SCOPED FIX | FIX IN STEP 7 | False boot signals | Honesty fix without full Runtime wiring |
 | SHT-004 | PLANNED FIX | FIX IN STEP 7 | EOF containment | Catch `EOFError` in shell loop |
-| SHT-005 | NEXT FIX — D2 | FIX IN STEP 7 | Memory identity wording | Truthful limitation only; no Memory composition |
+| SHT-005 | RESOLVED WITH EVIDENCE — commit `76d9113` | FIX IN STEP 7 | Memory identity wording | Truthful Memory Platform identity wording without adding a live shell Memory capability; see Section 6 |
 | SHT-006 | PLANNED FIX | FIX IN STEP 7 | Known-command validation | Incomplete `read`/`write` must not AI-fallback |
 
-No finding other than SHT-001 is marked resolved.
+Only SHT-001 and SHT-005 are marked resolved.
 
 ---
 
@@ -127,7 +128,50 @@ No finding other than SHT-001 is marked resolved.
 
 ---
 
-## 6. Repository Safety Record
+## 6. D2 — SHT-005 Memory Shell Boundary Record
+
+### Production behavior
+
+- Modified `jaos/ai/identity/limitation_registry.py`.
+- Replaced the false “No Long-Term Memory Yet” statement.
+- New limitation:
+  `Memory Platform Not Connected to This Shell`
+- The description states that Memory Platform is implemented and certified at
+  `JAOS_VERSION`, but is not initialized or accessible through the current
+  JAOS Shell runtime.
+- `CapabilityRegistry` was not modified.
+- Memory was not composed, initialized, or exposed through the shell.
+
+### Exact tests
+
+- Extended `tests/tests/ai/test_ai_identity_manager.py`.
+- Added three focused D2 tests:
+  - stale limitation absent
+  - truthful limitation present with exact description
+  - no live Memory capability claimed
+
+### Verification evidence
+
+| Check | Result |
+|---|---|
+| Syntax validation exit code | 0 |
+| Focused identity tests | 5 passed |
+| Existing AI/CLI regression | 12 passed |
+| Certified collection | 1,596 tests |
+| Full suite | 1,596 passed in 7.66 seconds |
+| Shell verification exit code | 0 |
+| Capability-boundary verification exit code | 0 |
+| Rendered identity showed the truthful limitation | Yes |
+| Stale memory wording was absent | Yes |
+| Rendered Capabilities section contained no Memory Platform capability | Yes |
+| `git diff --check` | Pass |
+| Commit | `76d9113` |
+
+SHT-005 is resolved with evidence.
+
+---
+
+## 7. Repository Safety Record
 
 - Eight unrelated changes appeared during D1:
   `.vscode/settings.json` and seven generated JSON files.
@@ -136,48 +180,47 @@ No finding other than SHT-001 is marked resolved.
 - Founder approved restoring all eight.
 - They were restored before testing and committing D1.
 - D1 commit contains exactly three production files and two tests.
+- D2 changed exactly one production file and one existing test file.
 - Working tree was clean after commit.
-- Branch was ahead of origin by three commits.
+- Branch was ahead of origin by five commits.
 - No push occurred.
 
 ---
 
-## 7. Next Controlled Fix
+## 8. Next Controlled Fix
 
-D2 — SHT-005 truthful Memory Platform identity wording.
+D2 is complete.
 
-Required boundary:
+The next cluster has not been authorized for implementation.
 
-- Memory Platform exists and is certified at `v0.9.0-alpha`.
-- It is not initialized or accessible through the current JAOS Shell.
-- Do not add Memory to the live shell capability list.
-- Do not compose Memory into the shell.
-- Change only limitation wording and focused tests.
-- D2 has not begun.
+Next action is focused read-only inspection of the provider-shutdown and EOF
+relationship covering RAA-005, SHT-002, and SHT-004.
+
+No lifecycle or EOF code change has begun.
 
 ---
 
-## 8. Remaining Step 7 Workflow
+## 9. Remaining Step 7 Workflow
 
-1. Complete D2.
-2. Continue one controlled fix cluster at a time.
-3. Run targeted tests after each fix.
-4. Preserve or increase the certified test count.
-5. Rerun shell workflows affected by each fix.
-6. Resolve or formally defer every RAA/SHT finding.
-7. Run final compileall, pip check, full pytest, and shell regression.
-8. Submit this report for Founder review.
-9. Do not enter Step 8 without explicit approval.
+1. Continue one controlled fix cluster at a time.
+2. Run targeted tests after each fix.
+3. Preserve or increase the certified test count.
+4. Rerun shell workflows affected by each fix.
+5. Resolve or formally defer every RAA/SHT finding.
+6. Run final compileall, pip check, full pytest, and shell regression.
+7. Submit this report for Founder review.
+8. Do not enter Step 8 without explicit approval.
 
 ---
 
-## 9. Step 7 Exit Criteria
+## 10. Step 7 Exit Criteria
 
 | Criterion | Status |
 |---|---|
 | Every finding has evidence-backed resolution or approved deferral | PENDING |
 | Targeted tests pass for every implemented fix | PENDING |
 | D1 — SHT-001 version alignment verified with evidence | COMPLETE |
+| D2 — SHT-005 Memory shell-boundary wording verified with evidence | COMPLETE |
 | Full automated suite passes | PENDING |
 | Shell regression passes | PENDING |
 | Syntax and dependency validation pass | PENDING |
@@ -185,11 +228,11 @@ Required boundary:
 | Step 7 report is complete | PENDING |
 | Founder/reviewer approval is recorded | PENDING |
 
-Only the D1-specific criterion is COMPLETE.
+Only the D1 and D2 criteria are COMPLETE. All remaining criteria stay PENDING.
 
 ---
 
-## 10. Approval
+## 11. Approval
 
 | Role | Decision | Date | Signature |
 |---|---|---|---|
