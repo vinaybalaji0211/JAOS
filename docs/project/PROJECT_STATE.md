@@ -33,33 +33,57 @@ The Git repository remains the permanent source of truth for JAOS.
 | Current product phase | Phase 8 — AI Intelligence Platform |
 | Current milestone | MS-0025E — Reasoning and Planning Intelligence |
 | Phase execution | Temporarily paused |
-| Active engineering activity | Repository stabilization and documentation synchronization |
+| Active engineering activity | Step 6 completion documentation synchronization |
 | Previous completed phase | Phase 7 — Memory Platform |
 | Next planned phase | Phase 9 — Workflow & Automation Platform |
 | Long-term release target | JAOS v1.0 |
 | Overall project health | HEALTHY |
 | Architecture health | STABLE |
-| Documentation state | SYNCHRONIZATION IN PROGRESS |
+| Documentation state | STEP 6 COMPLETION SYNCHRONIZATION IN PROGRESS |
 
 ---
 
 ## 3. Current Engineering Checkpoint
 
-Phase 8 implementation is temporarily paused while the repository completes a
-controlled stabilization workflow.
+Phase 8 implementation remains temporarily paused while the repository completes
+the controlled stabilization workflow.
 
-The active checkpoint is:
+The latest completed checkpoint is:
 
-Repository Stabilization — Documentation Synchronization
+Step 6 — JAOS Shell Testing
 
-The locked 20-phase roadmap and milestone record have been synchronized.
+Step 6 was completed with findings. The verified Step 6 result is recorded in:
 
-Current documentation synchronization includes:
+`docs/engineering/JAOS_SHELL_TEST_REPORT.md`
 
-- `docs/project/ROADMAP.md`
-- `docs/project/MILESTONES.md`
-- `docs/project/PROJECT_STATE.md`
-- Remaining current-state, sprint, continuation, release, and governance documents
+Founder/reviewer Vinay B approved Step 6 on 2026-08-12.
+
+SHT-001 through SHT-006 are accepted for controlled remediation during
+Step 7 — Bug Fixing and Regression.
+
+Step 5 — Full Automated Testing remains COMPLETED and recorded in:
+
+`docs/engineering/FULL_AUTOMATED_TEST_REPORT.md`
+
+The accepted automated baseline remains:
+
+- 1,590 tests collected
+- 1,590 tests passed
+- Zero failures, errors, skips, expected failures, unexpected passes, or warnings
+- Syntax validation passed
+- Dependency validation passed
+- Repository safety passed
+
+RAA-001 through RAA-009 remain assigned to controlled remediation during
+Step 7 — Bug Fixing and Regression.
+
+The current activity is Step 6 completion documentation synchronization.
+
+The next stabilization step is:
+
+Step 7 — Bug Fixing and Regression
+
+Step 7 has not begun and requires explicit Founder approval.
 
 Nothing from Phase 8 is being discarded or restarted.
 
@@ -73,17 +97,18 @@ MS-0025E — Reasoning and Planning Intelligence
 
 The approved stabilization sequence is:
 
-1. Repository State Audit
-2. Backup Checkpoint
-3. Documentation Synchronization
-4. Runtime Architecture Audit
-5. Full Automated Testing
-6. JAOS Shell Testing
-7. Bug Fixing and Regression
-8. Stabilization Certification
-9. Resume Phase 8
+1. Repository State Audit — COMPLETED
+2. Backup Checkpoint — COMPLETED
+3. Documentation Synchronization — COMPLETED
+4. Runtime Architecture Audit — COMPLETED
+5. Full Automated Testing — COMPLETED
+6. JAOS Shell Testing — COMPLETED WITH FINDINGS
+7. Bug Fixing and Regression — PENDING — AWAITING FOUNDER APPROVAL
+8. Stabilization Certification — PENDING
+9. Resume Phase 8 — PENDING
 
-Documentation synchronization is currently in progress.
+The sequence must not be skipped or reordered without an approved engineering
+decision.
 
 Phase 8 implementation must not resume until the repository stabilization
 checkpoint is completed and certified.
@@ -468,19 +493,25 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-1. Complete `PROJECT_STATE.md` synchronization.
-2. Synchronize the remaining current project documents.
-3. Verify consistency across all authoritative documentation.
-4. Complete the Runtime Architecture Audit.
-5. Run the full automated test suite.
-6. Perform JAOS runtime and shell testing.
-7. Fix confirmed defects and run regression testing.
-8. Publish the Repository Stabilization Certification.
-9. Resume MS-0025E — Reasoning and Planning Intelligence.
-10. Complete the remaining Phase 8 milestones.
-11. Certify and release v0.10.0-alpha.
-12. Complete remaining Memory Platform production work.
-13. Begin Phase 9 — Workflow & Automation Platform.
+1. Complete Step 6 status synchronization across authoritative continuation
+   documents.
+2. Cross-check the manifest, bootstrap, continuation, sprint, project-state,
+   and next-action records.
+3. Verify repository safety and documentation whitespace checks.
+4. Inform the Founder that Step 6 synchronization is complete.
+5. Explain the Step 7 scope, authorized remediations, evidence, and exit
+   criteria.
+6. Wait for explicit Founder approval to enter Step 7.
+7. After approval, remediate RAA-001 through RAA-009 and SHT-001 through
+   SHT-006 during Step 7.
+8. Run the required Step 7 regression validation.
+9. Complete Step 8 — Stabilization Certification.
+10. Commit and push the approved stabilization checkpoint.
+11. Resume MS-0025E only after stabilization certification.
+12. Complete the remaining Phase 8 milestones.
+13. Certify and release v0.10.0-alpha.
+14. Complete remaining Memory Platform production work.
+15. Begin Phase 9 — Workflow & Automation Platform.
 
 ---
 
@@ -494,8 +525,13 @@ gate passes.
 | Phase 7 release | COMPLETE |
 | Phase 8 implementation | ACTIVE — temporarily paused |
 | Repository stabilization | IN PROGRESS |
-| Documentation synchronization | IN PROGRESS |
-| Runtime architecture audit | PENDING |
+| Documentation synchronization | COMPLETE |
+| Runtime architecture audit | COMPLETE |
+| Full automated testing | COMPLETE |
+| Step 5 completion synchronization | COMPLETE |
+| JAOS Shell testing | COMPLETE WITH FINDINGS |
+| Step 6 completion synchronization | IN PROGRESS |
+| Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
 | Full regression certification | PENDING |
 | v0.10.0-alpha readiness | NOT YET CERTIFIED |
 

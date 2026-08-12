@@ -110,9 +110,11 @@ approved reason.
 
 | Phase 8 execution | Temporarily paused |
 
-| Stabilization activity | Runtime Architecture Audit |
+| Stabilization activity | Step 6 completion documentation synchronization |
 
-| Stabilization step | Step 4 of 9 |
+| Stabilization step | Step 6 of 9 — COMPLETED WITH FINDINGS |
+
+| Step 7 entry | PENDING — AWAITING FOUNDER APPROVAL |
 
 | Repository health | HEALTHY |
 
@@ -412,13 +414,13 @@ The current repository-stabilization sequence is mandatory:
 
 | 3 | Documentation Synchronization | COMPLETED |
 
-| 4 | Runtime Architecture Audit | IN PROGRESS |
+| 4 | Runtime Architecture Audit | COMPLETED |
 
-| 5 | Full Automated Testing | PENDING |
+| 5 | Full Automated Testing | COMPLETED |
 
-| 6 | JAOS Shell Testing | PENDING |
+| 6 | JAOS Shell Testing | COMPLETED WITH FINDINGS |
 
-| 7 | Bug Fixing and Regression | PENDING |
+| 7 | Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
 
 | 8 | Stabilization Certification | PENDING |
 
@@ -428,15 +430,63 @@ This sequence must not be skipped or reordered without an approved engineering
 
 decision.
 
+Latest completed activity:
+
+Step 6 — JAOS Shell Testing
+
+Step 6 was completed with findings. The approved shell-test report is recorded
+in:
+
+`docs/engineering/JAOS_SHELL_TEST_REPORT.md`
+
+Founder/reviewer Vinay B approved Step 6 on 2026-08-12.
+
+The verified Step 6 evidence is:
+
+- Core shell workflow exit code: 0
+
+- Filesystem workflow exit code: 0
+
+- Cleanup workflow exit code: 0
+
+- Edge-case workflow exit code: 0
+
+- Lifecycle inspection exit code: 0
+
+- EOF workflow exit code: 1
+
+- Filesystem approval enforcement passed
+
+- Sandbox cleanup was confirmed
+
+- Provider remained initialized after shell exit
+
+- Immediate EOF produced an uncaught `EOFError`
+
+- SHT-001 through SHT-006 are accepted for Step 7 remediation
+
+Step 5 — Full Automated Testing remains COMPLETED and recorded in:
+
+`docs/engineering/FULL_AUTOMATED_TEST_REPORT.md`
+
+RAA-001 through RAA-009 and SHT-001 through SHT-006 remain assigned to Step 7
+remediation.
+
 Current activity:
 
-Step 4 — Runtime Architecture Audit
+Step 6 completion documentation synchronization
 
-The runtime architecture must be audited against the approved platform
+Step 6 completion documentation synchronization is in progress.
 
-boundaries, ownership rules, lifecycle behavior, and composition contracts.
+Next pending activity:
 
-Audit evidence must be reviewed before Step 5 begins.
+Step 7 — Bug Fixing and Regression
+
+Step 7 has not begun. Prepare the Step 7 entry decision. The Founder must be
+
+informed and must explicitly approve entering Step 7. Begin Step 7 only after
+
+that approval.
 
 Phase 8 must remain paused until Step 8 passes.
 
@@ -928,13 +978,21 @@ Current execution state:
 
 Temporarily paused for repository stabilization
 
-Current stabilization activity:
+Latest completed stabilization activity:
 
-Step 4 — Runtime Architecture Audit
+Step 6 — JAOS Shell Testing
 
-Next stabilization activity:
+Current activity:
 
-Step 5 — Full Automated Testing
+Step 6 completion documentation synchronization
+
+Next pending stabilization activity:
+
+Step 7 — Bug Fixing and Regression
+
+Step 7 entry status:
+
+PENDING — AWAITING FOUNDER APPROVAL
 
 Phase 8 may resume only after stabilization certification.
 

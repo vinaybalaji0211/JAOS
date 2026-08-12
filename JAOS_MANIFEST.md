@@ -104,9 +104,11 @@ The repository must remain resumable at every engineering checkpoint.
 
 | Phase 8 execution | Temporarily paused |
 
-| Stabilization activity | Runtime Architecture Audit |
+| Stabilization activity | Step 6 completion documentation synchronization |
 
-| Stabilization step | Step 4 of 9 |
+| Stabilization step | Step 6 of 9 — COMPLETED WITH FINDINGS |
+
+| Step 7 entry | PENDING — AWAITING FOUNDER APPROVAL |
 
 | Repository health | HEALTHY |
 
@@ -204,13 +206,13 @@ The approved repository-stabilization sequence is mandatory.
 
 | 3 | Documentation Synchronization | COMPLETED |
 
-| 4 | Runtime Architecture Audit | IN PROGRESS |
+| 4 | Runtime Architecture Audit | COMPLETED |
 
-| 5 | Full Automated Testing | PENDING |
+| 5 | Full Automated Testing | COMPLETED |
 
-| 6 | JAOS Shell Testing | PENDING |
+| 6 | JAOS Shell Testing | COMPLETED WITH FINDINGS |
 
-| 7 | Bug Fixing and Regression | PENDING |
+| 7 | Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
 
 | 8 | Stabilization Certification | PENDING |
 
@@ -230,7 +232,7 @@ repository is formally authorized to resume from MS-0025E.
 
 Step 3 — Documentation Synchronization is complete.
 
-The synchronized and validated authoritative documents are:
+The synchronized authoritative continuation documents are:
 
 - `JAOS_MANIFEST.md`
 
@@ -238,21 +240,49 @@ The synchronized and validated authoritative documents are:
 
 - `docs/bootstrap/CONTINUATION_CONTEXT.md`
 
-- `docs/project/ROADMAP.md`
-
-- `docs/project/MILESTONES.md`
-
 - `docs/project/PROJECT_STATE.md`
 
 - `docs/project/CURRENT_SPRINT.md`
 
 - `docs/project/NEXT_ACTIONS.md`
 
-Cross-document consistency and repository safety checks passed.
+Step 4 — Runtime Architecture Audit is complete and recorded in:
 
-The current stabilization activity is:
+`docs/engineering/RUNTIME_ARCHITECTURE_AUDIT.md`
 
-Step 4 — Runtime Architecture Audit
+Step 5 — Full Automated Testing is complete and recorded in:
+
+`docs/engineering/FULL_AUTOMATED_TEST_REPORT.md`
+
+Step 6 — JAOS Shell Testing is complete with findings and recorded in:
+
+`docs/engineering/JAOS_SHELL_TEST_REPORT.md`
+
+Founder/reviewer Vinay B approved Step 6 on 2026-08-12.
+
+The verified Step 6 evidence is:
+
+- Core, filesystem, cleanup, edge-case, and lifecycle runs exited 0
+
+- EOF testing exited 1 because of an uncaught `EOFError`
+
+- Filesystem approval enforcement passed
+
+- Sandbox cleanup was confirmed
+
+- Provider lifecycle remained initialized after shell exit
+
+- SHT-001 through SHT-006 were accepted for Step 7 remediation
+
+RAA-001 through RAA-009 remain assigned to controlled Step 7 remediation.
+
+The current activity is:
+
+Step 6 completion documentation synchronization
+
+Step 7 — Bug Fixing and Regression has not begun and requires explicit Founder
+
+approval.
 
 ---
 
@@ -652,29 +682,39 @@ Execution strategy must be optimized first.
 
 ## 15. Current Objective
 
-The immediate objective is to complete repository stabilization in the approved
+The immediate objective is to finish Step 6 completion documentation
 
-order.
+synchronization.
 
 Current objective:
 
-1. Documentation synchronization is complete.
+1. Preserve the approved JAOS Shell Test Report and findings.
 
-2. Cross-document consistency verification is complete.
+2. Synchronize Step 6 completion across all authoritative continuation
 
-3. Complete the Runtime Architecture Audit.
+   documents.
 
-4. Run the full automated test suite.
+3. Cross-check all authoritative continuation documents.
 
-5. Perform JAOS runtime and shell testing.
+4. Verify repository and documentation safety checks.
 
-6. Fix confirmed defects and run regression testing.
+5. Inform the Founder when synchronization is complete.
 
-7. Publish the Repository Stabilization Certification.
+6. Prepare the Step 7 entry decision for Founder review.
 
-8. Commit and push the approved stabilization checkpoint.
+7. Wait for explicit Founder approval before Step 7.
 
-9. Resume MS-0025E — Reasoning and Planning Intelligence.
+8. After approval, remediate RAA-001 through RAA-009 and SHT-001 through
+
+   SHT-006 during Step 7.
+
+9. Run the required Step 7 regression validation.
+
+10. Complete Step 8 — Stabilization Certification.
+
+11. Commit and push the approved stabilization checkpoint.
+
+12. Resume MS-0025E only after stabilization certification.
 
 Phase 8 must resume only after stabilization certification.
 
@@ -906,7 +946,17 @@ independent, and maintainable across its lifetime.
 
 | Documentation synchronization | COMPLETE |
 
-| Runtime architecture audit | IN PROGRESS |
+| Runtime architecture audit | COMPLETE |
+
+| Full automated testing | COMPLETE |
+
+| Step 5 completion synchronization | COMPLETE |
+
+| JAOS Shell testing | COMPLETE WITH FINDINGS |
+
+| Step 6 completion synchronization | IN PROGRESS |
+
+| Bug fixing and regression | PENDING — AWAITING FOUNDER APPROVAL |
 
 | Full regression certification | PENDING |
 
