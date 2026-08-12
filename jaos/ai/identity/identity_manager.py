@@ -1,6 +1,7 @@
 from jaos.ai.identity.capability_registry import CapabilityRegistry
 from jaos.ai.identity.identity_models import JAOSIdentity
 from jaos.ai.identity.limitation_registry import LimitationRegistry
+from jaos.version import JAOS_VERSION
 
 
 class IdentityManager:
@@ -19,7 +20,7 @@ class IdentityManager:
     def get_identity(self) -> JAOSIdentity:
         return JAOSIdentity(
             name="JAOS",
-            version="v0.7.0-alpha",
+            version=JAOS_VERSION,
             codename="Jarvis Artificial Operating System",
             description=(
                 "JAOS is a modular AI Operating System designed to understand "
