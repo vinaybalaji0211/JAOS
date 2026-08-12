@@ -57,18 +57,25 @@ The authoritative evidence is:
 
 `docs/engineering/JAOS_SHELL_TEST_REPORT.md`
 
-SHT-001 through SHT-006 are accepted for controlled remediation during Step 7 —
-Bug Fixing and Regression.
+Step 6 documentation synchronization is COMPLETE.
+
+The documentation checkpoint is:
+
+`786abb3` docs(stabilization): certify Steps 4 through 6
+
+The active stabilization step is:
+
+Step 7 — Bug Fixing and Regression
+
+Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
+
+RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
+controlled Step 7 remediation. No finding has been fixed or closed yet.
 
 Step 5 — Full Automated Testing remains COMPLETED with the verified automated
 baseline of 1,590 tests collected and 1,590 tests passed.
 
-The next stabilization step is:
-
-Step 7 — Bug Fixing and Regression
-
-Step 7 remains pending until the Founder is informed and explicitly approves
-entering it.
+Step 8 — Stabilization Certification remains PENDING — BLOCKED BY STEP 7.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -101,7 +108,7 @@ The objectives of this sprint are to:
 | Milestone family | MS-0025 |
 | Active milestone | MS-0025E — Reasoning and Planning Intelligence |
 | Phase 8 execution | Temporarily paused |
-| Stabilization step | Step 6 — JAOS Shell Testing — COMPLETED WITH FINDINGS |
+| Stabilization step | Step 7 — Bug Fixing and Regression — IN PROGRESS |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | HEALTHY |
 | Architecture health | STABLE |
@@ -160,8 +167,8 @@ The approved stabilization order is mandatory.
 | 4 | Runtime Architecture Audit | COMPLETED |
 | 5 | Full Automated Testing | COMPLETED |
 | 6 | JAOS Shell Testing | COMPLETED WITH FINDINGS |
-| 7 | Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
-| 8 | Stabilization Certification | PENDING |
+| 7 | Bug Fixing and Regression | IN PROGRESS |
+| 8 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 | 9 | Resume Phase 8 | PENDING |
 
 The sequence must not be skipped or reordered without an approved engineering
@@ -171,27 +178,44 @@ decision.
 
 ## 7. Current Work
 
-The current activity is Step 6 completion documentation synchronization.
+The current activity is Step 7 finding triage and remediation planning.
 
-Step 6 — JAOS Shell Testing is complete with findings and recorded in:
+Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
+
+The documentation checkpoint is:
+
+`786abb3` docs(stabilization): certify Steps 4 through 6
+
+Step 6 — JAOS Shell Testing remains COMPLETED WITH FINDINGS and recorded in:
 
 `docs/engineering/JAOS_SHELL_TEST_REPORT.md`
 
-Founder/reviewer Vinay B approved Step 6 on 2026-08-12.
-
-SHT-001 through SHT-006 are accepted for controlled remediation during
-Step 7 — Bug Fixing and Regression.
+Step 6 documentation synchronization is COMPLETE.
 
 Step 5 — Full Automated Testing remains COMPLETED and recorded in:
 
 `docs/engineering/FULL_AUTOMATED_TEST_REPORT.md`
 
-RAA-001 through RAA-009 remain assigned to controlled remediation during
-Step 7 — Bug Fixing and Regression.
+Step 4 — Runtime Architecture Audit remains COMPLETED and recorded in:
 
-The next stabilization step is Step 7 — Bug Fixing and Regression.
+`docs/engineering/RUNTIME_ARCHITECTURE_AUDIT.md`
 
-Step 7 has not begun and requires explicit Founder approval.
+RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
+controlled Step 7 remediation.
+
+Implementation has not started. No finding has been fixed or closed yet.
+
+The controlled Step 7 workflow is:
+
+1. Triage and map overlapping findings.
+2. Define remediation order and acceptance tests.
+3. Apply one controlled fix cluster at a time.
+4. Run targeted tests after every cluster.
+5. Run the full regression suite.
+6. Produce the Step 7 report for Founder review.
+
+Step 8 — Stabilization Certification has not begun and remains
+PENDING — BLOCKED BY STEP 7.
 
 MS-0025E and Phase 8 implementation remain paused.
 
@@ -386,21 +410,16 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-1. Complete Step 6 status synchronization across authoritative continuation
-   documents.
-2. Cross-check the manifest, bootstrap, continuation, sprint, project-state,
-   and next-action records.
-3. Verify repository safety and documentation whitespace checks.
-4. Inform the Founder that Step 6 synchronization is complete.
-5. Explain the Step 7 scope, authorized remediations, evidence, and exit
-   criteria.
-6. Wait for explicit Founder approval to enter Step 7.
-7. After approval, remediate RAA-001 through RAA-009 and SHT-001 through
-   SHT-006 during Step 7.
-8. Run the required Step 7 regression validation.
-9. Complete Step 8 — Stabilization Certification.
-10. Commit and push the approved stabilization checkpoint.
-11. Resume MS-0025E only after stabilization certification.
+1. Triage and map overlapping RAA-001 through RAA-009 and SHT-001 through
+   SHT-006 findings.
+2. Define remediation order and acceptance tests.
+3. Apply one controlled fix cluster at a time.
+4. Run targeted tests after every cluster.
+5. Run the full regression suite.
+6. Produce the Step 7 report for Founder review.
+7. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
+   until Step 7 is complete and approved.
+8. Resume MS-0025E only after Step 8 — Stabilization Certification.
 
 ---
 
@@ -416,9 +435,9 @@ This sprint is complete only when:
 | Full Automated Testing | COMPLETE |
 | Step 5 completion synchronization | COMPLETE |
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
-| Step 6 completion synchronization | IN PROGRESS |
-| Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
-| Stabilization Certification | PENDING |
+| Step 6 completion synchronization | COMPLETE |
+| Bug Fixing and Regression | IN PROGRESS |
+| Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 | Phase 8 Resume | PENDING |
 
 Overall sprint status:
@@ -427,11 +446,19 @@ IN PROGRESS
 
 Current checkpoint:
 
-Step 6 completion documentation synchronization
+`786abb3` docs(stabilization): certify Steps 4 through 6
+
+Current activity:
+
+Step 7 finding triage and remediation planning
+
+Active stabilization step:
+
+Step 7 — Bug Fixing and Regression
 
 Next pending step:
 
-Step 7 — Bug Fixing and Regression
+Step 8 — Stabilization Certification
 
 Current resume target:
 

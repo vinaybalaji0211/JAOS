@@ -110,11 +110,13 @@ approved reason.
 
 | Phase 8 execution | Temporarily paused |
 
-| Stabilization activity | Step 6 completion documentation synchronization |
+| Stabilization activity | Step 7 finding triage and remediation planning |
 
-| Stabilization step | Step 6 of 9 — COMPLETED WITH FINDINGS |
+| Stabilization step | Step 7 of 9 — IN PROGRESS |
 
-| Step 7 entry | PENDING — AWAITING FOUNDER APPROVAL |
+| Step 7 entry | APPROVED — IN PROGRESS |
+
+| Step 8 entry | PENDING — BLOCKED BY STEP 7 |
 
 | Repository health | HEALTHY |
 
@@ -420,9 +422,9 @@ The current repository-stabilization sequence is mandatory:
 
 | 6 | JAOS Shell Testing | COMPLETED WITH FINDINGS |
 
-| 7 | Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
+| 7 | Bug Fixing and Regression | IN PROGRESS |
 
-| 8 | Stabilization Certification | PENDING |
+| 8 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 
 | 9 | Resume Phase 8 | PENDING |
 
@@ -472,21 +474,55 @@ Step 5 — Full Automated Testing remains COMPLETED and recorded in:
 RAA-001 through RAA-009 and SHT-001 through SHT-006 remain assigned to Step 7
 remediation.
 
+Step 6 completion synchronization is COMPLETE.
+
+The documentation checkpoint is:
+
+`786abb3` docs(stabilization): certify Steps 4 through 6
+
+Founder/reviewer Vinay B approved Step 7 entry on 2026-08-12.
+
 Current activity:
 
-Step 6 completion documentation synchronization
+Step 7 finding triage and remediation planning
 
-Step 6 completion documentation synchronization is in progress.
+RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
+
+controlled Step 7 remediation.
+
+No finding has been fixed, closed, or certified. Implementation changes have
+
+not started.
+
+The controlled Step 7 continuation instructions are:
+
+1. Complete read-only finding triage and remediation planning.
+
+2. Build the RAA/SHT finding-remediation matrix.
+
+3. Map overlaps and dependencies.
+
+4. Classify each finding as fix, documentation correction, or approved
+
+   deferral.
+
+5. Define acceptance tests before implementation.
+
+6. Apply one controlled fix cluster at a time.
+
+7. Run targeted tests after each cluster.
+
+8. Run full automated and shell regression suites.
+
+9. Produce the Step 7 report for Founder review.
 
 Next pending activity:
 
-Step 7 — Bug Fixing and Regression
+Step 8 — Stabilization Certification
 
-Step 7 has not begun. Prepare the Step 7 entry decision. The Founder must be
+Step 8 remains PENDING — BLOCKED BY STEP 7 until Step 7 completes and receives
 
-informed and must explicitly approve entering Step 7. Begin Step 7 only after
-
-that approval.
+Founder review.
 
 Phase 8 must remain paused until Step 8 passes.
 
@@ -984,15 +1020,23 @@ Step 6 — JAOS Shell Testing
 
 Current activity:
 
-Step 6 completion documentation synchronization
+Step 7 finding triage and remediation planning
 
-Next pending stabilization activity:
+Active stabilization step:
 
 Step 7 — Bug Fixing and Regression
 
 Step 7 entry status:
 
-PENDING — AWAITING FOUNDER APPROVAL
+APPROVED — IN PROGRESS
+
+Next pending stabilization activity:
+
+Step 8 — Stabilization Certification
+
+Step 8 entry status:
+
+PENDING — BLOCKED BY STEP 7
 
 Phase 8 may resume only after stabilization certification.
 

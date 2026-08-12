@@ -10,8 +10,8 @@ Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Temporarily paused for repository stabilization
-Current Stabilization Activity: Step 6 completion documentation synchronization
-Exact Next Action: Complete synchronization and request approval to enter Step 7
+Current Stabilization Activity: Step 7 finding triage and remediation planning
+Exact Next Action: Complete read-only Step 7 finding triage and remediation planning before modifying source code or tests
 
 ---
 
@@ -47,9 +47,10 @@ It must not direct engineers to repeat completed planning or implementation.
 | Milestone family | MS-0025 |
 | Active milestone | MS-0025E — Reasoning and Planning Intelligence |
 | Phase 8 execution | Temporarily paused |
-| Stabilization step | Step 6 of 9 — COMPLETED WITH FINDINGS |
-| Current activity | Step 6 completion documentation synchronization |
-| Step 7 entry | PENDING — AWAITING FOUNDER APPROVAL |
+| Stabilization step | Step 7 of 9 — IN PROGRESS |
+| Current activity | Step 7 finding triage and remediation planning |
+| Step 7 entry | APPROVED — IN PROGRESS |
+| Step 8 entry | PENDING — BLOCKED BY STEP 7 |
 | Repository health | HEALTHY |
 | Architecture health | STABLE |
 | Full regression certification | PENDING |
@@ -84,37 +85,47 @@ This pause is not:
 
 The immediate priority is:
 
-Complete Step 6 status synchronization across the authoritative continuation
-documents.
+Complete read-only Step 7 finding triage and remediation planning before
+modifying source code or tests.
 
-Step 6 — JAOS Shell Testing was approved by Founder/reviewer Vinay B on
-2026-08-12 as complete with findings.
+Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
-The approved shell-test report is recorded in:
+The documentation checkpoint is:
+
+`786abb3` docs(stabilization): certify Steps 4 through 6
+
+Step 6 — JAOS Shell Testing remains COMPLETED WITH FINDINGS and recorded in:
 
 `docs/engineering/JAOS_SHELL_TEST_REPORT.md`
 
-SHT-001 through SHT-006 are accepted for controlled Step 7 remediation.
+Step 6 completion documentation synchronization is COMPLETE.
 
 Step 5 — Full Automated Testing remains COMPLETED and recorded in:
 
 `docs/engineering/FULL_AUTOMATED_TEST_REPORT.md`
 
-The currently authorized work is limited to:
+RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
+controlled remediation.
 
-1. Synchronizing Step 6 completion across authoritative continuation documents.
-2. Preserving the accepted Step 5 and Step 6 evidence.
-3. Preserving RAA-001 through RAA-009 and SHT-001 through SHT-006 for Step 7
-   remediation.
-4. Verifying repository and documentation safety checks.
-5. Informing the Founder before entering Step 7.
-6. Waiting for explicit Founder approval to enter Step 7.
-7. Preparing the Step 7 entry decision for Founder review.
+No finding has been fixed, closed, or certified yet. Implementation changes
+have not started.
 
-Step 7 — Bug Fixing and Regression has not begun.
+The controlled Step 7 workflow is:
 
-No implementation changes or Phase 8 feature work are authorized during this
-documentation synchronization activity.
+1. Build a finding-remediation matrix for RAA-001 through RAA-009 and
+   SHT-001 through SHT-006.
+2. Identify overlaps and dependencies.
+3. Classify each finding as fix, documentation correction, or approved
+   deferral.
+4. Define acceptance tests before implementation.
+5. Apply one controlled fix cluster at a time.
+6. Run targeted tests after every cluster.
+7. Run the complete automated and JAOS Shell regression suites.
+8. Produce the Step 7 report for Founder review.
+
+Step 8 — Stabilization Certification remains PENDING — BLOCKED BY STEP 7.
+
+MS-0025E and Phase 8 implementation remain paused.
 
 ---
 
@@ -279,8 +290,8 @@ The approved repository-stabilization sequence is mandatory:
 | 4 | Runtime Architecture Audit | COMPLETED |
 | 5 | Full Automated Testing | COMPLETED |
 | 6 | JAOS Shell Testing | COMPLETED WITH FINDINGS |
-| 7 | Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
-| 8 | Stabilization Certification | PENDING |
+| 7 | Bug Fixing and Regression | IN PROGRESS |
+| 8 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 | 9 | Resume Phase 8 | PENDING |
 
 The sequence must not be skipped or reordered without an approved engineering
@@ -294,6 +305,12 @@ Certification passes.
 ## 9. Documentation Synchronization State
 
 Step 3 — Documentation Synchronization is complete.
+
+Step 6 completion documentation synchronization is COMPLETE.
+
+The documentation checkpoint is:
+
+`786abb3` docs(stabilization): certify Steps 4 through 6
 
 The synchronized authoritative documentation checkpoint contains:
 
@@ -312,13 +329,8 @@ The transition evidence confirms:
 - The certified release remains `v0.9.0-alpha`.
 - The development target remains `v0.10.0-alpha`.
 - Phase 8 and MS-0025E remain active but temporarily paused.
-- Exactly eight intended documentation files are modified.
-- No unintended untracked files exist.
-- No files are staged.
-- `git diff --check` passes.
-
-The documentation checkpoint must remain unstaged until the complete
-stabilization checkpoint is reviewed.
+- Steps 4 through 6 are certified in the documentation checkpoint.
+- `git diff --check` passes for the reviewed documentation checkpoint.
 
 ---
 
@@ -421,8 +433,9 @@ Current authoritative states:
 | Runtime Architecture Audit | COMPLETE |
 | Full Automated Testing | COMPLETE |
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
-| Bug Fixing and Regression | PENDING — AWAITING FOUNDER APPROVAL |
-| Stabilization Certification | PENDING |
+| Step 6 completion synchronization | COMPLETE |
+| Bug Fixing and Regression | IN PROGRESS |
+| Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 | Phase 8 Certification | PENDING |
 
 The current full regression count must be established during:
@@ -453,51 +466,49 @@ No current certification claim may be based solely on an older test count.
 
 ---
 
-## 12. Actions Authorized During Step 6 Completion Synchronization
+## 12. Actions Authorized During Step 7 Finding Triage and Remediation Planning
 
 The following actions are authorized:
 
-- Read and compare authoritative repository documentation.
-- Correct confirmed Step 6 status inconsistencies.
-- Record the approved Step 6 shell-test evidence and findings.
-- Preserve RAA-001 through RAA-009 and SHT-001 through SHT-006 for Step 7
-  remediation.
-- Validate required document markers.
+- Read and compare authoritative repository documentation and audit evidence.
+- Build the finding-remediation matrix for RAA-001 through RAA-009 and
+  SHT-001 through SHT-006.
+- Identify overlaps and dependencies among findings.
+- Classify each finding as fix, documentation correction, or approved
+  deferral.
+- Define acceptance tests before implementation.
+- Record the Founder-approved Step 7 entry and checkpoint `786abb3`.
+- Preserve Step 4, Step 5, and Step 6 completion evidence.
 - Run non-mutating documentation and repository checks.
 - Run `git diff --check`.
-- Prepare the Step 7 entry decision for Founder review.
 
-Only documentation within the approved synchronization checkpoint may be
-changed.
+Only documentation required for the Step 7 planning checkpoint may be changed.
 
 Each change must remain reviewable and recoverable.
 
 ---
 
-## 13. Actions Not Authorized During Step 6 Completion Synchronization
+## 13. Actions Not Authorized During Step 7 Finding Triage and Remediation Planning
 
 Do not:
 
-- Enter Step 7 without explicit Founder approval.
-- Begin Bug Fixing and Regression.
-- Implement RAA-001 through RAA-009.
-- Implement SHT-001 through SHT-006.
+- Modify source code or tests before the finding matrix and acceptance tests
+  are defined.
+- Mark any finding resolved without evidence.
+- Enter Step 8.
+- Resume MS-0025E or Phase 8.
 - Add new Phase 8 functionality.
-- Continue MS-0025E implementation.
 - Start MS-0025G.
 - Start MS-0025X.
 - Claim MS-0025F certification.
-- Modify runtime behavior.
-- Modify tests to manufacture a passing result.
-- Delete existing implementation.
-- Reset the branch.
 - Rewrite Git history.
+- Force-push.
+- Reset the branch.
 - Rebase.
 - Merge.
 - Pull.
-- Force-push.
 - Stage partially reviewed files.
-- Commit the incomplete synchronization checkpoint.
+- Commit before the planning checkpoint is reviewed.
 - Tag a release.
 - Claim stabilization is complete.
 - Change the locked roadmap structure.
@@ -535,9 +546,6 @@ RAA-001 through RAA-009 remain assigned to controlled Step 7 remediation.
 Step 5 remains complete. Step 6 evidence and findings are recorded in
 Section 15.
 
-No implementation correction is authorized during the current documentation
-synchronization activity.
-
 ---
 
 ## 15. Step 6 Completion Record
@@ -567,11 +575,13 @@ Founder/reviewer Vinay B approved Step 6 on 2026-08-12.
 SHT-001 through SHT-006 are accepted for controlled Step 7 remediation alongside
 RAA-001 through RAA-009.
 
-Step 7 remains pending until the Founder is informed and explicitly approves
-entering it.
+Step 6 completion documentation synchronization is COMPLETE.
 
-No implementation correction is authorized during the current documentation
-synchronization activity.
+Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
+
+The documentation checkpoint is:
+
+`786abb3` docs(stabilization): certify Steps 4 through 6
 
 ---
 
@@ -579,23 +589,38 @@ synchronization activity.
 
 The current activity is:
 
-Step 6 completion documentation synchronization
+Step 7 finding triage and remediation planning
 
-The synchronization must:
+Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
-- Record Step 6 as completed with findings and approved.
-- Preserve the accepted SHT-001 through SHT-006 findings.
-- Preserve the verified Step 5 automated baseline.
-- Preserve the accepted Runtime Architecture Audit findings.
-- Keep Step 7 pending explicit Founder approval.
-- Preserve the Phase 8 pause and MS-0025E resume point.
-- Keep repository safety checks clean.
+The documentation checkpoint is:
 
-Step 6 completion documentation synchronization is in progress.
+`786abb3` docs(stabilization): certify Steps 4 through 6
 
-Step 6 is complete with findings.
+Step 6 completion documentation synchronization is COMPLETE.
 
-Step 7 — Bug Fixing and Regression has not begun.
+RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
+controlled remediation.
+
+No finding has been fixed, closed, or certified yet. Implementation changes
+have not started.
+
+The controlled Step 7 workflow is:
+
+1. Build a finding-remediation matrix for RAA-001 through RAA-009 and
+   SHT-001 through SHT-006.
+2. Identify overlaps and dependencies.
+3. Classify each finding as fix, documentation correction, or approved
+   deferral.
+4. Define acceptance tests before implementation.
+5. Apply one controlled fix cluster at a time.
+6. Run targeted tests after every cluster.
+7. Run the complete automated and JAOS Shell regression suites.
+8. Produce the Step 7 report for Founder review.
+
+Step 8 — Stabilization Certification remains PENDING — BLOCKED BY STEP 7.
+
+MS-0025E and Phase 8 implementation remain paused.
 
 ---
 
@@ -743,30 +768,34 @@ than rapidly changing implementation.
 
 ## 22. Exact Next Actions
 
-1. Complete Step 6 status synchronization across authoritative continuation
-   documents.
-2. Cross-check `JAOS_MANIFEST.md`, `PROJECT_BOOTSTRAP.md`,
-   `CONTINUATION_CONTEXT.md`, `CURRENT_SPRINT.md`, `PROJECT_STATE.md`, and
-   `NEXT_ACTIONS.md`.
-3. Verify repository safety and documentation whitespace checks.
-4. Inform the Founder that Step 6 synchronization is complete.
-5. Explain the Step 7 scope, authorized remediations, evidence, and exit
-   criteria.
-6. Prepare the Step 7 entry decision for Founder review.
-7. Wait for explicit Founder approval to enter Step 7.
-8. Begin Step 7 — Bug Fixing and Regression only after that approval.
+1. Build a finding-remediation matrix for RAA-001 through RAA-009 and
+   SHT-001 through SHT-006.
+2. Identify overlaps and dependencies.
+3. Classify each finding as fix, documentation correction, or approved
+   deferral.
+4. Define acceptance tests before implementation.
+5. Apply one controlled fix cluster at a time only after the matrix and
+   acceptance tests are defined.
+6. Run targeted tests after every cluster.
+7. Run the complete automated and JAOS Shell regression suites.
+8. Produce the Step 7 report for Founder review.
+9. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
+   until Step 7 is complete and approved.
 
-Do not stage or commit the incomplete documentation synchronization checkpoint.
+Do not modify source code or tests before the finding matrix and acceptance
+tests are defined.
 
-Do not modify implementation code or resume Phase 8 implementation.
+Do not mark any finding resolved without evidence.
+
+Do not enter Step 8 or resume Phase 8 implementation.
 
 ---
 
 ## 23. Current Command-Level Action
 
-Synchronize the approved completion of Step 6 across the remaining authoritative
-continuation documents.
+Complete read-only Step 7 finding triage and remediation planning before
+modifying source code or tests.
 
-Do not begin Step 7 yet.
+Do not resolve any finding during this planning checkpoint.
 
-Do not modify implementation code, stage files, commit, push, or resume Phase 8.
+Do not enter Step 8, resume MS-0025E, or resume Phase 8.
