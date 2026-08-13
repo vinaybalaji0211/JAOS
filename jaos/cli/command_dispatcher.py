@@ -36,6 +36,15 @@ class CommandDispatcher:
             ai_manager=self.ai_manager,
         )
 
+    def shutdown(self) -> None:
+        """
+        Synchronously shut down AI provider lifecycle owned by this dispatcher.
+
+        Delegates to AIManager.shutdown(); does not access concrete providers
+        and does not catch shutdown errors.
+        """
+        self.ai_manager.shutdown()
+
     def dispatch(self, command: str) -> bool:
         normalized = command.strip().lower()
 
@@ -81,6 +90,7 @@ class CommandDispatcher:
 
         if normalized == "exit":
             print("Shutting down JAOS...")
+            self.shutdown()
             return False
 
         response = self.executive.process(command)

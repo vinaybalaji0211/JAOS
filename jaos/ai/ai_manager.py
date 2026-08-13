@@ -41,6 +41,21 @@ class AIManager:
         self._identity_manager = identity_manager or IdentityManager()
         self._system_prompt_builder = system_prompt_builder or SystemPromptBuilder()
         self._status_provider = AIStatusProvider(provider_manager)
+        self._shutdown_complete = False
+
+    def shutdown(self) -> None:
+        """
+        Synchronously shut down owned AI providers.
+
+        Idempotent: a successful prior shutdown is a no-op. ProviderManager
+        errors are not swallowed, and the completion guard is set only after
+        shutdown_all() returns successfully.
+        """
+        if self._shutdown_complete:
+            return
+
+        self._composition.provider_manager.shutdown_all()
+        self._shutdown_complete = True
 
     def generate(self, prompt: str, **kwargs: object) -> ParsedResponse:
         request = AIGenerateRequest(prompt=prompt, **kwargs)

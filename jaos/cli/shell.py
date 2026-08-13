@@ -15,12 +15,20 @@ class JAOSShell:
         print("Type 'exit' to quit.")
         print()
 
-        running = True
+        try:
+            running = True
 
-        while running:
-            command = input("JAOS > ").strip()
+            while running:
+                try:
+                    command = input("JAOS > ").strip()
+                except EOFError:
+                    print()
+                    print("Shutting down JAOS...")
+                    break
 
-            if not command:
-                continue
+                if not command:
+                    continue
 
-            running = self.dispatcher.dispatch(command)
+                running = self.dispatcher.dispatch(command)
+        finally:
+            self.dispatcher.shutdown()
