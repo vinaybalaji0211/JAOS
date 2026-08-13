@@ -1,14 +1,14 @@
 # Bug Fixing and Regression Report
 
 Version: 1.0
-Status: IN PROGRESS — D1 AND D2 VERIFIED
+Status: IN PROGRESS — D1, D2, AND LIFECYCLE CLUSTER VERIFIED
 Stabilization Step: Step 7 of 9
 Owner: Vinay B
 Maintainer: JAOS Engineering
 Date: 2026-08-12
 Branch: phase8-ai-intelligence
 Step 7 Entry Commit: 2098be4
-Current HEAD: 76d9113
+Current HEAD: 25437ba
 Phase 8 Status: PAUSED
 MS-0025E Status: PAUSED
 
@@ -44,6 +44,7 @@ Recorded checkpoints:
 | `2098be4` | Step 7 entry |
 | `8fb08cf` | D1 runtime version alignment |
 | `76d9113` | D2 Memory Platform identity wording |
+| `25437ba` | Lifecycle and EOF cluster (RAA-005 / SHT-002 / SHT-004) |
 
 ---
 
@@ -70,19 +71,23 @@ Recorded checkpoints:
 | RAA-002 | PROPOSED DEFER — would resume Phase 8 composition | DEFER WITH JUSTIFICATION | Intelligence composition | Do not wire Intelligence into shell while MS-0025E is paused |
 | RAA-003 | PROPOSED DEFER — requires migration ADR/bridge | DEFER WITH JUSTIFICATION | Parallel runtime stacks | Requires declared migration bridge before unification |
 | RAA-004 | PLANNED FIX | FIX IN STEP 7 | Boot readiness / health | Platform BootManager validator consistency |
-| RAA-005 | PLANNED FIX | FIX IN STEP 7 | Provider shutdown | Shell exit must call provider shutdown |
+| RAA-005 | RESOLVED WITH EVIDENCE — commit 25437ba | FIX IN STEP 7 | Provider shutdown | Lifecycle cluster; see Section 7 |
 | RAA-006 | PLANNED SCOPED FIX | FIX IN STEP 7 | False health / boot signals | Scoped truthful reporting; not full Runtime adoption |
 | RAA-007 | DECISION REQUIRED / PROPOSED PARTIAL DEFER | REQUIRES ARCHITECTURE DECISION | CLI provider construction | Full composition-root relocation deferred; partial cleanup optional later |
 | RAA-008 | PLANNED FIX | FIX IN STEP 7 | Public MockProvider export | Remove concrete provider from `jaos.ai` public facade |
 | RAA-009 | PROPOSED DEFER — contract extraction is design work | DEFER WITH JUSTIFICATION | Intelligence–Memory coupling | Cross-platform contract facade is design work |
 | SHT-001 | RESOLVED WITH EVIDENCE — commit `8fb08cf` | FIX IN STEP 7 | Version / identity drift | D1 verified; see Section 5 |
-| SHT-002 | PLANNED FIX with RAA-005 | FIX IN STEP 7 | Provider shutdown | Same cluster as RAA-005 |
+| SHT-002 | RESOLVED WITH EVIDENCE — commit 25437ba | FIX IN STEP 7 | Provider shutdown | Lifecycle cluster; see Section 7 |
 | SHT-003 | PLANNED SCOPED FIX | FIX IN STEP 7 | False boot signals | Honesty fix without full Runtime wiring |
-| SHT-004 | PLANNED FIX | FIX IN STEP 7 | EOF containment | Catch `EOFError` in shell loop |
+| SHT-004 | RESOLVED WITH EVIDENCE — commit 25437ba | FIX IN STEP 7 | EOF containment | Lifecycle cluster; see Section 7 |
 | SHT-005 | RESOLVED WITH EVIDENCE — commit `76d9113` | FIX IN STEP 7 | Memory identity wording | Truthful Memory Platform identity wording without adding a live shell Memory capability; see Section 6 |
 | SHT-006 | PLANNED FIX | FIX IN STEP 7 | Known-command validation | Incomplete `read`/`write` must not AI-fallback |
 
-Only SHT-001 and SHT-005 are marked resolved.
+Exactly SHT-001, SHT-005, RAA-005, SHT-002, and SHT-004 are resolved.
+Step 7 finding progress: 5 of 15 findings are resolved with evidence; 10 remain
+for implementation, architecture decision, or approved deferral.
+No other finding is resolved.
+Step 7 remains in progress.
 
 ---
 
@@ -171,7 +176,88 @@ SHT-005 is resolved with evidence.
 
 ---
 
-## 7. Repository Safety Record
+## 7. Lifecycle and EOF Cluster Record
+
+Findings:
+
+- RAA-005
+- SHT-002
+- SHT-004
+
+### Production changes
+
+- `jaos/ai/ai_manager.py`
+  - Added public synchronous, idempotent `shutdown()`.
+  - Delegates to the owned ProviderManager’s `shutdown_all()`.
+  - Does not swallow shutdown errors.
+  - Completion guard is set only after successful shutdown.
+- `jaos/cli/command_dispatcher.py`
+  - Added public synchronous `shutdown()`.
+  - Delegates to `AIManager.shutdown()`.
+  - Explicit `exit` invokes shutdown before returning `False`.
+- `jaos/cli/shell.py`
+  - Added `try/finally` lifecycle cleanup.
+  - EOF is handled gracefully without a traceback.
+  - Unexpected dispatch exceptions still propagate after cleanup.
+  - No Runtime Platform or BootManager rewire was introduced.
+
+### Certified test file
+
+- `tests/tests/integration/test_shell_shutdown_lifecycle.py`
+
+### Focused behaviors
+
+- Explicit exit returns `False` and shuts down the mock provider.
+- Repeated shutdown is safe.
+- EOF returns normally and shuts down the provider.
+- Unexpected dispatch errors still shut down providers and are re-raised.
+
+### Verification evidence
+
+| Check | Result |
+|---|---|
+| Syntax validation exit code | 0 |
+| Focused lifecycle tests | 4 passed |
+| Certified collection | 1,600 tests |
+| Valid AI/provider/lifecycle regression | 29 passed |
+| Full suite | 1,600 passed in 8.23 seconds |
+| Explicit-exit lifecycle check exit code | 0 |
+| Provider before exit | initialized |
+| Provider after exit | shutdown |
+| EOF shell exit code | 0 |
+| EOF output contained `Shutting down JAOS...` | Yes |
+| EOF output contained no `EOFError` or traceback | Yes |
+| `git diff --check` | Pass |
+| Commit | `25437ba` |
+
+### Accidental-file safety event
+
+- A corrupted root artifact named
+  `tstestsintegrationtest_shell_shutdown_lifecycle.py` appeared.
+- Founder approved moving it outside the repository.
+- It was preserved under `%TEMP%`.
+- The intended test file remained under the certified test tree.
+- The accidental file was absent before testing and committing.
+
+### Legacy-test observation
+
+- An exploratory run including `tests/test_mock_provider.py` failed during
+  collection because it imports `MockProvider` from the intentionally empty
+  `jaos.ai.providers` package initializer.
+- `pytest.ini` limits the certified suite to `tests/tests`.
+- A diff against checkpoint `7efc0e1` proved the legacy test and provider
+  initializer were unchanged by the lifecycle cluster.
+- The stale legacy test was excluded from the valid lifecycle regression.
+- Production exports were not changed merely to satisfy obsolete test debt.
+- Valid selected regression passed 29 tests.
+- Certified full regression passed all 1,600 tests.
+- This legacy observation does not resolve or alter RAA-008.
+
+RAA-005, SHT-002, and SHT-004 are resolved with evidence.
+
+---
+
+## 8. Repository Safety Record
 
 - Eight unrelated changes appeared during D1:
   `.vscode/settings.json` and seven generated JSON files.
@@ -181,26 +267,28 @@ SHT-005 is resolved with evidence.
 - They were restored before testing and committing D1.
 - D1 commit contains exactly three production files and two tests.
 - D2 changed exactly one production file and one existing test file.
+- Lifecycle commit contains exactly three production files and one certified
+  test file.
 - Working tree was clean after commit.
-- Branch was ahead of origin by five commits.
+- Branch was ahead of origin by seven commits.
 - No push occurred.
 
 ---
 
-## 8. Next Controlled Fix
+## 9. Next Controlled Fix
 
-D2 is complete.
+Lifecycle cluster is complete.
 
-The next cluster has not been authorized for implementation.
+Next action is focused read-only inspection of SHT-006:
+known-command validation versus AI fallback.
 
-Next action is focused read-only inspection of the provider-shutdown and EOF
-relationship covering RAA-005, SHT-002, and SHT-004.
+SHT-006 implementation has not begun.
 
-No lifecycle or EOF code change has begun.
+RAA-008 remains separate and unresolved.
 
 ---
 
-## 9. Remaining Step 7 Workflow
+## 10. Remaining Step 7 Workflow
 
 1. Continue one controlled fix cluster at a time.
 2. Run targeted tests after each fix.
@@ -213,7 +301,7 @@ No lifecycle or EOF code change has begun.
 
 ---
 
-## 10. Step 7 Exit Criteria
+## 11. Step 7 Exit Criteria
 
 | Criterion | Status |
 |---|---|
@@ -221,6 +309,7 @@ No lifecycle or EOF code change has begun.
 | Targeted tests pass for every implemented fix | PENDING |
 | D1 — SHT-001 version alignment verified with evidence | COMPLETE |
 | D2 — SHT-005 Memory shell-boundary wording verified with evidence | COMPLETE |
+| Lifecycle cluster — RAA-005/SHT-002/SHT-004 | COMPLETE |
 | Full automated suite passes | PENDING |
 | Shell regression passes | PENDING |
 | Syntax and dependency validation pass | PENDING |
@@ -228,11 +317,12 @@ No lifecycle or EOF code change has begun.
 | Step 7 report is complete | PENDING |
 | Founder/reviewer approval is recorded | PENDING |
 
-Only the D1 and D2 criteria are COMPLETE. All remaining criteria stay PENDING.
+D1, D2, and the lifecycle cluster criteria are COMPLETE. All remaining criteria
+stay PENDING.
 
 ---
 
-## 11. Approval
+## 12. Approval
 
 | Role | Decision | Date | Signature |
 |---|---|---|---|
