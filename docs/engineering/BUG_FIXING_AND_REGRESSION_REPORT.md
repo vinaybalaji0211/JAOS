@@ -1,14 +1,14 @@
 # Bug Fixing and Regression Report
 
 Version: 1.0
-Status: IN PROGRESS — D1, D2, AND LIFECYCLE CLUSTER VERIFIED
+Status: IN PROGRESS — D1, D2, LIFECYCLE, AND SHT-006 VERIFIED
 Stabilization Step: Step 7 of 9
 Owner: Vinay B
 Maintainer: JAOS Engineering
 Date: 2026-08-12
 Branch: phase8-ai-intelligence
 Step 7 Entry Commit: 2098be4
-Current HEAD: 25437ba
+Current HEAD: 80e15df
 Phase 8 Status: PAUSED
 MS-0025E Status: PAUSED
 
@@ -45,6 +45,7 @@ Recorded checkpoints:
 | `8fb08cf` | D1 runtime version alignment |
 | `76d9113` | D2 Memory Platform identity wording |
 | `25437ba` | Lifecycle and EOF cluster (RAA-005 / SHT-002 / SHT-004) |
+| `80e15df` | SHT-006 incomplete filesystem-command validation |
 
 ---
 
@@ -81,10 +82,10 @@ Recorded checkpoints:
 | SHT-003 | PLANNED SCOPED FIX | FIX IN STEP 7 | False boot signals | Honesty fix without full Runtime wiring |
 | SHT-004 | RESOLVED WITH EVIDENCE — commit 25437ba | FIX IN STEP 7 | EOF containment | Lifecycle cluster; see Section 7 |
 | SHT-005 | RESOLVED WITH EVIDENCE — commit `76d9113` | FIX IN STEP 7 | Memory identity wording | Truthful Memory Platform identity wording without adding a live shell Memory capability; see Section 6 |
-| SHT-006 | PLANNED FIX | FIX IN STEP 7 | Known-command validation | Incomplete `read`/`write` must not AI-fallback |
+| SHT-006 | RESOLVED WITH EVIDENCE — commit 80e15df | FIX IN STEP 7 | Known-command validation | Incomplete FS commands no longer AI-fallback; see Section 8 |
 
-Exactly SHT-001, SHT-005, RAA-005, SHT-002, and SHT-004 are resolved.
-Step 7 finding progress: 5 of 15 findings are resolved with evidence; 10 remain
+Exactly SHT-001, SHT-005, RAA-005, SHT-002, SHT-004, and SHT-006 are resolved.
+Step 7 finding progress: 6 of 15 findings are resolved with evidence; 9 remain
 for implementation, architecture decision, or approved deferral.
 No other finding is resolved.
 Step 7 remains in progress.
@@ -257,7 +258,55 @@ RAA-005, SHT-002, and SHT-004 are resolved with evidence.
 
 ---
 
-## 8. Repository Safety Record
+## 8. SHT-006 — Incomplete Filesystem-Command Validation Record
+
+Finding:
+
+- SHT-006
+
+### Production change
+
+- `CommandDispatcher` now intercepts only documented incomplete filesystem
+  command forms before Executive/AI routing.
+- Deterministic usage guidance is returned.
+- Complete commands still reach Executive/Tool routing.
+- Unknown and free-form text still reach AI fallback.
+- Delete approval behavior remains unchanged.
+- Empty `ai` validation remains unchanged.
+
+### Files
+
+- `jaos/cli/command_dispatcher.py`
+- `tests/tests/cli/test_command_dispatcher_sht006.py`
+
+### Live-shell evidence
+
+- Incomplete read/write/copy/move/rename/delete/search/backup forms returned
+  their usage guidance.
+- `delete notes.txt` retained approval-required behavior.
+- `unknown-command` reached the mock AI fallback.
+- Free-form `Explain JAOS routing` reached the mock AI fallback.
+- Empty `ai` returned `AI prompt cannot be empty.`
+- `ai hello JAOS` reached the mock AI provider.
+- Shell shutdown remained clean.
+
+### Verification evidence
+
+| Check | Result |
+|---|---|
+| Syntax compilation exit code | 0 |
+| Targeted tests | 27 passed in 0.62 seconds |
+| Certified collection | 1,627 tests collected in 2.66 seconds |
+| Live shell exit code | 0 |
+| Full regression | 1,627 passed in 8.75 seconds |
+| `git diff --check` | Pass |
+| Commit | `80e15df` |
+
+SHT-006 is resolved with evidence.
+
+---
+
+## 9. Repository Safety Record
 
 - Eight unrelated changes appeared during D1:
   `.vscode/settings.json` and seven generated JSON files.
@@ -269,26 +318,33 @@ RAA-005, SHT-002, and SHT-004 are resolved with evidence.
 - D2 changed exactly one production file and one existing test file.
 - Lifecycle commit contains exactly three production files and one certified
   test file.
+- SHT-006 commit contains exactly one production file and one certified test
+  file.
 - Working tree was clean after commit.
 - Branch was ahead of origin by seven commits.
 - No push occurred.
 
 ---
 
-## 9. Next Controlled Fix
+## 10. Next Controlled Fix
 
-Lifecycle cluster is complete.
+SHT-006 is complete.
 
-Next action is focused read-only inspection of SHT-006:
-known-command validation versus AI fallback.
+Next controlled activity:
 
-SHT-006 implementation has not begun.
+Read-only RAA-008 public MockProvider facade inspection.
 
-RAA-008 remains separate and unresolved.
+RAA-008 implementation has not begun.
+
+Phase 8 and MS-0025E remain paused.
+
+Step 8 remains blocked.
+
+Founder/reviewer approval remains pending for Step 7 completion.
 
 ---
 
-## 10. Remaining Step 7 Workflow
+## 11. Remaining Step 7 Workflow
 
 1. Continue one controlled fix cluster at a time.
 2. Run targeted tests after each fix.
@@ -301,7 +357,7 @@ RAA-008 remains separate and unresolved.
 
 ---
 
-## 11. Step 7 Exit Criteria
+## 12. Step 7 Exit Criteria
 
 | Criterion | Status |
 |---|---|
@@ -310,6 +366,7 @@ RAA-008 remains separate and unresolved.
 | D1 — SHT-001 version alignment verified with evidence | COMPLETE |
 | D2 — SHT-005 Memory shell-boundary wording verified with evidence | COMPLETE |
 | Lifecycle cluster — RAA-005/SHT-002/SHT-004 | COMPLETE |
+| SHT-006 — incomplete filesystem-command validation verified with evidence | COMPLETE |
 | Full automated suite passes | PENDING |
 | Shell regression passes | PENDING |
 | Syntax and dependency validation pass | PENDING |
@@ -317,12 +374,12 @@ RAA-008 remains separate and unresolved.
 | Step 7 report is complete | PENDING |
 | Founder/reviewer approval is recorded | PENDING |
 
-D1, D2, and the lifecycle cluster criteria are COMPLETE. All remaining criteria
-stay PENDING.
+D1, D2, the lifecycle cluster, and SHT-006 criteria are COMPLETE. All remaining
+criteria stay PENDING.
 
 ---
 
-## 12. Approval
+## 13. Approval
 
 | Role | Decision | Date | Signature |
 |---|---|---|---|
