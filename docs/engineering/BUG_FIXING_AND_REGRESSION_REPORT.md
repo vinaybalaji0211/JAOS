@@ -1,14 +1,14 @@
 # Bug Fixing and Regression Report
 
 Version: 1.0
-Status: IN PROGRESS — D1, D2, LIFECYCLE, AND SHT-006 VERIFIED
+Status: IN PROGRESS — D1, D2, LIFECYCLE, SHT-006, AND RAA-008 VERIFIED
 Stabilization Step: Step 7 of 9
 Owner: Vinay B
 Maintainer: JAOS Engineering
 Date: 2026-08-12
 Branch: phase8-ai-intelligence
 Step 7 Entry Commit: 2098be4
-Current HEAD: 80e15df
+Current HEAD: fe3555b
 Phase 8 Status: PAUSED
 MS-0025E Status: PAUSED
 
@@ -46,6 +46,7 @@ Recorded checkpoints:
 | `76d9113` | D2 Memory Platform identity wording |
 | `25437ba` | Lifecycle and EOF cluster (RAA-005 / SHT-002 / SHT-004) |
 | `80e15df` | SHT-006 incomplete filesystem-command validation |
+| `fe3555b` | RAA-008 concrete provider facade export removal |
 
 ---
 
@@ -75,7 +76,7 @@ Recorded checkpoints:
 | RAA-005 | RESOLVED WITH EVIDENCE — commit 25437ba | FIX IN STEP 7 | Provider shutdown | Lifecycle cluster; see Section 7 |
 | RAA-006 | PLANNED SCOPED FIX | FIX IN STEP 7 | False health / boot signals | Scoped truthful reporting; not full Runtime adoption |
 | RAA-007 | DECISION REQUIRED / PROPOSED PARTIAL DEFER | REQUIRES ARCHITECTURE DECISION | CLI provider construction | Full composition-root relocation deferred; partial cleanup optional later |
-| RAA-008 | PLANNED FIX | FIX IN STEP 7 | Public MockProvider export | Remove concrete provider from `jaos.ai` public facade |
+| RAA-008 | RESOLVED WITH EVIDENCE — commit `fe3555b` | FIX IN STEP 7 | Public MockProvider export | Concrete provider removed from `jaos.ai` facade; see Section 9 |
 | RAA-009 | PROPOSED DEFER — contract extraction is design work | DEFER WITH JUSTIFICATION | Intelligence–Memory coupling | Cross-platform contract facade is design work |
 | SHT-001 | RESOLVED WITH EVIDENCE — commit `8fb08cf` | FIX IN STEP 7 | Version / identity drift | D1 verified; see Section 5 |
 | SHT-002 | RESOLVED WITH EVIDENCE — commit 25437ba | FIX IN STEP 7 | Provider shutdown | Lifecycle cluster; see Section 7 |
@@ -84,8 +85,9 @@ Recorded checkpoints:
 | SHT-005 | RESOLVED WITH EVIDENCE — commit `76d9113` | FIX IN STEP 7 | Memory identity wording | Truthful Memory Platform identity wording without adding a live shell Memory capability; see Section 6 |
 | SHT-006 | RESOLVED WITH EVIDENCE — commit 80e15df | FIX IN STEP 7 | Known-command validation | Incomplete FS commands no longer AI-fallback; see Section 8 |
 
-Exactly SHT-001, SHT-005, RAA-005, SHT-002, SHT-004, and SHT-006 are resolved.
-Step 7 finding progress: 6 of 15 findings are resolved with evidence; 9 remain
+Exactly SHT-001, SHT-005, RAA-005, SHT-002, SHT-004, SHT-006, and RAA-008 are
+resolved.
+Step 7 finding progress: 7 of 15 findings are resolved with evidence; 8 remain
 for implementation, architecture decision, or approved deferral.
 No other finding is resolved.
 Step 7 remains in progress.
@@ -306,7 +308,45 @@ SHT-006 is resolved with evidence.
 
 ---
 
-## 9. Repository Safety Record
+## 9. RAA-008 — Concrete Provider Facade Export Removal Record
+
+Finding:
+
+- RAA-008
+
+### Production behavior
+
+- `MockProvider` removed from `jaos.ai` import surface and `__all__`.
+- CommandDispatcher now imports MockProvider from its explicit concrete module.
+- Provider construction, registration, initialization, selection, and
+  shutdown behavior remain unchanged.
+- `jaos.ai.providers.__init__` remains unchanged and empty.
+- RAA-007 composition relocation was not performed.
+- Legacy top-level tests were not modified.
+
+### Files
+
+- `jaos/ai/__init__.py`
+- `jaos/cli/command_dispatcher.py`
+- `tests/tests/ai/test_ai_public_facade_raa008.py`
+
+### Verification evidence
+
+| Check | Result |
+|---|---|
+| Syntax compilation exit code | 0 |
+| Targeted tests | 5 passed in 0.51 seconds |
+| Relevant regression | 36 passed in 0.55 seconds |
+| Certified collection | 1,632 tests in 2.83 seconds |
+| Full regression | 1,632 passed in 7.18 seconds |
+| `git diff --check` | Pass |
+| Commit | `fe3555b` |
+
+RAA-008 is resolved with evidence.
+
+---
+
+## 10. Repository Safety Record
 
 - Eight unrelated changes appeared during D1:
   `.vscode/settings.json` and seven generated JSON files.
@@ -320,21 +360,25 @@ SHT-006 is resolved with evidence.
   test file.
 - SHT-006 commit contains exactly one production file and one certified test
   file.
+- RAA-008 commit contains exactly two production files and one certified test
+  file.
 - Working tree was clean after commit.
 - Branch was ahead of origin by seven commits.
 - No push occurred.
 
 ---
 
-## 10. Next Controlled Fix
+## 11. Next Controlled Fix
 
-SHT-006 is complete.
+RAA-008 is complete.
 
 Next controlled activity:
 
-Read-only RAA-008 public MockProvider facade inspection.
+Read-only RAA-006 / SHT-003 truthful health and boot-reporting inspection.
 
-RAA-008 implementation has not begun.
+RAA-006/SHT-003 implementation has not begun.
+
+Full RAA-001 Runtime adoption remains undecided.
 
 Phase 8 and MS-0025E remain paused.
 
@@ -344,7 +388,7 @@ Founder/reviewer approval remains pending for Step 7 completion.
 
 ---
 
-## 11. Remaining Step 7 Workflow
+## 12. Remaining Step 7 Workflow
 
 1. Continue one controlled fix cluster at a time.
 2. Run targeted tests after each fix.
@@ -357,7 +401,7 @@ Founder/reviewer approval remains pending for Step 7 completion.
 
 ---
 
-## 12. Step 7 Exit Criteria
+## 13. Step 7 Exit Criteria
 
 | Criterion | Status |
 |---|---|
@@ -367,6 +411,7 @@ Founder/reviewer approval remains pending for Step 7 completion.
 | D2 — SHT-005 Memory shell-boundary wording verified with evidence | COMPLETE |
 | Lifecycle cluster — RAA-005/SHT-002/SHT-004 | COMPLETE |
 | SHT-006 — incomplete filesystem-command validation verified with evidence | COMPLETE |
+| RAA-008 — concrete provider facade export removal verified with evidence | COMPLETE |
 | Full automated suite passes | PENDING |
 | Shell regression passes | PENDING |
 | Syntax and dependency validation pass | PENDING |
@@ -374,12 +419,12 @@ Founder/reviewer approval remains pending for Step 7 completion.
 | Step 7 report is complete | PENDING |
 | Founder/reviewer approval is recorded | PENDING |
 
-D1, D2, the lifecycle cluster, and SHT-006 criteria are COMPLETE. All remaining
-criteria stay PENDING.
+D1, D2, the lifecycle cluster, SHT-006, and RAA-008 criteria are COMPLETE. All
+remaining criteria stay PENDING.
 
 ---
 
-## 13. Approval
+## 14. Approval
 
 | Role | Decision | Date | Signature |
 |---|---|---|---|
