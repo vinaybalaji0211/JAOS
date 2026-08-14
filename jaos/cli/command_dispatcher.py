@@ -2,12 +2,12 @@ from jaos.ai import (
     AIManager,
     AIProviderConfig,
     AIProviderType,
-    MockProvider,
     ProviderManager,
 )
 from jaos.ai.diagnostics import DiagnosticStatus as AIDiagnosticStatus
 from jaos.ai.intelligence import ProviderProfileRegistry
 from jaos.ai.operations import ProviderStatusService
+from jaos.ai.providers.mock_provider import MockProvider
 from jaos.bootstrap.tool_loader import load_tools
 from jaos.executive.controller import ExecutiveController
 from jaos.executive.diagnostics.models import (

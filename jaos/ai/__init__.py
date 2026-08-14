@@ -45,7 +45,6 @@ from jaos.ai.provider import (
     ProviderRegistryError,
 )
 from jaos.ai.provider.provider_config import AIProviderCapability
-from jaos.ai.providers.mock_provider import MockProvider
 from jaos.ai.response import (
     ParsedResponse,
     ResponseManager,
@@ -88,7 +87,6 @@ __all__ = [
     "ContextManager",
     "ContextType",
     "ConversationTurn",
-    "MockProvider",
     "ParsedResponse",
     "PromptBuildRequest",
     "PromptBuilder",
