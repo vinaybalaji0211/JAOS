@@ -93,6 +93,13 @@ class CommandDispatcher:
             self.shutdown()
             return False
 
+        usage = self._incomplete_filesystem_usage(command)
+        if usage is not None:
+            print()
+            print(usage)
+            print()
+            return True
+
         response = self.executive.process(command)
 
         print()
@@ -154,6 +161,49 @@ class CommandDispatcher:
 
         print(response.text)
         print()
+
+    @staticmethod
+    def _incomplete_filesystem_usage(command: str) -> str | None:
+        """
+        Return usage guidance for documented incomplete filesystem shell forms.
+
+        Only the proven incomplete shapes listed for SHT-006 are intercepted.
+        Complete forms, delete-with-path, unknown commands, and free-form text
+        return None so existing Executive/AI routing remains unchanged.
+        """
+        parts = command.strip().split()
+
+        if not parts:
+            return None
+
+        verb = parts[0].lower()
+        argument_count = len(parts) - 1
+
+        if verb == "read" and argument_count == 0:
+            return "Usage: read <path>"
+
+        if verb == "write" and argument_count < 2:
+            return "Usage: write <path> <content>"
+
+        if verb == "copy" and argument_count < 2:
+            return "Usage: copy <source> <destination>"
+
+        if verb == "move" and argument_count < 2:
+            return "Usage: move <source> <destination>"
+
+        if verb == "rename" and argument_count < 2:
+            return "Usage: rename <source> <new_name>"
+
+        if verb == "delete" and argument_count == 0:
+            return "Usage: delete <path> --confirm"
+
+        if verb == "search" and argument_count < 2:
+            return "Usage: search <root> <pattern>"
+
+        if verb == "backup" and argument_count < 2:
+            return "Usage: backup <source> <destination>"
+
+        return None
 
     def _show_help(self) -> None:
         print()
