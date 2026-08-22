@@ -5,7 +5,7 @@ import pytest
 from jaos_platform.boot_manager import BootManager
 from jaos_platform.lifecycle_state import RuntimeLifecycleState
 from jaos_platform.lifecycle_transitions import LifecycleTransitionError
-from jaos_platform.platform_runtime import PlatformRuntime
+from jaos_platform.platform_runtime import PartialShutdownError, PlatformRuntime
 from jaos_platform.runtime_paths import RuntimePaths
 
 
@@ -243,6 +243,40 @@ def test_boot_completed_subscriber_failure_does_not_corrupt_boot_result():
     assert manager.boot() is True
     assert runtime.lifecycle_state == RuntimeLifecycleState.READY
     assert manager.status == "READY"
+
+
+def test_stop_continues_after_individual_component_failure_and_aggregates_errors(
+    monkeypatch,
+):
+    runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
+
+    original_registry_unregister = runtime.registry.unregister
+
+    def broken_registry_unregister(name):
+        if name == "runtime_context":
+            raise RuntimeError("registry unregister exploded")
+        return original_registry_unregister(name)
+
+    monkeypatch.setattr(
+        runtime.registry, "unregister", broken_registry_unregister
+    )
+
+    with pytest.raises(PartialShutdownError, match="runtime_context"):
+        runtime.stop()
+
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+    assert runtime.container.is_registered("event_bus") is False
+    assert runtime.container.is_registered("runtime_context") is False
+    assert runtime.container.is_registered("service_registry") is False
+    assert runtime.container.is_registered("service_container") is False
+
+    assert runtime.registry.is_registered("event_bus") is False
+    assert runtime.registry.is_registered("service_registry") is False
+    assert runtime.registry.is_registered("service_container") is False
+    assert runtime.registry.is_registered("runtime_context") is True
 
 
 def test_runtime_paths_preserved_across_lifecycle(tmp_path: Path) -> None:

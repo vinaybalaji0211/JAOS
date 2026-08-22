@@ -19,6 +19,10 @@ from jaos_platform.service_registry import ServiceRegistry
 from logs.logger import configure_runtime_logging
 
 
+class PartialShutdownError(RuntimeError):
+    """Raised when one or more owned platform services failed to stop cleanly."""
+
+
 class PlatformRuntime:
     """
     Central runtime infrastructure for JAOS.
@@ -113,10 +117,23 @@ class PlatformRuntime:
         self._transition(RuntimeLifecycleState.FAILED)
 
     def stop(self) -> None:
-        """Tear down owned platform services in reverse order; advance to STOPPED."""
+        """Tear down owned platform services in reverse order; advance to STOPPED.
+
+        Individual teardown failures do not stop the unwind: every owned
+        service is still given a chance to release, and any failures are
+        aggregated into one PartialShutdownError raised after the attempt,
+        with the runtime left truthfully FAILED rather than STOPPED.
+        """
 
         self._transition(RuntimeLifecycleState.STOPPING)
-        self._teardown_platform_services()
+        errors = self._teardown_platform_services()
+
+        if errors:
+            self._transition(RuntimeLifecycleState.FAILED)
+            raise PartialShutdownError(
+                "; ".join(f"{name}: {exc}" for name, exc in errors)
+            )
+
         self._transition(RuntimeLifecycleState.STOPPED)
 
     def _transition(self, target: RuntimeLifecycleState) -> None:
@@ -124,11 +141,21 @@ class PlatformRuntime:
             self._lifecycle_state, target
         )
 
-    def _teardown_platform_services(self) -> None:
+    def _teardown_platform_services(self) -> list[tuple[str, Exception]]:
+        errors: list[tuple[str, Exception]] = []
+
         for name in reversed(self._platform_service_names):
-            if self.registry.is_registered(name):
-                self.registry.unregister(name)
-            if self.container.is_registered(name):
-                self.container.unregister(name)
+            try:
+                if self.registry.is_registered(name):
+                    self.registry.unregister(name)
+            except Exception as exc:
+                errors.append((f"{name}:registry", exc))
+
+            try:
+                if self.container.is_registered(name):
+                    self.container.unregister(name)
+            except Exception as exc:
+                errors.append((f"{name}:container", exc))
 
         self._platform_service_names = []
+        return errors

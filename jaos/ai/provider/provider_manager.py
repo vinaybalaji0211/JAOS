@@ -92,8 +92,19 @@ class ProviderManager:
             self.initialize_provider(name)
 
     def shutdown_all(self) -> None:
+        errors: list[tuple[str, Exception]] = []
+
         for name in self.list_provider_names():
-            self.shutdown_provider(name)
+            try:
+                self.shutdown_provider(name)
+            except Exception as exc:
+                errors.append((name, exc))
+
+        if errors:
+            raise ProviderManagerError(
+                "Failed to shutdown AI providers: "
+                + "; ".join(f"{name}: {exc}" for name, exc in errors)
+            )
 
     def health_check(self, name: str) -> AIProviderHealth:
         normalized_name = self._normalize_name(name)

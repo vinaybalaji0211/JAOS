@@ -1,12 +1,28 @@
 from __future__ import annotations
 
 from jaos_platform.dependency_validator import DependencyValidator
+from jaos_platform.lifecycle_state import RuntimeLifecycleState
 from jaos_platform.platform_runtime import PlatformRuntime
 from jaos_platform.runtime_health_certifier import (
     RuntimeHealthCertifier,
 )
 from jaos_platform.runtime_validator import RuntimeValidator
 from jaos_platform.startup_validator import StartupValidator
+
+_STOPPABLE_LIFECYCLE_STATES = frozenset(
+    {
+        RuntimeLifecycleState.INITIALIZED,
+        RuntimeLifecycleState.READY,
+        RuntimeLifecycleState.DEGRADED,
+    }
+)
+
+_BOOT_TIME_CONTEXT_KEYS = (
+    "runtime_report",
+    "startup_report",
+    "dependency_report",
+    "health_report",
+)
 
 
 class BootManager:
@@ -78,18 +94,42 @@ class BootManager:
         return True
 
     def shutdown(self) -> bool:
-        self.status = "SHUTDOWN"
+        """Coordinate runtime-wide teardown.
 
-        self.runtime.context.set(
-            "boot_status",
-            self.status,
-        )
+        Only attempts PlatformRuntime.stop() from a state where STOPPING is a
+        legal transition, so an illegal transition is never attempted rather
+        than raised and reported as a failure. Stale boot-time reports are
+        cleared so RuntimeContext cannot keep claiming readiness facts about
+        a runtime that is no longer running, and event subscriptions are
+        released as the final step, after the shutdown notification.
+        """
+
+        errors: list[str] = []
+
+        if self.runtime.lifecycle_state in _STOPPABLE_LIFECYCLE_STATES:
+            try:
+                self.runtime.stop()
+            except Exception as exc:
+                errors.append(str(exc))
+
+        for key in _BOOT_TIME_CONTEXT_KEYS:
+            self.runtime.context.remove(key)
+
+        if errors:
+            self.status = "FAILED"
+        elif self.runtime.lifecycle_state == RuntimeLifecycleState.STOPPED:
+            self.status = "STOPPED"
+        elif self.runtime.lifecycle_state == RuntimeLifecycleState.FAILED:
+            self.status = "FAILED"
+        else:
+            self.status = "SHUTDOWN"
+
+        self.runtime.context.set("boot_status", self.status)
 
         self.runtime.events.publish(
-            "boot_shutdown",
-            {
-                "status": self.status,
-            },
+            "boot_shutdown", {"status": self.status, "errors": errors}
         )
 
-        return True
+        self.runtime.events.clear()
+
+        return len(errors) == 0

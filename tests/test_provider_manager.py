@@ -143,6 +143,34 @@ def test_shutdown_provider():
     assert state.healthy is False
 
 
+def test_shutdown_all_continues_after_individual_provider_failure():
+    manager = ProviderManager()
+
+    broken = MockProvider()
+    healthy = MockProvider()
+
+    def broken_shutdown():
+        raise RuntimeError("broken provider shutdown exploded")
+
+    broken.shutdown = broken_shutdown
+
+    manager.register_provider(
+        broken, AIProviderConfig(name="broken", provider_type=AIProviderType.MOCK)
+    )
+    manager.register_provider(
+        healthy, AIProviderConfig(name="healthy", provider_type=AIProviderType.MOCK)
+    )
+    manager.initialize_provider("broken")
+    manager.initialize_provider("healthy")
+
+    with pytest.raises(ProviderManagerError, match="broken"):
+        manager.shutdown_all()
+
+    assert healthy.shutdown_called is True
+    assert manager.get_state("healthy").lifecycle == AIProviderLifecycleState.SHUTDOWN
+    assert manager.get_state("broken").lifecycle == AIProviderLifecycleState.FAILED
+
+
 def test_health_check_healthy():
     manager = ProviderManager()
     provider = MockProvider(healthy=True)

@@ -643,6 +643,29 @@ class TestProviderRegistry:
         assert len(registry) == 0
         assert registry.default_provider_id is None
 
+    def test_clear_registry_continues_after_individual_shutdown_failure(
+        self,
+    ) -> None:
+        registry = ProviderRegistry()
+
+        first = FakeProvider("alpha")
+        second = FakeProvider("beta")
+
+        def broken_shutdown() -> None:
+            raise RuntimeError("alpha shutdown exploded")
+
+        first.shutdown = broken_shutdown
+
+        registry.register(first)
+        registry.register(second)
+
+        with pytest.raises(RuntimeError, match="alpha"):
+            registry.clear()
+
+        assert second.shutdown_called
+        assert len(registry) == 0
+        assert registry.default_provider_id is None
+
     def test_invalid_provider_registration(self) -> None:
         registry = ProviderRegistry()
 

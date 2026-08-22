@@ -118,6 +118,68 @@ def test_required_validation_failure_prevents_ready(monkeypatch):
     assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
 
 
+def test_shutdown_after_boot_stops_runtime_and_clears_boot_time_context():
+    runtime = PlatformRuntime()
+
+    manager = BootManager(runtime)
+    manager.boot()
+
+    assert manager.shutdown() is True
+    assert runtime.lifecycle_state == RuntimeLifecycleState.STOPPED
+    assert manager.status == "STOPPED"
+    assert runtime.context.get("boot_status") == "STOPPED"
+    assert runtime.context.contains("runtime_report") is False
+    assert runtime.context.contains("startup_report") is False
+    assert runtime.context.contains("dependency_report") is False
+    assert runtime.context.contains("health_report") is False
+
+
+def test_shutdown_releases_event_subscriptions():
+    runtime = PlatformRuntime()
+
+    manager = BootManager(runtime)
+    manager.boot()
+    runtime.events.subscribe("custom_event", lambda _payload: None)
+
+    manager.shutdown()
+
+    assert runtime.events.subscriber_count("custom_event") == 0
+    assert runtime.events.subscriber_count("boot_shutdown") == 0
+
+
+def test_shutdown_is_idempotent_after_stop():
+    runtime = PlatformRuntime()
+
+    manager = BootManager(runtime)
+    manager.boot()
+
+    assert manager.shutdown() is True
+    assert manager.shutdown() is True
+    assert runtime.lifecycle_state == RuntimeLifecycleState.STOPPED
+    assert manager.status == "STOPPED"
+
+
+def test_shutdown_after_failed_boot_does_not_attempt_illegal_transition(
+    monkeypatch,
+):
+    runtime = PlatformRuntime()
+
+    monkeypatch.setattr(
+        StartupValidator,
+        "validate",
+        lambda self: {"ready": False, "lifecycle_ready": False},
+    )
+
+    manager = BootManager(runtime)
+    manager.boot()
+
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+    assert manager.shutdown() is True
+    assert manager.status == "FAILED"
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+
 def test_start_failure_produces_truthful_failed_state():
     runtime = PlatformRuntime()
     runtime.container.register("event_bus", object())

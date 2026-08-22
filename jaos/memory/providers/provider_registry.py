@@ -280,6 +280,10 @@ class ProviderRegistry:
         """
         Shut down and remove all providers.
 
+        Every provider is given a chance to shut down even if another
+        provider's shutdown fails; failures are aggregated and raised
+        together after every provider has been attempted.
+
         Returns:
             Number of providers removed.
         """
@@ -290,8 +294,22 @@ class ProviderRegistry:
             self._providers.clear()
             self._default_provider_id = None
 
+        errors: list[tuple[str, Exception]] = []
+
         for provider in providers:
-            provider.shutdown()
+            try:
+                provider.shutdown()
+            except Exception as exc:
+                errors.append((provider.provider_id, exc))
+
+        if errors:
+            raise RuntimeError(
+                "Failed to shut down memory providers: "
+                + "; ".join(
+                    f"{provider_id}: {exc}"
+                    for provider_id, exc in errors
+                )
+            )
 
         return removed_count
 
