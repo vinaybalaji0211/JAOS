@@ -37,3 +37,11 @@ class ServiceContainer:
 
     def list_services(self):
         return sorted(self._services.keys())
+
+    def unregister(self, name: str) -> None:
+        if name not in self._services:
+            raise KeyError(f"Unknown service: {name}")
+
+        del self._services[name]
+
+        logger.info("Unregistered service: %s", name)

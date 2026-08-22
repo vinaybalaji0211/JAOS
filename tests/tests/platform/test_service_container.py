@@ -43,3 +43,19 @@ def test_unknown_service_rejected():
 
     with pytest.raises(KeyError):
         container.resolve("missing")
+
+
+def test_unregister_removes_service():
+    container = ServiceContainer()
+
+    container.register("memory", object())
+    container.unregister("memory")
+
+    assert container.is_registered("memory") is False
+
+
+def test_unregister_unknown_service_rejected():
+    container = ServiceContainer()
+
+    with pytest.raises(KeyError):
+        container.unregister("missing")

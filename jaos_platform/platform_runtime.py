@@ -4,6 +4,8 @@ import os
 from pathlib import Path
 
 from jaos_platform.event_bus import EventBus
+from jaos_platform.lifecycle_state import RuntimeLifecycleState
+from jaos_platform.lifecycle_transitions import validate_transition
 from jaos_platform.runtime_context import RuntimeContext
 from jaos_platform.runtime_paths import (
     DEFAULT_PROFILE_ID,
@@ -48,7 +50,8 @@ class PlatformRuntime:
         self.context = RuntimeContext(runtime_paths=runtime_paths)
         self.events = EventBus()
 
-        self._register_platform_services()
+        self._lifecycle_state = RuntimeLifecycleState.CREATED
+        self._platform_service_names: list[str] = []
 
     @property
     def runtime_paths(self) -> RuntimePaths:
@@ -56,34 +59,71 @@ class PlatformRuntime:
 
         return self._runtime_paths
 
+    @property
+    def lifecycle_state(self) -> RuntimeLifecycleState:
+        """Return the current RuntimeLifecycleState of this runtime."""
+
+        return self._lifecycle_state
+
     def configure_logging(self) -> Path:
         """Explicitly configure logging from this runtime's owned paths."""
 
         return configure_runtime_logging(self.runtime_paths)
 
-    def _register_platform_services(self):
+    def initialize(self) -> None:
+        """Advance CREATED -> INITIALIZING -> INITIALIZED."""
 
-        self.container.register("service_container", self.container)
-        self.container.register("service_registry", self.registry)
-        self.container.register("runtime_context", self.context)
-        self.container.register("event_bus", self.events)
+        self._transition(RuntimeLifecycleState.INITIALIZING)
+        self._transition(RuntimeLifecycleState.INITIALIZED)
 
-        self.registry.register(ServiceMetadata(
-            name="service_container",
-            owner="Platform",
-        ))
+    def start(self) -> None:
+        """Register and start owned platform services; advance to READY.
 
-        self.registry.register(ServiceMetadata(
-            name="service_registry",
-            owner="Platform",
-        ))
+        On failure, undo every platform service registered by this attempt,
+        transition through ROLLING_BACK to FAILED, and re-raise.
+        """
 
-        self.registry.register(ServiceMetadata(
-            name="runtime_context",
-            owner="Platform",
-        ))
+        self._transition(RuntimeLifecycleState.STARTING)
 
-        self.registry.register(ServiceMetadata(
-            name="event_bus",
-            owner="Platform",
-        ))
+        platform_services = (
+            ("service_container", self.container),
+            ("service_registry", self.registry),
+            ("runtime_context", self.context),
+            ("event_bus", self.events),
+        )
+
+        try:
+            for name, implementation in platform_services:
+                self.container.register(name, implementation)
+                self._platform_service_names.append(name)
+                self.registry.register(
+                    ServiceMetadata(name=name, owner="Platform")
+                )
+        except Exception:
+            self._teardown_platform_services()
+            self._transition(RuntimeLifecycleState.ROLLING_BACK)
+            self._transition(RuntimeLifecycleState.FAILED)
+            raise
+
+        self._transition(RuntimeLifecycleState.READY)
+
+    def stop(self) -> None:
+        """Tear down owned platform services in reverse order; advance to STOPPED."""
+
+        self._transition(RuntimeLifecycleState.STOPPING)
+        self._teardown_platform_services()
+        self._transition(RuntimeLifecycleState.STOPPED)
+
+    def _transition(self, target: RuntimeLifecycleState) -> None:
+        self._lifecycle_state = validate_transition(
+            self._lifecycle_state, target
+        )
+
+    def _teardown_platform_services(self) -> None:
+        for name in reversed(self._platform_service_names):
+            if self.registry.is_registered(name):
+                self.registry.unregister(name)
+            if self.container.is_registered(name):
+                self.container.unregister(name)
+
+        self._platform_service_names = []

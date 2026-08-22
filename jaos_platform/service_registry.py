@@ -31,3 +31,11 @@ class ServiceRegistry:
 
     def is_registered(self, name: str) -> bool:
         return name in self._services
+
+    def unregister(self, name: str) -> None:
+        if name not in self._services:
+            raise KeyError(f"Unknown service: {name}")
+
+        del self._services[name]
+
+        logger.info("Unregistered service metadata: %s", name)

@@ -22,6 +22,8 @@ def test_platform_runtime_accepts_and_preserves_injected_paths(
     paths = RuntimePaths(tmp_path / "runtime")
 
     runtime = PlatformRuntime(runtime_paths=paths)
+    runtime.initialize()
+    runtime.start()
 
     assert runtime.runtime_paths is paths
     assert runtime.context.runtime_paths is paths

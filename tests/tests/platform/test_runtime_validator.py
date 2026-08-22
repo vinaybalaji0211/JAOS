@@ -4,6 +4,8 @@ from jaos_platform.runtime_validator import RuntimeValidator
 
 def test_runtime_validator_reports_healthy_runtime():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     validator = RuntimeValidator(runtime)
 
@@ -14,6 +16,8 @@ def test_runtime_validator_reports_healthy_runtime():
 
 def test_runtime_validator_checks_container():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     validator = RuntimeValidator(runtime)
 
@@ -24,6 +28,8 @@ def test_runtime_validator_checks_container():
 
 def test_runtime_validator_checks_context():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     validator = RuntimeValidator(runtime)
 
@@ -34,6 +40,8 @@ def test_runtime_validator_checks_context():
 
 def test_runtime_validator_checks_event_bus():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     validator = RuntimeValidator(runtime)
 
@@ -44,6 +52,8 @@ def test_runtime_validator_checks_event_bus():
 
 def test_runtime_validator_checks_service_registry():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     validator = RuntimeValidator(runtime)
 

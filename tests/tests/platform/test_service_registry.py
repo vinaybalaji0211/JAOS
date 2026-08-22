@@ -53,3 +53,19 @@ def test_list_services():
     registry.register(ServiceMetadata(name="a"))
 
     assert registry.list() == ["a", "b"]
+
+
+def test_unregister_removes_service():
+    registry = ServiceRegistry()
+
+    registry.register(ServiceMetadata(name="memory"))
+    registry.unregister("memory")
+
+    assert registry.is_registered("memory") is False
+
+
+def test_unregister_unknown_service_rejected():
+    registry = ServiceRegistry()
+
+    with pytest.raises(KeyError):
+        registry.unregister("missing")

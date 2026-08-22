@@ -7,6 +7,8 @@ from jaos_platform.runtime_health_certifier import (
 
 def test_runtime_health_reports_overall_healthy():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     certifier = RuntimeHealthCertifier(runtime)
 
@@ -17,6 +19,8 @@ def test_runtime_health_reports_overall_healthy():
 
 def test_runtime_health_reports_service_health():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     certifier = RuntimeHealthCertifier(runtime)
 
@@ -27,6 +31,8 @@ def test_runtime_health_reports_service_health():
 
 def test_runtime_health_reports_all_services():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
     certifier = RuntimeHealthCertifier(runtime)
 
