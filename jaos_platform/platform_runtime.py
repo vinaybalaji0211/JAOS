@@ -107,6 +107,11 @@ class PlatformRuntime:
 
         self._transition(RuntimeLifecycleState.READY)
 
+    def mark_failed(self) -> None:
+        """Transition to FAILED when a required post-start validation fails."""
+
+        self._transition(RuntimeLifecycleState.FAILED)
+
     def stop(self) -> None:
         """Tear down owned platform services in reverse order; advance to STOPPED."""
 

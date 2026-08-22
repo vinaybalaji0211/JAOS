@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+from jaos_platform.dependency_validator import DependencyValidator
+from jaos_platform.lifecycle_state import RuntimeLifecycleState
 from jaos_platform.platform_runtime import PlatformRuntime
+from jaos_platform.runtime_validator import RuntimeValidator
 
 
 class StartupValidator:
@@ -11,33 +14,20 @@ class StartupValidator:
 
     def validate(self) -> dict:
         report = {
-            "boot_status": self._boot_ready(),
-            "configuration": self._configuration_ready(),
-            "executive_brain": self._executive_ready(),
-            "startup_services": self._startup_services_ready(),
+            "lifecycle_ready": self._lifecycle_ready(),
+            "runtime_integrity": self._runtime_integrity(),
+            "dependencies_satisfied": self._dependencies_satisfied(),
         }
 
         report["ready"] = all(report.values())
 
         return report
 
-    def _boot_ready(self) -> bool:
-        return self.runtime.context.get("boot_status") == "READY"
+    def _lifecycle_ready(self) -> bool:
+        return self.runtime.lifecycle_state == RuntimeLifecycleState.READY
 
-    def _configuration_ready(self) -> bool:
-        return (
-            self.runtime.context.get("config_manager_status")
-            == "READY"
-        )
+    def _runtime_integrity(self) -> bool:
+        return RuntimeValidator(self.runtime).validate()["healthy"]
 
-    def _executive_ready(self) -> bool:
-        return (
-            self.runtime.context.get("executive_brain_status")
-            == "READY"
-        )
-
-    def _startup_services_ready(self) -> bool:
-        return (
-            self.runtime.context.get("startup_manager_status")
-            == "READY"
-        )
+    def _dependencies_satisfied(self) -> bool:
+        return DependencyValidator(self.runtime).validate()["valid"]

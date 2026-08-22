@@ -1,59 +1,54 @@
 from jaos_platform.boot_manager import BootManager
+from jaos_platform.lifecycle_state import RuntimeLifecycleState
 from jaos_platform.platform_runtime import PlatformRuntime
 from jaos_platform.startup_validator import StartupValidator
 
 
-def test_startup_validator_reports_ready():
+def test_startup_validator_reports_ready_after_boot():
     runtime = PlatformRuntime()
 
-    runtime.context.set("config_manager_status", "READY")
-    runtime.context.set("executive_brain_status", "READY")
-    runtime.context.set("startup_manager_status", "READY")
+    assert BootManager(runtime).boot() is True
 
-    BootManager(runtime).boot()
-
-    validator = StartupValidator(runtime)
-
-    report = validator.validate()
+    report = StartupValidator(runtime).validate()
 
     assert report["ready"] is True
 
 
-def test_boot_status_check():
+def test_startup_validator_reports_not_ready_before_start():
     runtime = PlatformRuntime()
 
-    BootManager(runtime).boot()
+    report = StartupValidator(runtime).validate()
 
-    validator = StartupValidator(runtime)
+    assert report["ready"] is False
+    assert report["lifecycle_ready"] is False
 
-    assert validator.validate()["boot_status"] is True
 
-
-def test_configuration_check():
+def test_lifecycle_ready_reflects_runtime_lifecycle_state():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
-    runtime.context.set("config_manager_status", "READY")
+    report = StartupValidator(runtime).validate()
 
-    validator = StartupValidator(runtime)
+    assert report["lifecycle_ready"] is True
+    assert runtime.lifecycle_state == RuntimeLifecycleState.READY
 
-    assert validator.validate()["configuration"] is True
 
-
-def test_executive_check():
+def test_runtime_integrity_delegates_to_runtime_validator():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
-    runtime.context.set("executive_brain_status", "READY")
+    report = StartupValidator(runtime).validate()
 
-    validator = StartupValidator(runtime)
-
-    assert validator.validate()["executive_brain"] is True
+    assert report["runtime_integrity"] is True
 
 
-def test_startup_services_check():
+def test_dependencies_satisfied_delegates_to_dependency_validator():
     runtime = PlatformRuntime()
+    runtime.initialize()
+    runtime.start()
 
-    runtime.context.set("startup_manager_status", "READY")
+    report = StartupValidator(runtime).validate()
 
-    validator = StartupValidator(runtime)
-
-    assert validator.validate()["startup_services"] is True
+    assert report["dependencies_satisfied"] is True
