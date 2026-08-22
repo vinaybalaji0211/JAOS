@@ -116,6 +116,20 @@ class PlatformRuntime:
 
         self._transition(RuntimeLifecycleState.FAILED)
 
+    def mark_degraded(self) -> None:
+        """Transition to DEGRADED when running with reduced capability.
+
+        Makes DEGRADED representable from READY or STARTING; the policy for
+        when to call this is owned by FORTRESS-10, not by this method.
+        """
+
+        self._transition(RuntimeLifecycleState.DEGRADED)
+
+    def mark_recovered(self) -> None:
+        """Transition from DEGRADED back to READY once full capability returns."""
+
+        self._transition(RuntimeLifecycleState.READY)
+
     def stop(self) -> None:
         """Tear down owned platform services in reverse order; advance to STOPPED.
 
