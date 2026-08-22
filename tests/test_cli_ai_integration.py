@@ -1,4 +1,8 @@
+import pytest
+
 from jaos.ai.diagnostics.models import DiagnosticStatus as AIDiagnosticStatus
+from jaos.ai.provider import ProviderManagerError
+from jaos.ai.providers.mock_provider import MockProvider
 from jaos.cli.command_dispatcher import CommandDispatcher
 from jaos.executive.diagnostics.models import (
     DiagnosticStatus as ExecutiveDiagnosticStatus,
@@ -102,6 +106,28 @@ def test_status_reports_executive_degraded_when_unhealthy(capsys, monkeypatch):
 
     assert "Executive Controller: Degraded" in output
     assert "Executive Controller: Online" not in output
+
+
+def test_construction_failure_during_initialization_leaves_no_live_provider(
+    monkeypatch,
+):
+    shutdown_calls = []
+    original_shutdown = MockProvider.shutdown
+
+    def broken_initialize(self):
+        raise RuntimeError("provider init exploded")
+
+    def tracking_shutdown(self):
+        shutdown_calls.append(self)
+        return original_shutdown(self)
+
+    monkeypatch.setattr(MockProvider, "initialize", broken_initialize)
+    monkeypatch.setattr(MockProvider, "shutdown", tracking_shutdown)
+
+    with pytest.raises(ProviderManagerError, match="mock"):
+        CommandDispatcher()
+
+    assert len(shutdown_calls) == 1
 
 
 def test_help_includes_ai_commands(capsys):

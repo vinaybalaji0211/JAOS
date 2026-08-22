@@ -22,19 +22,28 @@ class CommandDispatcher:
     """
 
     def __init__(self, tool_manager: ToolManager | None = None) -> None:
+        """Construct dispatcher collaborators, then initialize providers.
+
+        Construction builds the full object graph first; provider
+        initialization runs last and is rollback-scoped, so a failure during
+        initialization never runs against a partially-constructed graph and
+        never leaves a live provider behind.
+        """
         self.tool_manager = tool_manager or ToolManager()
 
         load_tools(self.tool_manager)
 
-        self.ai_manager = self._build_ai_manager()
+        provider_manager = ProviderManager()
+
+        self.ai_manager = AIManager(provider_manager)
         self.provider_profiles = ProviderProfileRegistry.build_default()
-        self.provider_status = ProviderStatusService(
-            self.ai_manager.get_provider_manager()
-        )
+        self.provider_status = ProviderStatusService(provider_manager)
         self.executive = ExecutiveController(
             self.tool_manager,
             ai_manager=self.ai_manager,
         )
+
+        self._initialize_providers(provider_manager)
 
     def shutdown(self) -> None:
         """
@@ -132,11 +141,18 @@ class CommandDispatcher:
 
         return True
 
-    def _build_ai_manager(self) -> AIManager:
-        provider_manager = ProviderManager()
+    @staticmethod
+    def _initialize_providers(provider_manager: ProviderManager) -> None:
+        """Register and initialize providers after construction has succeeded.
+
+        Rollback-scoped: if initialize_provider fails, the just-registered
+        provider is unregistered and shut down directly so no live provider
+        survives a failed CommandDispatcher construction.
+        """
+        mock_provider = MockProvider()
 
         provider_manager.register_provider(
-            MockProvider(),
+            mock_provider,
             AIProviderConfig(
                 name="mock",
                 provider_type=AIProviderType.MOCK,
@@ -145,9 +161,12 @@ class CommandDispatcher:
             set_default=True,
         )
 
-        provider_manager.initialize_provider("mock")
-
-        return AIManager(provider_manager)
+        try:
+            provider_manager.initialize_provider("mock")
+        except Exception:
+            provider_manager.unregister_provider("mock")
+            mock_provider.shutdown()
+            raise
 
     def _handle_ai_command(self, prompt: str) -> None:
         print()
