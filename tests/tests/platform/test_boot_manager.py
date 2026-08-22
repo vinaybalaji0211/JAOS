@@ -180,6 +180,48 @@ def test_shutdown_after_failed_boot_does_not_attempt_illegal_transition(
     assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
 
 
+def test_boot_after_failed_boot_raises_lifecycle_error(monkeypatch):
+    runtime = PlatformRuntime()
+
+    monkeypatch.setattr(
+        StartupValidator,
+        "validate",
+        lambda self: {"ready": False, "lifecycle_ready": False},
+    )
+
+    manager = BootManager(runtime)
+    manager.boot()
+
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+    with pytest.raises(LifecycleTransitionError):
+        manager.boot()
+
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+
+def test_repeated_illegal_boot_does_not_duplicate_registrations():
+    runtime = PlatformRuntime()
+
+    manager = BootManager(runtime)
+    manager.boot()
+
+    expected = [
+        "event_bus",
+        "runtime_context",
+        "service_container",
+        "service_registry",
+    ]
+    assert runtime.container.list_services() == expected
+    assert runtime.registry.list() == expected
+
+    with pytest.raises(LifecycleTransitionError):
+        manager.boot()
+
+    assert runtime.container.list_services() == expected
+    assert runtime.registry.list() == expected
+
+
 def test_start_failure_produces_truthful_failed_state():
     runtime = PlatformRuntime()
     runtime.container.register("event_bus", object())

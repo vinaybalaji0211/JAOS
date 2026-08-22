@@ -279,6 +279,30 @@ def test_stop_continues_after_individual_component_failure_and_aggregates_errors
     assert runtime.registry.is_registered("runtime_context") is True
 
 
+def test_failed_is_terminal_for_platform_runtime():
+    runtime = PlatformRuntime()
+    runtime.initialize()
+
+    sentinel = object()
+    runtime.container.register("event_bus", sentinel)
+
+    with pytest.raises(ValueError):
+        runtime.start()
+
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+    with pytest.raises(LifecycleTransitionError):
+        runtime.initialize()
+
+    with pytest.raises(LifecycleTransitionError):
+        runtime.start()
+
+    with pytest.raises(LifecycleTransitionError):
+        runtime.stop()
+
+    assert runtime.lifecycle_state == RuntimeLifecycleState.FAILED
+
+
 def test_runtime_paths_preserved_across_lifecycle(tmp_path: Path) -> None:
     paths = RuntimePaths(tmp_path / "runtime")
     runtime = PlatformRuntime(runtime_paths=paths)
