@@ -91,8 +91,12 @@ class MemoryProvider(ABC):
     def health_check(self) -> bool:
         """
         Return whether the provider is healthy and available.
+
+        Defaults to unhealthy: a provider is only healthy once it proves it,
+        not merely because it was constructed. Concrete providers must
+        override this with a real check.
         """
-        return True
+        return False
 
     def __repr__(self) -> str:
         """

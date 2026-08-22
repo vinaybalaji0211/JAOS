@@ -377,6 +377,33 @@ class InvalidStoreProvider(FakeProvider):
         return object()
 
 
+class BareMemoryProvider(MemoryProvider):
+    """
+    Minimal provider that does not override health_check.
+    """
+
+    def __init__(self, provider_id: str) -> None:
+        self._descriptor = ProviderDescriptor(
+            provider_id=provider_id,
+            provider_name=f"{provider_id} provider",
+            provider_version="1.0",
+            capabilities=ProviderCapabilities.from_iterable(()),
+        )
+
+    @property
+    def descriptor(self) -> ProviderDescriptor:
+        return self._descriptor
+
+    def create_store(self) -> MemoryStore:
+        raise NotImplementedError
+
+
+def test_default_health_check_is_unhealthy_until_overridden() -> None:
+    provider = BareMemoryProvider("bare")
+
+    assert provider.health_check() is False
+
+
 class TestProviderRegistry:
     """
     Certify provider registry behavior.

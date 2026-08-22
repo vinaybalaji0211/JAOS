@@ -20,12 +20,16 @@ class ExecutiveStatusProvider:
         planner_status = PlannerStatusProvider(self.registry).get_status()
         execution_status = ExecutionStatusProvider().get_status()
 
+        # parser_status and execution_status have no real failure condition
+        # to check today (ParserStatusProvider/ExecutionStatusProvider report
+        # a static, dependency-free capability, not a verified fact), so they
+        # are surfaced in details but excluded from the aggregate: including
+        # their unconditional healthy=True would let overall health be true
+        # partly because a component merely exists.
         healthy = all(
             (
                 handler_status.healthy,
-                parser_status.healthy,
                 planner_status.healthy,
-                execution_status.healthy,
             )
         )
 

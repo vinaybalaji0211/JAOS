@@ -1,5 +1,6 @@
 from jaos.ai.diagnostics.models import DiagnosticStatus
 from jaos.ai.provider import ProviderManager
+from jaos.ai.provider.health import AIProviderHealthStatus
 
 
 class AIStatusProvider:
@@ -18,10 +19,25 @@ class AIStatusProvider:
         except Exception:
             default_provider = None
 
+        healthy = False
+        message = "AI Platform has no registered providers."
+
+        if default_provider is not None:
+            try:
+                health = self.provider_manager.health_check(default_provider)
+                healthy = health.status == AIProviderHealthStatus.HEALTHY
+                message = (
+                    "AI Platform is online."
+                    if healthy
+                    else f"AI Platform default provider is {health.status.value}."
+                )
+            except Exception as exc:
+                message = f"AI Platform default provider health check failed: {exc}"
+
         return DiagnosticStatus(
             component="AI Platform",
-            healthy=True,
-            message="AI Platform is online.",
+            healthy=healthy,
+            message=message,
             details={
                 "provider_count": provider_count,
                 "default_provider": default_provider,
