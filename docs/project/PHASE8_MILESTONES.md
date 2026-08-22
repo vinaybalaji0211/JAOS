@@ -1,6 +1,6 @@
 # JAOS Phase 8 Milestones
 
-Version: 1.1
+Version: 1.2
 Status: ACTIVE
 Phase: Phase 8 — AI Intelligence Platform
 Release Target: v0.10.0-alpha
@@ -22,6 +22,7 @@ The governing documents are:
 
 - `docs/architecture/AI_INTELLIGENCE_ARCHITECTURE.md`
 - `docs/architecture/AI_INTELLIGENCE_REQUIREMENTS.md`
+- `docs/architecture/FORTRESS_PROGRAM.md`
 - `docs/project/NEXT_ACTIONS.md`
 
 ---
@@ -35,6 +36,21 @@ platform composition, integration, stabilization, and certification.
 
 No component may bypass existing platform authority or directly depend on a
 concrete AI or memory provider.
+
+### Fortress hard gate
+
+The Founder-approved Fortress Program is mandatory before major Phase 8
+intelligence expansion. It does not change the MS-0025 milestone identifiers or
+rewrite completed MS-0025A through MS-0025D evidence.
+
+Advanced reasoning expansion, autonomous workflows, multi-agent runtime
+behavior, advanced memory-driven action, PC control, voice, vision, IoT,
+robotics, and future cloud-GPU execution remain paused until Step 8 and Fortress
+certification are complete and explicit Founder authorization is recorded.
+
+Intelligence remains proposal-only throughout Fortress work:
+
+> Intelligence proposes; Executive executes.
 
 ---
 
@@ -194,7 +210,7 @@ Manager, Prompt Composer, AI Platform, and Memory Platform boundaries.
 
 ## 7. MS-0025E — Reasoning and Planning Intelligence
 
-Status: ACTIVE
+Status: ACTIVE — MAJOR EXPANSION PAUSED BY FORTRESS GATE
 
 ### Objective
 

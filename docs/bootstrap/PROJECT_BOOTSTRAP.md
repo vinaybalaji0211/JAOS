@@ -1,6 +1,6 @@
 # Project Bootstrap
 
-Version: 3.0
+Version: 3.1
 
 Status: ACTIVE
 
@@ -20,7 +20,7 @@ Current Phase: Phase 8 — AI Intelligence Platform
 
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 
-Execution State: Temporarily paused for repository stabilization
+Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 
 ---
 
@@ -108,9 +108,9 @@ approved reason.
 
 | Active milestone | MS-0025E — Reasoning and Planning Intelligence |
 
-| Phase 8 execution | Temporarily paused |
+| Phase 8 execution | Major expansion paused — Fortress hard gate |
 
-| Stabilization activity | Step 7 finding triage and remediation planning |
+| Stabilization activity | Step 7 — Bug Fixing and Regression |
 
 | Stabilization step | Step 7 of 9 — IN PROGRESS |
 
@@ -118,11 +118,31 @@ approved reason.
 
 | Step 8 entry | PENDING — BLOCKED BY STEP 7 |
 
-| Repository health | HEALTHY |
+| Fortress Program | ACTIVE — mandatory hard gate |
 
-| Architecture health | STABLE |
+| FORTRESS-01 | IMPLEMENTED — governance baseline recorded |
+
+| FORTRESS-02 | COMPLETE AND VERIFIED |
+
+| FORTRESS-02G | AUDIT COMPLETE |
+
+| FORTRESS-02H | IMPLEMENTED AND VERIFIED |
+
+| FORTRESS-02I | IMPLEMENTED AND VERIFIED |
+
+| FORTRESS-02J | IMPLEMENTED AND VERIFIED |
+
+| FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
+
+| FORTRESS-03 | NOT STARTED - AWAITING EXPLICIT FOUNDER AUTHORIZATION |
+
+| Repository health | STABILIZATION IN PROGRESS |
+
+| Architecture health | FORTRESS HARDENING REQUIRED |
 
 | Full regression certification | PENDING |
+
+| Fortress certification | NOT STARTED |
 
 | Phase 8 release readiness | NOT YET CERTIFIED |
 
@@ -148,9 +168,8 @@ It is not:
 
 - Authorization to discard completed work
 
-No new Phase 8 functionality may be added until repository stabilization is
-
-certified.
+Major Phase 8 expansion may resume only after Step 8 and Fortress certification
+are complete and explicit Founder authorization is recorded.
 
 ---
 
@@ -169,6 +188,8 @@ Every JAOS engineering session must begin by reading these documents in order:
 5. `docs/project/CURRENT_SPRINT.md`
 
 6. `docs/project/NEXT_ACTIONS.md`
+
+7. `docs/architecture/FORTRESS_PROGRAM.md`
 
 After the primary entry documents, read the documents governing the active work,
 
@@ -482,25 +503,25 @@ The documentation checkpoint is:
 
 Founder/reviewer Vinay B approved Step 7 entry on 2026-08-12.
 
-Current activity:
+Current stabilization activity:
 
-Step 7 finding triage and remediation planning
+Step 7 — Bug Fixing and Regression
 
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 
 controlled Step 7 remediation.
 
-No finding has been fixed, closed, or certified. Implementation changes have
-
-not started.
+RAA-005 and RAA-008 are resolved with evidence. Other unresolved RAA findings
+remain unresolved. Step 7 remains in progress; neither Step 8 nor Fortress
+certification has begun.
 
 The controlled Step 7 continuation instructions are:
 
-1. Complete read-only finding triage and remediation planning.
+1. Preserve completed Step 7 remediation evidence and unresolved finding state.
 
-2. Build the RAA/SHT finding-remediation matrix.
+2. Use the Fortress Program as the mandatory architecture and hardening gate.
 
-3. Map overlaps and dependencies.
+3. Do not begin FORTRESS-02K or FORTRESS-03 without separate authorization.
 
 4. Classify each finding as fix, documentation correction, or approved
 
@@ -524,7 +545,8 @@ Step 8 remains PENDING — BLOCKED BY STEP 7 until Step 7 completes and receives
 
 Founder review.
 
-Phase 8 must remain paused until Step 8 passes.
+Major Phase 8 expansion must remain paused until Step 8 and Fortress
+certification pass and explicit Founder authorization to resume is recorded.
 
 ---
 
@@ -848,7 +870,8 @@ Commits must be intentional, focused, and accurately described.
 
 ## 17. Phase 8 Resume Control
 
-After repository stabilization is certified, Phase 8 resumes from:
+After Step 8 and Fortress certification are complete and explicit Founder
+authorization is recorded, Phase 8 resumes from:
 
 MS-0025E — Reasoning and Planning Intelligence
 
@@ -1012,7 +1035,7 @@ MS-0025E — Reasoning and Planning Intelligence
 
 Current execution state:
 
-Temporarily paused for repository stabilization
+Major Phase 8 expansion paused for stabilization and Fortress certification
 
 Latest completed stabilization activity:
 
@@ -1020,7 +1043,7 @@ Step 6 — JAOS Shell Testing
 
 Current activity:
 
-Step 7 finding triage and remediation planning
+Step 7 — Bug Fixing and Regression
 
 Active stabilization step:
 
@@ -1038,7 +1061,8 @@ Step 8 entry status:
 
 PENDING — BLOCKED BY STEP 7
 
-Phase 8 may resume only after stabilization certification.
+Major Phase 8 expansion may resume only after Step 8 and Fortress certification
+and explicit Founder authorization.
 
 ---
 

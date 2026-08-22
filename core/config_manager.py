@@ -1,6 +1,8 @@
 import json
 import os
 
+from pathlib import Path
+
 from logs.logger import logger
 
 
@@ -8,38 +10,84 @@ class ConfigManager:
 
     FILE_PATH = "config/settings.json"
 
+    MUTABLE_KEYS = (
+        "mode",
+        "ai_provider",
+    )
+
+    DEFAULT_CONFIG = {
+
+        "jarvis_name": "JARVIS OS",
+
+        "mode": "NORMAL",
+
+        "ai_provider": "NONE"
+
+    }
+
     @staticmethod
-    def load_config():
+    def _validated_profile_settings_path(profile_settings_path):
 
-        if not os.path.exists(ConfigManager.FILE_PATH):
+        try:
+            candidate = Path(profile_settings_path)
 
-            default_config = {
+        except (TypeError, ValueError, OSError) as error:
 
-                "jarvis_name": "JARVIS OS",
+            raise ValueError(
+                "profile_settings_path must be a valid absolute path"
+            ) from error
 
-                "mode": "NORMAL",
+        if not candidate.is_absolute():
 
-                "ai_provider": "NONE"
+            raise ValueError(
+                "profile_settings_path must be an absolute path"
+            )
 
-            }
+        return candidate
 
-            os.makedirs("config", exist_ok=True)
+    @staticmethod
+    def load_config(profile_settings_path=None):
+        """
+        Return effective settings without writing any file.
+
+        Repository settings are read-only defaults. When
+        profile_settings_path is supplied and exists, its mutable keys
+        overlay those defaults. Loading never creates either file.
+        """
+
+        if os.path.exists(ConfigManager.FILE_PATH):
 
             with open(
                     ConfigManager.FILE_PATH,
-                    "w") as file:
+                    "r",
+                    encoding="utf-8") as file:
 
-                json.dump(
-                    default_config,
-                    file,
-                    indent=4
-                )
+                config = json.load(file)
 
-        with open(
-                ConfigManager.FILE_PATH,
-                "r") as file:
+        else:
 
-            config = json.load(file)
+            config = dict(ConfigManager.DEFAULT_CONFIG)
+
+        if profile_settings_path is not None:
+
+            overlay_path = ConfigManager._validated_profile_settings_path(
+                profile_settings_path
+            )
+
+            if overlay_path.exists():
+
+                with open(
+                        overlay_path,
+                        "r",
+                        encoding="utf-8") as file:
+
+                    overlay = json.load(file)
+
+                for key in ConfigManager.MUTABLE_KEYS:
+
+                    if key in overlay:
+
+                        config[key] = overlay[key]
 
         logger.info(
             "Configuration loaded."
@@ -48,14 +96,45 @@ class ConfigManager:
         return config
 
     @staticmethod
-    def save_config(config):
+    def save_config(config, profile_settings_path=None):
+        """
+        Persist mutable settings to an explicit profile settings path.
+
+        Repository settings are read-only. A mutation without an explicit
+        absolute profile target fails closed rather than falling back to
+        the repository defaults file.
+        """
+
+        if profile_settings_path is None:
+
+            raise ValueError(
+                "save_config requires an explicit absolute "
+                "profile_settings_path; repository configuration "
+                "defaults are read-only"
+            )
+
+        overlay_path = ConfigManager._validated_profile_settings_path(
+            profile_settings_path
+        )
+
+        mutable_config = {
+            key: config[key]
+            for key in ConfigManager.MUTABLE_KEYS
+            if key in config
+        }
+
+        overlay_path.parent.mkdir(
+            parents=True,
+            exist_ok=True,
+        )
 
         with open(
-                ConfigManager.FILE_PATH,
-                "w") as file:
+                overlay_path,
+                "w",
+                encoding="utf-8") as file:
 
             json.dump(
-                config,
+                mutable_config,
                 file,
                 indent=4
             )
@@ -63,3 +142,5 @@ class ConfigManager:
         logger.info(
             "Configuration updated."
         )
+
+        return overlay_path

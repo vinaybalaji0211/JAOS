@@ -22,7 +22,7 @@ SCHEMA_VERSION = 1
 # Database
 ###############################################################################
 
-DEFAULT_DATABASE_FILENAME = "jaos_memory.db"
+DEFAULT_DATABASE_FILENAME = "memory.sqlite3"
 
 ###############################################################################
 # SQLite Configuration

@@ -1,6 +1,6 @@
 # JAOS Locked Master Roadmap
 
-Version: 4.0
+Version: 4.1
 Status: LOCKED
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -79,7 +79,7 @@ must not arbitrarily remove core JAOS features.
 | 5 | Executive Integration & Stabilization | Completed |
 | 6 | AI Platform | Completed — v0.8.0-alpha |
 | 7 | Memory Platform | Completed — v0.9.0-alpha |
-| 8 | AI Intelligence Platform | Active — temporarily paused for repository stabilization |
+| 8 | AI Intelligence Platform | Active — major expansion paused by Fortress gate |
 | 9 | Workflow & Automation Platform | Planned |
 | 10 | Desktop & Operating System Integration | Planned |
 | 11 | Voice & Audio Intelligence | Planned |
@@ -214,7 +214,7 @@ Status: Active
 Release target: v0.10.0-alpha
 Milestone family: MS-0025
 Current milestone: MS-0025E — Reasoning and Planning Intelligence
-Execution state: Temporarily paused for repository stabilization
+Execution state: Major expansion paused for stabilization and Fortress certification
 
 Primary scope:
 
@@ -236,6 +236,13 @@ Phase 8 must not introduce unrestricted autonomous execution or bypass the
 Executive, Tool, Permission, Memory, AI Provider, or Runtime Platform
 boundaries.
 
+The Founder-approved JAOS Architectural Unification & Runtime Hardening
+("Fortress Program") is a mandatory hard gate before major Phase 8 intelligence
+expansion. It preserves the 20-phase roadmap and existing milestone identifiers;
+it does not create a new product phase. The authoritative program, canonical
+runtime target, ordered workstreams, and certification gate are maintained in
+`docs/architecture/FORTRESS_PROGRAM.md`.
+
 Completed milestones:
 
 - MS-0025A — Intelligence Domain Models and Contracts
@@ -253,8 +260,8 @@ Remaining milestone sequence:
 - MS-0025X — AI Intelligence Platform Composition
 - MS-0025F — AI Intelligence End-to-End Certification
 
-Phase 8 resumes only after repository stabilization and certification are
-complete.
+Major Phase 8 expansion resumes only after Step 8 and Fortress certification
+are complete and explicit Founder authorization is recorded.
 
 ---
 

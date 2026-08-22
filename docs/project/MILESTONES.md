@@ -1,6 +1,6 @@
 # JAOS Milestones
 
-Version: 3.0
+Version: 3.1
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -49,7 +49,7 @@ The following rules apply:
 | 5 | Executive Integration & Stabilization | Completed |
 | 6 | AI Platform | Completed — v0.8.0-alpha |
 | 7 | Memory Platform | Completed — v0.9.0-alpha |
-| 8 | AI Intelligence Platform | Active — temporarily paused for repository stabilization |
+| 8 | AI Intelligence Platform | Active — major expansion paused by Fortress gate |
 | 9 | Workflow & Automation Platform | Planned |
 | 10 | Desktop & Operating System Integration | Planned |
 | 11 | Voice & Audio Intelligence | Planned |
@@ -290,7 +290,7 @@ v0.9.0-alpha contracts.
 ### Phase 8 — AI Intelligence Platform
 
 Status: ACTIVE
-Execution state: Temporarily paused for repository stabilization
+Execution state: Major expansion paused for stabilization and Fortress certification
 Release target: v0.10.0-alpha
 Milestone family: MS-0025
 Current milestone: MS-0025E — Reasoning and Planning Intelligence
@@ -313,9 +313,14 @@ Current outcome:
 The domain contracts, context foundation, prompt composition foundation, and
 Conversation Engine are complete.
 
-Reasoning and Planning Intelligence remains the active milestone. Implementation
-will resume after repository stabilization and documentation synchronization
-are complete.
+Reasoning and Planning Intelligence remains the active milestone. Major
+expansion will resume only after Step 8 and Fortress certification are complete
+and explicit Founder authorization is recorded.
+
+The Fortress Program is a prerequisite hardening and certification gate, not a
+new roadmap phase or a replacement milestone. Its ordered workstreams and
+canonical target are maintained in
+`docs/architecture/FORTRESS_PROGRAM.md`.
 
 Phase 8 must preserve the authority boundaries of the Runtime, Executive, Tool,
 Permission, AI Provider, and Memory Platforms.
@@ -334,6 +339,7 @@ Phase 8 certification requires:
 - Security review
 - Performance review
 - Documentation synchronization
+- Completion and certification of FORTRESS-01 through FORTRESS-12
 - Phase certification
 - Release of v0.10.0-alpha
 

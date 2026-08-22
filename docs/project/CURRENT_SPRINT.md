@@ -1,16 +1,16 @@
 # JAOS Current Sprint
 
-Version: 3.0
+Version: 3.1
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
-Sprint Name: Repository Stabilization and Phase 8 Continuation
+Sprint Name: Repository Stabilization, Fortress Governance, and Phase 8 Continuation
 Sprint Type: Engineering Stabilization
 Current Release: v0.9.0-alpha
 Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
-Execution State: Temporarily paused for repository stabilization
+Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 
 ---
 
@@ -70,12 +70,18 @@ Step 7 — Bug Fixing and Regression
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
-controlled Step 7 remediation. No finding has been fixed or closed yet.
+controlled Step 7 remediation. RAA-005 and RAA-008 are resolved with evidence;
+other unresolved RAA findings remain unresolved.
 
 Step 5 — Full Automated Testing remains COMPLETED with the verified automated
 baseline of 1,590 tests collected and 1,590 tests passed.
 
 Step 8 — Stabilization Certification remains PENDING — BLOCKED BY STEP 7.
+
+The Founder-approved Fortress Program is now the mandatory hard gate before
+major Phase 8 expansion. FORTRESS-01 has recorded the governance baseline.
+FORTRESS-02 is COMPLETE AND VERIFIED. FORTRESS-03 has not started and
+awaits explicit Founder authorization.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -95,6 +101,8 @@ The objectives of this sprint are to:
 - Publish a repository stabilization certification.
 - Resume Phase 8 from MS-0025E.
 - Preserve the locked 20-phase roadmap and existing milestone authority.
+- Complete the ordered Fortress workstreams and certification before major
+  Phase 8 expansion resumes.
 
 ---
 
@@ -107,11 +115,21 @@ The objectives of this sprint are to:
 | Current phase | Phase 8 — AI Intelligence Platform |
 | Milestone family | MS-0025 |
 | Active milestone | MS-0025E — Reasoning and Planning Intelligence |
-| Phase 8 execution | Temporarily paused |
+| Phase 8 execution | Major expansion paused — Fortress hard gate |
 | Stabilization step | Step 7 — Bug Fixing and Regression — IN PROGRESS |
+| Fortress Program | ACTIVE — mandatory hard gate |
+| FORTRESS-01 | IMPLEMENTED — governance baseline recorded |
+| FORTRESS-02 | COMPLETE AND VERIFIED |
+| FORTRESS-02G | AUDIT COMPLETE |
+| FORTRESS-02H | IMPLEMENTED AND VERIFIED |
+| FORTRESS-02I | IMPLEMENTED AND VERIFIED |
+| FORTRESS-02J | IMPLEMENTED AND VERIFIED |
+| FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
+| FORTRESS-03 | NOT STARTED - AWAITING EXPLICIT FOUNDER AUTHORIZATION |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
-| Repository health | HEALTHY |
-| Architecture health | STABLE |
+| Repository health | STABILIZATION IN PROGRESS |
+| Architecture health | FORTRESS HARDENING REQUIRED |
+| Fortress certification | NOT STARTED |
 | Full regression certification | PENDING |
 
 ---
@@ -178,7 +196,7 @@ decision.
 
 ## 7. Current Work
 
-The current activity is Step 7 finding triage and remediation planning.
+The current stabilization activity is Step 7 — Bug Fixing and Regression.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -203,7 +221,8 @@ Step 4 — Runtime Architecture Audit remains COMPLETED and recorded in:
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled Step 7 remediation.
 
-Implementation has not started. No finding has been fixed or closed yet.
+Step 7 implementation is in progress. RAA-005 and RAA-008 are resolved with
+evidence; other unresolved RAA findings remain unresolved.
 
 The controlled Step 7 workflow is:
 
@@ -229,7 +248,7 @@ MS-0025E and Phase 8 implementation remain paused.
 | MS-0025B | Context Management Foundation | COMPLETED |
 | MS-0025C | Prompt Composition Foundation | COMPLETED |
 | MS-0025D | Conversation Engine | COMPLETED |
-| MS-0025E | Reasoning and Planning Intelligence | ACTIVE — temporarily paused |
+| MS-0025E | Reasoning and Planning Intelligence | ACTIVE — major expansion paused by Fortress gate |
 | MS-0025G | Agent and Execution Proposal Foundations | PLANNED |
 | MS-0025X | AI Intelligence Platform Composition | PLANNED |
 | MS-0025F | AI Intelligence End-to-End Certification | PLANNED |
@@ -245,7 +264,8 @@ milestone revision.
 
 ## 9. Phase 8 Resume Order
 
-After repository stabilization is certified, Phase 8 will resume in this order:
+After Step 8 and Fortress certification are complete and explicit Founder
+authorization is recorded, Phase 8 will resume in this order:
 
 1. Resume MS-0025E — Reasoning and Planning Intelligence.
 2. Complete reasoning contracts and component behavior.
@@ -419,7 +439,8 @@ This sprint is complete only when:
 6. Produce the Step 7 report for Founder review.
 7. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
    until Step 7 is complete and approved.
-8. Resume MS-0025E only after Step 8 — Stabilization Certification.
+8. Resume MS-0025E only after Step 8 and Fortress certification and explicit
+   Founder authorization.
 
 ---
 
@@ -450,7 +471,7 @@ Current checkpoint:
 
 Current activity:
 
-Step 7 finding triage and remediation planning
+Step 7 — Bug Fixing and Regression
 
 Active stabilization step:
 

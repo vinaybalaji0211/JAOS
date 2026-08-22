@@ -10,6 +10,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from jaos.memory.providers.database_constants import (
+    DEFAULT_DATABASE_FILENAME,
+)
 from jaos.memory.providers.memory_provider import MemoryProvider
 from jaos.memory.providers.provider_capabilities import (
     ProviderCapabilities,
@@ -38,9 +41,24 @@ class SQLiteProvider(MemoryProvider):
 
         Args:
             database_path:
-                SQLite database file path.
+                Absolute SQLite database file path. Relative paths are
+                rejected so provider state cannot resolve against the
+                current working directory.
         """
-        self._database_path = Path(database_path)
+        try:
+            normalized_path = Path(database_path)
+
+        except (TypeError, ValueError, OSError) as error:
+            raise ValueError(
+                "database_path must be a valid absolute path"
+            ) from error
+
+        if not normalized_path.is_absolute():
+            raise ValueError(
+                "database_path must be an absolute path"
+            )
+
+        self._database_path = normalized_path
 
         self._descriptor = ProviderDescriptor(
             provider_id="sqlite",
@@ -64,6 +82,30 @@ class SQLiteProvider(MemoryProvider):
                     ProviderCapability.STATISTICS,
                     ProviderCapability.HEALTH_CHECKS,
                 )
+            ),
+        )
+
+    @classmethod
+    def from_memory_scope(
+        cls,
+        memory_scope: str | Path,
+    ) -> SQLiteProvider:
+        """Create a provider bound to an injected runtime memory scope."""
+        try:
+            normalized_scope = Path(memory_scope)
+        except (TypeError, ValueError, OSError) as error:
+            raise ValueError(
+                "memory_scope must be a valid absolute path"
+            ) from error
+
+        if not normalized_scope.is_absolute():
+            raise ValueError(
+                "memory_scope must be an absolute path"
+            )
+
+        return cls(
+            database_path=(
+                normalized_scope / DEFAULT_DATABASE_FILENAME
             ),
         )
 

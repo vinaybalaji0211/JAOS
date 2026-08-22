@@ -104,10 +104,25 @@ def create_sqlite_connection(
     Create and configure a SQLite connection for the memory platform.
 
     The caller owns the returned connection and must close it.
+
+    Persistent database paths must be absolute. Relative paths are
+    rejected before any directory is created or any connection is opened
+    so memory state cannot resolve against the current working directory.
     """
-    normalized_path = Path(database_path)
+    try:
+        normalized_path = Path(database_path)
+
+    except (TypeError, ValueError, OSError) as error:
+        raise ValueError(
+            "database_path must be ':memory:' or a valid absolute path"
+        ) from error
 
     if str(normalized_path) != ":memory:":
+        if not normalized_path.is_absolute():
+            raise ValueError(
+                "database_path must be an absolute path"
+            )
+
         normalized_path.parent.mkdir(parents=True, exist_ok=True)
 
     connection = sqlite3.connect(

@@ -1,17 +1,18 @@
 # JAOS Next Actions
 
-Version: 4.0
+Version: 4.1
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
-Last Synchronized: 2026-08-12
+Last Synchronized: 2026-08-21
 Certified Release: v0.9.0-alpha
 Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
-Execution State: Temporarily paused for repository stabilization
-Current Stabilization Activity: Step 7 finding triage and remediation planning
-Exact Next Action: Complete read-only Step 7 finding triage and remediation planning before modifying source code or tests
+Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
+Current Stabilization Activity: Step 7 — Bug Fixing and Regression
+Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 COMPLETE AND VERIFIED; FORTRESS-03 not started and awaiting explicit Founder authorization
+Exact Next Action: FORTRESS-02 is COMPLETE AND VERIFIED. Continue only separately authorized Step 7 work. Do not begin FORTRESS-03 without explicit Founder authorization
 
 ---
 
@@ -46,15 +47,25 @@ It must not direct engineers to repeat completed planning or implementation.
 | Current phase | Phase 8 — AI Intelligence Platform |
 | Milestone family | MS-0025 |
 | Active milestone | MS-0025E — Reasoning and Planning Intelligence |
-| Phase 8 execution | Temporarily paused |
+| Phase 8 execution | Major expansion paused — Fortress hard gate |
 | Stabilization step | Step 7 of 9 — IN PROGRESS |
-| Current activity | Step 7 finding triage and remediation planning |
+| Current activity | Step 7 — Bug Fixing and Regression |
 | Step 7 entry | APPROVED — IN PROGRESS |
 | Step 8 entry | PENDING — BLOCKED BY STEP 7 |
-| Repository health | HEALTHY |
-| Architecture health | STABLE |
+| Fortress Program | ACTIVE — mandatory hard gate |
+| FORTRESS-01 | IMPLEMENTED — governance baseline recorded |
+| FORTRESS-02 | COMPLETE AND VERIFIED |
+| FORTRESS-02G | AUDIT COMPLETE |
+| FORTRESS-02H | IMPLEMENTED AND VERIFIED |
+| FORTRESS-02I | IMPLEMENTED AND VERIFIED |
+| FORTRESS-02J | IMPLEMENTED AND VERIFIED |
+| FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
+| FORTRESS-03 | NOT STARTED - AWAITING EXPLICIT FOUNDER AUTHORIZATION |
+| Repository health | STABILIZATION IN PROGRESS |
+| Architecture health | FORTRESS HARDENING REQUIRED |
 | Full regression certification | PENDING |
 | Stabilization certification | PENDING |
+| Fortress certification | NOT STARTED |
 | Phase 8 release readiness | NOT YET CERTIFIED |
 
 Phase 7 — Memory Platform is complete, certified, released, tagged, and pushed as:
@@ -83,10 +94,10 @@ This pause is not:
 
 ## 3. Immediate Priority
 
-The immediate priority is:
-
-Complete read-only Step 7 finding triage and remediation planning before
-modifying source code or tests.
+The immediate priority is to preserve the FORTRESS-01 governance checkpoint and
+the verified FORTRESS-02 slice state, continue only separately authorized Step 7
+work, and avoid beginning FORTRESS-02K or FORTRESS-03 without separate
+authorization.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -107,8 +118,9 @@ Step 5 — Full Automated Testing remains COMPLETED and recorded in:
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled remediation.
 
-No finding has been fixed, closed, or certified yet. Implementation changes
-have not started.
+RAA-005 and RAA-008 are resolved with evidence. Other unresolved RAA findings
+remain unresolved. Step 7 remains in progress; neither Step 8 nor Fortress
+certification has begun.
 
 The controlled Step 7 workflow is:
 
@@ -216,7 +228,7 @@ Current milestone status:
 | MS-0025B | Context Management | COMPLETED |
 | MS-0025C | Prompt Composition | COMPLETED |
 | MS-0025D | Conversation Intelligence | COMPLETED |
-| MS-0025E | Reasoning and Planning Intelligence | ACTIVE — PAUSED FOR STABILIZATION |
+| MS-0025E | Reasoning and Planning Intelligence | ACTIVE — MAJOR EXPANSION PAUSED BY FORTRESS GATE |
 | MS-0025G | Agent and Execution Proposal Foundations | PENDING |
 | MS-0025X | AI Intelligence Platform Composition | PENDING |
 | MS-0025F | AI Intelligence End-to-End Certification | PENDING CERTIFICATION |
@@ -225,7 +237,8 @@ The active implementation milestone is:
 
 `MS-0025E — Reasoning and Planning Intelligence`
 
-Phase 8 must resume from MS-0025E after stabilization certification.
+After Step 8 and Fortress certification are complete and explicit Founder
+authorization is recorded, Phase 8 resumes from MS-0025E.
 
 MS-0025A through MS-0025D must not be restarted or reimplemented without an
 approved engineering decision supported by repository evidence.
@@ -297,8 +310,8 @@ The approved repository-stabilization sequence is mandatory:
 The sequence must not be skipped or reordered without an approved engineering
 decision.
 
-Phase 8 implementation must remain paused until Step 8 — Stabilization
-Certification passes.
+Major Phase 8 expansion must remain paused until Step 8 and Fortress
+certification pass and explicit Founder authorization is recorded.
 
 ---
 
@@ -466,38 +479,45 @@ No current certification claim may be based solely on an older test count.
 
 ---
 
-## 12. Actions Authorized During Step 7 Finding Triage and Remediation Planning
+## 12. Actions Authorized at the Current Fortress Checkpoint
 
 The following actions are authorized:
 
 - Read and compare authoritative repository documentation and audit evidence.
-- Build the finding-remediation matrix for RAA-001 through RAA-009 and
-  SHT-001 through SHT-006.
-- Identify overlaps and dependencies among findings.
-- Classify each finding as fix, documentation correction, or approved
-  deferral.
-- Define acceptance tests before implementation.
+- Preserve the current RAA/SHT resolution evidence and unresolved finding state.
+- Use `docs/architecture/FORTRESS_PROGRAM.md` as the governing Fortress record.
+- Continue only Step 7 work that receives separate authorization.
 - Record the Founder-approved Step 7 entry and checkpoint `786abb3`.
 - Preserve Step 4, Step 5, and Step 6 completion evidence.
 - Run non-mutating documentation and repository checks.
 - Run `git diff --check`.
 
-Only documentation required for the Step 7 planning checkpoint may be changed.
+FORTRESS-01 authorized only the governance and documentation baseline it
+recorded. It did not authorize FORTRESS-02 implementation. FORTRESS-02 slices
+02A through 02J were implemented under separate authorization and are verified
+by the checkpoint reconciliation recorded in
+`docs/architecture/FORTRESS_PROGRAM.md` sections 7.2 and 7.3. No authorization
+for FORTRESS-02G, FORTRESS-03, Step 8, or major Phase 8 expansion exists.
 
 Each change must remain reviewable and recoverable.
 
 ---
 
-## 13. Actions Not Authorized During Step 7 Finding Triage and Remediation Planning
+## 13. Actions Not Authorized at the Current Fortress Checkpoint
 
 Do not:
 
-- Modify source code or tests before the finding matrix and acceptance tests
-  are defined.
+- Begin FORTRESS-02G.
+- Begin FORTRESS-03.
+- Claim FORTRESS-02 complete or certified.
+- Modify production code, tests, or runtime data without separate
+  authorization.
 - Mark any finding resolved without evidence.
 - Enter Step 8.
-- Resume MS-0025E or Phase 8.
-- Add new Phase 8 functionality.
+- Resume MS-0025E or major Phase 8 expansion.
+- Add advanced reasoning, autonomous workflow, multi-agent runtime, advanced
+  memory-driven action, PC control, voice, vision, IoT, robotics, or future
+  cloud-GPU capability expansion.
 - Start MS-0025G.
 - Start MS-0025X.
 - Claim MS-0025F certification.
@@ -589,7 +609,7 @@ The documentation checkpoint is:
 
 The current activity is:
 
-Step 7 finding triage and remediation planning
+Step 7 — Bug Fixing and Regression
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -602,8 +622,9 @@ Step 6 completion documentation synchronization is COMPLETE.
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled remediation.
 
-No finding has been fixed, closed, or certified yet. Implementation changes
-have not started.
+RAA-005 and RAA-008 are resolved with evidence. Other unresolved RAA findings
+remain unresolved. Step 7 remains in progress; neither Step 8 nor Fortress
+certification has begun.
 
 The controlled Step 7 workflow is:
 
@@ -626,7 +647,8 @@ MS-0025E and Phase 8 implementation remain paused.
 
 ## 17. Phase 8 Resume Order
 
-Phase 8 resumes only after Step 8 — Stabilization Certification passes.
+Major Phase 8 expansion resumes only after Step 8 and Fortress certification
+pass and explicit Founder authorization is recorded.
 
 The approved resume order is:
 
@@ -768,34 +790,39 @@ than rapidly changing implementation.
 
 ## 22. Exact Next Actions
 
-1. Build a finding-remediation matrix for RAA-001 through RAA-009 and
-   SHT-001 through SHT-006.
-2. Identify overlaps and dependencies.
-3. Classify each finding as fix, documentation correction, or approved
-   deferral.
-4. Define acceptance tests before implementation.
-5. Apply one controlled fix cluster at a time only after the matrix and
-   acceptance tests are defined.
-6. Run targeted tests after every cluster.
-7. Run the complete automated and JAOS Shell regression suites.
-8. Produce the Step 7 report for Founder review.
-9. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
-   until Step 7 is complete and approved.
+1. Preserve the FORTRESS-01 governance baseline and canonical target.
+2. Preserve the verified FORTRESS-02 slice state for 02A through 02J.
+3. Preserve RAA-005 and RAA-008 resolution evidence and keep other unresolved
+   RAA findings open.
+4. Continue only separately authorized Step 7 remediation.
+5. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7 until
+   Step 7 is complete and approved.
+6. Do not begin FORTRESS-02K or FORTRESS-03 without separate authorization.
+7. Execute the skipped directory-symlink escape rejection check in an elevated
+   or capable environment before Fortress certification.
+8. Keep major Phase 8 expansion paused until Step 8 and Fortress certification
+   pass and explicit Founder authorization is recorded.
 
-Do not modify source code or tests before the finding matrix and acceptance
-tests are defined.
+Do not modify production code, tests, or runtime data under FORTRESS-01.
 
 Do not mark any finding resolved without evidence.
 
-Do not enter Step 8 or resume Phase 8 implementation.
+Do not enter Step 8 or resume major Phase 8 expansion before the complete
+Fortress gate passes.
 
 ---
 
 ## 23. Current Command-Level Action
 
-Complete read-only Step 7 finding triage and remediation planning before
-modifying source code or tests.
+FORTRESS-02 is COMPLETE AND VERIFIED at workstream level, with closure
+evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md` section 7.7.
+Continue only separately authorized Step 7 work. Do not begin FORTRESS-03,
+claim Fortress Program certification, enter Step 8, resume MS-0025E, or resume
+major Phase 8 expansion.
 
-Do not resolve any finding during this planning checkpoint.
-
-Do not enter Step 8, resume MS-0025E, or resume Phase 8.
+The following remain explicitly open and unchanged: the directory-symlink escape
+validation is unverified on this host; the canonical launcher does not yet route
+through `PlatformRuntime`, which belongs to FORTRESS-04; `main.py` retirement and
+quarantine belong to FORTRESS-04 and FORTRESS-06; `config/providers.json`
+ownership remains deferred; Fortress certification has not started; Step 7
+remains in progress; and Step 8 remains blocked by Step 7.
