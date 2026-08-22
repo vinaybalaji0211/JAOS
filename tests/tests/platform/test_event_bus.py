@@ -52,3 +52,33 @@ def test_clear():
     bus.clear()
 
     assert bus.subscriber_count("x") == 0
+
+
+def test_subscriber_failure_does_not_propagate():
+    bus = EventBus()
+
+    def broken(_data):
+        raise RuntimeError("subscriber exploded")
+
+    bus.subscribe("event", broken)
+
+    bus.publish("event", "payload")
+
+
+def test_subscriber_failure_does_not_block_other_subscribers():
+    bus = EventBus()
+
+    result = []
+
+    def broken(_data):
+        raise RuntimeError("subscriber exploded")
+
+    def healthy(data):
+        result.append(data)
+
+    bus.subscribe("event", broken)
+    bus.subscribe("event", healthy)
+
+    bus.publish("event", "payload")
+
+    assert result == ["payload"]

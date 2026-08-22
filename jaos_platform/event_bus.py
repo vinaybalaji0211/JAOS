@@ -20,7 +20,12 @@ class EventBus:
         logger.debug("Publishing event: %s", event)
 
         for handler in self._subscribers.get(event, []):
-            handler(payload)
+            try:
+                handler(payload)
+            except Exception:
+                logger.exception(
+                    "EventBus subscriber failed for event: %s", event
+                )
 
     def subscriber_count(self, event: str) -> int:
         return len(self._subscribers.get(event, []))
