@@ -232,19 +232,31 @@ class CommandDispatcher:
 
     def _show_status(self) -> None:
         ai_status = self.ai_manager.get_status()
+        ai_diagnostic = self.ai_manager.get_diagnostic_status()
+        executive_status = self.executive.get_status()
+        registered_tools = self.tool_manager.list_tools()
 
         print()
         print("System Status")
         print("-------------")
         print("Boot: Online")
         print("Shell: Online")
-        print("Executive Controller: Online")
+        print(
+            "Executive Controller: "
+            + ("Online" if executive_status.healthy else "Degraded")
+        )
         print("Command Dispatcher: Online")
-        print("Tool Platform: Ready")
-        print("AI Platform: Ready")
+        print(
+            "Tool Platform: "
+            + ("Ready" if registered_tools else "Not Ready")
+        )
+        print(
+            "AI Platform: "
+            + ("Ready" if ai_diagnostic.healthy else "Not Ready")
+        )
         print(f"AI Providers: {ai_status.provider_count}")
         print(f"Default AI Provider: {ai_status.default_provider}")
-        print(f"Registered Tools: {len(self.tool_manager.list_tools())}")
+        print(f"Registered Tools: {len(registered_tools)}")
         print()
 
     def _show_identity(self) -> None:

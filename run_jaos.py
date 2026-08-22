@@ -9,8 +9,6 @@ class JAOSApplication:
         print("Jarvis Artificial Operating System")
         print("=" * 40)
         print()
-        print("Boot Complete")
-        print()
         print("Good evening, Vinay.")
 
     def run(self) -> None:

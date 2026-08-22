@@ -1,4 +1,8 @@
+from jaos.ai.diagnostics.models import DiagnosticStatus as AIDiagnosticStatus
 from jaos.cli.command_dispatcher import CommandDispatcher
+from jaos.executive.diagnostics.models import (
+    DiagnosticStatus as ExecutiveDiagnosticStatus,
+)
 
 
 def test_status_includes_ai_platform(capsys):
@@ -47,6 +51,57 @@ def test_empty_ai_prompt_is_rejected(capsys):
 
     assert should_continue is True
     assert "AI prompt cannot be empty." in output
+
+
+def test_status_reports_ai_platform_not_ready_when_unhealthy(capsys, monkeypatch):
+    dispatcher = CommandDispatcher()
+    monkeypatch.setattr(
+        dispatcher.ai_manager,
+        "get_diagnostic_status",
+        lambda: AIDiagnosticStatus(
+            component="AI Platform",
+            healthy=False,
+            message="down",
+            details={},
+        ),
+    )
+
+    dispatcher.dispatch("status")
+    output = capsys.readouterr().out
+
+    assert "AI Platform: Not Ready" in output
+    assert "AI Platform: Ready" not in output
+
+
+def test_status_reports_tool_platform_not_ready_with_no_tools(capsys, monkeypatch):
+    dispatcher = CommandDispatcher()
+    monkeypatch.setattr(dispatcher.tool_manager, "list_tools", lambda: ())
+
+    dispatcher.dispatch("status")
+    output = capsys.readouterr().out
+
+    assert "Tool Platform: Not Ready" in output
+    assert "Tool Platform: Ready" not in output
+
+
+def test_status_reports_executive_degraded_when_unhealthy(capsys, monkeypatch):
+    dispatcher = CommandDispatcher()
+    monkeypatch.setattr(
+        dispatcher.executive,
+        "get_status",
+        lambda: ExecutiveDiagnosticStatus(
+            component="Executive Platform",
+            healthy=False,
+            message="down",
+            details={},
+        ),
+    )
+
+    dispatcher.dispatch("status")
+    output = capsys.readouterr().out
+
+    assert "Executive Controller: Degraded" in output
+    assert "Executive Controller: Online" not in output
 
 
 def test_help_includes_ai_commands(capsys):
