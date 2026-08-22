@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.6
+Document Version: 1.7
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -18,7 +18,7 @@ Maintainer: JAOS Engineering
 
 Founder Direction Recorded: 2026-08-21
 
-Last Updated: 2026-08-21
+Last Updated: 2026-08-22
 
 Related Documents:
 
@@ -97,7 +97,7 @@ requires all of the following:
 | FORTRESS-02I | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02J | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
-| FORTRESS-03 | NOT STARTED - AWAITING EXPLICIT FOUNDER AUTHORIZATION |
+| FORTRESS-03 | COMPLETE AND VERIFIED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-005 | RESOLVED WITH EVIDENCE |
 | RAA-008 | RESOLVED WITH EVIDENCE |
@@ -202,7 +202,7 @@ records a safe dependency-preserving adjustment:
 |---|---|---|
 | 1 | FORTRESS-01 — Governance and canonical architecture | IMPLEMENTED — governance baseline recorded |
 | 2 | FORTRESS-02 — Runtime-data and test isolation | COMPLETE AND VERIFIED — closure evidence recorded in section 7.7 |
-| 3 | FORTRESS-03 — Runtime lifecycle correctness | PLANNED — NOT STARTED |
+| 3 | FORTRESS-03 — Runtime lifecycle correctness | COMPLETE AND VERIFIED — closure evidence recorded in section 7.8 |
 | 4 | FORTRESS-04 — One launcher and one composition root | PLANNED |
 | 5 | FORTRESS-05 — Canonical platform composition | PLANNED |
 | 6 | FORTRESS-06 — Legacy migration and quarantine | PLANNED |
@@ -649,6 +649,163 @@ certification remains NOT STARTED, and major Phase 8 expansion remains PAUSED.
 
 ---
 
+### 7.8 FORTRESS-03 Closure Evidence — FORTRESS-03 COMPLETE AND VERIFIED
+
+Date: 2026-08-22. Environment: Python 3.14, pytest, Windows, `.venv`.
+Execution constraints for every run: `PYTHONDONTWRITEBYTECODE=1`,
+`-p no:cacheprovider`, and external disposable `--basetemp` roots outside the
+repository, per section 7.4's established contract.
+
+FORTRESS-03 continued from the already-committed 03A (canonical runtime
+lifecycle state model) and 03B (`PlatformRuntime` lifecycle ownership) through
+03C–03J, one slice at a time, each with its own atomic commit:
+
+| Slice | Scope | Status |
+|---|---|---|
+| FORTRESS-03A | Canonical `RuntimeLifecycleState` model and legal-transition table | COMPLETE AND VERIFIED (prior session) |
+| FORTRESS-03B | `PlatformRuntime` lifecycle ownership (construct/initialize/start/stop) | COMPLETE AND VERIFIED (prior session) |
+| FORTRESS-03C | Truthful readiness | COMPLETE AND VERIFIED |
+| FORTRESS-03D | Partial-start rollback and EventBus subscriber isolation | COMPLETE AND VERIFIED |
+| FORTRESS-03E | Coordinated shutdown; AI/Memory shutdown hardening | COMPLETE AND VERIFIED |
+| FORTRESS-03F | Truthful health | COMPLETE AND VERIFIED |
+| FORTRESS-03G | Repeat lifecycle semantics | COMPLETE AND VERIFIED (no production change required; closed with evidence) |
+| FORTRESS-03H | Production status honesty | COMPLETE AND VERIFIED |
+| FORTRESS-03I | Construction/initialization separation | COMPLETE AND VERIFIED |
+| FORTRESS-03J | Lifecycle invariant closure suite and documentation sync | COMPLETE AND VERIFIED |
+
+**RAA-004 resolved with evidence.** `BootManager.boot()` previously ignored
+every validator report and unconditionally set `boot_status = READY`,
+returning `True` regardless of outcome; `StartupValidator._boot_ready()`
+checked `boot_status == "READY"` while the status was still `"BOOTING"`, and
+readiness was gated on `config_manager_status`/`executive_brain_status`/
+`startup_manager_status` — legacy context keys nothing in the canonical path
+sets. `BootManager` now drives the real `PlatformRuntime` lifecycle
+(`initialize()` then `start()`), resets `steps` on every attempt, and gates
+`READY` on `RuntimeValidator`/`StartupValidator`/`DependencyValidator`
+reports computed from the just-started runtime; `StartupValidator` readiness
+is derived only from `lifecycle_state` plus real validator delegation.
+Evidence: `tests/tests/platform/test_boot_manager.py`,
+`test_startup_validator.py`, `test_fortress_03_lifecycle_closure.py`.
+
+**RAA-006 resolved with evidence.** `RuntimeHealthCertifier` marked every
+registered service `HEALTHY` unconditionally; `AIStatusProvider.get_status()`
+hardcoded `healthy=True`; `MemoryProvider.health_check()` defaulted to `True`
+for any provider that did not override it; `ExecutiveStatusProvider`
+aggregated two hardcoded-`True` sub-reports into its overall health. All four
+now derive their reported status from real, verifiable facts — real service
+presence, an actual provider `health_check()` call, a fail-closed default,
+and excluding sub-reports with no real failure condition from the aggregate
+— with `UNKNOWN`/`DEGRADED`/`FAILED` all reachable where warranted.
+`PlatformRuntime.mark_degraded()`/`mark_recovered()` make
+`RuntimeLifecycleState.DEGRADED` reachable on a live instance, not just legal
+in the abstract transition table; the operational policy for when to use it
+remains FORTRESS-10's. Evidence: `tests/tests/platform/test_runtime_health_certifier.py`,
+`tests/tests/ai/test_ai_status.py`, `tests/tests/executive/test_executive_status.py`,
+`tests/tests/memory/test_provider_platform.py`.
+
+**SHT-003 resolved.** `run_jaos.py` no longer prints an unconditional
+`"Boot Complete"` claim (nothing has been constructed at that point in the
+launcher, so no replacement claim was invented — the launcher does not yet
+route through `PlatformRuntime`; that remains FORTRESS-04). The live CLI
+`status` command (`CommandDispatcher._show_status()`) now derives
+`Tool Platform`/`AI Platform`/`Executive Controller` from
+`self.tool_manager`, `self.ai_manager.get_diagnostic_status()`, and
+`self.executive.get_status()` respectively, instead of hardcoded literals.
+Evidence: `tests/tests/integration/test_run_jaos_banner.py`,
+`tests/test_cli_ai_integration.py`.
+
+**Lifecycle half of RAA-007 resolved.** `CommandDispatcher.__init__`
+interleaved object-graph construction with provider registration and
+initialization, so a failure after `initialize_provider()` succeeded left an
+initialized provider with no reachable owner. Construction now builds the
+complete object graph first; provider registration and initialization run
+last, as an explicitly separate, rollback-scoped step that unregisters and
+shuts down the provider if initialization fails. Composition-root ownership
+(moving construction out of `CommandDispatcher` entirely) remains
+FORTRESS-04/05. Evidence: `tests/test_cli_ai_integration.py`.
+
+**Partial-start rollback, coordinated shutdown, and subscriber isolation.**
+`PlatformRuntime.start()` already unwound partial registration atomically
+(03B); `EventBus.publish()` now isolates a subscriber exception so it cannot
+propagate into lifecycle progression or block remaining subscribers;
+`PlatformRuntime._teardown_platform_services()` now continues past an
+individual unregister failure and aggregates every failure into one
+`PartialShutdownError`, leaving the runtime truthfully `FAILED` rather than
+`STOPPED` when teardown was incomplete. The same defect class was narrowly
+hardened at the two named external call sites: `ProviderManager.shutdown_all()`
+(AI) and `ProviderRegistry.clear()` (Memory) each now attempt every provider
+regardless of individual failures and raise one aggregated error, without any
+change to AI/Memory architecture or single-provider shutdown semantics.
+Evidence: `tests/tests/platform/test_event_bus.py`,
+`test_platform_runtime_lifecycle.py`, `test_fortress_03_lifecycle_closure.py`,
+`tests/test_provider_manager.py`, `tests/tests/memory/test_provider_platform.py`.
+
+**Repeat lifecycle semantics (03G).** No production change was required: the
+canonical transition table (03A) and the truthful boot gate (03C) already
+enforce no silent double initialize/start, no invalid boot-after-terminal-state,
+no duplicate registration buildup, no step accumulation, and STOPPED/FAILED
+terminal with no restart contract. Explicit test evidence was added to prove
+each invariant directly rather than only as a byproduct of other tests.
+
+**Lifecycle invariant closure suite (03J).**
+`tests/tests/platform/test_fortress_03_lifecycle_closure.py` is the single
+consolidated location proving, against live objects, every required FORTRESS-03J
+invariant: construction != readiness; READY only after required readiness;
+invalid transitions fail; partial startup rollback; reverse teardown;
+shutdown continues through failures; truthful health; DEGRADED reachable; no
+canonical legacy readiness keys; production path makes no fabricated
+readiness claim; no contradictory RuntimeContext lifecycle facts.
+
+**Documentation synchronized.** `docs/architecture/RUNTIME_LIFECYCLE.md` and
+`docs/architecture/BOOT_SEQUENCE.md` each gained a "Canonical ... (FORTRESS-03,
+Verified)" section documenting the actual implemented state model and boot/
+shutdown flow, with their pre-existing escaped-markdown corruption
+(backslash-escaped headings/bullets, `&#x20;` entities, redundant blank
+lines) fixed. Their broader pre-existing conceptual content for later phases
+is preserved unchanged under an "Extended / Future" heading, not deleted or
+contradicted.
+
+**Full configured regression, run after every slice and again at closure:**
+
+| Suite | Result |
+|---|---|
+| `tests/tests` (final, post-03J) | 1,941 passed, 1 skipped, 0 failed, 0 errors |
+
+Exact per-slice full-suite counts recorded during implementation: 1,904 (03C)
+→ 1,909 (03D) → 1,915 (03E) → 1,926 (03F) → 1,929 (03G) → 1,930 (03H) → 1,930
+(03I) → 1,941 (03J), against the pre-FORTRESS-03 baseline of 1,841 recorded in
+section 7.7.
+
+**Protected-tree evidence.** `git status --porcelain` was inspected before
+every stage/commit across all of 03C–03J; `data/`, `config/`, `logs/`, and
+`exports/` showed only the pre-existing modified/untracked state already
+present at the start of this workstream (the seven pre-existing modified
+`data/*.json` files and `SECURITY.md`) at every check, with zero additional
+changes introduced by any FORTRESS-03 commit. No commit in this workstream
+staged or touched a path under `data/`, `config/`, `logs/`, or `exports/`.
+
+**Deferred items, each with its owner, unchanged or newly recorded:**
+
+| Deferred item | Owner |
+|---|---|
+| `run_jaos.py` routing through `PlatformRuntime`; launcher composition root | FORTRESS-04 |
+| `CommandDispatcher` provider construction moved out of the CLI dispatcher | FORTRESS-04/05 |
+| Operational policy for when to call `mark_degraded()`/`mark_recovered()` | FORTRESS-10 |
+| Central/unified health contract across AI, Memory, and Executive (today each platform's health surface is truthful but independently shaped) | FORTRESS-10 |
+| Directory-symlink escape verification on a capable host | FORTRESS-11 and the certification environment |
+| `main.py` retirement and legacy stack disposition | FORTRESS-04 and FORTRESS-06 |
+| Legacy writer quarantine; `pytest .` package-name collision | FORTRESS-06 |
+
+**FORTRESS-03 — Runtime lifecycle correctness — is COMPLETE AND VERIFIED.**
+
+This closes the FORTRESS-03 workstream only. It does not constitute Fortress
+Program certification, does not complete Step 7, does not authorize Step 8,
+does not resume Phase 8 expansion, and does not authorize FORTRESS-04 to
+begin without separate authorization. Fortress certification remains
+governed by section 9 and requires FORTRESS-01 through FORTRESS-12.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -699,6 +856,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-22 | 1.7 | Recorded FORTRESS-03 closure evidence for slices 03A through 03J: truthful readiness, partial-start rollback and subscriber isolation, coordinated shutdown with narrow AI/Memory hardening, truthful health across Runtime/AI/Memory/Executive, repeat lifecycle semantics, production status honesty (SHT-003), construction/initialization separation (lifecycle half of RAA-007), and the consolidated lifecycle invariant closure suite. RAA-004 and RAA-006 resolved with evidence. FORTRESS-03 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-04 are all unaffected and unauthorized. |
 | 2026-08-21 | 1.6 | Recorded the FORTRESS-02K re-run after the junction blocker was remediated by test-only change. All ADR-0010 acceptance criteria now pass and FORTRESS-02 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-03 are all unaffected and unauthorized. |
 | 2026-08-21 | 1.5 | Recorded the FORTRESS-02K closure evidence run. FORTRESS-02 is NOT closed and remains IN PROGRESS, blocked by one ADR-0010 acceptance-criterion gap: the missing junction rejection test. Symlink skip, `pytest .` exit code, explicit legacy-path import, and the launcher composition gap are each recorded as non-blocking with an assigned owner. |
 | 2026-08-21 | 1.4 | Recorded the verified FORTRESS-02J inventory writer, reachability, disposition, and canonical-containment enrichment. FORTRESS-02K is next and not started. FORTRESS-02 remains in progress and is not certified. |

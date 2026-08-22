@@ -4,15 +4,15 @@ Version: 4.1
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
-Last Synchronized: 2026-08-21
+Last Synchronized: 2026-08-22
 Certified Release: v0.9.0-alpha
 Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 Current Stabilization Activity: Step 7 — Bug Fixing and Regression
-Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 COMPLETE AND VERIFIED; FORTRESS-03 not started and awaiting explicit Founder authorization
-Exact Next Action: FORTRESS-02 is COMPLETE AND VERIFIED. Continue only separately authorized Step 7 work. Do not begin FORTRESS-03 without explicit Founder authorization
+Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 COMPLETE AND VERIFIED; FORTRESS-03 COMPLETE AND VERIFIED; FORTRESS-04 not started and awaiting explicit Founder authorization
+Exact Next Action: FORTRESS-03 is COMPLETE AND VERIFIED. Continue only separately authorized Step 7 work. Do not begin FORTRESS-04 without explicit Founder authorization
 
 ---
 
@@ -60,7 +60,7 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-02I | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02J | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
-| FORTRESS-03 | NOT STARTED - AWAITING EXPLICIT FOUNDER AUTHORIZATION |
+| FORTRESS-03 | COMPLETE AND VERIFIED |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Full regression certification | PENDING |
@@ -95,8 +95,8 @@ This pause is not:
 ## 3. Immediate Priority
 
 The immediate priority is to preserve the FORTRESS-01 governance checkpoint and
-the verified FORTRESS-02 slice state, continue only separately authorized Step 7
-work, and avoid beginning FORTRESS-02K or FORTRESS-03 without separate
+the verified FORTRESS-02 and FORTRESS-03 slice state, continue only separately
+authorized Step 7 work, and avoid beginning FORTRESS-04 without separate
 authorization.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
@@ -494,10 +494,10 @@ The following actions are authorized:
 
 FORTRESS-01 authorized only the governance and documentation baseline it
 recorded. It did not authorize FORTRESS-02 implementation. FORTRESS-02 slices
-02A through 02J were implemented under separate authorization and are verified
-by the checkpoint reconciliation recorded in
-`docs/architecture/FORTRESS_PROGRAM.md` sections 7.2 and 7.3. No authorization
-for FORTRESS-02G, FORTRESS-03, Step 8, or major Phase 8 expansion exists.
+02A through 02K and FORTRESS-03 slices 03A through 03J were each implemented
+under separate authorization and are verified by the closure evidence recorded
+in `docs/architecture/FORTRESS_PROGRAM.md` sections 7.7 and 7.8. No
+authorization for FORTRESS-04, Step 8, or major Phase 8 expansion exists.
 
 Each change must remain reviewable and recoverable.
 
@@ -507,9 +507,8 @@ Each change must remain reviewable and recoverable.
 
 Do not:
 
-- Begin FORTRESS-02G.
-- Begin FORTRESS-03.
-- Claim FORTRESS-02 complete or certified.
+- Begin FORTRESS-04.
+- Claim the Fortress Program certified.
 - Modify production code, tests, or runtime data without separate
   authorization.
 - Mark any finding resolved without evidence.
@@ -791,13 +790,15 @@ than rapidly changing implementation.
 ## 22. Exact Next Actions
 
 1. Preserve the FORTRESS-01 governance baseline and canonical target.
-2. Preserve the verified FORTRESS-02 slice state for 02A through 02J.
-3. Preserve RAA-005 and RAA-008 resolution evidence and keep other unresolved
+2. Preserve the verified FORTRESS-02 slice state for 02A through 02K and the
+   verified FORTRESS-03 slice state for 03A through 03J.
+3. Preserve RAA-005 and RAA-008 resolution evidence, and the RAA-004 and
+   RAA-006 evidence recorded under FORTRESS-03, and keep other unresolved
    RAA findings open.
 4. Continue only separately authorized Step 7 remediation.
 5. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7 until
    Step 7 is complete and approved.
-6. Do not begin FORTRESS-02K or FORTRESS-03 without separate authorization.
+6. Do not begin FORTRESS-04 without separate authorization.
 7. Execute the skipped directory-symlink escape rejection check in an elevated
    or capable environment before Fortress certification.
 8. Keep major Phase 8 expansion paused until Step 8 and Fortress certification
@@ -814,15 +815,19 @@ Fortress gate passes.
 
 ## 23. Current Command-Level Action
 
-FORTRESS-02 is COMPLETE AND VERIFIED at workstream level, with closure
-evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md` section 7.7.
-Continue only separately authorized Step 7 work. Do not begin FORTRESS-03,
-claim Fortress Program certification, enter Step 8, resume MS-0025E, or resume
-major Phase 8 expansion.
+FORTRESS-02 and FORTRESS-03 are COMPLETE AND VERIFIED at workstream level,
+with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
+sections 7.7 and 7.8. RAA-004 and RAA-006 are resolved with evidence, and
+SHT-003 and the lifecycle half of RAA-007 are resolved. Continue only
+separately authorized Step 7 work. Do not begin FORTRESS-04, claim Fortress
+Program certification, enter Step 8, resume MS-0025E, or resume major Phase 8
+expansion.
 
 The following remain explicitly open and unchanged: the directory-symlink escape
 validation is unverified on this host; the canonical launcher does not yet route
 through `PlatformRuntime`, which belongs to FORTRESS-04; `main.py` retirement and
 quarantine belong to FORTRESS-04 and FORTRESS-06; `config/providers.json`
-ownership remains deferred; Fortress certification has not started; Step 7
-remains in progress; and Step 8 remains blocked by Step 7.
+ownership remains deferred; composition-root ownership for `CommandDispatcher`
+remains FORTRESS-04/05; the operational policy for `PlatformRuntime.mark_degraded()`
+remains FORTRESS-10; Fortress certification has not started; Step 7 remains in
+progress; and Step 8 remains blocked by Step 7.
