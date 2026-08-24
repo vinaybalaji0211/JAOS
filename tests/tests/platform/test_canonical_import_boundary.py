@@ -203,6 +203,7 @@ def test_canonical_closure_reaches_expected_platforms() -> None:
         "jaos.tools",
         "jaos.executive",
         "jaos_platform",
+        "jaos.composition",
     )
     for expected in expected_roots:
         assert any(

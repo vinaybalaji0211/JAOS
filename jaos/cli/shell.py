@@ -6,8 +6,8 @@ class JAOSShell:
     Interactive command shell for JAOS.
     """
 
-    def __init__(self) -> None:
-        self.dispatcher = CommandDispatcher()
+    def __init__(self, dispatcher: CommandDispatcher | None = None) -> None:
+        self.dispatcher = dispatcher or CommandDispatcher()
 
     def run(self) -> None:
         print()

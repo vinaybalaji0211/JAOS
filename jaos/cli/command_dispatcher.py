@@ -1,13 +1,8 @@
-from jaos.ai import (
-    AIManager,
-    AIProviderConfig,
-    AIProviderType,
-    ProviderManager,
-)
+from jaos.ai import AIManager, ProviderManager
+from jaos.ai.bootstrap import initialize_default_provider
 from jaos.ai.diagnostics import DiagnosticStatus as AIDiagnosticStatus
 from jaos.ai.intelligence import ProviderProfileRegistry
 from jaos.ai.operations import ProviderStatusService
-from jaos.ai.providers.mock_provider import MockProvider
 from jaos.bootstrap.tool_loader import load_tools
 from jaos.executive.controller import ExecutiveController
 from jaos.executive.diagnostics.models import (
@@ -21,38 +16,58 @@ class CommandDispatcher:
     Routes JAOS shell commands.
     """
 
-    def __init__(self, tool_manager: ToolManager | None = None) -> None:
+    def __init__(
+        self,
+        tool_manager: ToolManager | None = None,
+        *,
+        ai_manager: AIManager | None = None,
+        executive: ExecutiveController | None = None,
+    ) -> None:
         """Construct dispatcher collaborators, then initialize providers.
 
-        Construction builds the full object graph first; provider
-        initialization runs last and is rollback-scoped, so a failure during
-        initialization never runs against a partially-constructed graph and
-        never leaves a live provider behind.
+        Every collaborator may be injected by a canonical composition root
+        (FORTRESS-05: jaos.composition.PlatformComposition); any collaborator
+        not supplied is constructed and initialized here exactly as before,
+        so standalone construction is unchanged. A self-constructed
+        ToolManager still gets load_tools(); an injected one is assumed
+        already configured by its owner. A self-constructed AIManager's
+        provider initialization runs last and is rollback-scoped, so a
+        failure never runs against a partially-constructed graph and never
+        leaves a live provider behind.
         """
         self.tool_manager = tool_manager or ToolManager()
 
-        load_tools(self.tool_manager)
+        if tool_manager is None:
+            load_tools(self.tool_manager)
 
-        provider_manager = ProviderManager()
+        self._owns_ai_manager = ai_manager is None
 
-        self.ai_manager = AIManager(provider_manager)
+        if ai_manager is not None:
+            self.ai_manager = ai_manager
+        else:
+            provider_manager = ProviderManager()
+            self.ai_manager = AIManager(provider_manager)
+            initialize_default_provider(provider_manager)
+
         self.provider_profiles = ProviderProfileRegistry.build_default()
-        self.provider_status = ProviderStatusService(provider_manager)
-        self.executive = ExecutiveController(
+        self.provider_status = ProviderStatusService(
+            self.ai_manager.get_provider_manager()
+        )
+        self.executive = executive or ExecutiveController(
             self.tool_manager,
             ai_manager=self.ai_manager,
         )
-
-        self._initialize_providers(provider_manager)
 
     def shutdown(self) -> None:
         """
         Synchronously shut down AI provider lifecycle owned by this dispatcher.
 
-        Delegates to AIManager.shutdown(); does not access concrete providers
-        and does not catch shutdown errors.
+        Only shuts down an AIManager this dispatcher constructed itself; when
+        it was injected by a canonical composition root, that root owns its
+        shutdown, so it is never stopped twice.
         """
-        self.ai_manager.shutdown()
+        if self._owns_ai_manager:
+            self.ai_manager.shutdown()
 
     def dispatch(self, command: str) -> bool:
         normalized = command.strip().lower()
@@ -140,33 +155,6 @@ class CommandDispatcher:
         print()
 
         return True
-
-    @staticmethod
-    def _initialize_providers(provider_manager: ProviderManager) -> None:
-        """Register and initialize providers after construction has succeeded.
-
-        Rollback-scoped: if initialize_provider fails, the just-registered
-        provider is unregistered and shut down directly so no live provider
-        survives a failed CommandDispatcher construction.
-        """
-        mock_provider = MockProvider()
-
-        provider_manager.register_provider(
-            mock_provider,
-            AIProviderConfig(
-                name="mock",
-                provider_type=AIProviderType.MOCK,
-                default_model="mock-model",
-            ),
-            set_default=True,
-        )
-
-        try:
-            provider_manager.initialize_provider("mock")
-        except Exception:
-            provider_manager.unregister_provider("mock")
-            mock_provider.shutdown()
-            raise
 
     def _handle_ai_command(self, prompt: str) -> None:
         print()

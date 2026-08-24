@@ -97,7 +97,7 @@ def test_run_controls_shutdown_on_shell_exception(
     monkeypatch, jaos_runtime_paths: RuntimePaths
 ):
     class BrokenShell:
-        def __init__(self) -> None:
+        def __init__(self, dispatcher=None) -> None:
             raise RuntimeError("shell construction exploded")
 
     monkeypatch.setattr(run_jaos, "JAOSShell", BrokenShell)

@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import sys
 
+from jaos.cli.command_dispatcher import CommandDispatcher
 from jaos.cli.shell import JAOSShell
+from jaos.composition import PlatformComposition
 from jaos.version import JAOS_VERSION
 from jaos_platform.boot_manager import BootManager
 from jaos_platform.platform_runtime import PlatformRuntime
@@ -39,16 +41,37 @@ class JAOSApplication:
             self.boot_manager.shutdown()
             return 1
 
+        composition = PlatformComposition(self.runtime)
+        composed = False
+        shell_ok = False
+
         try:
-            JAOSShell().run()
+            composition.compose()
+            composed = True
+
+            dispatcher = CommandDispatcher(
+                composition.tool_manager,
+                ai_manager=composition.ai_manager,
+                executive=composition.executive_controller,
+            )
+            JAOSShell(dispatcher).run()
+            shell_ok = True
         except Exception:
-            logger.exception("Unhandled error in JAOS shell")
+            logger.exception("Unhandled error while composing or running JAOS")
             print()
             print("JAOS encountered an unrecoverable error and is shutting down.")
-            self.boot_manager.shutdown()
-            return 1
 
-        return 0 if self.boot_manager.shutdown() else 1
+        teardown_ok = True
+        if composed:
+            try:
+                composition.teardown()
+            except Exception:
+                logger.exception("Error tearing down composed platforms")
+                teardown_ok = False
+
+        runtime_stopped_ok = self.boot_manager.shutdown()
+
+        return 0 if (shell_ok and teardown_ok and runtime_stopped_ok) else 1
 
 
 if __name__ == "__main__":
