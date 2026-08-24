@@ -1,4 +1,4 @@
-"""FORTRESS-05A/05B: canonical whole-system platform composition."""
+"""FORTRESS-05A-D: canonical whole-system platform composition."""
 
 from __future__ import annotations
 
@@ -14,6 +14,7 @@ from jaos.composition import (
 from jaos.composition.platform_composition import (
     AI_MANAGER_SERVICE,
     EXECUTIVE_CONTROLLER_SERVICE,
+    INTELLIGENCE_ORCHESTRATOR_SERVICE,
     MEMORY_STORE_SERVICE,
     TOOL_MANAGER_SERVICE,
 )
@@ -54,6 +55,7 @@ def test_compose_registers_real_platforms(jaos_runtime_paths: RuntimePaths):
             AI_MANAGER_SERVICE,
             EXECUTIVE_CONTROLLER_SERVICE,
             MEMORY_STORE_SERVICE,
+            INTELLIGENCE_ORCHESTRATOR_SERVICE,
         }
         assert set(runtime.container.list_services()) == expected
         assert set(runtime.registry.list()) == expected
@@ -128,9 +130,17 @@ def test_compose_failure_rolls_back_previously_registered_platforms(
     assert runtime.container.is_registered(TOOL_MANAGER_SERVICE) is False
     assert runtime.container.is_registered(AI_MANAGER_SERVICE) is False
     assert runtime.container.is_registered(MEMORY_STORE_SERVICE) is False
+    assert (
+        runtime.container.is_registered(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+        is False
+    )
     assert runtime.registry.is_registered(TOOL_MANAGER_SERVICE) is False
     assert runtime.registry.is_registered(AI_MANAGER_SERVICE) is False
     assert runtime.registry.is_registered(MEMORY_STORE_SERVICE) is False
+    assert (
+        runtime.registry.is_registered(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+        is False
+    )
     assert set(runtime.container.list_services()) == {
         "event_bus",
         "runtime_context",
@@ -152,7 +162,15 @@ def test_teardown_releases_composed_platforms(jaos_runtime_paths: RuntimePaths):
     assert runtime.container.is_registered(AI_MANAGER_SERVICE) is False
     assert runtime.container.is_registered(EXECUTIVE_CONTROLLER_SERVICE) is False
     assert runtime.container.is_registered(MEMORY_STORE_SERVICE) is False
+    assert (
+        runtime.container.is_registered(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+        is False
+    )
     assert runtime.registry.is_registered(MEMORY_STORE_SERVICE) is False
+    assert (
+        runtime.registry.is_registered(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+        is False
+    )
     assert store.is_closed is True
 
 
@@ -176,6 +194,10 @@ def test_teardown_continues_after_failure_and_aggregates(
     assert runtime.container.is_registered(AI_MANAGER_SERVICE) is False
     assert runtime.container.is_registered(EXECUTIVE_CONTROLLER_SERVICE) is False
     assert runtime.container.is_registered(MEMORY_STORE_SERVICE) is False
+    assert (
+        runtime.container.is_registered(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+        is False
+    )
 
 
 def test_composed_ai_manager_has_a_healthy_default_provider(
