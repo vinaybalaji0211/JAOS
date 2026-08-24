@@ -197,12 +197,41 @@ def test_canonical_closure_reaches_expected_platforms() -> None:
     reached = report["reached_modules"]
     assert isinstance(reached, set)
 
-    expected_roots = ("jaos.cli", "jaos.ai", "jaos.tools", "jaos.executive")
+    expected_roots = (
+        "jaos.cli",
+        "jaos.ai",
+        "jaos.tools",
+        "jaos.executive",
+        "jaos_platform",
+    )
     for expected in expected_roots:
         assert any(
             module == expected or module.startswith(f"{expected}.")
             for module in reached
         ), expected
+
+
+def test_canonical_closure_reaches_platform_runtime_lifecycle() -> None:
+    """FORTRESS-04: run_jaos.py's closure reaches the Runtime Platform
+    lifecycle owner, not merely some jaos_platform symbol."""
+
+    report = analyze_import_closure(
+        _REPOSITORY_ROOT,
+        CANONICAL_ENTRY_POINT,
+    )
+    reached = report["reached_modules"]
+    assert isinstance(reached, set)
+
+    assert any(
+        module in {"jaos_platform.platform_runtime", "jaos_platform"}
+        or module.startswith("jaos_platform.platform_runtime")
+        for module in reached
+    )
+    assert any(
+        module in {"jaos_platform.boot_manager", "jaos_platform"}
+        or module.startswith("jaos_platform.boot_manager")
+        for module in reached
+    )
 
 
 @pytest.mark.parametrize(
