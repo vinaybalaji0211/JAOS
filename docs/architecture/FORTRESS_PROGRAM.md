@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.7
+Document Version: 1.8
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -98,6 +98,7 @@ requires all of the following:
 | FORTRESS-02J | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
 | FORTRESS-03 | COMPLETE AND VERIFIED |
+| FORTRESS-04 | COMPLETE AND VERIFIED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-005 | RESOLVED WITH EVIDENCE |
 | RAA-008 | RESOLVED WITH EVIDENCE |
@@ -203,7 +204,7 @@ records a safe dependency-preserving adjustment:
 | 1 | FORTRESS-01 — Governance and canonical architecture | IMPLEMENTED — governance baseline recorded |
 | 2 | FORTRESS-02 — Runtime-data and test isolation | COMPLETE AND VERIFIED — closure evidence recorded in section 7.7 |
 | 3 | FORTRESS-03 — Runtime lifecycle correctness | COMPLETE AND VERIFIED — closure evidence recorded in section 7.8 |
-| 4 | FORTRESS-04 — One launcher and one composition root | PLANNED |
+| 4 | FORTRESS-04 — One launcher and one composition root | COMPLETE AND VERIFIED — closure evidence recorded in section 7.9 |
 | 5 | FORTRESS-05 — Canonical platform composition | PLANNED |
 | 6 | FORTRESS-06 — Legacy migration and quarantine | PLANNED |
 | 7 | FORTRESS-07 — Permission, approval, and audit hardening | PLANNED |
@@ -806,6 +807,94 @@ governed by section 9 and requires FORTRESS-01 through FORTRESS-12.
 
 ---
 
+### 7.9 FORTRESS-04 Closure Evidence — FORTRESS-04 COMPLETE AND VERIFIED
+
+Date: 2026-08-22. Environment and execution constraints as in section 7.4.
+
+FORTRESS-04's goal was one canonical production launcher and one runtime
+composition root, with `run_jaos.py` actually reaching `PlatformRuntime`
+rather than merely declaring it as a target.
+
+**RAA-001 resolved with evidence (lifecycle/reachability half).**
+`run_jaos.py`'s `JAOSApplication` previously printed a banner and handed off
+directly to `JAOSShell`; `PlatformRuntime`/`BootManager` existed but were
+never instantiated by the launcher. `JAOSApplication` now owns one
+`PlatformRuntime` (constructor-injectable for tests) and one `BootManager`.
+`run()`:
+
+1. Prints the banner (unchanged, no status claim).
+2. Calls `runtime.configure_logging()` — logging is configured through the
+   runtime's own `RuntimePaths`, not a private/hardcoded path.
+3. Calls `boot_manager.boot()`. If it returns `False`, the shell is never
+   constructed, a truthful failure message is printed,
+   `boot_manager.shutdown()` still runs, and `run()` returns `1`.
+4. On success, constructs and runs `JAOSShell`, wrapped so an unexpected
+   exception during or after construction is caught, logged via the JAOS
+   logger, followed by a controlled `boot_manager.shutdown()`, and reported
+   as exit code `1` rather than propagating an uncontrolled crash.
+5. On the clean path, the final exit code is `0 if boot_manager.shutdown()
+   else 1` — shutdown's own truthful result decides the code, it is never
+   assumed.
+
+No path prints an unconditional status claim ("Boot Complete", "Ready").
+`main.py` is untouched: not imported by `run_jaos.py`, not modernized,
+still preserved for FORTRESS-06 quarantine.
+
+**Scope boundary preserved.** This resolves only the lifecycle/reachability
+half of RAA-001 — the launcher now reaches and drives `PlatformRuntime`'s
+own four platform services. It does not compose AI/Tool/Executive/Memory
+into `PlatformRuntime`'s service container; `CommandDispatcher`'s
+construction is unchanged and remains FORTRESS-05's composition work.
+
+**Verified results, all exit code 0:**
+
+| Suite | Result |
+|---|---|
+| `test_canonical_import_boundary.py` | 12 passed |
+| `test_run_jaos_banner.py` | 2 passed |
+| `test_run_jaos_launcher.py` | 5 passed |
+| Full configured suite `tests/tests` | 1,947 passed, 1 skipped, 0 failed, 0 errors |
+
+`test_canonical_closure_reaches_expected_platforms` and the new
+`test_canonical_closure_reaches_platform_runtime_lifecycle` run AST analysis
+against the real repository `run_jaos.py` (not a synthetic tree) and assert
+its closure now reaches `jaos_platform.platform_runtime` and
+`jaos_platform.boot_manager` specifically, with zero forbidden-module
+violations — direct evidence the launcher reaches the canonical Runtime
+Platform, not merely some unrelated `jaos_platform` symbol.
+
+**Test isolation note.** Every `test_run_jaos_launcher.py` test injects the
+disposable `jaos_runtime_paths` fixture into the `PlatformRuntime` it
+constructs, because `run()` now calls `configure_logging()`, which performs
+a real `mkdir` under the resolved logs directory. Verified after the full
+suite run: no directory was created under the real OS-default JAOS runtime
+root (`%LOCALAPPDATA%\JAOS` on this host).
+
+**Protected-tree evidence.** `git status --porcelain` inspected before
+staging: only `run_jaos.py`, `test_canonical_import_boundary.py`, and the
+new `test_run_jaos_launcher.py` were staged; `data/`, `config/`, `logs/`,
+and `exports/` carried only the pre-existing modified/untracked state
+already present before this workstream, with zero additional changes.
+
+**Deferred items, each with its owner:**
+
+| Deferred item | Owner |
+|---|---|
+| Composing AI/Tool/Executive/Memory platforms into `PlatformRuntime`'s own service container | FORTRESS-05 |
+| `CommandDispatcher` construction moved out of the CLI into the composition root | FORTRESS-04/05 (recorded, unchanged from FORTRESS-03 closure) |
+| `main.py` retirement and legacy stack disposition | FORTRESS-06 |
+| Full top-level exception taxonomy / distinct exit codes per failure class | Not required by FORTRESS-04; current truthful 0/1 contract is sufficient |
+
+**FORTRESS-04 — One launcher and one composition root — is COMPLETE AND
+VERIFIED.**
+
+This closes the FORTRESS-04 workstream only. It does not constitute
+Fortress Program certification, does not complete Step 7, does not
+authorize Step 8, does not resume Phase 8 expansion, and does not authorize
+FORTRESS-05 to begin without separate authorization.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -856,6 +945,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-22 | 1.8 | Recorded FORTRESS-04 closure evidence: `run_jaos.py` now instantiates and drives `PlatformRuntime`/`BootManager` (lifecycle/reachability half of RAA-001 resolved), with truthful exit codes, controlled shutdown on both boot failure and unexpected shell exceptions, and no fabricated status claim. FORTRESS-04 is COMPLETE AND VERIFIED at workstream level. Composing AI/Tool/Executive/Memory into the Runtime Platform remains FORTRESS-05, unauthorized. |
 | 2026-08-22 | 1.7 | Recorded FORTRESS-03 closure evidence for slices 03A through 03J: truthful readiness, partial-start rollback and subscriber isolation, coordinated shutdown with narrow AI/Memory hardening, truthful health across Runtime/AI/Memory/Executive, repeat lifecycle semantics, production status honesty (SHT-003), construction/initialization separation (lifecycle half of RAA-007), and the consolidated lifecycle invariant closure suite. RAA-004 and RAA-006 resolved with evidence. FORTRESS-03 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-04 are all unaffected and unauthorized. |
 | 2026-08-21 | 1.6 | Recorded the FORTRESS-02K re-run after the junction blocker was remediated by test-only change. All ADR-0010 acceptance criteria now pass and FORTRESS-02 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-03 are all unaffected and unauthorized. |
 | 2026-08-21 | 1.5 | Recorded the FORTRESS-02K closure evidence run. FORTRESS-02 is NOT closed and remains IN PROGRESS, blocked by one ADR-0010 acceptance-criterion gap: the missing junction rejection test. Symlink skip, `pytest .` exit code, explicit legacy-path import, and the launcher composition gap are each recorded as non-blocking with an assigned owner. |

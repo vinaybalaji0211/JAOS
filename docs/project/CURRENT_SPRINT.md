@@ -82,8 +82,9 @@ The Founder-approved Fortress Program is now the mandatory hard gate before
 major Phase 8 expansion. FORTRESS-01 has recorded the governance baseline.
 FORTRESS-02 is COMPLETE AND VERIFIED. FORTRESS-03 is COMPLETE AND VERIFIED,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
-section 7.8. FORTRESS-04 has not started and awaits explicit Founder
-authorization.
+section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
+recorded in section 7.9. FORTRESS-05 has not started and awaits explicit
+Founder authorization.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -128,6 +129,7 @@ The objectives of this sprint are to:
 | FORTRESS-02J | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
 | FORTRESS-03 | COMPLETE AND VERIFIED |
+| FORTRESS-04 | COMPLETE AND VERIFIED |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |

@@ -43,13 +43,14 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-02J | IMPLEMENTED AND VERIFIED |
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
 | FORTRESS-03 | COMPLETE AND VERIFIED |
+| FORTRESS-04 | COMPLETE AND VERIFIED |
 | Previous completed phase | Phase 7 — Memory Platform |
 | Next planned phase | Phase 9 — Workflow & Automation Platform |
 | Long-term release target | JAOS v1.0 |
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | FORTRESS-03 CLOSURE EVIDENCE RECORDED |
+| Documentation state | FORTRESS-04 CLOSURE EVIDENCE RECORDED |
 
 ---
 
