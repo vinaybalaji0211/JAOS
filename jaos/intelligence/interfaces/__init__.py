@@ -1,23 +1,29 @@
-"""Public interfaces for the JAOS AI Intelligence Platform."""
+"""Public interfaces for the JAOS AI Intelligence Platform.
 
-from jaos.intelligence.interfaces.agent_orchestrator import AgentOrchestrator
-from jaos.intelligence.interfaces.context_manager import (
-    IntelligenceContextManager,
-)
-from jaos.intelligence.interfaces.context_source import (
-    IntelligenceContextSource,
-)
-from jaos.intelligence.interfaces.conversation_engine import ConversationEngine
-from jaos.intelligence.interfaces.execution_proposal_builder import (
-    ExecutionProposalBuilder,
-)
-from jaos.intelligence.interfaces.intelligence_component import (
-    IntelligenceComponent,
-)
-from jaos.intelligence.interfaces.intelligence_engine import IntelligenceEngine
-from jaos.intelligence.interfaces.planning_engine import PlanningEngine
-from jaos.intelligence.interfaces.prompt_composer import PromptComposer
-from jaos.intelligence.interfaces.reasoning_engine import ReasoningEngine
+The facade is lazy so a conversation-only runtime does not import interfaces
+for paused planning, reasoning, agent, or execution-proposal capabilities.
+"""
+
+from importlib import import_module
+
+_EXPORT_MODULES = {
+    "AgentOrchestrator": "jaos.intelligence.interfaces.agent_orchestrator",
+    "ConversationEngine": "jaos.intelligence.interfaces.conversation_engine",
+    "ExecutionProposalBuilder": (
+        "jaos.intelligence.interfaces.execution_proposal_builder"
+    ),
+    "IntelligenceComponent": (
+        "jaos.intelligence.interfaces.intelligence_component"
+    ),
+    "IntelligenceContextManager": (
+        "jaos.intelligence.interfaces.context_manager"
+    ),
+    "IntelligenceContextSource": "jaos.intelligence.interfaces.context_source",
+    "IntelligenceEngine": "jaos.intelligence.interfaces.intelligence_engine",
+    "PlanningEngine": "jaos.intelligence.interfaces.planning_engine",
+    "PromptComposer": "jaos.intelligence.interfaces.prompt_composer",
+    "ReasoningEngine": "jaos.intelligence.interfaces.reasoning_engine",
+}
 
 __all__ = [
     "AgentOrchestrator",
@@ -31,3 +37,17 @@ __all__ = [
     "PromptComposer",
     "ReasoningEngine",
 ]
+
+
+def __getattr__(name: str) -> object:
+    module_name = _EXPORT_MODULES.get(name)
+    if module_name is None:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+    value = getattr(import_module(module_name), name)
+    globals()[name] = value
+    return value
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | set(__all__))

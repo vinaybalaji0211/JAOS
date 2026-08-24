@@ -14,6 +14,11 @@ class MemoryStore(ABC):
     Provider-independent contract for persistent memory storage.
     """
 
+    @property
+    @abstractmethod
+    def is_closed(self) -> bool:
+        """Return whether the store has released its owned resources."""
+
     @abstractmethod
     def create(self, record: MemoryRecord) -> MemoryRecord:
         """
@@ -75,8 +80,13 @@ class MemoryStore(ABC):
 
         Returns the number of deleted records.
         """
+
     @abstractmethod
     def begin_transaction(self) -> MemoryTransaction:
         """
         Create a new transaction for atomic memory write operations.
         """
+
+    @abstractmethod
+    def close(self) -> None:
+        """Release owned resources; repeated successful calls are no-ops."""

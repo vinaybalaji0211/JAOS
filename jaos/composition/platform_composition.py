@@ -77,6 +77,8 @@ class PlatformComposition:
     def __init__(self, runtime: PlatformRuntime) -> None:
         self.runtime = runtime
         self._service_names: list[str] = []
+        self._pending_ai_manager: AIManager | None = None
+        self._pending_memory_store: MemoryStore | None = None
         self._prompt_composer: IntelligencePromptComposer | None = None
         self._intelligence_orchestrator: ConversationOrchestrator | None = None
 
@@ -116,7 +118,13 @@ class PlatformComposition:
                 f"{self.runtime.lifecycle_state.value}"
             )
 
-        if self._service_names:
+        if (
+            self._service_names
+            or self._pending_ai_manager is not None
+            or self._pending_memory_store is not None
+            or self._prompt_composer is not None
+            or self._intelligence_orchestrator is not None
+        ):
             raise CompositionError("PlatformComposition is already composed")
 
         try:
@@ -124,10 +132,7 @@ class PlatformComposition:
             load_tools(tool_manager)
             self._register(TOOL_MANAGER_SERVICE, tool_manager)
 
-            provider_manager = ProviderManager()
-            ai_manager = AIManager(provider_manager)
-            initialize_default_provider(provider_manager)
-            self._register(AI_MANAGER_SERVICE, ai_manager)
+            ai_manager = self._compose_ai_manager()
 
             executive_controller = ExecutiveController(
                 tool_manager,
@@ -137,10 +142,23 @@ class PlatformComposition:
 
             self._compose_memory_store()
             self._compose_intelligence_orchestrator(ai_manager)
-        except Exception:
-            self._shutdown_owned_resources()
-            self._rollback()
+        except Exception as error:
+            cleanup_errors, retained_names = self._shutdown_owned_resources()
+            cleanup_errors.extend(self._rollback(retained_names))
+            self._annotate_cleanup_errors(error, cleanup_errors)
             raise
+
+    def _compose_ai_manager(self) -> AIManager:
+        """Initialize and register AI without leaking an orphaned provider."""
+
+        provider_manager = ProviderManager()
+        ai_manager = AIManager(provider_manager)
+        self._pending_ai_manager = ai_manager
+        initialize_default_provider(provider_manager)
+        self._register(AI_MANAGER_SERVICE, ai_manager)
+        self._pending_ai_manager = None
+
+        return ai_manager
 
     def _compose_memory_store(self) -> None:
         """Build and register the canonical Memory store.
@@ -148,83 +166,70 @@ class PlatformComposition:
         Uses the modern provider chain exclusively, bound to injected
         RuntimePaths.memory: no repo-relative path, no legacy data fallback,
         no automatic migration. Registration is folded into this same
-        try/except so a store that opens successfully but fails to register
-        (e.g. a duplicate service name) is still closed before the failure
-        propagates to compose()'s coordinated resource cleanup and rollback.
+        ownership scope so a store that opens successfully but fails to
+        register (e.g. a duplicate service name) is still retained until
+        compose()'s coordinated resource cleanup closes it successfully.
         """
 
-        provider = SQLiteProvider.from_memory_scope(self.runtime.runtime_paths.memory)
+        provider = SQLiteProvider.from_memory_scope(
+            self.runtime.runtime_paths.memory
+        )
         registry = ProviderRegistry()
-        store: MemoryStore | None = None
-
-        try:
-            registry.register(provider)
-            store = ProviderFactory(registry).create_default()
-            self._register(MEMORY_STORE_SERVICE, store)
-        except Exception:
-            if store is not None and not store.is_closed:
-                store.close()
-            raise
+        registry.register(provider)
+        store = ProviderFactory(registry).create_default()
+        self._pending_memory_store = store
+        self._register(MEMORY_STORE_SERVICE, store)
+        self._pending_memory_store = None
 
     def _compose_intelligence_orchestrator(self, ai_manager: AIManager) -> None:
         """Build, initialize, and register canonical Conversation Intelligence."""
 
-        prompt_composer: IntelligencePromptComposer | None = None
-        orchestrator: ConversationOrchestrator | None = None
+        session_store = InMemoryConversationSessionStore()
 
-        try:
-            session_store = InMemoryConversationSessionStore()
+        policy_registry = ConversationPolicyRegistry()
+        policy_registry.register_policy(
+            ConversationPolicy(policy_name="default"),
+            make_default=True,
+        )
 
-            policy_registry = ConversationPolicyRegistry()
-            policy_registry.register_policy(
-                ConversationPolicy(policy_name="default"),
-                make_default=True,
-            )
+        session_manager = ConversationSessionManager(
+            session_store,
+            policy_registry,
+        )
+        reference_resolver = ConversationReferenceResolver()
 
-            session_manager = ConversationSessionManager(
-                session_store,
-                policy_registry,
-            )
-            reference_resolver = ConversationReferenceResolver()
-
-            template_registry = PromptTemplateRegistry()
-            template_registry.register_template(
-                IntelligencePromptTemplate(
-                    template_id="conversation",
-                    version="1.0",
-                    system_instruction=_CONVERSATION_SYSTEM_INSTRUCTION,
-                    task_instruction=_CONVERSATION_TASK_INSTRUCTION,
-                ),
-                make_default=True,
-            )
-
-            prompt_composer = IntelligencePromptComposer(template_registry)
-            self._prompt_composer = prompt_composer
-            prompt_composer.initialize()
-
-            orchestrator = ConversationOrchestrator(
-                session_manager,
-                policy_registry,
-                reference_resolver,
-                prompt_composer,
-                ai_manager,
+        template_registry = PromptTemplateRegistry()
+        template_registry.register_template(
+            IntelligencePromptTemplate(
                 template_id="conversation",
-            )
-            self._intelligence_orchestrator = orchestrator
-            orchestrator.initialize()
+                version="1.0",
+                system_instruction=_CONVERSATION_SYSTEM_INSTRUCTION,
+                task_instruction=_CONVERSATION_TASK_INSTRUCTION,
+            ),
+            make_default=True,
+        )
 
-            self._register(
-                INTELLIGENCE_ORCHESTRATOR_SERVICE,
-                orchestrator,
-                owner="Intelligence",
-            )
-        except Exception:
-            self._shutdown_intelligence_components(
-                orchestrator,
-                prompt_composer,
-            )
-            self._clear_intelligence_references()
-            raise
+        prompt_composer = IntelligencePromptComposer(template_registry)
+        self._prompt_composer = prompt_composer
+        prompt_composer.initialize()
+
+        orchestrator = ConversationOrchestrator(
+            session_manager,
+            policy_registry,
+            reference_resolver,
+            prompt_composer,
+            ai_manager,
+            template_id="conversation",
+            template_version="1.0",
+        )
+        self._intelligence_orchestrator = orchestrator
+        orchestrator.initialize()
+
+        self._register(
+            INTELLIGENCE_ORCHESTRATOR_SERVICE,
+            orchestrator,
+            owner="Intelligence",
+        )
 
     def teardown(self) -> None:
         """Tear down composed platforms in reverse order.
@@ -236,42 +241,82 @@ class PlatformComposition:
         Executive have no shutdown of their own today.
         """
 
-        errors = self._shutdown_owned_resources()
-        errors.extend(self._rollback())
+        errors, retained_names = self._shutdown_owned_resources()
+        errors.extend(self._rollback(retained_names))
 
         if errors:
             raise CompositionTeardownError(
                 "; ".join(f"{name}: {exc}" for name, exc in errors)
             )
 
-    def _shutdown_owned_resources(self) -> list[tuple[str, Exception]]:
-        """Release initialized resources without unregistering services."""
+    def _shutdown_owned_resources(
+        self,
+    ) -> tuple[list[tuple[str, Exception]], set[str]]:
+        """Release resources while retaining failed owners for retry."""
 
         errors: list[tuple[str, Exception]] = []
+        retained_names: set[str] = set()
+
+        if (
+            INTELLIGENCE_ORCHESTRATOR_SERVICE not in self._service_names
+            and (
+                self._intelligence_orchestrator is not None
+                or self._prompt_composer is not None
+            )
+        ):
+            intelligence_errors = self._shutdown_intelligence_components(
+                self._intelligence_orchestrator,
+                self._prompt_composer,
+            )
+            errors.extend(intelligence_errors)
+            if intelligence_errors:
+                retained_names.add(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+            else:
+                self._clear_intelligence_references()
+
+        if self._pending_memory_store is not None:
+            try:
+                if not self._pending_memory_store.is_closed:
+                    self._pending_memory_store.close()
+                self._pending_memory_store = None
+            except Exception as exc:  # noqa: BLE001
+                errors.append((MEMORY_STORE_SERVICE, exc))
+
+        if self._pending_ai_manager is not None:
+            try:
+                self._pending_ai_manager.shutdown()
+                self._pending_ai_manager = None
+            except Exception as exc:  # noqa: BLE001
+                errors.append((AI_MANAGER_SERVICE, exc))
+                retained_names.add(AI_MANAGER_SERVICE)
 
         for name in reversed(self._service_names):
             if name == INTELLIGENCE_ORCHESTRATOR_SERVICE:
-                errors.extend(
-                    self._shutdown_intelligence_components(
-                        self._intelligence_orchestrator,
-                        self._prompt_composer,
-                    )
+                intelligence_errors = self._shutdown_intelligence_components(
+                    self._intelligence_orchestrator,
+                    self._prompt_composer,
                 )
-                self._clear_intelligence_references()
+                errors.extend(intelligence_errors)
+                if intelligence_errors:
+                    retained_names.add(name)
+                else:
+                    self._clear_intelligence_references()
             elif name == MEMORY_STORE_SERVICE:
                 try:
                     store = self.runtime.container.resolve(name)
                     if not store.is_closed:
                         store.close()
-                except Exception as exc:
+                except Exception as exc:  # noqa: BLE001
                     errors.append((name, exc))
+                    retained_names.add(name)
             elif name == AI_MANAGER_SERVICE:
                 try:
                     self.runtime.container.resolve(name).shutdown()
-                except Exception as exc:
+                except Exception as exc:  # noqa: BLE001
                     errors.append((name, exc))
+                    retained_names.add(name)
 
-        return errors
+        return errors, retained_names
 
     @staticmethod
     def _shutdown_intelligence_components(
@@ -286,14 +331,14 @@ class PlatformComposition:
             try:
                 if orchestrator.is_ready:
                     orchestrator.shutdown()
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001
                 errors.append((INTELLIGENCE_ORCHESTRATOR_SERVICE, exc))
 
         if prompt_composer is not None:
             try:
                 if prompt_composer.is_ready:
                     prompt_composer.shutdown()
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001
                 errors.append((_INTELLIGENCE_PROMPT_COMPOSER_COMPONENT, exc))
 
         return errors
@@ -324,37 +369,59 @@ class PlatformComposition:
             try:
                 if self.runtime.registry.is_registered(name):
                     self.runtime.registry.unregister(name)
-            except Exception:
+            except Exception:  # noqa: BLE001, S110
                 pass
 
             try:
                 if self.runtime.container.is_registered(name):
                     self.runtime.container.unregister(name)
-            except Exception:
+            except Exception:  # noqa: BLE001, S110
                 pass
 
             raise
 
         self._service_names.append(name)
 
-    def _rollback(self) -> list[tuple[str, Exception]]:
-        """Unregister services owned by this composition and collect failures."""
+    def _rollback(
+        self,
+        retained_names: set[str] | None = None,
+    ) -> list[tuple[str, Exception]]:
+        """Unregister owned services except resources retained for retry."""
 
         errors: list[tuple[str, Exception]] = []
+        retained = retained_names or set()
 
         for name in reversed(self._service_names):
+            if name in retained:
+                continue
+
             try:
                 if self.runtime.registry.is_registered(name):
                     self.runtime.registry.unregister(name)
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001
                 errors.append((f"{name}.registry", exc))
 
             try:
                 if self.runtime.container.is_registered(name):
                     self.runtime.container.unregister(name)
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001
                 errors.append((f"{name}.container", exc))
 
-        self._service_names = []
-        self._clear_intelligence_references()
+        self._service_names = [
+            name for name in self._service_names if name in retained
+        ]
+        if INTELLIGENCE_ORCHESTRATOR_SERVICE not in retained:
+            self._clear_intelligence_references()
         return errors
+
+    @staticmethod
+    def _annotate_cleanup_errors(
+        original_error: Exception,
+        cleanup_errors: list[tuple[str, Exception]],
+    ) -> None:
+        """Preserve the original failure while recording cleanup failures."""
+
+        for name, cleanup_error in cleanup_errors:
+            original_error.add_note(
+                f"cleanup failure for {name}: {cleanup_error}"
+            )

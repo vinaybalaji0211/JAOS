@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 3.1
+Version: 3.2
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -70,8 +70,9 @@ Step 7 — Bug Fixing and Regression
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
-controlled Step 7 remediation. RAA-005 and RAA-008 are resolved with evidence;
-other unresolved RAA findings remain unresolved.
+controlled Step 7 remediation. RAA-005 and RAA-008 are resolved with evidence.
+RAA-002 and RAA-007 are partially resolved; RAA-009 remains open and deferred;
+other unresolved findings remain unresolved.
 
 Step 5 — Full Automated Testing remains COMPLETED with the verified automated
 baseline of 1,590 tests collected and 1,590 tests passed.
@@ -83,8 +84,9 @@ major Phase 8 expansion. FORTRESS-01 has recorded the governance baseline.
 FORTRESS-02 is COMPLETE AND VERIFIED. FORTRESS-03 is COMPLETE AND VERIFIED,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
-recorded in section 7.9. FORTRESS-05 has not started and awaits explicit
-Founder authorization.
+recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
+level under ADR-0011, with closure evidence recorded in section 7.10.
+FORTRESS-06 has not started and awaits explicit Founder authorization.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -130,6 +132,7 @@ The objectives of this sprint are to:
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
+| FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
@@ -226,7 +229,24 @@ RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled Step 7 remediation.
 
 Step 7 implementation is in progress. RAA-005 and RAA-008 are resolved with
-evidence; other unresolved RAA findings remain unresolved.
+evidence. RAA-002 is partially resolved because Conversation composition and
+lifecycle ownership exist without production request routing. RAA-007 is
+partially resolved because the canonical path is fixed while compatibility
+self-construction remains FORTRESS-06 debt. RAA-009 remains open and deferred;
+other unresolved findings remain unresolved.
+
+FORTRESS-05 closure evidence proves one production `PlatformRuntime` /
+`PlatformComposition` graph for Tool, AI, Executive, SQLite-backed Memory, and
+Conversation Intelligence. The focused remediation suite passed 85 tests; the
+related ladder passed 1,597 with one skip; and the full configured suite passed
+1,996 with one skip and zero failures/errors.
+
+Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
+lifecycle-owned but not live-request routed. The Memory-context adapter and
+RAA-009 remain deferred. Advanced reasoning, planning, decision, agents,
+execution proposals, and autonomy remain paused. The lazy facade, compatibility
+fallbacks, and legacy quarantine remain FORTRESS-06 debt; Tool control-policy
+hardening remains FORTRESS-07.
 
 The controlled Step 7 workflow is:
 
@@ -434,17 +454,21 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-1. Triage and map overlapping RAA-001 through RAA-009 and SHT-001 through
-   SHT-006 findings.
-2. Define remediation order and acceptance tests.
-3. Apply one controlled fix cluster at a time.
-4. Run targeted tests after every cluster.
-5. Run the full regression suite.
-6. Produce the Step 7 report for Founder review.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state.
+2. Continue only separately authorized Step 7 remediation.
+3. Keep RAA-009 and the Memory-context adapter open/deferred.
+4. Do not begin FORTRESS-06 without explicit Founder authorization.
+5. Execute the skipped directory-symlink escape check on a capable host before
+   Fortress certification.
+6. Produce the Step 7 report for Founder review when Step 7 is complete.
 7. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
    until Step 7 is complete and approved.
 8. Resume MS-0025E only after Step 8 and Fortress certification and explicit
    Founder authorization.
+9. Complete the remaining Phase 8 milestones.
+10. Certify and release v0.10.0-alpha.
+11. Complete remaining Memory Platform production work.
+12. Begin Phase 9 — Workflow & Automation Platform.
 
 ---
 
@@ -469,9 +493,20 @@ Overall sprint status:
 
 IN PROGRESS
 
-Current checkpoint:
+Prior stabilization checkpoint:
 
 `786abb3` docs(stabilization): certify Steps 4 through 6
+
+Newer Fortress checkpoints:
+
+`f9b054e` (FORTRESS-05A/05B), `1df73e3` (FORTRESS-05C), and `cf26693`
+(FORTRESS-05D)
+
+Current FORTRESS-05 state:
+
+COMPLETE AND VERIFIED at workstream level under ADR-0011; RAA-002 and RAA-007
+remain partially resolved, RAA-009 remains open, and overall Fortress
+certification has not started.
 
 Current activity:
 

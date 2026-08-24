@@ -12,6 +12,7 @@ from jaos.memory.models.memory_record import MemoryRecord
 from jaos.memory.models.memory_scope import MemoryScope
 from jaos.memory.models.memory_type import MemoryType
 from jaos.memory.providers.in_memory_store import InMemoryStore
+from jaos.memory.storage.memory_store import MemoryStore
 
 
 @pytest.fixture
@@ -77,6 +78,31 @@ def test_store_starts_empty() -> None:
     assert store.count() == 0
     assert store.list_records().records == []
     assert store.list_records().total_matches == 0
+
+
+def test_memory_store_contract_requires_lifecycle_and_in_memory_honors_it(
+    memory_type: MemoryType,
+    global_identity: MemoryIdentity,
+) -> None:
+    assert {"close", "is_closed"}.issubset(MemoryStore.__abstractmethods__)
+
+    store = InMemoryStore()
+    record = build_record(
+        content="Lifecycle contract evidence.",
+        memory_type=memory_type,
+        identity=global_identity,
+        memory_id="lifecycle-contract",
+    )
+    store.create(record)
+
+    assert store.is_closed is False
+
+    store.close()
+    store.close()
+
+    assert store.is_closed is True
+    with pytest.raises(RuntimeError, match="InMemoryStore is closed"):
+        store.get(record.memory_id)
 
 
 def test_create_and_get_record(

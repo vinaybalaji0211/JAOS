@@ -174,30 +174,66 @@ def test_teardown_releases_composed_platforms(jaos_runtime_paths: RuntimePaths):
     assert store.is_closed is True
 
 
-def test_teardown_continues_after_failure_and_aggregates(
+def test_ai_shutdown_failure_is_retained_retried_and_aggregated(
     monkeypatch, jaos_runtime_paths: RuntimePaths
 ):
     runtime = _started_runtime(jaos_runtime_paths)
     composition = PlatformComposition(runtime)
     composition.compose()
+    ai_manager = composition.ai_manager
+    provider = ai_manager.get_provider_manager().get_provider("mock")
+    store = composition.memory_store
+    orchestrator = composition.intelligence_orchestrator
+    prompt_composer = orchestrator._prompt_composer
+    original_shutdown = ai_manager.shutdown
+    shutdown_calls = 0
+
+    def fail_once_then_shutdown() -> None:
+        nonlocal shutdown_calls
+        shutdown_calls += 1
+        if shutdown_calls == 1:
+            raise RuntimeError("ai shutdown exploded")
+        original_shutdown()
 
     monkeypatch.setattr(
-        composition.ai_manager,
+        ai_manager,
         "shutdown",
-        lambda: (_ for _ in ()).throw(RuntimeError("ai shutdown exploded")),
+        fail_once_then_shutdown,
     )
 
-    with pytest.raises(CompositionTeardownError, match="ai shutdown exploded"):
+    with pytest.raises(
+        CompositionTeardownError,
+        match="ai_manager_platform: ai shutdown exploded",
+    ):
         composition.teardown()
 
+    assert shutdown_calls == 1
+    assert runtime.container.resolve(AI_MANAGER_SERVICE) is ai_manager
+    assert runtime.registry.is_registered(AI_MANAGER_SERVICE) is True
+    assert composition._service_names == [AI_MANAGER_SERVICE]
+    assert provider._initialized is True
+    assert store.is_closed is True
+    assert orchestrator.is_ready is False
+    assert prompt_composer.is_ready is False
     assert runtime.container.is_registered(TOOL_MANAGER_SERVICE) is False
-    assert runtime.container.is_registered(AI_MANAGER_SERVICE) is False
     assert runtime.container.is_registered(EXECUTIVE_CONTROLLER_SERVICE) is False
     assert runtime.container.is_registered(MEMORY_STORE_SERVICE) is False
     assert (
         runtime.container.is_registered(INTELLIGENCE_ORCHESTRATOR_SERVICE)
         is False
     )
+
+    composition.teardown()
+
+    assert shutdown_calls == 2
+    assert ai_manager._shutdown_complete is True
+    assert provider._initialized is False
+    assert runtime.container.is_registered(AI_MANAGER_SERVICE) is False
+    assert runtime.registry.is_registered(AI_MANAGER_SERVICE) is False
+    assert composition._service_names == []
+
+    composition.teardown()
+    assert shutdown_calls == 2
 
 
 def test_composed_ai_manager_has_a_healthy_default_provider(

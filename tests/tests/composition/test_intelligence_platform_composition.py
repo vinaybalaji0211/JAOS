@@ -8,7 +8,11 @@ from pathlib import Path
 
 import pytest
 
-from jaos.composition import CompositionError, PlatformComposition
+from jaos.composition import (
+    CompositionError,
+    CompositionTeardownError,
+    PlatformComposition,
+)
 from jaos.composition.platform_composition import (
     AI_MANAGER_SERVICE,
     EXECUTIVE_CONTROLLER_SERVICE,
@@ -24,6 +28,16 @@ from jaos.intelligence.conversation import (
     ConversationSessionManager,
     InMemoryConversationSessionStore,
 )
+from jaos.intelligence.models.context_bundle import ContextBundle
+from jaos.intelligence.models.conversation_role import ConversationRole
+from jaos.intelligence.models.conversation_turn import ConversationTurn
+from jaos.intelligence.models.intelligence_identity import (
+    IntelligenceIdentity,
+)
+from jaos.intelligence.models.intelligence_result_status import (
+    IntelligenceResultStatus,
+)
+from jaos.intelligence.models.intelligence_scope import IntelligenceScope
 from jaos.intelligence.prompt import (
     IntelligencePromptComposer,
     IntelligencePromptTemplate,
@@ -121,7 +135,7 @@ def test_canonical_orchestrator_registration_identity_and_object_graph(
         )
         assert orchestrator._ai_manager is composition.ai_manager
         assert orchestrator._template_id == "conversation"
-        assert orchestrator._template_version is None
+        assert orchestrator._template_version == "1.0"
         assert orchestrator._prompt_composer.is_ready is True
         assert orchestrator.is_ready is True
 
@@ -163,6 +177,49 @@ def test_approved_default_policy_and_conversation_template_are_registered(
         composition.teardown()
 
 
+def test_composed_orchestrator_completes_real_mock_backed_turn(
+    jaos_runtime_paths: RuntimePaths,
+) -> None:
+    runtime = _started_runtime(jaos_runtime_paths)
+    composition = PlatformComposition(runtime)
+    composition.compose()
+
+    try:
+        orchestrator = composition.intelligence_orchestrator
+        identity = IntelligenceIdentity(
+            IntelligenceScope.USER,
+            "fortress-readiness",
+        )
+        session = orchestrator.start_session(identity)
+        turn = ConversationTurn(
+            session_id=session.session_id,
+            role=ConversationRole.USER,
+            content="Confirm canonical conversation readiness.",
+            source="fortress-test",
+        )
+        result = orchestrator.process_turn(
+            session.session_id,
+            turn,
+            ContextBundle(
+                request_id="fortress-conversation-readiness",
+                identity=identity,
+                context_policy="default",
+            ),
+        )
+
+        assert result.status is IntelligenceResultStatus.SUCCEEDED
+        assert result.provider_name == "mock"
+        assert result.provider_model == "mock-model"
+        assert result.output is not None
+        assert result.output.startswith("mock: ")
+        assert "Confirm canonical conversation readiness." in result.output
+        assert result.structured_output["prompt"]["template_reference"] == (
+            "conversation@1.0"
+        )
+    finally:
+        composition.teardown()
+
+
 def test_prompt_composer_initializes_before_orchestrator(
     jaos_runtime_paths: RuntimePaths,
     monkeypatch: pytest.MonkeyPatch,
@@ -179,11 +236,11 @@ def test_prompt_composer_initializes_before_orchestrator(
         composition_module.ConversationOrchestrator.initialize
     )
 
-    def recording_composer_initialize(self):  # noqa: ANN001
+    def recording_composer_initialize(self):
         events.append(("prompt_composer", self.is_ready, None))
         original_composer_initialize(self)
 
-    def recording_orchestrator_initialize(self):  # noqa: ANN001
+    def recording_orchestrator_initialize(self):
         events.append(
             (
                 "conversation_orchestrator",
@@ -270,6 +327,109 @@ def test_teardown_shuts_down_intelligence_in_order_without_double_shutdown(
     ) is False
 
 
+@pytest.mark.parametrize(
+    "failed_component",
+    ["conversation_orchestrator", "prompt_composer"],
+)
+def test_intelligence_shutdown_failure_retains_and_retries_owned_lifecycle(
+    failed_component: str,
+    jaos_runtime_paths: RuntimePaths,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _started_runtime(jaos_runtime_paths)
+    composition = PlatformComposition(runtime)
+    composition.compose()
+    orchestrator = composition.intelligence_orchestrator
+    prompt_composer = orchestrator._prompt_composer
+    store = composition.memory_store
+    ai_manager = composition.ai_manager
+    original_orchestrator_shutdown = orchestrator.shutdown
+    original_prompt_shutdown = prompt_composer.shutdown
+    shutdown_calls = {
+        "conversation_orchestrator": 0,
+        "prompt_composer": 0,
+    }
+
+    def shutdown_orchestrator() -> None:
+        shutdown_calls["conversation_orchestrator"] += 1
+        if (
+            failed_component == "conversation_orchestrator"
+            and shutdown_calls["conversation_orchestrator"] == 1
+        ):
+            raise RuntimeError("conversation orchestrator shutdown exploded")
+        original_orchestrator_shutdown()
+
+    def shutdown_prompt_composer() -> None:
+        shutdown_calls["prompt_composer"] += 1
+        if (
+            failed_component == "prompt_composer"
+            and shutdown_calls["prompt_composer"] == 1
+        ):
+            raise RuntimeError("prompt composer shutdown exploded")
+        original_prompt_shutdown()
+
+    monkeypatch.setattr(orchestrator, "shutdown", shutdown_orchestrator)
+    monkeypatch.setattr(
+        prompt_composer,
+        "shutdown",
+        shutdown_prompt_composer,
+    )
+
+    expected_error = (
+        "conversation orchestrator shutdown exploded"
+        if failed_component == "conversation_orchestrator"
+        else "prompt composer shutdown exploded"
+    )
+    with pytest.raises(CompositionTeardownError, match=expected_error):
+        composition.teardown()
+
+    assert (
+        runtime.container.resolve(INTELLIGENCE_ORCHESTRATOR_SERVICE)
+        is orchestrator
+    )
+    assert runtime.registry.is_registered(
+        INTELLIGENCE_ORCHESTRATOR_SERVICE
+    ) is True
+    assert composition._intelligence_orchestrator is orchestrator
+    assert composition._prompt_composer is prompt_composer
+    assert composition._service_names == [INTELLIGENCE_ORCHESTRATOR_SERVICE]
+    assert store.is_closed is True
+    assert ai_manager._shutdown_complete is True
+    for name in (
+        TOOL_MANAGER_SERVICE,
+        AI_MANAGER_SERVICE,
+        EXECUTIVE_CONTROLLER_SERVICE,
+        MEMORY_STORE_SERVICE,
+    ):
+        assert runtime.container.is_registered(name) is False
+        assert runtime.registry.is_registered(name) is False
+
+    composition.teardown()
+
+    assert shutdown_calls[failed_component] == 2
+    successful_component = (
+        "prompt_composer"
+        if failed_component == "conversation_orchestrator"
+        else "conversation_orchestrator"
+    )
+    assert shutdown_calls[successful_component] == 1
+    assert orchestrator.is_ready is False
+    assert prompt_composer.is_ready is False
+    assert runtime.container.is_registered(
+        INTELLIGENCE_ORCHESTRATOR_SERVICE
+    ) is False
+    assert runtime.registry.is_registered(
+        INTELLIGENCE_ORCHESTRATOR_SERVICE
+    ) is False
+    assert composition._intelligence_orchestrator is None
+    assert composition._prompt_composer is None
+    assert composition._service_names == []
+
+    composition.teardown()
+    assert shutdown_calls[failed_component] == 2
+    assert shutdown_calls[successful_component] == 1
+
+
 def test_intelligence_registration_failure_cleans_lifecycle_and_propagates(
     jaos_runtime_paths: RuntimePaths,
     monkeypatch: pytest.MonkeyPatch,
@@ -288,15 +448,15 @@ def test_intelligence_registration_failure_cleans_lifecycle_and_propagates(
         composition_module.IntelligencePromptComposer.shutdown
     )
 
-    def recording_orchestrator_shutdown(self):  # noqa: ANN001
+    def recording_orchestrator_shutdown(self):
         shutdown_events.append("conversation_orchestrator")
         original_orchestrator_shutdown(self)
 
-    def recording_composer_shutdown(self):  # noqa: ANN001
+    def recording_composer_shutdown(self):
         shutdown_events.append("prompt_composer")
         original_composer_shutdown(self)
 
-    def failing_register(self, name, instance, **kwargs):  # noqa: ANN001
+    def failing_register(self, name, instance, **kwargs):
         created[name] = instance
         if name == INTELLIGENCE_ORCHESTRATOR_SERVICE:
             raise RuntimeError("intelligence registration exploded")
@@ -411,7 +571,7 @@ def test_intelligence_composition_preserves_existing_platform_identities(
         ._compose_intelligence_orchestrator
     )
 
-    def observing_compose_intelligence(self, ai_manager):  # noqa: ANN001
+    def observing_compose_intelligence(self, ai_manager):
         observed["before"] = (
             self.tool_manager,
             self.ai_manager,
@@ -488,6 +648,7 @@ def test_composition_import_boundary_excludes_ms0025e_and_memory_context():
             (
                 "jaos.intelligence.planning",
                 "jaos.intelligence.reasoning",
+                "jaos.intelligence.decision",
                 "jaos.intelligence.agent",
             )
         )
@@ -497,6 +658,8 @@ def test_composition_import_boundary_excludes_ms0025e_and_memory_context():
     assert "ExecutionProposalBuilder" not in source
     assert "MemoryContextSource" not in source
     assert "MemorySearchEngine" not in source
+    assert "DecisionEngine" not in source
+    assert "autonomous" not in source
     assert "executive_brain" not in source
 
 

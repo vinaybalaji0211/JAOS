@@ -22,6 +22,13 @@ class InMemoryStore(MemoryStore):
     def __init__(self) -> None:
         self._records: dict[str, MemoryRecord] = {}
         self._lock = RLock()
+        self._closed = False
+
+    @property
+    def is_closed(self) -> bool:
+        """Return whether this store has been closed."""
+        with self._lock:
+            return self._closed
 
     def create(self, record: MemoryRecord) -> MemoryRecord:
         """
@@ -30,6 +37,7 @@ class InMemoryStore(MemoryStore):
         memory_id = record.memory_id
 
         with self._lock:
+            self._require_open()
             if memory_id in self._records:
                 raise ValueError(
                     f"Memory record already exists: {memory_id}"
@@ -43,6 +51,7 @@ class InMemoryStore(MemoryStore):
         Retrieve one memory record by its identifier.
         """
         with self._lock:
+            self._require_open()
             return self._records.get(memory_id)
 
     def update(self, record: MemoryRecord) -> MemoryRecord:
@@ -52,6 +61,7 @@ class InMemoryStore(MemoryStore):
         memory_id = record.memory_id
 
         with self._lock:
+            self._require_open()
             if memory_id not in self._records:
                 raise ValueError(
                     f"Memory record does not exist: {memory_id}"
@@ -67,6 +77,7 @@ class InMemoryStore(MemoryStore):
         Returns True when a record was deleted.
         """
         with self._lock:
+            self._require_open()
             if memory_id not in self._records:
                 return False
 
@@ -87,6 +98,7 @@ class InMemoryStore(MemoryStore):
         normalized_query = query.query_text.casefold()
 
         with self._lock:
+            self._require_open()
             matching_records = [
                 record
                 for record in self._records.values()
@@ -142,6 +154,7 @@ class InMemoryStore(MemoryStore):
         started_at = perf_counter()
 
         with self._lock:
+            self._require_open()
             if memory_filter is None:
                 matching_records = list(self._records.values())
             else:
@@ -171,6 +184,7 @@ class InMemoryStore(MemoryStore):
         Count stored memories matching an optional filter.
         """
         with self._lock:
+            self._require_open()
             if memory_filter is None:
                 return len(self._records)
 
@@ -187,14 +201,28 @@ class InMemoryStore(MemoryStore):
         Returns the number of deleted records.
         """
         with self._lock:
+            self._require_open()
             deleted_count = len(self._records)
             self._records.clear()
             return deleted_count
+
     def begin_transaction(self) -> MemoryTransaction:
         """
         Create a new isolated transaction for this store.
         """
-        return InMemoryTransaction(self)
+        with self._lock:
+            self._require_open()
+            return InMemoryTransaction(self)
+
+    def close(self) -> None:
+        """Close the store; repeated calls have no effect."""
+        with self._lock:
+            self._closed = True
+
+    def _require_open(self) -> None:
+        """Reject operations after the store lifecycle has ended."""
+        if self._closed:
+            raise RuntimeError("InMemoryStore is closed")
 
     @staticmethod
     def _matches_query(

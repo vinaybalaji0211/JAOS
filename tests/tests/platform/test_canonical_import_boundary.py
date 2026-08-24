@@ -29,22 +29,61 @@ from pathlib import Path
 
 import pytest
 
-
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 CANONICAL_ENTRY_POINT = "run_jaos.py"
 
 FORBIDDEN_TOP_LEVEL_MODULES = frozenset(
     {
+        "agent",
+        "agents",
+        "autonomous",
         "brain",
         "memory",
         "core",
         "executive_brain",
         "kernel",
         "main",
+        "planning",
+        "reasoning",
         "tests",
+        "workflow",
     }
 )
+
+FORBIDDEN_CANONICAL_MODULE_PREFIXES = (
+    "jaos.intelligence.context.memory_context_source",
+    "jaos.intelligence.decision",
+    "jaos.intelligence.interfaces.agent_orchestrator",
+    "jaos.intelligence.interfaces.decision_engine",
+    "jaos.intelligence.interfaces.execution_proposal_builder",
+    "jaos.intelligence.interfaces.planning_engine",
+    "jaos.intelligence.interfaces.reasoning_engine",
+    "jaos.intelligence.models.agent_",
+    "jaos.intelligence.models.confidence_assessment",
+    "jaos.intelligence.models.decision_",
+    "jaos.intelligence.models.execution_proposal",
+    "jaos.intelligence.models.explainability_report",
+    "jaos.intelligence.models.fallback_policy",
+    "jaos.intelligence.models.optimization_goal",
+    "jaos.intelligence.models.parallel_execution_policy",
+    "jaos.intelligence.models.plan_proposal",
+    "jaos.intelligence.models.planning_",
+    "jaos.intelligence.models.proposed_plan_step",
+    "jaos.intelligence.models.reasoning_",
+    "jaos.intelligence.planning",
+    "jaos.memory.storage.memory_search_engine",
+)
+
+
+def is_forbidden_runtime_module(module_name: str) -> bool:
+    """Return whether a module is outside the canonical runtime boundary."""
+
+    top_level = module_name.split(".", maxsplit=1)[0]
+    return (
+        top_level in FORBIDDEN_TOP_LEVEL_MODULES
+        or module_name.startswith(FORBIDDEN_CANONICAL_MODULE_PREFIXES)
+    )
 
 
 def _is_type_checking_guard(node: ast.If) -> bool:
@@ -75,18 +114,23 @@ def _collect_imports(node: ast.AST, modules: set[str], relative: list[str]) -> N
         _collect_imports(child, modules, relative)
 
 
-def _module_source(root: Path, module_name: str) -> Path | None:
+def _module_sources(root: Path, module_name: str) -> list[tuple[str, Path]]:
+    """Resolve import-time sources, including every parent package facade."""
+
     parts = module_name.split(".")
+    sources: list[tuple[str, Path]] = []
+
+    for index in range(1, len(parts) + 1):
+        package_name = ".".join(parts[:index])
+        package_init = root.joinpath(*parts[:index]) / "__init__.py"
+        if package_init.is_file():
+            sources.append((package_name, package_init))
 
     module_file = root.joinpath(*parts).with_suffix(".py")
     if module_file.is_file():
-        return module_file
+        sources.append((module_name, module_file))
 
-    package_init = root.joinpath(*parts) / "__init__.py"
-    if package_init.is_file():
-        return package_init
-
-    return None
+    return sources
 
 
 def analyze_import_closure(
@@ -121,18 +165,26 @@ def analyze_import_closure(
             relative_imports.append(f"{owner} -> relative import {module_name!r}")
 
         for module_name in sorted(imported):
-            top_level = module_name.split(".")[0]
+            top_level = module_name.split(".", maxsplit=1)[0]
 
             if top_level in FORBIDDEN_TOP_LEVEL_MODULES:
-                violations.append(f"{owner} imports forbidden module {module_name}")
+                violations.append(
+                    f"{owner} imports forbidden module {module_name}"
+                )
                 continue
 
-            resolved = _module_source(root, module_name)
-            if resolved is None:
+            if is_forbidden_runtime_module(module_name):
+                violations.append(
+                    f"{owner} imports deferred module {module_name}"
+                )
                 continue
 
-            reached_modules.add(module_name)
-            pending.append((module_name, resolved))
+            for resolved_name, resolved_path in _module_sources(
+                root,
+                module_name,
+            ):
+                reached_modules.add(resolved_name)
+                pending.append((resolved_name, resolved_path))
 
     return {
         "reached_modules": reached_modules,
@@ -202,6 +254,8 @@ def test_canonical_closure_reaches_expected_platforms() -> None:
         "jaos.ai",
         "jaos.tools",
         "jaos.executive",
+        "jaos.memory",
+        "jaos.intelligence",
         "jaos_platform",
         "jaos.composition",
     )
@@ -262,6 +316,34 @@ def test_forbidden_legacy_imports_are_detected(
     assert isinstance(violations, list)
     assert violations, "the forbidden import was not detected"
     assert any(expected_fragment in violation for violation in violations)
+
+
+@pytest.mark.parametrize(
+    "deferred_import",
+    [
+        "from jaos.intelligence.decision import DefaultDecisionEngine",
+        "from jaos.intelligence.interfaces.decision_engine import DecisionEngine",
+        "from jaos.intelligence.models.decision_request import DecisionRequest",
+        "from jaos.intelligence.models.confidence_assessment import ConfidenceAssessment",
+        "from jaos.intelligence.models.explainability_report import ExplainabilityReport",
+        "from jaos.intelligence.models.fallback_policy import FallbackPolicy",
+        "from jaos.intelligence.models.optimization_goal import OptimizationGoal",
+        "from jaos.intelligence.models.parallel_execution_policy import ParallelExecutionPolicy",
+        "from jaos.intelligence.planning import DefaultPlanningEngine",
+    ],
+)
+def test_deferred_intelligence_imports_are_detected(
+    tmp_path: Path,
+    deferred_import: str,
+) -> None:
+    _synthetic_canonical_tree(
+        tmp_path,
+        f"{deferred_import}\n\n\nclass JAOSShell:\n    pass\n",
+    )
+
+    report = analyze_import_closure(tmp_path, "run_jaos.py")
+
+    assert report["violations"]
 
 
 def test_safe_canonical_import_passes(tmp_path: Path) -> None:

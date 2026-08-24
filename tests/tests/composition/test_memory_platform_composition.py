@@ -7,13 +7,17 @@ from pathlib import Path
 
 import pytest
 
-from jaos.composition import PlatformComposition
+from jaos.composition import CompositionTeardownError, PlatformComposition
 from jaos.composition.platform_composition import (
     AI_MANAGER_SERVICE,
     EXECUTIVE_CONTROLLER_SERVICE,
     MEMORY_STORE_SERVICE,
     TOOL_MANAGER_SERVICE,
 )
+from jaos.memory.models.memory_identity import MemoryIdentity
+from jaos.memory.models.memory_record import MemoryRecord
+from jaos.memory.models.memory_scope import MemoryScope
+from jaos.memory.models.memory_type import MemoryType
 from jaos.memory.providers.sqlite_store import SQLiteStore
 from jaos_platform.platform_runtime import PlatformRuntime
 from jaos_platform.runtime_paths import RuntimePaths
@@ -68,6 +72,31 @@ def test_memory_store_path_is_under_injected_runtime_paths_only(
         composition.teardown()
 
 
+def test_composed_memory_store_completes_real_create_get_round_trip(
+    jaos_runtime_paths: RuntimePaths,
+) -> None:
+    runtime = _started_runtime(jaos_runtime_paths)
+    composition = PlatformComposition(runtime)
+    composition.compose()
+
+    try:
+        store = composition.memory_store
+        record = MemoryRecord(
+            memory_id="fortress-memory-readiness",
+            content="Canonical Memory composition is functionally ready.",
+            memory_type=MemoryType.LONG_TERM,
+            identity=MemoryIdentity(MemoryScope.GLOBAL),
+            source="fortress-test",
+        )
+
+        assert store.create(record) == record
+        assert store.get(record.memory_id) == record
+        assert store.database_path.parent == jaos_runtime_paths.memory
+        assert store.database_path.is_file()
+    finally:
+        composition.teardown()
+
+
 def test_teardown_closes_and_unregisters_memory_store_exactly_once(
     jaos_runtime_paths: RuntimePaths,
     monkeypatch: pytest.MonkeyPatch,
@@ -109,6 +138,103 @@ def test_teardown_on_already_closed_store_does_not_reclose(
     assert runtime.container.is_registered(MEMORY_STORE_SERVICE) is False
 
 
+def test_close_failure_retains_registered_store_for_retry(
+    jaos_runtime_paths: RuntimePaths,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _started_runtime(jaos_runtime_paths)
+    composition = PlatformComposition(runtime)
+    composition.compose()
+    store = composition.memory_store
+    original_close = store.close
+    close_calls = 0
+
+    def fail_once_then_close() -> None:
+        nonlocal close_calls
+        close_calls += 1
+        if close_calls == 1:
+            raise RuntimeError("memory close exploded")
+        original_close()
+
+    monkeypatch.setattr(store, "close", fail_once_then_close)
+
+    with pytest.raises(
+        CompositionTeardownError,
+        match="memory close exploded",
+    ):
+        composition.teardown()
+
+    assert store.is_closed is False
+    assert runtime.container.resolve(MEMORY_STORE_SERVICE) is store
+    assert runtime.registry.is_registered(MEMORY_STORE_SERVICE) is True
+    assert composition._service_names == [MEMORY_STORE_SERVICE]
+    assert runtime.container.is_registered(TOOL_MANAGER_SERVICE) is False
+    assert runtime.container.is_registered(AI_MANAGER_SERVICE) is False
+    assert runtime.container.is_registered(
+        EXECUTIVE_CONTROLLER_SERVICE
+    ) is False
+
+    composition.teardown()
+
+    assert close_calls == 2
+    assert store.is_closed is True
+    assert runtime.container.is_registered(MEMORY_STORE_SERVICE) is False
+    assert runtime.registry.is_registered(MEMORY_STORE_SERVICE) is False
+
+
+def test_memory_registration_failure_preserves_original_and_pending_store(
+    jaos_runtime_paths: RuntimePaths,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _started_runtime(jaos_runtime_paths)
+    composition = PlatformComposition(runtime)
+
+    import jaos.composition.platform_composition as composition_module
+
+    registration_error = RuntimeError("memory registration exploded")
+    created: list[SQLiteStore] = []
+    close_calls = 0
+    original_register = composition_module.PlatformComposition._register
+    original_close = SQLiteStore.close
+
+    def failing_register(self, name, instance, **kwargs):
+        if name == MEMORY_STORE_SERVICE:
+            created.append(instance)
+            raise registration_error
+        return original_register(self, name, instance, **kwargs)
+
+    def fail_once_then_close(self):
+        nonlocal close_calls
+        close_calls += 1
+        if close_calls == 1:
+            raise RuntimeError("orphan close exploded")
+        original_close(self)
+
+    monkeypatch.setattr(
+        composition_module.PlatformComposition,
+        "_register",
+        failing_register,
+    )
+    monkeypatch.setattr(SQLiteStore, "close", fail_once_then_close)
+
+    with pytest.raises(RuntimeError) as error:
+        composition.compose()
+
+    assert error.value is registration_error
+    assert any(
+        "orphan close exploded" in note
+        for note in getattr(error.value, "__notes__", ())
+    )
+    assert composition._pending_memory_store is created[0]
+    assert created[0].is_closed is False
+
+    composition.teardown()
+
+    assert close_calls == 2
+    assert created[0].is_closed is True
+    assert composition._pending_memory_store is None
+
+
 def test_memory_composition_failure_closes_orphaned_store_and_leaves_no_trace(
     jaos_runtime_paths: RuntimePaths,
     monkeypatch: pytest.MonkeyPatch,
@@ -121,7 +247,7 @@ def test_memory_composition_failure_closes_orphaned_store_and_leaves_no_trace(
     created_stores: list[SQLiteStore] = []
     original_register = composition_module.PlatformComposition._register
 
-    def failing_register(self, name, instance):  # noqa: ANN001
+    def failing_register(self, name, instance):
         if name == MEMORY_STORE_SERVICE:
             created_stores.append(instance)
             raise RuntimeError("memory registration exploded")

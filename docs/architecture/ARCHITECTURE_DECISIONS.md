@@ -2,7 +2,7 @@
 
 
 
-Version: 1.2
+Version: 1.3
 
 Status: ACTIVE
 
@@ -728,6 +728,222 @@ Approved By
 
 
 Founder Vinay B — 2026-08-21
+
+
+
+\---
+
+
+
+\# ADR-0011
+
+
+
+Title
+
+
+
+FORTRESS-05 Canonical Composition Carve-Out and Authority Contract
+
+
+
+Status
+
+
+
+Accepted — Founder-approved 2026-08-24
+
+
+
+Context
+
+
+
+FORTRESS-05 must establish one canonical production composition graph without
+starting the paused MS-0025X Intelligence Manager milestone. The already
+completed MS-0025A-D Conversation Intelligence foundation is sufficiently
+mature to be composed, initialized, lifecycle-owned, and readiness-tested as a
+narrow Fortress carve-out. It is not yet authorized as a production request
+route.
+
+
+
+Decision
+
+
+
+The canonical authority graph is:
+
+
+
+```text
+PlatformRuntime
+  -> PlatformComposition
+     -> ToolManager
+     -> AIManager
+     -> ExecutiveController
+     -> MemoryStore
+     -> ConversationOrchestrator
+```
+
+
+
+`PlatformRuntime` and `PlatformComposition` own the graph. The five registered
+service authorities are:
+
+
+
+| Authority | Runtime service name | Registry owner |
+|---|---|---|
+| ToolManager | `tool_manager_platform` | Platform |
+| AIManager | `ai_manager_platform` | Platform |
+| ExecutiveController | `executive_controller_platform` | Platform |
+| MemoryStore | `memory_store_platform` | Platform |
+| ConversationOrchestrator | `intelligence_orchestrator_platform` | Intelligence |
+
+
+
+The Conversation bootstrap policy is exactly:
+
+
+
+```python
+ConversationPolicy(policy_name="default")
+```
+
+
+
+All other dataclass defaults remain unchanged: `context_policy="default"`,
+`max_history_turns=100`, `reference_window_turns=20`, reference resolution,
+interruption, continuation, required context bundles, and working memory are
+enabled; memory-candidate submission is disabled; provider responses are
+limited to 50,000 characters and 100 metadata items; metadata is empty.
+
+
+
+The only bootstrap prompt template is `conversation@1.0`. Both identifiers are
+explicitly pinned on `ConversationOrchestrator`. Its exact approved content is:
+
+
+
+```python
+system_instruction = (
+    "You are the conversational intelligence component of JAOS. "
+    "Respond using the supplied conversation context, policy, and resolved "
+    "references. Do not claim that tools, actions, approvals, or external "
+    "operations occurred unless their results are explicitly provided."
+)
+task_instruction = (
+    "Produce a helpful response to the user's current message. "
+    "Preserve conversational continuity and respect the supplied context and "
+    "policy."
+)
+```
+
+
+
+Scope Boundary
+
+
+
+FORTRESS-05 may compose, initialize, lifecycle-own, and health/readiness-test
+the completed MS-0025A-D Conversation Intelligence components. It does not
+route production CLI requests through `ConversationOrchestrator`; expand an
+Intelligence manager or facade; add planning, reasoning, decision, autonomy,
+agents, multi-agent behavior, execution proposals, or advanced Phase 8
+capabilities; or integrate `MemoryContextSource`.
+
+
+
+MS-0025X remains paused until the Fortress gate and a later governing decision
+permit it. `MemoryStore` is canonical and lifecycle-owned but is not used by
+live CLI behavior. `ConversationOrchestrator` is canonical and lifecycle-owned
+but has no live production request consumer.
+
+
+
+Compatibility and Deferred Ownership
+
+
+
+`CommandDispatcher` and `JAOSShell` retain compatibility-only self-construction
+fallbacks. The canonical `run_jaos.py` path must inject Tool, AI, and Executive
+and must never reach those fallbacks. Their removal or quarantine belongs to
+FORTRESS-06, together with legacy/shadow-stack quarantine.
+
+
+
+The lazy `jaos.intelligence` package facades are interim import containment.
+They compatibility-preserve public exports and the `context`, `exceptions`,
+`interfaces`, `models`, and `prompt` submodule attributes without eager
+deferred-capability loading. Their packaging debt belongs to FORTRESS-06.
+
+
+
+No `SQLiteStore` to `MemorySearchEngine` adapter is authorized.
+`MemoryContextSource` integration remains deferred.
+
+
+
+Finding Disposition
+
+
+
+- RAA-002 is PARTIALLY RESOLVED: composition and lifecycle ownership are
+  resolved; production request-path routing remains deferred to the
+  post-Fortress/MS-0025X owner unless later governance assigns it elsewhere.
+- RAA-007 is PARTIALLY RESOLVED: canonical production composition ownership is
+  resolved; `CommandDispatcher`/`JAOSShell` self-construction compatibility
+  remains FORTRESS-06 debt.
+- RAA-009 remains OPEN — DEFERRED: the Memory-context coupling is unchanged.
+
+
+
+Authorization Trail
+
+
+
+- FORTRESS-05A/05B — Tool, AI, and Executive composition; committed checkpoint
+  `f9b054e`.
+- FORTRESS-05C — canonical Memory composition; committed checkpoint `1df73e3`.
+- FORTRESS-05D — narrow Conversation Intelligence composition; committed
+  checkpoint `cf26693`.
+- FORTRESS-05E — uncommitted invariant and closure candidate authorized before
+  this decision was recorded.
+- FORTRESS-05 closure remediation — Founder-authorized 2026-08-24 to correct
+  lifecycle, failure, readiness, import, governance, and evidence gaps found by
+  independent review.
+
+
+
+Consequences
+
+
+
+- AI initialization and registration must be rollback-scoped so no initialized
+  provider survives a failed registration.
+- `MemoryStore` owns a provider-neutral `close()`/`is_closed` lifecycle
+  contract.
+- A composition-owned Memory, AI, or Intelligence lifecycle failure must retain
+  its reachable service registration, ownership name, and required lifecycle
+  references for deterministic retry. Independent safe cleanup continues and
+  all teardown errors are aggregated; a successful retry releases the retained
+  service and references.
+- Functional closure evidence must include a real composed mock-backed
+  Conversation turn and a real Memory create/get round trip under disposable
+  `RuntimePaths.memory`.
+- FORTRESS-05 cannot be marked COMPLETE AND VERIFIED until its focused,
+  affected-subsystem, and full configured verification ladder passes.
+- This decision does not certify the Fortress Program, complete Step 7, start
+  Step 8, resume Phase 8, or begin FORTRESS-06.
+
+
+
+Approved By
+
+
+
+Founder Vinay B — 2026-08-24
 
 
 

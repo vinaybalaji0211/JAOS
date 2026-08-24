@@ -1,52 +1,56 @@
-"""Public models for the JAOS AI Intelligence Platform."""
+"""Public models for the JAOS AI Intelligence Platform.
 
-from jaos.intelligence.models.agent_availability_state import (
-    AgentAvailabilityState,
-)
-from jaos.intelligence.models.agent_descriptor import AgentDescriptor
-from jaos.intelligence.models.agent_health_state import AgentHealthState
-from jaos.intelligence.models.agent_result import AgentResult
-from jaos.intelligence.models.agent_task import AgentTask
-from jaos.intelligence.models.agent_task_status import AgentTaskStatus
-from jaos.intelligence.models.context_bundle import ContextBundle
-from jaos.intelligence.models.context_item import ContextItem
-from jaos.intelligence.models.context_trust_level import ContextTrustLevel
-from jaos.intelligence.models.conversation_role import ConversationRole
-from jaos.intelligence.models.conversation_session import ConversationSession
-from jaos.intelligence.models.conversation_session_state import (
-    ConversationSessionState,
-)
-from jaos.intelligence.models.conversation_turn import ConversationTurn
-from jaos.intelligence.models.execution_proposal import ExecutionProposal
-from jaos.intelligence.models.failure_behavior import (
-    FailureBehavior,
-)
-from jaos.intelligence.models.intelligence_context_type import (
-    IntelligenceContextType,
-)
-from jaos.intelligence.models.intelligence_identity import (
-    IntelligenceIdentity,
-)
-from jaos.intelligence.models.intelligence_request import IntelligenceRequest
-from jaos.intelligence.models.intelligence_request_type import (
-    IntelligenceRequestType,
-)
-from jaos.intelligence.models.intelligence_result import IntelligenceResult
-from jaos.intelligence.models.intelligence_result_status import (
-    IntelligenceResultStatus,
-)
-from jaos.intelligence.models.intelligence_scope import IntelligenceScope
-from jaos.intelligence.models.plan_proposal import PlanProposal
-from jaos.intelligence.models.planning_configuration import (
-    PlanningConfiguration,
-)
-from jaos.intelligence.models.planning_request import PlanningRequest
-from jaos.intelligence.models.proposal_status import ProposalStatus
-from jaos.intelligence.models.proposed_plan_step import ProposedPlanStep
-from jaos.intelligence.models.reasoning_assumption import ReasoningAssumption
-from jaos.intelligence.models.reasoning_request import ReasoningRequest
-from jaos.intelligence.models.reasoning_result import ReasoningResult
-from jaos.intelligence.models.risk_level import RiskLevel
+Models are resolved lazily so importing completed conversation models does not
+eagerly import paused planning, reasoning, agent, or execution-proposal models.
+"""
+
+from importlib import import_module
+
+_EXPORT_MODULES = {
+    "AgentAvailabilityState": (
+        "jaos.intelligence.models.agent_availability_state"
+    ),
+    "AgentDescriptor": "jaos.intelligence.models.agent_descriptor",
+    "AgentHealthState": "jaos.intelligence.models.agent_health_state",
+    "AgentResult": "jaos.intelligence.models.agent_result",
+    "AgentTask": "jaos.intelligence.models.agent_task",
+    "AgentTaskStatus": "jaos.intelligence.models.agent_task_status",
+    "ContextBundle": "jaos.intelligence.models.context_bundle",
+    "ContextItem": "jaos.intelligence.models.context_item",
+    "ContextTrustLevel": "jaos.intelligence.models.context_trust_level",
+    "ConversationRole": "jaos.intelligence.models.conversation_role",
+    "ConversationSession": "jaos.intelligence.models.conversation_session",
+    "ConversationSessionState": (
+        "jaos.intelligence.models.conversation_session_state"
+    ),
+    "ConversationTurn": "jaos.intelligence.models.conversation_turn",
+    "ExecutionProposal": "jaos.intelligence.models.execution_proposal",
+    "FailureBehavior": "jaos.intelligence.models.failure_behavior",
+    "IntelligenceContextType": (
+        "jaos.intelligence.models.intelligence_context_type"
+    ),
+    "IntelligenceIdentity": "jaos.intelligence.models.intelligence_identity",
+    "IntelligenceRequest": "jaos.intelligence.models.intelligence_request",
+    "IntelligenceRequestType": (
+        "jaos.intelligence.models.intelligence_request_type"
+    ),
+    "IntelligenceResult": "jaos.intelligence.models.intelligence_result",
+    "IntelligenceResultStatus": (
+        "jaos.intelligence.models.intelligence_result_status"
+    ),
+    "IntelligenceScope": "jaos.intelligence.models.intelligence_scope",
+    "PlanProposal": "jaos.intelligence.models.plan_proposal",
+    "PlanningConfiguration": (
+        "jaos.intelligence.models.planning_configuration"
+    ),
+    "PlanningRequest": "jaos.intelligence.models.planning_request",
+    "ProposalStatus": "jaos.intelligence.models.proposal_status",
+    "ProposedPlanStep": "jaos.intelligence.models.proposed_plan_step",
+    "ReasoningAssumption": "jaos.intelligence.models.reasoning_assumption",
+    "ReasoningRequest": "jaos.intelligence.models.reasoning_request",
+    "ReasoningResult": "jaos.intelligence.models.reasoning_result",
+    "RiskLevel": "jaos.intelligence.models.risk_level",
+}
 
 __all__ = [
     "AgentAvailabilityState",
@@ -81,3 +85,17 @@ __all__ = [
     "ReasoningResult",
     "RiskLevel",
 ]
+
+
+def __getattr__(name: str) -> object:
+    module_name = _EXPORT_MODULES.get(name)
+    if module_name is None:
+        raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+    value = getattr(import_module(module_name), name)
+    globals()[name] = value
+    return value
+
+
+def __dir__() -> list[str]:
+    return sorted(set(globals()) | set(__all__))

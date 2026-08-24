@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.8
+Document Version: 1.9
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -18,7 +18,7 @@ Maintainer: JAOS Engineering
 
 Founder Direction Recorded: 2026-08-21
 
-Last Updated: 2026-08-22
+Last Updated: 2026-08-24
 
 Related Documents:
 
@@ -99,9 +99,13 @@ requires all of the following:
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
+| FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
+| RAA-002 | PARTIALLY RESOLVED |
 | RAA-005 | RESOLVED WITH EVIDENCE |
+| RAA-007 | PARTIALLY RESOLVED |
 | RAA-008 | RESOLVED WITH EVIDENCE |
+| RAA-009 | OPEN — MEMORY-CONTEXT ADAPTER DEFERRED |
 | Other unresolved RAA findings | REMAIN UNRESOLVED |
 | Step 8 — Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Fortress certification | NOT STARTED |
@@ -116,10 +120,12 @@ in ADR-0010. This decision fixes the design boundary only. It does not implement
 legacy-data migration, and it does not authorize production-code or test
 changes.
 
-Implementation of the first FORTRESS-02 slices proceeded after that decision
-under separate authorization. Their verified state is recorded in section 7.2.
-FORTRESS-02 is COMPLETE AND VERIFIED at workstream level. The overall
-Fortress Program is not certified, and FORTRESS-03 has not started.
+Implementation of each completed workstream proceeded under separate
+authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
+workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
+Conversation authority remains intentionally unrouted. The overall Fortress
+Program is not certified, FORTRESS-06 has not started, and major Phase 8
+expansion remains paused.
 
 ---
 
@@ -205,7 +211,7 @@ records a safe dependency-preserving adjustment:
 | 2 | FORTRESS-02 — Runtime-data and test isolation | COMPLETE AND VERIFIED — closure evidence recorded in section 7.7 |
 | 3 | FORTRESS-03 — Runtime lifecycle correctness | COMPLETE AND VERIFIED — closure evidence recorded in section 7.8 |
 | 4 | FORTRESS-04 — One launcher and one composition root | COMPLETE AND VERIFIED — closure evidence recorded in section 7.9 |
-| 5 | FORTRESS-05 — Canonical platform composition | PLANNED |
+| 5 | FORTRESS-05 — Canonical platform composition | COMPLETE AND VERIFIED — ADR-0011 closure evidence in section 7.10 |
 | 6 | FORTRESS-06 — Legacy migration and quarantine | PLANNED |
 | 7 | FORTRESS-07 — Permission, approval, and audit hardening | PLANNED |
 | 8 | FORTRESS-08 — Crash-safe persistence, rollback, and replay | PLANNED |
@@ -895,13 +901,125 @@ FORTRESS-05 to begin without separate authorization.
 
 ---
 
+### 7.10 FORTRESS-05 Closure Evidence — COMPLETE AND VERIFIED
+
+Date: 2026-08-24. Governing decision: ADR-0011. Environment: Python 3.14.6,
+pytest 9.1.1, Windows, `.venv`. Required execution constraints are
+`PYTHONDONTWRITEBYTECODE=1`, `-p no:cacheprovider`, and a unique external
+disposable `--basetemp`.
+
+FORTRESS-05 was delivered through separately authorized slices:
+
+| Slice | Authorized scope | State / checkpoint |
+|---|---|---|
+| FORTRESS-05A | Canonical Tool Platform composition | IMPLEMENTED; included in `f9b054e` |
+| FORTRESS-05B | Shared AIManager and Executive composition | IMPLEMENTED; included in `f9b054e` |
+| FORTRESS-05C | Canonical SQLite-backed MemoryStore composition | IMPLEMENTED; `1df73e3` |
+| FORTRESS-05D | Narrow MS-0025A-D Conversation Intelligence composition | IMPLEMENTED AND VERIFIED; `cf26693` |
+| FORTRESS-05E | Executable canonical-composition invariants and closure evidence | IMPLEMENTED AND VERIFIED; uncommitted |
+| Closure remediation | Independent-review lifecycle, failure, readiness, import, and governance corrections | IMPLEMENTED AND VERIFIED; uncommitted |
+
+The Founder-approved graph is:
+
+```text
+PlatformRuntime
+  -> PlatformComposition
+     -> ToolManager
+     -> AIManager
+     -> ExecutiveController
+     -> MemoryStore
+     -> ConversationOrchestrator
+```
+
+The exact service names are `tool_manager_platform`, `ai_manager_platform`,
+`executive_controller_platform`, `memory_store_platform`, and
+`intelligence_orchestrator_platform`. The first four registry entries are
+owned by Platform; the Conversation authority is owned by Intelligence. Every
+composition property resolves the same object held by the Runtime container.
+
+The Conversation carve-out composes and lifecycle-owns completed MS-0025A-D
+components only. It uses `ConversationPolicy(policy_name="default")` with all
+other dataclass defaults unchanged and explicitly pins the approved template as
+`conversation@1.0`. `ConversationOrchestrator` shares the composed `AIManager`.
+It is not routed from the production CLI. MS-0025X, advanced Intelligence,
+planning, reasoning, decision, agents, execution proposals, autonomous
+workflows, and Memory-context integration remain paused or deferred.
+
+The composed `MemoryStore` is lifecycle-owned but is not used by live CLI
+behavior. Its provider-neutral contract now declares `close()` and
+`is_closed`, implemented by SQLite, PostgreSQL, and in-memory stores.
+
+Composition-owned Memory, AI, and Intelligence lifecycle failures use one
+retry-retention rule. A failed owner remains registered and reachable, its
+service name and required lifecycle references remain with the composition,
+independent safe cleanup continues, and all teardown failures are aggregated
+in `CompositionTeardownError`. A later successful teardown retries the failed
+lifecycle work before unregistering and clearing the retained owner. An
+unregistered store or manager whose rollback cleanup fails is likewise retained
+by its composition reference until a successful retry.
+
+AI initialization and service registration are one guarded ownership window.
+An initialization or registration failure shuts down the newly created
+manager/provider, removes only attempt-owned services, preserves foreign
+registrations, and propagates the original failure even when cleanup also
+reports an error.
+
+Functional readiness is executable rather than construction-only: the focused
+suite completes one real Conversation turn through the composed deterministic
+MockProvider and one real Memory create/get round trip under disposable
+`RuntimePaths.memory`. It also proves that the real `JAOSShell` receives the
+canonical injected dispatcher and cannot reach shell or dispatcher fallback
+construction.
+
+The lazy Intelligence facade is interim FORTRESS-06 containment. Public exports
+and the prior `jaos.intelligence.context`, `.exceptions`, `.interfaces`,
+`.models`, and `.prompt` submodule attributes are preserved lazily without
+loading deferred capabilities during a clean launcher import or simple
+submodule compatibility access. Explicit access to a deferred capability
+remains observable by the executable module guard. The boundary covers
+decision, planning, reasoning, agents, execution proposals, confidence and
+explainability models, planning-policy models, `MemoryContextSource`,
+`MemorySearchEngine`, and autonomous workflow code.
+
+Current verification evidence:
+
+| Suite | Result |
+|---|---|
+| Final review #2 focused remediation suite | 54 passed |
+| Related composition / intelligence / memory / platform / integration ladder | 1,603 passed; 1 skipped |
+| Full configured `tests/tests` suite | 2,002 passed; 1 skipped; 0 failed; 0 errors |
+
+The one skip is the existing directory-symlink escape test. This Windows host
+cannot create the required directory symlink without privilege (`WinError
+1314`). The test remains intact and must run on a capable host before overall
+Fortress certification.
+
+Finding disposition under ADR-0011 is intentionally not full closure:
+
+- RAA-002 is PARTIALLY RESOLVED. Composition and lifecycle ownership are
+  resolved; production request-path routing remains deferred.
+- RAA-007 is PARTIALLY RESOLVED. Canonical production composition is fixed;
+  compatibility self-construction remains FORTRESS-06 debt.
+- RAA-009 remains OPEN — DEFERRED. No Memory-context adapter was implemented.
+
+**FORTRESS-05 — Canonical platform composition — is COMPLETE AND VERIFIED at
+workstream level.** RAA-002 and RAA-007 remain partially resolved by explicit
+Founder decision, and RAA-009 remains open. This does not certify the Fortress
+Program, complete Step 7, authorize Step 8, resume Phase 8 expansion, or begin
+FORTRESS-06.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
 
 - Step 7 remains in progress.
+- RAA-002 is partially resolved; production request routing remains deferred.
 - RAA-005 is resolved with evidence.
+- RAA-007 is partially resolved; compatibility fallback removal is FORTRESS-06.
 - RAA-008 is resolved with evidence.
+- RAA-009 remains open and deferred.
 - unresolved RAA findings remain unresolved.
 - Step 8 Stabilization Certification has not begun.
 - Phase 8 major expansion remains paused.
@@ -945,6 +1063,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-24 | 1.9 | Recorded ADR-0011 and the FORTRESS-05A-E slice-state table; verified AI registration rollback, provider-neutral Memory lifecycle and retryable close failure, explicit `conversation@1.0`, functional Conversation/Memory readiness, real-shell fallback non-reachability, decision/deferred import guards, and lazy submodule compatibility. Focused, affected-subsystem, and full configured suites passed with zero failures/errors. FORTRESS-05 is COMPLETE AND VERIFIED at workstream level. RAA-002 and RAA-007 remain partially resolved; RAA-009 remains open. Fortress certification, Step 7 completion, Step 8, Phase 8 resumption, and FORTRESS-06 remain unauthorized. |
 | 2026-08-22 | 1.8 | Recorded FORTRESS-04 closure evidence: `run_jaos.py` now instantiates and drives `PlatformRuntime`/`BootManager` (lifecycle/reachability half of RAA-001 resolved), with truthful exit codes, controlled shutdown on both boot failure and unexpected shell exceptions, and no fabricated status claim. FORTRESS-04 is COMPLETE AND VERIFIED at workstream level. Composing AI/Tool/Executive/Memory into the Runtime Platform remains FORTRESS-05, unauthorized. |
 | 2026-08-22 | 1.7 | Recorded FORTRESS-03 closure evidence for slices 03A through 03J: truthful readiness, partial-start rollback and subscriber isolation, coordinated shutdown with narrow AI/Memory hardening, truthful health across Runtime/AI/Memory/Executive, repeat lifecycle semantics, production status honesty (SHT-003), construction/initialization separation (lifecycle half of RAA-007), and the consolidated lifecycle invariant closure suite. RAA-004 and RAA-006 resolved with evidence. FORTRESS-03 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-04 are all unaffected and unauthorized. |
 | 2026-08-21 | 1.6 | Recorded the FORTRESS-02K re-run after the junction blocker was remediated by test-only change. All ADR-0010 acceptance criteria now pass and FORTRESS-02 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-03 are all unaffected and unauthorized. |

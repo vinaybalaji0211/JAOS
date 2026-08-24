@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.1
+Version: 4.2
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -44,13 +44,14 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-02K | CLOSURE EVIDENCE COMPLETE |
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
+| FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
 | Previous completed phase | Phase 7 — Memory Platform |
 | Next planned phase | Phase 9 — Workflow & Automation Platform |
 | Long-term release target | JAOS v1.0 |
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | FORTRESS-04 CLOSURE EVIDENCE RECORDED |
+| Documentation state | ADR-0011 / FORTRESS-05 CLOSURE RECORDED |
 
 ---
 
@@ -85,8 +86,28 @@ RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled Step 7 remediation.
 
 Step 7 implementation is in progress. RAA-005 and RAA-008 are resolved with
-evidence; other unresolved RAA findings remain unresolved. Step 8 and Fortress
-certification have not begun.
+evidence. RAA-002 and RAA-007 are partially resolved under ADR-0011. RAA-009
+remains open and deferred; other unresolved findings remain unresolved. Step 8
+and Fortress certification have not begun.
+
+FORTRESS-05 is COMPLETE AND VERIFIED at workstream level under ADR-0011. The
+production launcher reaches
+one Runtime composition graph containing the canonical Tool, AI, Executive,
+SQLite-backed Memory, and Conversation Intelligence authorities. Focused
+executable tests prove exact shared identities, functional Conversation and
+Memory readiness, real-shell fallback non-reachability, deferred-code import
+containment, and retryable rollback/teardown. The focused suite passed 85; the
+related ladder passed 1,597 with one skip; and the full configured suite passed
+1,996 with one skip and zero failures/errors. Evidence is recorded in
+`docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
+
+Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
+lifecycle-owned but not production request-routed.
+`MemoryContextSource`/`MemorySearchEngine` remains deferred with RAA-009.
+Advanced reasoning, planning, decision, agents, execution proposals, and
+autonomy remain paused. Compatibility fallbacks, the lazy Intelligence facade,
+and legacy quarantine remain FORTRESS-06 debt; Tool control-policy hardening
+remains FORTRESS-07.
 
 The controlled Step 7 workflow is:
 
@@ -527,13 +548,14 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-1. Triage and map overlapping RAA-001 through RAA-009 and SHT-001 through
-   SHT-006 findings.
-2. Define remediation order and acceptance tests.
-3. Apply one controlled fix cluster at a time.
-4. Run targeted tests after each cluster.
-5. Run the full automated and shell regression suites.
-6. Produce the Step 7 report for Founder review.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state.
+2. Continue only separately authorized Step 7 remediation.
+3. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
+   architecture decision and implementation are authorized.
+4. Do not begin FORTRESS-06 without explicit Founder authorization.
+5. Execute the skipped directory-symlink escape check on a capable host before
+   Fortress certification.
+6. Produce the Step 7 report for Founder review when all Step 7 work is done.
 7. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
    until Step 7 is complete and approved.
 8. Resume MS-0025E only after Step 8 and Fortress certification and explicit

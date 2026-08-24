@@ -1,7 +1,7 @@
 # Runtime Architecture Audit
 
-Version: 1.0
-Status: APPROVED — STEP 4 COMPLETE
+Version: 1.1
+Status: APPROVED — STEP 4 COMPLETE; STEP 7 REMEDIATION STATUS APPENDED
 Owner: Vinay B
 Maintainer: JAOS Engineering
 Audit Activity: Repository Stabilization — Step 4
@@ -10,6 +10,7 @@ Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Audit Date: 2026-08-04
+Last Remediation Update: 2026-08-24
 Branch: phase8-ai-intelligence
 
 ---
@@ -303,6 +304,37 @@ after explicit approval.
 
 ---
 
+### 9.1 Step 7 Remediation Update — FORTRESS-05
+
+The section 9 table remains the approved 2026-08-04 finding record. The
+following later statuses are appended without rewriting that historical audit:
+
+| Finding | Current status | Executable evidence |
+|---|---|---|
+| RAA-002 | PARTIALLY RESOLVED | `run_jaos.py` reaches one `PlatformRuntime`/`PlatformComposition` graph that registers and lifecycle-owns canonical Conversation Intelligence alongside Tool, AI, Executive, and Memory. Conversation has no production request-path consumer; routing remains deferred to post-Fortress/MS-0025X governance unless reassigned. |
+| RAA-007 | PARTIALLY RESOLVED | FORTRESS-03 resolved construction/initialization lifecycle ordering and FORTRESS-05 fixes canonical production composition ownership. The launcher injects the exact Tool, AI, and Executive objects, and the real-shell invariant proves compatibility self-construction is unreachable there. `CommandDispatcher`/`JAOSShell` fallbacks remain FORTRESS-06 debt. |
+| RAA-009 | OPEN — DEFERRED | FORTRESS-05 intentionally does not compose `MemoryContextSource` or `MemorySearchEngine`. Co-composition of Memory and Conversation Intelligence does not adjudicate the recorded package-coupling risk. |
+
+FORTRESS-05 closure evidence is recorded in ADR-0011 and
+`docs/architecture/FORTRESS_PROGRAM.md` section 7.10. The focused remediation
+suite passed 85 tests; the affected composition/Intelligence/Memory/platform/
+integration ladder passed 1,597 with one skip; and the full configured suite
+passed 1,996 with one skip and zero failures/errors. The skip is the preserved
+directory-symlink escape test blocked by Windows privilege `WinError 1314`.
+
+`MemoryStore` is canonical and lifecycle-owned but is not used by live CLI
+behavior. `ConversationOrchestrator` is canonical and lifecycle-owned but is
+not production request-routed. The Memory-context adapter was not implemented,
+and the lazy Intelligence facade is interim containment pending FORTRESS-06.
+
+No advanced reasoning, planning, agent, execution-proposal, autonomous, or
+memory-context capability was added to the production composition path. Legacy
+quarantine remains FORTRESS-06; permission, approval, and audit policy
+hardening remains FORTRESS-07. Step 7 remains in progress, Step 8 has not
+started, and the Fortress Program is not certified.
+
+---
+
 ## 10. Correct Alignment
 
 The following boundaries are correctly preserved in the modern platform code:
@@ -342,6 +374,10 @@ Platform contracts and modern package boundaries are mostly sound.
 
 The executable runtime composition is incomplete relative to the declared
 architecture.
+
+This conclusion records the 2026-08-04 audit state. Section 9.1 records the
+later RAA-002/RAA-007 partial remediation and unchanged RAA-009 status;
+it does not alter the historical observation.
 
 ---
 
