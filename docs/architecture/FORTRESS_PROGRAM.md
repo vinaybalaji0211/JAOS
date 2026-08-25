@@ -101,11 +101,12 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D1 |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
-| FORTRESS-06D+ | NOT STARTED |
+| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED CANDIDATE |
+| FORTRESS-06D2+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-002 | PARTIALLY RESOLVED |
@@ -1179,6 +1180,63 @@ data, route `ConversationOrchestrator`, implement `MemoryContextSource`, alter
 provider resilience or permission policy, begin F06D or FORTRESS-07, complete
 Step 7, enter Step 8, certify Fortress, or resume major Phase 8 expansion.
 
+### 7.14 FORTRESS-06D1 — Quarantine Pure AI/Core Duplicate Configured Tests
+
+Date: 2026-08-25. F06D1 implementation is authorized to quarantine eight
+duplicate AI and Core configured tests under `tests/tests` that represent
+retired shadow architecture already backed by equal-or-stronger canonical
+evidence.
+
+F06D1 executed history-preserving, byte-identical moves for exactly:
+
+- `tests/tests/ai/test_ai_config.py` (4 tests) ->
+  `legacy_quarantine/tests/ai/test_ai_config.py.legacy`
+- `tests/tests/ai/test_ai_provider_interface.py` (4 tests) ->
+  `legacy_quarantine/tests/ai/test_ai_provider_interface.py.legacy`
+- `tests/tests/ai/test_ai_provider_manager.py` (14 tests) ->
+  `legacy_quarantine/tests/ai/test_ai_provider_manager.py.legacy`
+- `tests/tests/ai/test_ai_provider_models.py` (5 tests) ->
+  `legacy_quarantine/tests/ai/test_ai_provider_models.py.legacy`
+- `tests/tests/ai/test_llm_router.py` (7 tests) ->
+  `legacy_quarantine/tests/ai/test_llm_router.py.legacy`
+- `tests/tests/ai/test_prompt_engine.py` (8 tests) ->
+  `legacy_quarantine/tests/ai/test_prompt_engine.py.legacy`
+- `tests/tests/ai/test_prompt_models.py` (4 tests) ->
+  `legacy_quarantine/tests/ai/test_prompt_models.py.legacy`
+- `tests/tests/core/test_kernel.py` (4 tests) ->
+  `legacy_quarantine/tests/core/test_kernel.py.legacy`
+
+The 50 source test definitions are retired from configured execution. SHA256
+hashes were verified byte-identical before and after the moves. Neither
+archive directory contains `__init__.py`, and `.py.legacy` is unrecognized by
+Python import machinery and pytest discovery. Configured legacy-importing
+files decrease from 67 to 59.
+
+The F06D audit observation of 5 configured legacy runtime-state writer tests
+across 4 files (`test_executive_brain.py`, `test_executive_pipeline.py`,
+`test_memory_manager.py`, `test_config_containment.py`) is verified and
+reconciled.
+
+Verified F06D1 evidence, all exit code 0:
+
+| Gate | Target and options after `pytest` | Result |
+|---|---|---|
+| Focused containment | `tests/tests/platform/test_collection_containment.py -q` | 14 passed |
+| Import boundary | `tests/tests/platform/test_canonical_import_boundary.py -q` | 55 passed |
+| AI suite | `tests/tests/ai -q` | 33 passed |
+| Intelligence suite | `tests/tests/intelligence -q` | 785 passed |
+| Platform suite | `tests/tests/platform -q` | 365 passed, 1 skipped |
+| Composition suite | `tests/tests/composition -q` | 49 passed |
+| Integration suite | `tests/tests/integration -q` | 64 passed |
+| Full configured | `tests/tests -q` | 1,998 passed, 1 skipped |
+| Repository-root collection | `. --collect-only -q` | 1,999 collected |
+| Ruff 0.16.1 | `tests/tests/platform/test_collection_containment.py` | All checks passed |
+
+The skip remains the Windows directory-symlink privilege limitation (`WinError
+1314`). F06D1 is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted
+working tree. RAA-003 remains OPEN, F06D2+ remains not started, Step 8 remains
+blocked, and major Phase 8 expansion remains paused.
+
 ---
 
 ## 8. Relationship to Stabilization and Certified Phases
@@ -1235,6 +1293,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.14 | Recorded F06D1's exact quarantine of 8 duplicate AI/Core configured tests (50 tests retired) to `legacy_quarantine/tests/` as `.py.legacy` artifacts; verified 59 legacy-importing files remaining; full configured suite 1,998 passed, 1 skipped; root collection 1,999 collected; F06D1 is IMPLEMENTED AND VERIFIED CANDIDATE. |
 | 2026-08-25 | 1.13 | Synchronized F06C current-state wording with committed and pushed checkpoint `0a2ea60`; FORTRESS-06 remains in progress through F06C, while F06D+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.12 | Recorded F06C's mandatory injected CLI adapters, canonical lifecycle ownership, exact green verification evidence, and RAA-007 resolution. FORTRESS-06 remains in progress through F06C; F06D+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.11 | Recorded F06B's exact two-file byte-identical non-Python archive move and canonical pytest importlib mode. All three supported collection forms now collect the same 2,039 tests with exit code 0; focused 80, platform 364 with 1 skip, composition 45, integration 58, and full configured 2,038 with 1 skip passed. FORTRESS-06 remains in progress; F06C+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |

@@ -240,12 +240,12 @@ def test_supported_collection_invocations_share_canonical_node_ids(
         result = _run_pytest(tmp_path, [*arguments, "--collect-only", "-q"])
 
         assert result.returncode == 0, result.stdout + result.stderr
-        assert not _side_effect_fired(tmp_path), (
-            f"{label}: the flat legacy module body executed"
-        )
-        assert not _archive_side_effect_fired(tmp_path), (
-            f"{label}: an archived module body executed"
-        )
+        assert not _side_effect_fired(
+            tmp_path
+        ), f"{label}: the flat legacy module body executed"
+        assert not _archive_side_effect_fired(
+            tmp_path
+        ), f"{label}: an archived module body executed"
         assert "legacy_side_effect_test" not in result.stdout
         assert ".py.legacy" not in result.stdout
         collected_by_invocation[label] = _collected_node_ids(result.stdout)
@@ -394,18 +394,10 @@ def test_collection_boundary_classifies_paths_correctly() -> None:
 
     tests_root = _REPOSITORY_ROOT / "tests"
 
-    assert tests_conftest.is_excluded_legacy_module(
-        tests_root / "goal_tracker_test.py"
-    )
-    assert tests_conftest.is_excluded_legacy_module(
-        tests_root / "test_runner.py"
-    )
-    assert not tests_conftest.is_excluded_legacy_module(
-        tests_root / "__init__.py"
-    )
-    assert not tests_conftest.is_excluded_legacy_module(
-        tests_root / "conftest.py"
-    )
+    assert tests_conftest.is_excluded_legacy_module(tests_root / "goal_tracker_test.py")
+    assert tests_conftest.is_excluded_legacy_module(tests_root / "test_runner.py")
+    assert not tests_conftest.is_excluded_legacy_module(tests_root / "__init__.py")
+    assert not tests_conftest.is_excluded_legacy_module(tests_root / "conftest.py")
     assert not tests_conftest.is_excluded_legacy_module(
         tests_root / "tests" / "platform" / "test_runtime_paths.py"
     )
@@ -463,3 +455,54 @@ def test_root_test_shaped_scripts_are_non_python_archives() -> None:
             )
             is None
         )
+
+
+_F06D1_QUARANTINED_PATHS = (
+    "tests/tests/ai/test_ai_config.py",
+    "tests/tests/ai/test_ai_provider_interface.py",
+    "tests/tests/ai/test_ai_provider_manager.py",
+    "tests/tests/ai/test_ai_provider_models.py",
+    "tests/tests/ai/test_llm_router.py",
+    "tests/tests/ai/test_prompt_engine.py",
+    "tests/tests/ai/test_prompt_models.py",
+    "tests/tests/core/test_kernel.py",
+)
+
+_F06D1_ARCHIVED_RELPATHS = (
+    "legacy_quarantine/tests/ai/test_ai_config.py.legacy",
+    "legacy_quarantine/tests/ai/test_ai_provider_interface.py.legacy",
+    "legacy_quarantine/tests/ai/test_ai_provider_manager.py.legacy",
+    "legacy_quarantine/tests/ai/test_ai_provider_models.py.legacy",
+    "legacy_quarantine/tests/ai/test_llm_router.py.legacy",
+    "legacy_quarantine/tests/ai/test_prompt_engine.py.legacy",
+    "legacy_quarantine/tests/ai/test_prompt_models.py.legacy",
+    "legacy_quarantine/tests/core/test_kernel.py.legacy",
+)
+
+
+def test_f06d1_quarantined_tests_are_non_python_archives() -> None:
+    """F06D1 archives exactly 8 duplicate AI/Core tests as non-Python legacy files."""
+
+    for former_path in _F06D1_QUARANTINED_PATHS:
+        assert not (
+            _REPOSITORY_ROOT / former_path
+        ).exists(), f"Quarantined path {former_path} must not exist"
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+
+    for archive_relpath in _F06D1_ARCHIVED_RELPATHS:
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+        assert archive_path.is_file(), f"Archive file {archive_relpath} must exist"
+        assert not archive_path.name.endswith(
+            import_suffixes
+        ), f"{archive_relpath} must not end with a Python suffix"
+        assert archive_path.name.endswith(".py.legacy")
+
+    # Verify no __init__.py exists anywhere under legacy_quarantine
+    legacy_quarantine_root = _REPOSITORY_ROOT / "legacy_quarantine"
+    assert legacy_quarantine_root.is_dir()
+    for directory in legacy_quarantine_root.rglob("*"):
+        if directory.is_dir():
+            assert not (
+                directory / "__init__.py"
+            ).exists(), f"No __init__.py allowed in {directory}"
