@@ -1,6 +1,6 @@
 # Runtime Architecture Audit
 
-Version: 1.2
+Version: 1.3
 Status: APPROVED — STEP 4 COMPLETE; STEP 7 REMEDIATION STATUS APPENDED
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -361,7 +361,8 @@ directory for each pytest gate:
 The one skip is independently confirmed at
 `tests/tests/platform/test_runtime_paths.py:312`: Windows denied the required
 directory-symlink privilege with `WinError 1314`.
-F06C is an implemented-and-verified candidate in the uncommitted working tree.
+F06C is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`0a2ea60`.
 RAA-002 remains PARTIALLY RESOLVED, RAA-003 remains OPEN, and RAA-009 remains
 OPEN — DEFERRED. No legacy source or runtime data moved, the 428 excluded flat
 legacy tests remain untouched, Conversation remains unrouted, no

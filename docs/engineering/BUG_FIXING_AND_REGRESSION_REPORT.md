@@ -1,6 +1,6 @@
 # Bug Fixing and Regression Report
 
-Version: 1.1
+Version: 1.2
 Status: IN PROGRESS — D1, D2, LIFECYCLE, SHT-006, RAA-007, AND RAA-008 VERIFIED
 Stabilization Step: Step 7 of 9
 Owner: Vinay B
@@ -8,7 +8,7 @@ Maintainer: JAOS Engineering
 Date: 2026-08-12
 Branch: phase8-ai-intelligence
 Step 7 Entry Commit: 2098be4
-Current HEAD: eea8190
+Current HEAD: 0a2ea60
 Phase 8 Status: PAUSED
 MS-0025E Status: PAUSED
 
@@ -463,8 +463,9 @@ Founder/reviewer approval remains pending for Step 7 completion.
 ### 11.1 Later Fortress Continuation — FORTRESS-06C
 
 The section 11 next-action text above records its original 2026-08-12
-checkpoint. Later separately authorized Fortress work has now produced an
-IMPLEMENTED AND VERIFIED F06C candidate and resolved RAA-007 with evidence.
+checkpoint. Later separately authorized Fortress work produced the F06C
+IMPLEMENTED AND VERIFIED checkpoint, committed and pushed at `0a2ea60`, and
+resolved RAA-007 with evidence.
 F06D and later F06 slices remain not started, FORTRESS-07 has not started,
 Step 7 remains in progress, Step 8 remains blocked and not started, Fortress
 certification has not started, and major Phase 8 expansion remains paused.

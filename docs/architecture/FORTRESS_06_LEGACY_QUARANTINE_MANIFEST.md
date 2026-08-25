@@ -2,13 +2,13 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.2
+Document Version: 1.3
 
 Certified Repository Baseline: v0.9.0-alpha
 
 Development Target: v0.10.0-alpha
 
-Status: In Progress — F06C implemented and verified candidate (uncommitted working tree)
+Status: In Progress — F06C implemented and verified; committed and pushed at `0a2ea60`
 
 Owner and Approval Authority: Founder Vinay B
 
@@ -47,8 +47,9 @@ non-Python `.py.legacy` artifacts, then adopts pytest importlib mode through
 the single existing pytest configuration. It moves no other legacy source.
 
 F06C removes hidden CLI self-composition and lifecycle ownership. Its
-injected-adapter implementation is verified in the working tree and resolves
-RAA-007 with evidence without completing the FORTRESS-06 workstream.
+injected-adapter implementation is committed and pushed at checkpoint
+`0a2ea60` and resolves RAA-007 with evidence without completing the
+FORTRESS-06 workstream.
 
 The authoritative runtime-state artifact and writer metadata remains in
 `jaos_platform/runtime_state_inventory.py`. This manifest records which source
@@ -274,7 +275,8 @@ FORTRESS-06, Step 7, or any certification gate.
 
 ## 8. F06C Current State and Stop Boundary
 
-F06C is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+F06C is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`0a2ea60`.
 The verified implementation establishes the following behavior:
 
 - `CommandDispatcher` requires injected `ToolManager`, `AIManager`, and
@@ -331,6 +333,7 @@ and major Phase 8 expansion remains PAUSED.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.3 | Synchronized F06C current-state wording with committed and pushed checkpoint `0a2ea60`; FORTRESS-06 remains in progress, F06D+ remains not started, and certification gates remain unchanged. |
 | 2026-08-25 | 1.2 | Recorded F06C's verified injected CLI adapters, canonical lifecycle ownership, exact verification evidence, and RAA-007 resolution. FORTRESS-06 remains in progress and F06D+ remains not started. |
 | 2026-08-25 | 1.1 | Recorded F06B's exact two-artifact non-Python archive move, importlib pytest configuration, collection-collision remediation, and unchanged stop boundary. |
 | 2026-08-25 | 1.0 | Created the authoritative F06 classification and canonical import-guard contract. No legacy source or runtime data moved. |

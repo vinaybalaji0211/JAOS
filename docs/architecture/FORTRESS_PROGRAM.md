@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.12
+Document Version: 1.13
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -104,7 +104,7 @@ requires all of the following:
 | FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
-| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED WORKING TREE |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -1172,7 +1172,8 @@ Executive objects, the CLI adapters cannot construct platform collaborators,
 and shutdown remains with canonical composition/runtime ownership. RAA-007 is
 therefore RESOLVED WITH EVIDENCE.
 
-F06C is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+F06C is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`0a2ea60`.
 It does not move legacy source, touch the 428 flat legacy tests, migrate runtime
 data, route `ConversationOrchestrator`, implement `MemoryContextSource`, alter
 provider resilience or permission policy, begin F06D or FORTRESS-07, complete
@@ -1234,6 +1235,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.13 | Synchronized F06C current-state wording with committed and pushed checkpoint `0a2ea60`; FORTRESS-06 remains in progress through F06C, while F06D+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.12 | Recorded F06C's mandatory injected CLI adapters, canonical lifecycle ownership, exact green verification evidence, and RAA-007 resolution. FORTRESS-06 remains in progress through F06C; F06D+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.11 | Recorded F06B's exact two-file byte-identical non-Python archive move and canonical pytest importlib mode. All three supported collection forms now collect the same 2,039 tests with exit code 0; focused 80, platform 364 with 1 skip, composition 45, integration 58, and full configured 2,038 with 1 skip passed. FORTRESS-06 remains in progress; F06C+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.10 | Started FORTRESS-06 through the separately authorized F06A slice. Added the authoritative 33-entry legacy/quarantine manifest, reserved `legacy_quarantine`, and extended the existing canonical import guard to 22 F06-owned top-level identities while preserving canonical `jaos.*` roots. F06A is an implemented and verified candidate in the uncommitted working tree: focused 55 passed; platform 363 passed, 1 skipped; composition 45 passed; full configured suite 2,037 passed, 1 skipped. No source moved or was deleted, no runtime data migrated, F06B and FORTRESS-07 have not started, RAA-003 remains open, and RAA-007 remains partially resolved. |

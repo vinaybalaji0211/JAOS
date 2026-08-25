@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.5
+Version: 4.6
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -48,7 +48,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
-| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Previous completed phase | Phase 7 — Memory Platform |
@@ -57,7 +57,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | F06C VERIFIED CANDIDATE RECORDED |
+| Documentation state | F06C COMMITTED/PUSHED CHECKPOINT RECORDED |
 
 ---
 
@@ -123,8 +123,9 @@ an injected dispatcher, and canonical composition/runtime retains teardown.
 The focused run passed 125 tests; the affected ladder passed 583 with one skip;
 disposable launcher/lifecycle checks passed 4; the full configured suite passed
 2,047 with one skip; repository-root collection found 2,048 tests; and Ruff
-passed. All commands exited 0. RAA-007 is resolved with
-evidence. No other legacy source moved or was deleted, no runtime data
+passed. All commands exited 0. F06C is IMPLEMENTED AND VERIFIED — COMMITTED
+AND PUSHED at checkpoint `0a2ea60`. RAA-007 is resolved with evidence. No
+other legacy source moved or was deleted, no runtime data
 migrated, F06D and later slices have not started, and FORTRESS-07 has not
 started.
 
@@ -576,8 +577,8 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-1. Preserve the verified FORTRESS-01 through FORTRESS-05 state, the committed
-   F06A/F06B checkpoints, and the F06C implemented-and-verified candidate.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the committed
+   and pushed F06A/F06B/F06C checkpoints.
 2. Continue only separately authorized Step 7 remediation.
 3. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
    architecture decision and implementation are authorized.

@@ -1,6 +1,6 @@
 # JAOS Next Actions
 
-Version: 4.5
+Version: 4.6
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -12,7 +12,7 @@ Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 Current Stabilization Activity: Step 7 — Bug Fixing and Regression
 Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06C
-Exact Next Action: Preserve F06A/F06B and the F06C implemented-and-verified candidate; do not begin F06D+ or move additional legacy source
+Exact Next Action: Preserve the committed-and-pushed F06A/F06B/F06C checkpoints; do not begin F06D+ or move additional legacy source
 
 ---
 
@@ -66,7 +66,7 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
-| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Repository health | STABILIZATION IN PROGRESS |
@@ -104,7 +104,7 @@ This pause is not:
 
 The immediate priority is to preserve the FORTRESS-01 governance checkpoint,
 the verified FORTRESS-02 through FORTRESS-05 state, F06A checkpoint `92aa9d7`,
-F06B checkpoint `eea8190`, and the F06C implemented-and-verified candidate. Do
+F06B checkpoint `eea8190`, and F06C checkpoint `0a2ea60`. Do
 not begin F06D or any later slice, move any additional legacy source, or
 migrate runtime data.
 
@@ -842,8 +842,8 @@ FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at workstream level,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through F06C. F06A is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`; F06B is
-IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`; and F06C is an
-IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. No other
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`; and F06C is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0a2ea60`. No other
 legacy source moved or was deleted, no runtime data migrated, F06D and later
 slices have not started, and FORTRESS-07 has not started. RAA-003 remains open,
 RAA-007 is resolved with evidence, and RAA-009 remains open. Do not claim Fortress Program

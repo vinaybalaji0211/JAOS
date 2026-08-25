@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 3.5
+Version: 3.6
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -88,8 +88,8 @@ recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
 FORTRESS-06 is IN PROGRESS through F06C. F06A is IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is IMPLEMENTED AND VERIFIED
-— COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is an IMPLEMENTED AND
-VERIFIED CANDIDATE in the uncommitted working tree: the CLI surfaces require
+— COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is IMPLEMENTED AND
+VERIFIED — COMMITTED AND PUSHED at checkpoint `0a2ea60`: the CLI surfaces require
 injected collaborators and canonical composition/runtime retains lifecycle
 ownership. RAA-007 is resolved with evidence. No other legacy source moved or
 was deleted, no runtime data migrated, F06D and later slices have not started,
@@ -143,7 +143,7 @@ The objectives of this sprint are to:
 | FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
-| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
@@ -467,8 +467,8 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-1. Preserve the verified FORTRESS-01 through FORTRESS-05 state, the committed
-   F06A/F06B checkpoints, and the F06C implemented-and-verified candidate.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the committed
+   and pushed F06A/F06B/F06C checkpoints.
 2. Continue only separately authorized Step 7 remediation.
 3. Keep RAA-009 and the Memory-context adapter open/deferred.
 4. Do not begin F06D or any later FORTRESS-06 slice without separate Founder
@@ -504,7 +504,7 @@ This sprint is complete only when:
 | FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
-| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
@@ -522,7 +522,7 @@ Newer Fortress checkpoints:
 
 `f9b054e` (FORTRESS-05A/05B), `1df73e3` (FORTRESS-05C), `cf26693`
 (FORTRESS-05D), `bc54d36` (FORTRESS-05 closure), `92aa9d7` (FORTRESS-06A),
-and `eea8190` (FORTRESS-06B)
+`eea8190` (FORTRESS-06B), and `0a2ea60` (FORTRESS-06C)
 
 FORTRESS-05 checkpoint state:
 
@@ -535,7 +535,7 @@ Current FORTRESS-06 state:
 IN PROGRESS through F06C. F06A's 33-entry manifest and 22 guarded top-level
 identities are IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`.
 F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`. F06C is
-an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. The
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0a2ea60`. The
 focused F06C run passed 125 tests; the affected ladder passed 583 with one skip;
 disposable launcher/lifecycle checks passed 4; the full configured suite passed
 2,047 with one skip; repository-root collection found 2,048 tests;
