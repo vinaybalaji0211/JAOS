@@ -3,9 +3,9 @@
 Composes the real AI, Tool, Executive, Memory, and Conversation Intelligence
 platforms into a PlatformRuntime that has already reached READY, registering
 each canonical service so PlatformRuntime's own container/registry are the
-single authoritative record of what is live. This replaces CommandDispatcher's
-independent construction as the canonical production path; CommandDispatcher
-keeps its own fallback construction only for standalone/unit use.
+single authoritative record of what is live. CommandDispatcher receives its
+Tool, AI, and Executive collaborators from this composition root and performs
+no independent platform construction.
 
 Memory composition uses the canonical modern chain exclusively
 (SQLiteProvider.from_memory_scope -> ProviderRegistry -> ProviderFactory ->

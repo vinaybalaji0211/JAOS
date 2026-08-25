@@ -46,6 +46,107 @@ _CANONICAL_SERVICES = (
     MEMORY_STORE_SERVICE,
     INTELLIGENCE_ORCHESTRATOR_SERVICE,
 )
+
+_FORBIDDEN_DISPATCHER_CALLS = frozenset(
+    {
+        "ToolManager",
+        "ProviderManager",
+        "AIManager",
+        "ExecutiveController",
+        "load_tools",
+        "initialize_default_provider",
+    }
+)
+
+
+def _qualified_symbol(
+    node: ast.expr,
+    bindings: dict[str, str],
+) -> str | None:
+    if isinstance(node, ast.Name):
+        return bindings.get(node.id, node.id)
+
+    if isinstance(node, ast.Attribute):
+        owner = _qualified_symbol(node.value, bindings)
+        if owner is not None:
+            return f"{owner}.{node.attr}"
+
+    return None
+
+
+def _resolved_call_targets(
+    source_path: Path,
+    *,
+    class_name: str | None = None,
+) -> list[str]:
+    """Resolve direct, imported, and simply aliased call targets."""
+
+    tree = ast.parse(source_path.read_text(encoding="utf-8"))
+    bindings: dict[str, str] = {}
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for imported in node.names:
+                bound_name = imported.asname or imported.name.split(".", 1)[0]
+                bindings[bound_name] = (
+                    imported.name if imported.asname else bound_name
+                )
+        elif isinstance(node, ast.ImportFrom) and node.module is not None:
+            for imported in node.names:
+                if imported.name == "*":
+                    continue
+                bound_name = imported.asname or imported.name
+                bindings[bound_name] = f"{node.module}.{imported.name}"
+
+    alias_assignments = [
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, (ast.Assign, ast.AnnAssign))
+    ]
+    for _ in range(len(alias_assignments) + 1):
+        changed = False
+        for node in alias_assignments:
+            targets = node.targets if isinstance(node, ast.Assign) else [node.target]
+            value = node.value
+            if value is None:
+                continue
+
+            resolved = _qualified_symbol(value, bindings)
+            if resolved is None:
+                continue
+
+            for target in targets:
+                if not isinstance(target, ast.Name):
+                    continue
+                if resolved == target.id or resolved.startswith(f"{target.id}."):
+                    continue
+                if bindings.get(target.id) != resolved:
+                    bindings[target.id] = resolved
+                    changed = True
+        if not changed:
+            break
+
+    scope: ast.AST = tree
+    if class_name is not None:
+        matching_classes = [
+            node
+            for node in tree.body
+            if isinstance(node, ast.ClassDef) and node.name == class_name
+        ]
+        assert len(matching_classes) == 1, class_name
+        scope = matching_classes[0]
+
+    targets: list[str] = []
+    for node in ast.walk(scope):
+        if not isinstance(node, ast.Call):
+            continue
+        resolved = _qualified_symbol(node.func, bindings)
+        if resolved is not None:
+            targets.append(resolved)
+
+    return targets
+
+
 def _started_runtime(runtime_paths: RuntimePaths) -> PlatformRuntime:
     runtime = PlatformRuntime(runtime_paths=runtime_paths)
     runtime.initialize()
@@ -259,34 +360,133 @@ def test_ai_registration_failure_cleans_provider_without_masking_original(
     assert shutdown_calls == 2
 
 
-def test_canonical_launcher_cannot_reach_dispatcher_self_construction(
+def test_ast_call_resolver_follows_import_and_assignment_aliases(
+    tmp_path: Path,
+) -> None:
+    source_path = tmp_path / "aliased_dispatcher.py"
+    source_path.write_text(
+        """from jaos.tools.tool_manager import ToolManager as TM
+import jaos.ai as platform_ai
+from jaos.ai.bootstrap import initialize_default_provider as init
+from jaos.bootstrap.tool_loader import load_tools as load
+from jaos.executive.controller import ExecutiveController as EC
+
+build_executive = EC
+
+
+class CommandDispatcher:
+    def __init__(self):
+        build_tools = TM
+        build_tools()
+        platform_ai.ProviderManager()
+        platform_ai.AIManager()
+        build_executive()
+        load(None)
+        init(None)
+""",
+        encoding="utf-8",
+    )
+
+    terminals = {
+        target.rsplit(".", 1)[-1]
+        for target in _resolved_call_targets(
+            source_path,
+            class_name="CommandDispatcher",
+        )
+    }
+
+    assert terminals == _FORBIDDEN_DISPATCHER_CALLS
+
+
+def test_command_dispatcher_is_not_a_hidden_composition_root() -> None:
+    call_targets = _resolved_call_targets(
+        Path(dispatcher_module.__file__),
+        class_name="CommandDispatcher",
+    )
+    forbidden_targets = {
+        target
+        for target in call_targets
+        if target.rsplit(".", 1)[-1] in _FORBIDDEN_DISPATCHER_CALLS
+    }
+
+    assert forbidden_targets == set()
+
+
+def test_shell_does_not_construct_a_command_dispatcher() -> None:
+    call_targets = _resolved_call_targets(
+        Path(shell_module.__file__),
+        class_name="JAOSShell",
+    )
+
+    assert all(
+        target.rsplit(".", 1)[-1] != "CommandDispatcher"
+        for target in call_targets
+    )
+
+
+def test_cli_constructors_require_explicit_valid_dependencies_before_helpers(
+    jaos_runtime_paths: RuntimePaths,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    runtime = _started_runtime(jaos_runtime_paths)
+    composition = PlatformComposition(runtime)
+    composition.compose()
+    helper_calls: list[str] = []
+
+    def forbidden_helper(*_args: object, **_kwargs: object) -> object:
+        helper_calls.append("called")
+        raise AssertionError("dispatcher helper reached before validation")
+
+    monkeypatch.setattr(
+        dispatcher_module.ProviderProfileRegistry,
+        "build_default",
+        forbidden_helper,
+    )
+    monkeypatch.setattr(
+        dispatcher_module,
+        "ProviderStatusService",
+        forbidden_helper,
+    )
+
+    try:
+        with pytest.raises(TypeError):
+            dispatcher_module.CommandDispatcher()
+        with pytest.raises(TypeError):
+            dispatcher_module.CommandDispatcher(composition.tool_manager)
+        with pytest.raises(TypeError):
+            dispatcher_module.CommandDispatcher(
+                composition.tool_manager,
+                ai_manager=composition.ai_manager,
+            )
+
+        valid_dependencies = {
+            "tool_manager": composition.tool_manager,
+            "ai_manager": composition.ai_manager,
+            "executive": composition.executive_controller,
+        }
+        for dependency_name in valid_dependencies:
+            invalid_dependencies = dict(valid_dependencies)
+            invalid_dependencies[dependency_name] = None
+            with pytest.raises(TypeError):
+                dispatcher_module.CommandDispatcher(**invalid_dependencies)
+
+        with pytest.raises(TypeError):
+            shell_module.JAOSShell()
+        with pytest.raises(TypeError):
+            shell_module.JAOSShell(None)
+    finally:
+        composition.teardown()
+
+    assert helper_calls == []
+
+
+def test_canonical_launcher_injects_exact_composition_identities(
     jaos_runtime_paths: RuntimePaths,
     monkeypatch: pytest.MonkeyPatch,
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    def forbidden_fallback(*_args: object, **_kwargs: object) -> object:
-        raise AssertionError("CommandDispatcher compatibility fallback reached")
-
-    for collaborator in (
-        "ToolManager",
-        "ProviderManager",
-        "AIManager",
-        "ExecutiveController",
-    ):
-        monkeypatch.setattr(
-            dispatcher_module,
-            collaborator,
-            forbidden_fallback,
-        )
-
     observed: dict[str, object] = {}
     runtime = PlatformRuntime(runtime_paths=jaos_runtime_paths)
-
-    monkeypatch.setattr(
-        shell_module,
-        "CommandDispatcher",
-        forbidden_fallback,
-    )
 
     def inspect_real_shell(self: shell_module.JAOSShell) -> None:
         dispatcher = self.dispatcher
@@ -301,11 +501,15 @@ def test_canonical_launcher_cannot_reach_dispatcher_self_construction(
         observed["executive_identity"] = (
             dispatcher.executive is instances[EXECUTIVE_CONTROLLER_SERVICE]
         )
-        observed["owns_ai"] = dispatcher._owns_ai_manager
+        observed["has_shutdown"] = hasattr(dispatcher, "shutdown")
+        observed["has_owns_ai_manager"] = hasattr(
+            dispatcher,
+            "_owns_ai_manager",
+        )
+        observed["ai_manager"] = dispatcher.ai_manager
         observed["canonical_instance_count"] = len(
             {id(instance) for instance in instances.values()}
         )
-        dispatcher.shutdown()
 
     monkeypatch.setattr(shell_module.JAOSShell, "run", inspect_real_shell)
 
@@ -317,8 +521,10 @@ def test_canonical_launcher_cannot_reach_dispatcher_self_construction(
     assert observed["tool_identity"] is True
     assert observed["ai_identity"] is True
     assert observed["executive_identity"] is True
-    assert observed["owns_ai"] is False
+    assert observed["has_shutdown"] is False
+    assert observed["has_owns_ai_manager"] is False
     assert observed["canonical_instance_count"] == 5
+    assert observed["ai_manager"]._shutdown_complete is True
     assert runtime.container.list_services() == []
 
 
@@ -575,13 +781,8 @@ def test_run_jaos_is_the_only_production_platform_composition_root() -> None:
     composition_calls: list[Path] = []
 
     for source_path in production_sources:
-        tree = ast.parse(source_path.read_text(encoding="utf-8"))
-        for node in ast.walk(tree):
-            if not isinstance(node, ast.Call):
-                continue
-            if isinstance(node.func, ast.Name) and (
-                node.func.id == "PlatformComposition"
-            ):
+        for target in _resolved_call_targets(source_path):
+            if target.rsplit(".", 1)[-1] == "PlatformComposition":
                 composition_calls.append(source_path)
 
     assert composition_calls == [_REPOSITORY_ROOT / "run_jaos.py"]

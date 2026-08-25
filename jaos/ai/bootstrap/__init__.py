@@ -1,9 +1,7 @@
 """Shared default AI provider bootstrap for composition roots.
 
-Both CommandDispatcher's standalone construction and the canonical
-PlatformComposition (FORTRESS-05) need to register and initialize the same
-default mock provider. This is the single place that does it, so neither
-duplicates the other's rollback-scoped registration logic.
+The canonical PlatformComposition registers and initializes the default mock
+provider here so its rollback-scoped registration logic has one owner.
 """
 
 from __future__ import annotations

@@ -6,9 +6,7 @@ from jaos.ai import (
     AIProviderType,
     ProviderManager,
 )
-from jaos.ai.provider import AIProviderLifecycleState
 from jaos.ai.providers.mock_provider import MockProvider
-from jaos.cli.command_dispatcher import CommandDispatcher
 
 
 def test_mock_provider_is_absent_from_jaos_ai_all() -> None:
@@ -40,28 +38,3 @@ def test_abstract_facade_exports_remain_available() -> None:
     assert AIProviderType is ai_facade.AIProviderType
     assert ProviderManager is ai_facade.ProviderManager
     assert AIProviderType.MOCK.value == "mock"
-
-
-def test_command_dispatcher_constructs_and_initializes_mock_provider() -> None:
-    dispatcher = CommandDispatcher()
-
-    try:
-        lifecycle = (
-            dispatcher.ai_manager.get_provider_manager()
-            .get_state("mock")
-            .lifecycle
-        )
-        assert lifecycle == AIProviderLifecycleState.INITIALIZED
-        assert isinstance(
-            dispatcher.ai_manager.get_provider_manager().get_provider("mock"),
-            MockProvider,
-        )
-    finally:
-        dispatcher.shutdown()
-
-    shutdown_lifecycle = (
-        dispatcher.ai_manager.get_provider_manager()
-        .get_state("mock")
-        .lifecycle
-    )
-    assert shutdown_lifecycle == AIProviderLifecycleState.SHUTDOWN

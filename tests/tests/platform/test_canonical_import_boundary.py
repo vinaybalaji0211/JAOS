@@ -104,8 +104,8 @@ _F06_GUARD_END = "<!-- F06A-GUARDED-TOP-LEVEL-MODULES:END -->"
 _F06_CLASSIFICATION_START = "<!-- F06A-CLASSIFICATION-ENTRIES:START -->"
 _F06_CLASSIFICATION_END = "<!-- F06A-CLASSIFICATION-ENTRIES:END -->"
 _EXPECTED_F06_CLASSIFICATION_COUNTS = {
-    "A": 8,
-    "B": 3,
+    "A": 10,
+    "B": 1,
     "D": 16,
     "E": 3,
     "F": 3,
@@ -121,15 +121,15 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
             "jaos.executive",
             "jaos.tools",
             "jaos.intelligence.conversation",
+            (
+                "jaos.cli.command_dispatcher.CommandDispatcher "
+                "injected adapter"
+            ),
+            "jaos.cli.shell.JAOSShell injected adapter",
         }
     ),
     "B": frozenset(
         {
-            (
-                "jaos.cli.command_dispatcher.CommandDispatcher "
-                "self-construction fallback"
-            ),
-            "jaos.cli.shell.JAOSShell dispatcher fallback",
             "jaos.intelligence lazy facades",
         }
     ),
@@ -168,6 +168,7 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
         }
     ),
 }
+_EXPECTED_F06_CLASSIFIED_TOTAL = 33
 
 FORBIDDEN_CANONICAL_MODULE_PREFIXES = (
     "jaos.intelligence.context.memory_context_source",
@@ -657,12 +658,17 @@ def test_f06_manifest_guard_contract_matches_boundary_guard() -> None:
     assert _manifest_guarded_top_level_modules(source) == (
         F06_MANIFEST_GUARDED_TOP_LEVEL_MODULES
     )
-    assert _manifest_classification_counts(source) == (
+    classification_counts = _manifest_classification_counts(source)
+    classified_paths = _manifest_classified_paths(source)
+
+    assert classification_counts == (
         _EXPECTED_F06_CLASSIFICATION_COUNTS
     )
-    assert _manifest_classified_paths(source) == (
+    assert classified_paths == (
         _EXPECTED_F06_CLASSIFIED_PATHS
     )
+    assert sum(classification_counts.values()) == _EXPECTED_F06_CLASSIFIED_TOTAL
+    assert sum(map(len, classified_paths.values())) == _EXPECTED_F06_CLASSIFIED_TOTAL
 
 
 def test_preexisting_and_f06_guard_ownership_is_disjoint() -> None:

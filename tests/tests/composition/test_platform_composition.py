@@ -21,7 +21,6 @@ from jaos.composition.platform_composition import (
 from jaos.executive.controller import ExecutiveController
 from jaos.memory.providers.sqlite_store import SQLiteStore
 from jaos.tools.tool_manager import ToolManager
-from jaos_platform.lifecycle_state import RuntimeLifecycleState
 from jaos_platform.platform_runtime import PlatformRuntime
 from jaos_platform.runtime_paths import RuntimePaths
 
@@ -86,7 +85,6 @@ def test_dependency_injection_identity_flows_to_command_dispatcher(
     assert dispatcher.tool_manager is composition.tool_manager
     assert dispatcher.ai_manager is composition.ai_manager
     assert dispatcher.executive is composition.executive_controller
-    assert dispatcher._owns_ai_manager is False
 
     composition.teardown()
 

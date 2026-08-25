@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 3.4
+Version: 3.5
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -70,8 +70,8 @@ Step 7 — Bug Fixing and Regression
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
-controlled Step 7 remediation. RAA-005 and RAA-008 are resolved with evidence.
-RAA-002 and RAA-007 are partially resolved; RAA-003 remains open; RAA-009
+controlled Step 7 remediation. RAA-005, RAA-007, and RAA-008 are resolved with
+evidence. RAA-002 remains partially resolved; RAA-003 remains open; RAA-009
 remains open and deferred; other unresolved findings remain unresolved.
 
 Step 5 — Full Automated Testing remains COMPLETED with the verified automated
@@ -86,13 +86,14 @@ with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
 recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
-FORTRESS-06 is IN PROGRESS through F06B. F06A is IMPLEMENTED AND VERIFIED —
-COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is an IMPLEMENTED AND
-VERIFIED CANDIDATE in the uncommitted working tree: exactly two unsupported root test-shaped scripts are
-preserved byte-for-byte as non-Python archives, and the existing `pytest.ini`
-selects importlib mode. No other legacy source moved or was deleted, no runtime
-data migrated, F06C and later slices have not started, and FORTRESS-07 has not
-started.
+FORTRESS-06 is IN PROGRESS through F06C. F06A is IMPLEMENTED AND VERIFIED —
+COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is IMPLEMENTED AND VERIFIED
+— COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is an IMPLEMENTED AND
+VERIFIED CANDIDATE in the uncommitted working tree: the CLI surfaces require
+injected collaborators and canonical composition/runtime retains lifecycle
+ownership. RAA-007 is resolved with evidence. No other legacy source moved or
+was deleted, no runtime data migrated, F06D and later slices have not started,
+and FORTRESS-07 has not started.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -139,10 +140,11 @@ The objectives of this sprint are to:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06B |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
-| FORTRESS-06B | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
-| FORTRESS-06C+ | NOT STARTED |
+| FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | STABILIZATION IN PROGRESS |
@@ -242,9 +244,9 @@ controlled Step 7 remediation.
 Step 7 implementation is in progress. RAA-005 and RAA-008 are resolved with
 evidence. RAA-002 is partially resolved because Conversation composition and
 lifecycle ownership exist without production request routing. RAA-007 is
-partially resolved because the canonical path is fixed while compatibility
-self-construction remains FORTRESS-06 debt. RAA-009 remains open and deferred;
-other unresolved findings remain unresolved.
+resolved with evidence because F06C removes CLI self-composition and lifecycle
+ownership while preserving exact canonical injection. RAA-009 remains open and
+deferred; other unresolved findings remain unresolved.
 
 FORTRESS-05 closure evidence proves one production `PlatformRuntime` /
 `PlatformComposition` graph for Tool, AI, Executive, SQLite-backed Memory, and
@@ -255,8 +257,8 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not live-request routed. The Memory-context adapter and
 RAA-009 remain deferred. Advanced reasoning, planning, decision, agents,
-execution proposals, and autonomy remain paused. The lazy facade, compatibility
-fallbacks, and legacy quarantine remain FORTRESS-06 debt; Tool control-policy
+execution proposals, and autonomy remain paused. The lazy facade and legacy
+quarantine remain FORTRESS-06 debt; Tool control-policy
 hardening remains FORTRESS-07.
 
 The controlled Step 7 workflow is:
@@ -465,11 +467,11 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-1. Preserve the verified FORTRESS-01 through FORTRESS-05 state, F06A checkpoint,
-   and F06B implemented-and-verified candidate.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state, the committed
+   F06A/F06B checkpoints, and the F06C implemented-and-verified candidate.
 2. Continue only separately authorized Step 7 remediation.
 3. Keep RAA-009 and the Memory-context adapter open/deferred.
-4. Do not begin F06C or any later FORTRESS-06 slice without separate Founder
+4. Do not begin F06D or any later FORTRESS-06 slice without separate Founder
    authorization; do not move or delete any additional legacy source.
 5. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
@@ -499,10 +501,11 @@ This sprint is complete only when:
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06B |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
-| FORTRESS-06B | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
-| FORTRESS-06C+ | NOT STARTED |
+| FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 | Phase 8 Resume | PENDING |
@@ -518,25 +521,27 @@ Prior stabilization checkpoint:
 Newer Fortress checkpoints:
 
 `f9b054e` (FORTRESS-05A/05B), `1df73e3` (FORTRESS-05C), `cf26693`
-(FORTRESS-05D), `bc54d36` (FORTRESS-05 closure), and `92aa9d7` (FORTRESS-06A)
+(FORTRESS-05D), `bc54d36` (FORTRESS-05 closure), `92aa9d7` (FORTRESS-06A),
+and `eea8190` (FORTRESS-06B)
 
-Current FORTRESS-05 state:
+FORTRESS-05 checkpoint state:
 
-COMPLETE AND VERIFIED at workstream level under ADR-0011; RAA-002 and RAA-007
-remain partially resolved, RAA-009 remains open, and overall Fortress
-certification has not started.
+COMPLETE AND VERIFIED at workstream level under ADR-0011; at that checkpoint,
+RAA-002 and RAA-007 remained partially resolved and RAA-009 remained open.
+Overall Fortress certification has not started.
 
 Current FORTRESS-06 state:
 
-IN PROGRESS through F06B. F06A's 33-entry manifest and 22 guarded top-level
+IN PROGRESS through F06C. F06A's 33-entry manifest and 22 guarded top-level
 identities are IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`.
-F06B is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
-Focused passed 80; platform passed 364 with one skip; composition passed 45; integration passed
-58; and the full configured suite passed 2,038 with one skip. Configured,
-`tests/`, and repository-root collection each found 2,039 tests with exit code
-0. No other legacy source moved or was deleted, no runtime data migrated, and
-F06C and later slices have not started. RAA-003 remains OPEN and RAA-007 remains
-PARTIALLY RESOLVED.
+F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`. F06C is
+an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. The
+focused F06C run passed 125 tests; the affected ladder passed 583 with one skip;
+disposable launcher/lifecycle checks passed 4; the full configured suite passed
+2,047 with one skip; repository-root collection found 2,048 tests;
+and Ruff passed. All commands exited 0. No other legacy source moved or was
+deleted, no runtime data migrated, and F06D and later slices have not started.
+RAA-003 remains OPEN and RAA-007 is RESOLVED WITH EVIDENCE.
 
 Current activity:
 

@@ -2,9 +2,11 @@ from unittest.mock import MagicMock
 
 import pytest
 
+from jaos.ai import AIManager, ProviderManager
 from jaos.cli.command_dispatcher import CommandDispatcher
+from jaos.executive.controller import ExecutiveController
 from jaos.executive.models import ExecutiveResponse
-
+from jaos.tools.tool_manager import ToolManager
 
 INCOMPLETE_USAGE_CASES = (
     ("read", "Usage: read <path>"),
@@ -36,14 +38,15 @@ COMPLETE_COMMANDS = (
 
 @pytest.fixture
 def dispatcher() -> CommandDispatcher:
-    instance = CommandDispatcher.__new__(CommandDispatcher)
-    instance.tool_manager = MagicMock()
-    instance.ai_manager = MagicMock()
-    instance.provider_profiles = MagicMock()
-    instance.provider_status = MagicMock()
-    instance.executive = MagicMock()
-    instance.shutdown = MagicMock()
-    return instance
+    tool_manager = MagicMock(spec=ToolManager)
+    ai_manager = MagicMock(spec=AIManager)
+    ai_manager.get_provider_manager.return_value = MagicMock(spec=ProviderManager)
+    executive = MagicMock(spec=ExecutiveController)
+    return CommandDispatcher(
+        tool_manager,
+        ai_manager=ai_manager,
+        executive=executive,
+    )
 
 
 @pytest.mark.parametrize(("command", "usage"), INCOMPLETE_USAGE_CASES)

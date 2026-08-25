@@ -6,8 +6,11 @@ class JAOSShell:
     Interactive command shell for JAOS.
     """
 
-    def __init__(self, dispatcher: CommandDispatcher | None = None) -> None:
-        self.dispatcher = dispatcher or CommandDispatcher()
+    def __init__(self, dispatcher: CommandDispatcher) -> None:
+        if dispatcher is None:
+            raise TypeError("dispatcher must not be None")
+
+        self.dispatcher = dispatcher
 
     def run(self) -> None:
         print()
@@ -15,20 +18,17 @@ class JAOSShell:
         print("Type 'exit' to quit.")
         print()
 
-        try:
-            running = True
+        running = True
 
-            while running:
-                try:
-                    command = input("JAOS > ").strip()
-                except EOFError:
-                    print()
-                    print("Shutting down JAOS...")
-                    break
+        while running:
+            try:
+                command = input("JAOS > ").strip()
+            except EOFError:
+                print()
+                print("Shutting down JAOS...")
+                break
 
-                if not command:
-                    continue
+            if not command:
+                continue
 
-                running = self.dispatcher.dispatch(command)
-        finally:
-            self.dispatcher.shutdown()
+            running = self.dispatcher.dispatch(command)

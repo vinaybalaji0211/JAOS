@@ -1,9 +1,7 @@
-from jaos.ai import AIManager, ProviderManager
-from jaos.ai.bootstrap import initialize_default_provider
+from jaos.ai import AIManager
 from jaos.ai.diagnostics import DiagnosticStatus as AIDiagnosticStatus
 from jaos.ai.intelligence import ProviderProfileRegistry
 from jaos.ai.operations import ProviderStatusService
-from jaos.bootstrap.tool_loader import load_tools
 from jaos.executive.controller import ExecutiveController
 from jaos.executive.diagnostics.models import (
     DiagnosticStatus as ExecutiveDiagnosticStatus,
@@ -18,56 +16,27 @@ class CommandDispatcher:
 
     def __init__(
         self,
-        tool_manager: ToolManager | None = None,
+        tool_manager: ToolManager,
         *,
-        ai_manager: AIManager | None = None,
-        executive: ExecutiveController | None = None,
+        ai_manager: AIManager,
+        executive: ExecutiveController,
     ) -> None:
-        """Construct dispatcher collaborators, then initialize providers.
-
-        Every collaborator may be injected by a canonical composition root
-        (FORTRESS-05: jaos.composition.PlatformComposition); any collaborator
-        not supplied is constructed and initialized here exactly as before,
-        so standalone construction is unchanged. A self-constructed
-        ToolManager still gets load_tools(); an injected one is assumed
-        already configured by its owner. A self-constructed AIManager's
-        provider initialization runs last and is rollback-scoped, so a
-        failure never runs against a partially-constructed graph and never
-        leaves a live provider behind.
-        """
-        self.tool_manager = tool_manager or ToolManager()
-
+        """Bind collaborators owned and initialized by the composition root."""
         if tool_manager is None:
-            load_tools(self.tool_manager)
+            raise TypeError("tool_manager must not be None")
+        if ai_manager is None:
+            raise TypeError("ai_manager must not be None")
+        if executive is None:
+            raise TypeError("executive must not be None")
 
-        self._owns_ai_manager = ai_manager is None
-
-        if ai_manager is not None:
-            self.ai_manager = ai_manager
-        else:
-            provider_manager = ProviderManager()
-            self.ai_manager = AIManager(provider_manager)
-            initialize_default_provider(provider_manager)
+        self.tool_manager = tool_manager
+        self.ai_manager = ai_manager
 
         self.provider_profiles = ProviderProfileRegistry.build_default()
         self.provider_status = ProviderStatusService(
             self.ai_manager.get_provider_manager()
         )
-        self.executive = executive or ExecutiveController(
-            self.tool_manager,
-            ai_manager=self.ai_manager,
-        )
-
-    def shutdown(self) -> None:
-        """
-        Synchronously shut down AI provider lifecycle owned by this dispatcher.
-
-        Only shuts down an AIManager this dispatcher constructed itself; when
-        it was injected by a canonical composition root, that root owns its
-        shutdown, so it is never stopped twice.
-        """
-        if self._owns_ai_manager:
-            self.ai_manager.shutdown()
+        self.executive = executive
 
     def dispatch(self, command: str) -> bool:
         normalized = command.strip().lower()
@@ -114,7 +83,6 @@ class CommandDispatcher:
 
         if normalized == "exit":
             print("Shutting down JAOS...")
-            self.shutdown()
             return False
 
         usage = self._incomplete_filesystem_usage(command)

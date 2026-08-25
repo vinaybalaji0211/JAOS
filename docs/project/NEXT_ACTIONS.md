@@ -1,6 +1,6 @@
 # JAOS Next Actions
 
-Version: 4.4
+Version: 4.5
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -11,8 +11,8 @@ Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 Current Stabilization Activity: Step 7 — Bug Fixing and Regression
-Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06B
-Exact Next Action: Preserve F06A and the F06B implemented-and-verified candidate; do not begin F06C or move additional legacy source
+Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06C
+Exact Next Action: Preserve F06A/F06B and the F06C implemented-and-verified candidate; do not begin F06D+ or move additional legacy source
 
 ---
 
@@ -63,10 +63,11 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06B |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
-| FORTRESS-06B | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
-| FORTRESS-06C+ | NOT STARTED |
+| FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
+| FORTRESS-06C | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06D+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
@@ -103,8 +104,9 @@ This pause is not:
 
 The immediate priority is to preserve the FORTRESS-01 governance checkpoint,
 the verified FORTRESS-02 through FORTRESS-05 state, F06A checkpoint `92aa9d7`,
-and the F06B implemented-and-verified candidate. Do not begin F06C, move any
-additional legacy source, or migrate runtime data.
+F06B checkpoint `eea8190`, and the F06C implemented-and-verified candidate. Do
+not begin F06D or any later slice, move any additional legacy source, or
+migrate runtime data.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -125,10 +127,9 @@ Step 5 — Full Automated Testing remains COMPLETED and recorded in:
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled remediation.
 
-RAA-005 and RAA-008 are resolved with evidence. RAA-002 and RAA-007 are
-partially resolved under ADR-0011: request routing remains deferred for
-RAA-002, and compatibility self-construction remains FORTRESS-06 debt for
-RAA-007. RAA-003 remains open. RAA-009 remains open and deferred; other
+RAA-005, RAA-007, and RAA-008 are resolved with evidence. RAA-002 remains
+partially resolved because request routing remains deferred. RAA-003 remains
+open. RAA-009 remains open and deferred; other
 unresolved RAA findings remain unresolved. Step 7 remains in progress; neither
 Step 8 nor Fortress certification has begun.
 
@@ -503,6 +504,8 @@ The following actions are authorized:
 - Run `git diff --check`.
 - Preserve the separately authorized and verified F06A manifest/import guard
   and F06B collection/package-collision remediation evidence.
+- Preserve the separately authorized and verified F06C injected-adapter and
+  RAA-007 closure evidence.
 
 FORTRESS-01 authorized only the governance and documentation baseline it
 recorded. It did not authorize later implementation. FORTRESS-02 slices 02A
@@ -510,7 +513,7 @@ through 02K, FORTRESS-03 slices 03A through 03J, FORTRESS-04, and FORTRESS-05
 slices 05A through 05E were each implemented under separate authorization.
 FORTRESS-02 through FORTRESS-04 are verified by sections 7.7 through 7.9;
 FORTRESS-05 is verified under ADR-0011 by the closure evidence in section 7.10.
-FORTRESS-06 has proceeded only through separately authorized F06B. F06C and
+FORTRESS-06 has proceeded only through separately authorized F06C. F06D and
 later slices, Step 8, and major Phase 8 expansion are not authorized.
 
 Each change must remain reviewable and recoverable.
@@ -521,7 +524,7 @@ Each change must remain reviewable and recoverable.
 
 Do not:
 
-- Begin F06C or any later FORTRESS-06 slice.
+- Begin F06D or any later FORTRESS-06 slice.
 - Move or delete any additional legacy source, or migrate runtime data.
 - Claim the Fortress Program certified.
 - Modify production code, tests, or runtime data without separate
@@ -636,10 +639,10 @@ Step 6 completion documentation synchronization is COMPLETE.
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled remediation.
 
-RAA-005 and RAA-008 are resolved with evidence. RAA-002 and RAA-007 are
-partially resolved; RAA-009 remains open and deferred; other unresolved RAA
-findings remain unresolved. Step 7 remains in progress; neither Step 8 nor
-Fortress certification has begun.
+RAA-005, RAA-007, and RAA-008 are resolved with evidence. RAA-002 remains
+partially resolved, RAA-003 remains open, and RAA-009 remains open and
+deferred; other unresolved RAA findings remain unresolved. Step 7 remains in
+progress; neither Step 8 nor Fortress certification has begun.
 
 The controlled Step 7 workflow is:
 
@@ -809,16 +812,16 @@ than rapidly changing implementation.
 2. Preserve the verified FORTRESS-02 slice state for 02A through 02K, the
    verified FORTRESS-03 slice state for 03A through 03J, and the verified
    FORTRESS-04 and FORTRESS-05 state.
-3. Preserve RAA-005 and RAA-008 resolution evidence, the RAA-004 and RAA-006
+3. Preserve RAA-005, RAA-007, and RAA-008 resolution evidence, the RAA-004 and RAA-006
    evidence recorded under FORTRESS-03, and the RAA-001 lifecycle/reachability
-   evidence recorded under FORTRESS-04. Keep RAA-002 and RAA-007 partial,
+   evidence recorded under FORTRESS-04. Keep RAA-002 partial, RAA-003 open,
    RAA-009 open/deferred, and other unresolved findings open.
 4. Continue only separately authorized Step 7 remediation.
 5. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7 until
    Step 7 is complete and approved.
-6. Verify and preserve the separately authorized F06A and F06B implementation;
-   do not begin F06C or any later slice, move additional legacy source, or
-   migrate runtime data.
+6. Preserve the separately authorized and verified F06A, F06B, and F06C
+   implementation; do not begin F06D or any later slice, move additional legacy
+   source, or migrate runtime data.
 7. Execute the skipped directory-symlink escape rejection check in an elevated
    or capable environment before Fortress certification.
 8. Keep major Phase 8 expansion paused until Step 8 and Fortress certification
@@ -837,23 +840,23 @@ Fortress gate passes.
 
 FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at workstream level,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
-sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through F06B. F06A is
-IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`; F06B is an
-IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. It moved only the two authorized
-root test-shaped artifacts to non-Python archive names; no other legacy source
-moved or was deleted, no runtime data migrated, F06C and later slices have not
-started, and FORTRESS-07 has not started. RAA-003 remains open, RAA-007 remains
-partially resolved, and RAA-009 remains open. Do not claim Fortress Program
+sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through F06C. F06A is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`; F06B is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`; and F06C is an
+IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. No other
+legacy source moved or was deleted, no runtime data migrated, F06D and later
+slices have not started, and FORTRESS-07 has not started. RAA-003 remains open,
+RAA-007 is resolved with evidence, and RAA-009 remains open. Do not claim Fortress Program
 certification, enter Step 8, resume MS-0025E, or resume major Phase 8 expansion.
 
 The following remain explicitly open and unchanged: the directory-symlink
-escape validation is unverified on this host; composed Memory is not used by
+escape behavior remains unverified on this host because the preserved test is
+skipped under `WinError 1314`; composed Memory is not used by
 live CLI behavior; composed Conversation Intelligence is not production
 request-routed; RAA-009 and the
 `MemoryContextSource`/`MemorySearchEngine` adapter remain deferred; `main.py`
 retirement and legacy quarantine belong to FORTRESS-06;
-the lazy Intelligence facade and compatibility self-construction fallbacks are
-interim FORTRESS-06 debt;
+the lazy Intelligence facade is interim FORTRESS-06 debt;
 permission/approval/audit policy hardening belongs to FORTRESS-07;
 `config/providers.json` ownership remains deferred; the operational policy for
 `PlatformRuntime.mark_degraded()` remains FORTRESS-10; advanced reasoning,

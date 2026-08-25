@@ -1,6 +1,6 @@
 # Runtime Architecture Audit
 
-Version: 1.1
+Version: 1.2
 Status: APPROVED — STEP 4 COMPLETE; STEP 7 REMEDIATION STATUS APPENDED
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -10,7 +10,7 @@ Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Audit Date: 2026-08-04
-Last Remediation Update: 2026-08-24
+Last Remediation Update: 2026-08-25
 Branch: phase8-ai-intelligence
 
 ---
@@ -335,6 +335,42 @@ started, and the Fortress Program is not certified.
 
 ---
 
+### 9.2 Step 7 Remediation Update — FORTRESS-06C
+
+The section 9 table and section 9.1 remain the approved finding and F05
+checkpoint records. F06C supplies the later RAA-007 closure evidence without
+rewriting those historical states.
+
+| Finding | Current status | Executable evidence |
+|---|---|---|
+| RAA-007 | RESOLVED WITH EVIDENCE | `CommandDispatcher` requires injected Tool, AI, and Executive collaborators and owns none of their lifecycle; `JAOSShell` requires an injected dispatcher and owns no shutdown. AST guards prohibit either CLI adapter from constructing platform collaborators, runtime identity checks prove the canonical launcher passes the exact composed objects, and launcher/lifecycle checks prove teardown remains composition/runtime-owned. |
+
+All F06C verification commands exited 0 under Python 3.14.6 and pytest 9.1.1
+with bytecode and pytest cache disabled and a unique external base temporary
+directory for each pytest gate:
+
+- focused run across all seven changed test files: 125 passed in 9.05 seconds;
+- affected CLI, AI, composition, integration, and platform ladder: 583 passed,
+  1 skipped in 30.46 seconds;
+- disposable launcher/lifecycle normal-exit, EOF, dispatch-exception, and
+  shell-exception checks: 4 passed in 1.03 seconds;
+- full configured `tests/tests`: 2,047 passed, 1 skipped in 42.46 seconds;
+- repository-root collection: 2,048 collected in 3.73 seconds; and
+- Ruff 0.16.1 on changed Python files: all checks passed.
+
+The one skip is independently confirmed at
+`tests/tests/platform/test_runtime_paths.py:312`: Windows denied the required
+directory-symlink privilege with `WinError 1314`.
+F06C is an implemented-and-verified candidate in the uncommitted working tree.
+RAA-002 remains PARTIALLY RESOLVED, RAA-003 remains OPEN, and RAA-009 remains
+OPEN — DEFERRED. No legacy source or runtime data moved, the 428 excluded flat
+legacy tests remain untouched, Conversation remains unrouted, no
+`MemoryContextSource` adapter was implemented, and FORTRESS-07 has not started.
+Step 7 remains in progress, Step 8 remains blocked and not started, Fortress
+certification has not started, and major Phase 8 expansion remains paused.
+
+---
+
 ## 10. Correct Alignment
 
 The following boundaries are correctly preserved in the modern platform code:
@@ -376,8 +412,9 @@ The executable runtime composition is incomplete relative to the declared
 architecture.
 
 This conclusion records the 2026-08-04 audit state. Section 9.1 records the
-later RAA-002/RAA-007 partial remediation and unchanged RAA-009 status;
-it does not alter the historical observation.
+later F05 RAA-002/RAA-007 partial remediation and unchanged RAA-009 status;
+section 9.2 records F06C's still-later RAA-007 resolution. Neither append-only
+update alters the historical observation.
 
 ---
 

@@ -2,13 +2,13 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.1
+Document Version: 1.2
 
 Certified Repository Baseline: v0.9.0-alpha
 
 Development Target: v0.10.0-alpha
 
-Status: In Progress — F06B implemented and verified candidate (uncommitted working tree)
+Status: In Progress — F06C implemented and verified candidate (uncommitted working tree)
 
 Owner and Approval Authority: Founder Vinay B
 
@@ -45,6 +45,10 @@ legacy source. It does not migrate or reclassify preserved runtime data.
 F06B preserves two unsupported root test-shaped scripts as byte-identical,
 non-Python `.py.legacy` artifacts, then adopts pytest importlib mode through
 the single existing pytest configuration. It moves no other legacy source.
+
+F06C removes hidden CLI self-composition and lifecycle ownership. Its
+injected-adapter implementation is verified in the working tree and resolves
+RAA-007 with evidence without completing the FORTRESS-06 workstream.
 
 The authoritative runtime-state artifact and writer metadata remains in
 `jaos_platform/runtime_state_inventory.py`. This manifest records which source
@@ -87,8 +91,8 @@ slice that updates this manifest and its evidence together.
 | `jaos.executive` | A — CANONICAL | System-action authority. | Direct canonical closure. | Canonical Executive and composition suites. | None. | F06A boundary preservation. | PROHIBITED throughout F06. |
 | `jaos.tools` | A — CANONICAL | Controlled execution, permission, approval, and audit boundary. | Direct canonical closure. | Canonical Tool and composition suites. | Caller-supplied filesystem paths are excluded from the internal writer inventory. | F06A boundary preservation. | PROHIBITED throughout F06. |
 | `jaos.intelligence.conversation` | A — CANONICAL | Completed Conversation Intelligence scope only; proposal/response authority without execution authority. | Composed in the canonical closure but not request-routed. | Conversation and composition suites. | None. | F06A boundary preservation. | PROHIBITED throughout F06. |
-| `jaos.cli.command_dispatcher.CommandDispatcher self-construction fallback` | B — COMPATIBILITY DEBT | Zero-argument construction can still build Tool, AI, provider, and Executive collaborators. | Code is import-reachable; fallback is not called by `run_jaos.py`. | Two configured test modules plus excluded legacy CLI tests. | None. | F06C. | PROHIBITED until F06C caller and compatibility evidence is approved. |
-| `jaos.cli.shell.JAOSShell dispatcher fallback` | B — COMPATIBILITY DEBT | Zero-argument shell construction creates a dispatcher and therefore a hidden composition path. | Code is import-reachable; fallback is not called by `run_jaos.py`. | One configured integration test module. | None. | F06C. | PROHIBITED until F06C caller and compatibility evidence is approved. |
+| `jaos.cli.command_dispatcher.CommandDispatcher injected adapter` | A — CANONICAL | Requires injected Tool, AI, and Executive collaborators and routes CLI requests without constructing or lifecycle-owning them. | Direct canonical closure through `run_jaos.py`. | Canonical CLI, composition, integration, and architecture-boundary tests. | None. | F06C boundary preservation. | PROHIBITED throughout F06. |
+| `jaos.cli.shell.JAOSShell injected adapter` | A — CANONICAL | Requires an injected dispatcher and owns only the interactive input and EOF loop, not dispatcher composition or platform lifecycle. | Direct canonical closure through `run_jaos.py`. | Canonical shell, launcher, integration, and architecture-boundary tests. | None. | F06C boundary preservation. | PROHIBITED throughout F06. |
 | `jaos.intelligence lazy facades` | B — COMPATIBILITY DEBT | Lazily preserve public exports and submodule compatibility without loading deferred capabilities. | Import-reachable in canonical Conversation composition. | F05 import-boundary and public-contract tests. | None. | F06G. | PROHIBITED until an approved public-API decision and F06G evidence. |
 | `brain/` | D — QUARANTINE | Large legacy reasoning, provider, permission, approval, audit, and state-writer stack. | Unreachable from `run_jaos.py`. | Zero configured direct importers; 270 excluded flat-test importers. | Owns `BehaviorTracker`, `DecisionRecord`, `GoalTracker`, `ProviderMemory`, `ReasoningTraceLogger`, `CrashRecoverySystem`, `UserProfile`, and `ProviderRouter` legacy writers. | F06D, F06E, and F06F. | PROHIBITED until test adjudication, writer isolation, relocation plan, and rollback evidence pass. |
 | `communication/` | D — QUARANTINE | Top-level satellite service stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
@@ -118,8 +122,8 @@ Classification counts:
 
 | Classification | Count |
 |---|---:|
-| A — CANONICAL | 8 |
-| B — COMPATIBILITY DEBT | 3 |
+| A — CANONICAL | 10 |
+| B — COMPATIBILITY DEBT | 1 |
 | C — MIGRATION INPUT | 0 source entries |
 | D — QUARANTINE | 16 |
 | E — ARCHIVE-ONLY | 3 |
@@ -242,7 +246,7 @@ F06B addresses pytest collection and test-package identity only:
 - The 428 direct `tests/*.py` legacy scripts remain contained by the existing
   `tests/conftest.py` authority and remain later F06 debt.
 - No other legacy source moved or was deleted, and no runtime data migrated.
-- F06C and later F06 slices have not started.
+- At the F06B checkpoint, F06C and later F06 slices had not started.
 - RAA-003 remains OPEN.
 - RAA-007 remains PARTIALLY RESOLVED.
 - FORTRESS-07 has not started.
@@ -250,7 +254,8 @@ F06B addresses pytest collection and test-package identity only:
 - Step 8 and Fortress certification remain blocked or not started.
 - Major Phase 8 expansion remains paused.
 
-F06B is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`eea8190`.
 Verification completed with all commands at exit code 0:
 
 - focused collection/import/composition invariants: 80 passed;
@@ -267,9 +272,65 @@ FORTRESS-06, Step 7, or any certification gate.
 
 ---
 
-## 8. Update History
+## 8. F06C Current State and Stop Boundary
+
+F06C is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+The verified implementation establishes the following behavior:
+
+- `CommandDispatcher` requires injected `ToolManager`, `AIManager`, and
+  `ExecutiveController` collaborators. It does not construct or lifecycle-own
+  those platform objects.
+- `JAOSShell` requires an injected dispatcher. It does not construct a
+  dispatcher or shut down platform-owned collaborators.
+- `PlatformComposition` remains the owner of Tool, AI, and Executive
+  composition and teardown, and `JAOSApplication` remains the canonical
+  launcher and lifecycle coordinator.
+- Missing constructor collaborators fail at the constructor boundary instead
+  of falling through to deferred attribute errors.
+- A standalone compatibility factory is unnecessary because repository
+  evidence identifies no supported production or configured-test caller that
+  requires a second composition or lifecycle owner.
+- Configured tests use explicit collaborators or canonical
+  composition evidence. The 428 direct `tests/*.py` legacy scripts, including
+  excluded `tests/test_cli_ai_integration.py`, remain untouched and contained
+  by the existing `tests/conftest.py` authority.
+
+All verification commands exited 0 under Python 3.14.6 and pytest 9.1.1 with
+bytecode and pytest cache disabled and a unique external base temporary
+directory for each pytest gate:
+
+- focused run across all seven changed test files: 125 passed in 9.05 seconds;
+- affected CLI, AI, composition, integration, and platform ladder: 583 passed,
+  1 skipped in 30.46 seconds;
+- disposable launcher/lifecycle normal-exit, EOF, dispatch-exception, and
+  shell-exception checks: 4 passed in 1.03 seconds;
+- full configured `tests/tests`: 2,047 passed, 1 skipped in 42.46 seconds;
+- repository-root collection: 2,048 collected in 3.73 seconds; and
+- Ruff 0.16.1 on changed Python files: all checks passed.
+
+The one skip is independently confirmed at
+`tests/tests/platform/test_runtime_paths.py:312`: Windows denied the required
+directory-symlink privilege with `WinError 1314`.
+This evidence resolves RAA-007 while preserving all other finding states:
+
+- RAA-007 is RESOLVED WITH EVIDENCE.
+- RAA-002 remains PARTIALLY RESOLVED.
+- RAA-003 remains OPEN.
+- RAA-009 remains OPEN — DEFERRED.
+
+No legacy root or file moved, no runtime data migrated, and no permission,
+approval, audit, provider-resilience, Conversation routing, or Memory-context
+behavior changed in F06C. F06D and later F06 slices have not started.
+FORTRESS-07 has not started. Step 7 remains IN PROGRESS. Step 8 remains
+NOT STARTED — BLOCKED BY STEP 7, Fortress certification remains NOT STARTED,
+and major Phase 8 expansion remains PAUSED.
+
+---
+
+## 9. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.2 | Recorded F06C's verified injected CLI adapters, canonical lifecycle ownership, exact verification evidence, and RAA-007 resolution. FORTRESS-06 remains in progress and F06D+ remains not started. |
 | 2026-08-25 | 1.1 | Recorded F06B's exact two-artifact non-Python archive move, importlib pytest configuration, collection-collision remediation, and unchanged stop boundary. |
 | 2026-08-25 | 1.0 | Created the authoritative F06 classification and canonical import-guard contract. No legacy source or runtime data moved. |

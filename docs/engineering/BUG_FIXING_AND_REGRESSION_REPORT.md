@@ -1,14 +1,14 @@
 # Bug Fixing and Regression Report
 
-Version: 1.0
-Status: IN PROGRESS — D1, D2, LIFECYCLE, SHT-006, AND RAA-008 VERIFIED
+Version: 1.1
+Status: IN PROGRESS — D1, D2, LIFECYCLE, SHT-006, RAA-007, AND RAA-008 VERIFIED
 Stabilization Step: Step 7 of 9
 Owner: Vinay B
 Maintainer: JAOS Engineering
 Date: 2026-08-12
 Branch: phase8-ai-intelligence
 Step 7 Entry Commit: 2098be4
-Current HEAD: fe3555b
+Current HEAD: eea8190
 Phase 8 Status: PAUSED
 MS-0025E Status: PAUSED
 
@@ -346,6 +346,80 @@ RAA-008 is resolved with evidence.
 
 ---
 
+## 9.1 RAA-007 — Hidden CLI Composition-Root Removal Record
+
+Finding:
+
+- RAA-007
+
+This append-only record supersedes the section 4 proposed partial deferral only
+for current status. The section 4 matrix remains the historical Step 7 planning
+record.
+
+### Production behavior
+
+- `CommandDispatcher` requires injected `ToolManager`, `AIManager`, and
+  `ExecutiveController` collaborators and constructs none of them.
+- `CommandDispatcher` owns no AI/provider shutdown; exit prints the shutdown
+  message and returns `False` without tearing down platform dependencies.
+- `JAOSShell` requires an injected dispatcher and neither constructs nor shuts
+  down one.
+- `PlatformComposition` remains the Tool, AI, and Executive composition and
+  teardown owner; `JAOSApplication` remains the canonical launcher lifecycle
+  coordinator.
+- Missing constructor collaborators fail immediately with Python `TypeError`.
+- No standalone compatibility factory or second lifecycle owner was added.
+
+### Files
+
+Production:
+
+- `jaos/ai/bootstrap/__init__.py`
+- `jaos/cli/command_dispatcher.py`
+- `jaos/cli/shell.py`
+- `jaos/composition/platform_composition.py`
+
+Configured tests:
+
+- `tests/tests/ai/test_ai_public_facade_raa008.py`
+- `tests/tests/cli/test_command_dispatcher_sht006.py`
+- `tests/tests/composition/test_canonical_composition_invariants.py`
+- `tests/tests/composition/test_platform_composition.py`
+- `tests/tests/integration/test_run_jaos_launcher.py`
+- `tests/tests/integration/test_shell_shutdown_lifecycle.py`
+- `tests/tests/platform/test_canonical_import_boundary.py`
+
+The 428 direct `tests/*.py` legacy scripts, including excluded
+`tests/test_cli_ai_integration.py`, were not modified.
+
+### Verification evidence
+
+All commands exited 0 under Python 3.14.6 and pytest 9.1.1. Pytest ran with
+bytecode and cache disabled and a unique external base temporary directory.
+
+| Check | Result |
+|---|---|
+| Focused run across all seven changed test files | 125 passed in 9.05 seconds |
+| Affected CLI, AI, composition, integration, and platform ladder | 583 passed, 1 skipped in 30.46 seconds |
+| Disposable launcher/lifecycle normal exit, EOF, dispatch exception, and shell exception | 4 passed in 1.03 seconds |
+| Full configured `tests/tests` | 2,047 passed, 1 skipped in 42.46 seconds |
+| Repository-root collection | 2,048 collected in 3.73 seconds |
+| Ruff 0.16.1 on changed Python files | All checks passed |
+
+The one skip is independently confirmed at
+`tests/tests/platform/test_runtime_paths.py:312`: Windows denied the required
+directory-symlink privilege with `WinError 1314`.
+Architecture guards prove that the canonical launcher injects exact composed
+objects, the CLI adapters cannot construct platform collaborators, and
+composition/runtime retains shutdown ownership.
+
+RAA-007 is resolved with evidence. RAA-002 remains partially resolved,
+RAA-003 remains open, and RAA-009 remains open and deferred. This F06C result
+does not complete Step 7 or FORTRESS-06 and does not authorize Step 8,
+Fortress certification, FORTRESS-07, or major Phase 8 expansion.
+
+---
+
 ## 10. Repository Safety Record
 
 - Eight unrelated changes appeared during D1:
@@ -386,6 +460,15 @@ Step 8 remains blocked.
 
 Founder/reviewer approval remains pending for Step 7 completion.
 
+### 11.1 Later Fortress Continuation — FORTRESS-06C
+
+The section 11 next-action text above records its original 2026-08-12
+checkpoint. Later separately authorized Fortress work has now produced an
+IMPLEMENTED AND VERIFIED F06C candidate and resolved RAA-007 with evidence.
+F06D and later F06 slices remain not started, FORTRESS-07 has not started,
+Step 7 remains in progress, Step 8 remains blocked and not started, Fortress
+certification has not started, and major Phase 8 expansion remains paused.
+
 ---
 
 ## 12. Remaining Step 7 Workflow
@@ -412,6 +495,7 @@ Founder/reviewer approval remains pending for Step 7 completion.
 | Lifecycle cluster — RAA-005/SHT-002/SHT-004 | COMPLETE |
 | SHT-006 — incomplete filesystem-command validation verified with evidence | COMPLETE |
 | RAA-008 — concrete provider facade export removal verified with evidence | COMPLETE |
+| RAA-007 — hidden CLI composition-root removal verified with evidence | COMPLETE |
 | Full automated suite passes | PENDING |
 | Shell regression passes | PENDING |
 | Syntax and dependency validation pass | PENDING |
@@ -419,8 +503,8 @@ Founder/reviewer approval remains pending for Step 7 completion.
 | Step 7 report is complete | PENDING |
 | Founder/reviewer approval is recorded | PENDING |
 
-D1, D2, the lifecycle cluster, SHT-006, and RAA-008 criteria are COMPLETE. All
-remaining criteria stay PENDING.
+D1, D2, the lifecycle cluster, SHT-006, RAA-008, and RAA-007 criteria are
+COMPLETE. All remaining criteria stay PENDING.
 
 ---
 
