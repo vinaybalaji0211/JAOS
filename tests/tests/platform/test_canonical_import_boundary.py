@@ -107,8 +107,8 @@ _EXPECTED_F06_CLASSIFICATION_COUNTS = {
     "A": 8,
     "B": 3,
     "D": 16,
-    "E": 2,
-    "F": 4,
+    "E": 3,
+    "F": 3,
 }
 _EXPECTED_F06_CLASSIFIED_PATHS = {
     "A": frozenset(
@@ -155,14 +155,14 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
     ),
     "E": frozenset(
         {
-            "phase14_integration_test.py",
+            "legacy_quarantine/tests/phase14_integration_test.py.legacy",
             "kernel/jaos_kernel_backup.py",
+            "legacy_quarantine/tests/test_logger.py.legacy",
         }
     ),
     "F": frozenset(
         {
             "plugins/",
-            "test_logger.py",
             "infrastructure_intelligence_core.py",
             "reasoning_assumption.py",
         }

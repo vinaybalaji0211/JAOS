@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.3
+Version: 4.4
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -45,8 +45,10 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — F06A ONLY |
-| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06B |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
+| FORTRESS-06B | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-06C+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Previous completed phase | Phase 7 — Memory Platform |
 | Next planned phase | Phase 9 — Workflow & Automation Platform |
@@ -54,7 +56,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | F06A MANIFEST AND IMPORT-GUARD CANDIDATE RECORDED |
+| Documentation state | F06B VERIFIED CANDIDATE RECORDED |
 
 ---
 
@@ -104,12 +106,17 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
-FORTRESS-06 is now IN PROGRESS through F06A only. Its authoritative 33-entry
-legacy/quarantine manifest and the matching canonical import guards are an
-IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. Focused,
-platform, composition, and full configured suites passed. No legacy source has
-moved or been deleted, no runtime data has migrated, F06B and later slices have
-not started, and FORTRESS-07 has not started.
+FORTRESS-06 is now IN PROGRESS through F06B. F06A's authoritative 33-entry
+manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
+COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
+unsupported root test-shaped scripts byte-for-byte under non-Python
+`.py.legacy` names and selects pytest
+importlib mode through the existing `pytest.ini`. Focused 80, platform 364 with
+one skip, composition 45, integration 58, and full configured 2,038 with one
+skip passed. All three supported collection forms collected 2,039 tests with
+exit code 0. No other legacy source moved or was deleted, no runtime data
+migrated, F06C and later slices have not started, and FORTRESS-07 has not
+started.
 
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not production request-routed.
@@ -559,13 +566,13 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the F06A
-   implemented-and-verified candidate.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state, F06A checkpoint,
+   and F06B implemented-and-verified candidate.
 2. Continue only separately authorized Step 7 remediation.
 3. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
    architecture decision and implementation are authorized.
-4. Do not begin F06B or any later FORTRESS-06 slice without separate Founder
-   authorization; do not move or delete legacy source.
+4. Do not begin F06C or any later FORTRESS-06 slice without separate Founder
+   authorization; do not move or delete any additional legacy source.
 5. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
 6. Produce the Step 7 report for Founder review when all Step 7 work is done.

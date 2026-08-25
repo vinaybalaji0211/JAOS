@@ -2,13 +2,13 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.0
+Document Version: 1.1
 
 Certified Repository Baseline: v0.9.0-alpha
 
 Development Target: v0.10.0-alpha
 
-Status: In Progress — F06A implemented and verified candidate (uncommitted working tree)
+Status: In Progress — F06B implemented and verified candidate (uncommitted working tree)
 
 Owner and Approval Authority: Founder Vinay B
 
@@ -25,6 +25,8 @@ Related Documents:
 Evidence Sources:
 
 - `jaos_platform/runtime_state_inventory.py`
+- `pytest.ini`
+- `tests/tests/platform/test_collection_containment.py`
 - `tests/tests/platform/test_canonical_import_boundary.py`
 
 ---
@@ -39,6 +41,10 @@ after their owning F06 slice is separately authorized and verified.
 F06A records classifications and strengthens the existing canonical import
 boundary. It does not move, delete, rewrite, import-enable, or execute any
 legacy source. It does not migrate or reclassify preserved runtime data.
+
+F06B preserves two unsupported root test-shaped scripts as byte-identical,
+non-Python `.py.legacy` artifacts, then adopts pytest importlib mode through
+the single existing pytest configuration. It moves no other legacy source.
 
 The authoritative runtime-state artifact and writer metadata remains in
 `jaos_platform/runtime_state_inventory.py`. This manifest records which source
@@ -100,10 +106,10 @@ slice that updates this manifest and its evidence together.
 | `system_services/` | D — QUARANTINE | Top-level startup, backup, configuration, cache, and cleanup prototypes. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
 | `workflow/` | D — QUARANTINE | Parallel workflow, task, dependency, retry, and automation authority. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
 | `main.py` | D — QUARANTINE | Alternate launcher for `core.engine.JarvisEngine`; manually executable despite canonical non-reachability. | Not reachable from `run_jaos.py`; independently invokable. | No configured importer. | Indirectly reaches the `core` action-history, snapshot, and configuration writers. | F06E and F06F. | PROHIBITED until the legacy-launcher compatibility decision, writer isolation, and rollback evidence pass. |
-| `phase14_integration_test.py` | E — ARCHIVE-ONLY | Historical root module-body script matching pytest's legacy filename pattern. | Unreachable from `run_jaos.py`; importable during repository-root collection. | Outside configured testpaths. | None in FORTRESS-02 inventory. | F06B and F06E. | PROHIBITED until collection remediation and archive relocation are separately approved. |
+| `legacy_quarantine/tests/phase14_integration_test.py.legacy` | E — ARCHIVE-ONLY | Byte-identical preservation of the historical root module-body script under a suffix that is neither Python-importable nor pytest-discoverable. | Unreachable from `run_jaos.py`; archived payload is not a normal Python module. | None; removed from supported pytest collection by F06B. | None in FORTRESS-02 inventory. | F06B preservation; F06E final disposition. | MOVE COMPLETE in F06B; deletion or further movement PROHIBITED until F06E approval. |
 | `kernel/jaos_kernel_backup.py` | E — ARCHIVE-ONLY | Unreferenced executable backup of a shadow kernel; this file-specific archive classification refines but does not remove the root `kernel` quarantine prohibition. | Unreachable from `run_jaos.py`. | No configured importer. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until archive relocation and rollback evidence are separately approved. |
+| `legacy_quarantine/tests/test_logger.py.legacy` | E — ARCHIVE-ONLY | Byte-identical preservation of the root smoke script under a suffix that is neither Python-importable nor pytest-discoverable. | Unreachable from `run_jaos.py`; archived payload is not a normal Python module. | None; removed from supported pytest collection by F06B. | None; `logs/system.log` has no legacy writer. | F06B preservation; F06E final disposition. | MOVE COMPLETE in F06B; deletion or further movement PROHIBITED until F06E approval. |
 | `plugins/` | F — SAFE-TO-DELETE-LATER | One sample plugin with no known production or test caller; top-level plugins are not canonical. | Unreachable from `run_jaos.py`. | No configured importer. | None in FORTRESS-02 inventory. | F06E. | DELETION PROHIBITED until caller recheck and explicit removal authorization. |
-| `test_logger.py` | F — SAFE-TO-DELETE-LATER | Root smoke script with no known caller; its module body emits one unconfigured log record. | Unreachable from `run_jaos.py`; importable during repository-root collection. | Outside configured testpaths. | None; `logs/system.log` has no legacy writer. | F06B and F06E. | DELETION PROHIBITED until collection handling and explicit removal authorization. |
 | `infrastructure_intelligence_core.py` | F — SAFE-TO-DELETE-LATER | Unreferenced root duplicate of the packaged infrastructure component. | Unreachable from `run_jaos.py`. | No configured importer. | None in FORTRESS-02 inventory. | F06E. | DELETION PROHIBITED until caller recheck and explicit removal authorization. |
 | `reasoning_assumption.py` | F — SAFE-TO-DELETE-LATER | Empty root module with no known caller; distinct from canonical `jaos.intelligence.models.reasoning_assumption`. | Unreachable from `run_jaos.py`. | No configured importer. | None in FORTRESS-02 inventory. | F06E. | DELETION PROHIBITED until caller recheck and explicit removal authorization. |
 <!-- F06A-CLASSIFICATION-ENTRIES:END -->
@@ -116,8 +122,8 @@ Classification counts:
 | B — COMPATIBILITY DEBT | 3 |
 | C — MIGRATION INPUT | 0 source entries |
 | D — QUARANTINE | 16 |
-| E — ARCHIVE-ONLY | 2 |
-| F — SAFE-TO-DELETE-LATER | 4 |
+| E — ARCHIVE-ONLY | 3 |
+| F — SAFE-TO-DELETE-LATER | 3 |
 | G — UNKNOWN — NEEDS DECISION | 0 source entries |
 | Total classified source entries | 33 |
 
@@ -125,9 +131,15 @@ Classification counts:
 
 ## 4. Canonical Import Guard Contract
 
-The future quarantine namespace is the top-level module identity
-`legacy_quarantine`. F06A reserves and forbids that identity before any source
-is moved. F06A does not create the namespace or authorize relocation into it.
+The quarantine namespace is the top-level module identity
+`legacy_quarantine`. F06A reserved and forbade that identity before any source
+moved. F06B creates only `legacy_quarantine/tests/` for two non-Python archive
+payloads. Neither directory contains `__init__.py`, and no file under it has a
+recognized Python import suffix. Because the repository root is on
+`sys.path`, the directory can still be represented by Python as a PEP 420
+namespace; it is not a regular package and contains no importable payload.
+The F06A guard therefore remains the production non-reachability authority and
+continues to forbid canonical dependency on `legacy_quarantine`.
 
 The following top-level identities must never enter the static production
 import closure of `run_jaos.py`. This block is parsed by the existing canonical
@@ -189,15 +201,15 @@ data-preservation, and rollback evidence exists.
 
 ---
 
-## 6. F06A State and Stop Boundary
+## 6. F06A Closure State
 
 F06A is limited to this manifest, the existing canonical import-boundary
 infrastructure, focused tests, and minimum current-state documentation.
 
-- No legacy source has moved or been deleted.
+- At the F06A checkpoint, no legacy source had moved or been deleted.
 - No compatibility fallback has changed.
 - No runtime-state writer or preserved artifact has changed.
-- F06B and later F06 slices have not started.
+- At the F06A checkpoint, F06B and later F06 slices had not started.
 - RAA-003 remains OPEN.
 - RAA-007 remains PARTIALLY RESOLVED.
 - FORTRESS-07 has not started.
@@ -205,18 +217,59 @@ infrastructure, focused tests, and minimum current-state documentation.
 - Step 8 and Fortress certification remain blocked or not started.
 - Major Phase 8 expansion remains paused.
 
-F06A is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
-The focused import-boundary suite passed 55 tests; the platform suite passed
-363 tests with one skip; the affected composition suite passed 45 tests; and
+F06A is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`92aa9d7`. The focused import-boundary suite passed 55 tests; the platform
+suite passed 363 tests with one skip; the affected composition suite passed 45 tests; and
 the full configured `tests/tests` regression suite passed 2,037 tests with one
 skip. The skip is the known Windows directory-symlink privilege limitation.
-This evidence does not make F06A accepted, committed, certified, or complete the
-FORTRESS-06 workstream.
+This evidence did not complete the FORTRESS-06 workstream.
 
 ---
 
-## 7. Update History
+## 7. F06B State and Stop Boundary
+
+F06B addresses pytest collection and test-package identity only:
+
+- Root collection previously imported `phase14_integration_test.py`, which
+  loaded the root `brain` package before pytest attempted to collect
+  `tests/tests/brain/test_executive_brain.py` as
+  `brain.test_executive_brain`; prepend mode then failed collection.
+- `phase14_integration_test.py` and `test_logger.py` were not supported tests.
+  F06B preserves them byte-for-byte at the two archive paths recorded above.
+- The canonical `pytest.ini` selects `--import-mode=importlib`; no second pytest
+  configuration, path manipulation, module-cache manipulation, or broad ignore
+  rule was introduced.
+- The 428 direct `tests/*.py` legacy scripts remain contained by the existing
+  `tests/conftest.py` authority and remain later F06 debt.
+- No other legacy source moved or was deleted, and no runtime data migrated.
+- F06C and later F06 slices have not started.
+- RAA-003 remains OPEN.
+- RAA-007 remains PARTIALLY RESOLVED.
+- FORTRESS-07 has not started.
+- Step 7 remains IN PROGRESS.
+- Step 8 and Fortress certification remain blocked or not started.
+- Major Phase 8 expansion remains paused.
+
+F06B is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+Verification completed with all commands at exit code 0:
+
+- focused collection/import/composition invariants: 80 passed;
+- platform suite: 364 passed, 1 skipped;
+- composition suite: 45 passed;
+- integration suite: 58 passed;
+- full configured `tests/tests`: 2,038 passed, 1 skipped;
+- configured, `tests/`, and repository-root collection: 2,039 collected each;
+- Ruff on both changed Python test files: all checks passed.
+
+The skip remains the known Windows directory-symlink privilege limitation. No
+importlib semantic regression was observed. This evidence does not complete
+FORTRESS-06, Step 7, or any certification gate.
+
+---
+
+## 8. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.1 | Recorded F06B's exact two-artifact non-Python archive move, importlib pytest configuration, collection-collision remediation, and unchanged stop boundary. |
 | 2026-08-25 | 1.0 | Created the authoritative F06 classification and canonical import-guard contract. No legacy source or runtime data moved. |

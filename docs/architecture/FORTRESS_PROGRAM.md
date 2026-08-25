@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.10
+Document Version: 1.11
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,8 +101,10 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — F06A IMPLEMENTED AND VERIFIED CANDIDATE |
-| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED WORKING TREE |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06B |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
+| FORTRESS-06B | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED WORKING TREE |
+| FORTRESS-06C+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-002 | PARTIALLY RESOLVED |
@@ -129,10 +131,11 @@ Implementation of each completed workstream proceeded under separate
 authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
-Program is not certified. FORTRESS-06 is in progress only through the
-separately authorized F06A manifest-and-guard slice; no legacy source has moved
-or been deleted, no runtime data has migrated, F06B and later slices have not
-started, and major Phase 8 expansion remains paused.
+Program is not certified. FORTRESS-06 is in progress through the separately
+authorized F06B collection-remediation slice. F06B moved only two unsupported
+root test-shaped scripts as byte-identical non-Python archives; no other legacy
+source moved or was deleted, no runtime data migrated, F06C and later slices
+have not started, and major Phase 8 expansion remains paused.
 
 ---
 
@@ -219,7 +222,7 @@ records a safe dependency-preserving adjustment:
 | 3 | FORTRESS-03 — Runtime lifecycle correctness | COMPLETE AND VERIFIED — closure evidence recorded in section 7.8 |
 | 4 | FORTRESS-04 — One launcher and one composition root | COMPLETE AND VERIFIED — closure evidence recorded in section 7.9 |
 | 5 | FORTRESS-05 — Canonical platform composition | COMPLETE AND VERIFIED — ADR-0011 closure evidence in section 7.10 |
-| 6 | FORTRESS-06 — Legacy migration and quarantine | IN PROGRESS — F06A IMPLEMENTED AND VERIFIED CANDIDATE |
+| 6 | FORTRESS-06 — Legacy migration and quarantine | IN PROGRESS — THROUGH F06B |
 | 7 | FORTRESS-07 — Permission, approval, and audit hardening | PLANNED |
 | 8 | FORTRESS-08 — Crash-safe persistence, rollback, and replay | PLANNED |
 | 9 | FORTRESS-09 — Real provider resilience | PLANNED |
@@ -1043,12 +1046,86 @@ RAA-003, or fully resolve RAA-007. RAA-003 remains OPEN and RAA-007 remains
 PARTIALLY RESOLVED. Step 7 remains IN PROGRESS; Step 8 and Fortress
 certification remain not started; major Phase 8 expansion remains paused.
 
-F06A is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
-The focused import-boundary suite passed 55 tests; the platform suite passed
-363 tests with one skip; the affected composition suite passed 45 tests; and
+F06A is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`92aa9d7`. The focused import-boundary suite passed 55 tests; the platform
+suite passed 363 tests with one skip; the affected composition suite passed 45 tests; and
 the full configured `tests/tests` suite passed 2,037 tests with one skip. The
 skip is the known Windows directory-symlink privilege limitation. This evidence
-does not make F06A accepted, committed, certified, or complete FORTRESS-06.
+does not complete or certify FORTRESS-06.
+
+### 7.12 FORTRESS-06B — Pytest Collection and Package-Collision Remediation
+
+Date: 2026-08-25. F06B was separately authorized for two exact artifact moves,
+one canonical pytest import-mode setting, containment tests, and minimum
+governance synchronization.
+
+Repository-root prepend collection previously imported the unsupported root
+`phase14_integration_test.py` module-body script, preloading the application
+`brain` package before pytest tried to collect
+`tests/tests/brain/test_executive_brain.py` under the same package identity.
+Root collection failed with `ModuleNotFoundError` while explicit importlib-mode
+collection succeeded but still imported both root module-body scripts.
+
+F06B used history-preserving, byte-identical moves to archive exactly:
+
+- `phase14_integration_test.py` as
+  `legacy_quarantine/tests/phase14_integration_test.py.legacy`; and
+- `test_logger.py` as
+  `legacy_quarantine/tests/test_logger.py.legacy`.
+
+Neither archive directory has `__init__.py`, and `.py.legacy` is not a Python
+import suffix or pytest `python_files` match. `pytest.ini` is still the sole
+pytest configuration owner and now selects `--import-mode=importlib`. The
+existing `tests/conftest.py` remains the sole owner of containment for the 428
+direct `tests/*.py` legacy scripts. No broad ignore, import-path manipulation,
+module-cache manipulation, duplicate configuration, or production change was
+introduced.
+
+Native pytest importlib mode gives deterministic, isolated test-module loading
+while preserving root `brain/`, `tests/tests/brain/`, and canonical `jaos.*`
+application imports. Renaming either package would expand migration scope, and
+`sys.path` or `sys.modules` manipulation would create noncanonical import state.
+
+Verified F06B evidence, all exit code 0:
+
+- focused collection/import/composition invariants: 80 passed;
+- platform suite: 364 passed, 1 skipped;
+- composition suite: 45 passed;
+- integration suite: 58 passed;
+- full configured `tests/tests`: 2,038 passed, 1 skipped;
+- configured, `tests/`, and repository-root collection: 2,039 collected each;
+- Ruff on both changed Python test files: all checks passed.
+
+Every pytest gate used `PYTHONDONTWRITEBYTECODE=1`,
+`.venv/Scripts/python.exe -B -m pytest`, `-p no:cacheprovider`, and a unique
+external `--basetemp` under
+`C:/Users/vinay/AppData/Local/Temp/`. The exact targets were:
+
+| Gate | Target and options after `pytest` | Result |
+|---|---|---|
+| Focused | `tests/tests/platform/test_collection_containment.py tests/tests/platform/test_canonical_import_boundary.py tests/tests/composition/test_canonical_composition_invariants.py -q` | 80 passed |
+| Platform | `tests/tests/platform -q` | 364 passed, 1 skipped |
+| Composition | `tests/tests/composition -q` | 45 passed |
+| Integration | `tests/tests/integration -q` | 58 passed |
+| Full configured | `tests/tests -q` | 2,038 passed, 1 skipped |
+| Configured collection | `--collect-only -q` | 2,039 collected |
+| `tests/` collection | `tests/ --collect-only -q` | 2,039 collected |
+| Repository-root collection | `. --collect-only -q` | 2,039 collected |
+
+Ruff ran as `.venv/Scripts/python.exe -m ruff check` against
+`tests/tests/platform/test_collection_containment.py` and
+`tests/tests/platform/test_canonical_import_boundary.py`.
+
+The skip remains the Windows directory-symlink privilege limitation. No
+importlib fixture, monkeypatch, relative/package import, cross-test import, or
+duplicate-module-identity regression was observed. The F06A guard continues to
+forbid canonical production dependency on `legacy_quarantine` and every other
+F06 identity while allowing canonical `jaos.*` packages.
+
+F06B is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+It does not resolve RAA-003 or fully resolve RAA-007, perform broad legacy
+quarantine, start F06C or FORTRESS-07, complete Step 7, enter Step 8, certify
+Fortress, or resume major Phase 8 expansion.
 
 ---
 
@@ -1105,6 +1182,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.11 | Recorded F06B's exact two-file byte-identical non-Python archive move and canonical pytest importlib mode. All three supported collection forms now collect the same 2,039 tests with exit code 0; focused 80, platform 364 with 1 skip, composition 45, integration 58, and full configured 2,038 with 1 skip passed. FORTRESS-06 remains in progress; F06C+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.10 | Started FORTRESS-06 through the separately authorized F06A slice. Added the authoritative 33-entry legacy/quarantine manifest, reserved `legacy_quarantine`, and extended the existing canonical import guard to 22 F06-owned top-level identities while preserving canonical `jaos.*` roots. F06A is an implemented and verified candidate in the uncommitted working tree: focused 55 passed; platform 363 passed, 1 skipped; composition 45 passed; full configured suite 2,037 passed, 1 skipped. No source moved or was deleted, no runtime data migrated, F06B and FORTRESS-07 have not started, RAA-003 remains open, and RAA-007 remains partially resolved. |
 | 2026-08-24 | 1.9 | Recorded ADR-0011 and the FORTRESS-05A-E slice-state table; verified AI registration rollback, provider-neutral Memory lifecycle and retryable close failure, explicit `conversation@1.0`, functional Conversation/Memory readiness, real-shell fallback non-reachability, decision/deferred import guards, and lazy submodule compatibility. Focused, affected-subsystem, and full configured suites passed with zero failures/errors. FORTRESS-05 is COMPLETE AND VERIFIED at workstream level. RAA-002 and RAA-007 remain partially resolved; RAA-009 remains open. Fortress certification, Step 7 completion, Step 8, Phase 8 resumption, and FORTRESS-06 remain unauthorized. |
 | 2026-08-22 | 1.8 | Recorded FORTRESS-04 closure evidence: `run_jaos.py` now instantiates and drives `PlatformRuntime`/`BootManager` (lifecycle/reachability half of RAA-001 resolved), with truthful exit codes, controlled shutdown on both boot failure and unexpected shell exceptions, and no fabricated status claim. FORTRESS-04 is COMPLETE AND VERIFIED at workstream level. Composing AI/Tool/Executive/Memory into the Runtime Platform remains FORTRESS-05, unauthorized. |
