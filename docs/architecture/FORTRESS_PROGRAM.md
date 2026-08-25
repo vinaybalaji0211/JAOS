@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.9
+Document Version: 1.10
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -18,13 +18,14 @@ Maintainer: JAOS Engineering
 
 Founder Direction Recorded: 2026-08-21
 
-Last Updated: 2026-08-24
+Last Updated: 2026-08-25
 
 Related Documents:
 
 - `JAOS_MANIFEST.md`
 - `docs/architecture/ARCHITECTURE_DECISIONS.md`
 - `docs/architecture/ARCHITECTURE_GOVERNANCE.md`
+- `docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md`
 - `docs/project/ROADMAP.md`
 - `docs/project/MILESTONES.md`
 - `docs/project/PHASE8_MILESTONES.md`
@@ -100,8 +101,12 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
+| FORTRESS-06 | IN PROGRESS — F06A IMPLEMENTED AND VERIFIED CANDIDATE |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED WORKING TREE |
+| FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-002 | PARTIALLY RESOLVED |
+| RAA-003 | OPEN |
 | RAA-005 | RESOLVED WITH EVIDENCE |
 | RAA-007 | PARTIALLY RESOLVED |
 | RAA-008 | RESOLVED WITH EVIDENCE |
@@ -124,8 +129,10 @@ Implementation of each completed workstream proceeded under separate
 authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
-Program is not certified, FORTRESS-06 has not started, and major Phase 8
-expansion remains paused.
+Program is not certified. FORTRESS-06 is in progress only through the
+separately authorized F06A manifest-and-guard slice; no legacy source has moved
+or been deleted, no runtime data has migrated, F06B and later slices have not
+started, and major Phase 8 expansion remains paused.
 
 ---
 
@@ -212,7 +219,7 @@ records a safe dependency-preserving adjustment:
 | 3 | FORTRESS-03 — Runtime lifecycle correctness | COMPLETE AND VERIFIED — closure evidence recorded in section 7.8 |
 | 4 | FORTRESS-04 — One launcher and one composition root | COMPLETE AND VERIFIED — closure evidence recorded in section 7.9 |
 | 5 | FORTRESS-05 — Canonical platform composition | COMPLETE AND VERIFIED — ADR-0011 closure evidence in section 7.10 |
-| 6 | FORTRESS-06 — Legacy migration and quarantine | PLANNED |
+| 6 | FORTRESS-06 — Legacy migration and quarantine | IN PROGRESS — F06A IMPLEMENTED AND VERIFIED CANDIDATE |
 | 7 | FORTRESS-07 — Permission, approval, and audit hardening | PLANNED |
 | 8 | FORTRESS-08 — Crash-safe persistence, rollback, and replay | PLANNED |
 | 9 | FORTRESS-09 — Real provider resilience | PLANNED |
@@ -1010,6 +1017,41 @@ FORTRESS-06.
 
 ---
 
+### 7.11 FORTRESS-06A — Authoritative Legacy/Quarantine Manifest and Import Guards
+
+Date: 2026-08-25. FORTRESS-06 implementation is authorized only for F06A.
+
+F06A creates
+`docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md` as the
+authoritative human/governance classification record and extends the existing
+`tests/tests/platform/test_canonical_import_boundary.py` analyzer as the sole
+executable canonical import-boundary owner.
+
+The manifest records 33 source entries: eight canonical, three compatibility
+debts, sixteen quarantine candidates, two archive-only candidates, and four
+safe-to-delete-later candidates. It reserves the future top-level namespace
+`legacy_quarantine` without creating it. The executable guard enforces 22
+F06-owned top-level identities, including satellite roots previously protected
+only by topology, archive/safe-later module identities, and the reserved future
+namespace. Exact first-component matching preserves canonical `jaos.ai`,
+`jaos.memory`, `jaos.executive`, `jaos.tools`, `jaos.composition`, completed
+Conversation Intelligence scope, and `jaos_platform`.
+
+F06A does not move or delete legacy code, change compatibility fallbacks,
+migrate or rewrite runtime data, begin F06B, begin FORTRESS-07, resolve
+RAA-003, or fully resolve RAA-007. RAA-003 remains OPEN and RAA-007 remains
+PARTIALLY RESOLVED. Step 7 remains IN PROGRESS; Step 8 and Fortress
+certification remain not started; major Phase 8 expansion remains paused.
+
+F06A is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree.
+The focused import-boundary suite passed 55 tests; the platform suite passed
+363 tests with one skip; the affected composition suite passed 45 tests; and
+the full configured `tests/tests` suite passed 2,037 tests with one skip. The
+skip is the known Windows directory-symlink privilege limitation. This evidence
+does not make F06A accepted, committed, certified, or complete FORTRESS-06.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -1063,6 +1105,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.10 | Started FORTRESS-06 through the separately authorized F06A slice. Added the authoritative 33-entry legacy/quarantine manifest, reserved `legacy_quarantine`, and extended the existing canonical import guard to 22 F06-owned top-level identities while preserving canonical `jaos.*` roots. F06A is an implemented and verified candidate in the uncommitted working tree: focused 55 passed; platform 363 passed, 1 skipped; composition 45 passed; full configured suite 2,037 passed, 1 skipped. No source moved or was deleted, no runtime data migrated, F06B and FORTRESS-07 have not started, RAA-003 remains open, and RAA-007 remains partially resolved. |
 | 2026-08-24 | 1.9 | Recorded ADR-0011 and the FORTRESS-05A-E slice-state table; verified AI registration rollback, provider-neutral Memory lifecycle and retryable close failure, explicit `conversation@1.0`, functional Conversation/Memory readiness, real-shell fallback non-reachability, decision/deferred import guards, and lazy submodule compatibility. Focused, affected-subsystem, and full configured suites passed with zero failures/errors. FORTRESS-05 is COMPLETE AND VERIFIED at workstream level. RAA-002 and RAA-007 remain partially resolved; RAA-009 remains open. Fortress certification, Step 7 completion, Step 8, Phase 8 resumption, and FORTRESS-06 remain unauthorized. |
 | 2026-08-22 | 1.8 | Recorded FORTRESS-04 closure evidence: `run_jaos.py` now instantiates and drives `PlatformRuntime`/`BootManager` (lifecycle/reachability half of RAA-001 resolved), with truthful exit codes, controlled shutdown on both boot failure and unexpected shell exceptions, and no fabricated status claim. FORTRESS-04 is COMPLETE AND VERIFIED at workstream level. Composing AI/Tool/Executive/Memory into the Runtime Platform remains FORTRESS-05, unauthorized. |
 | 2026-08-22 | 1.7 | Recorded FORTRESS-03 closure evidence for slices 03A through 03J: truthful readiness, partial-start rollback and subscriber isolation, coordinated shutdown with narrow AI/Memory hardening, truthful health across Runtime/AI/Memory/Executive, repeat lifecycle semantics, production status honesty (SHT-003), construction/initialization separation (lifecycle half of RAA-007), and the consolidated lifecycle invariant closure suite. RAA-004 and RAA-006 resolved with evidence. FORTRESS-03 is COMPLETE AND VERIFIED at workstream level. Fortress certification, Step 7, Step 8, Phase 8 resumption, and FORTRESS-04 are all unaffected and unauthorized. |

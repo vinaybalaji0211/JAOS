@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.2
+Version: 4.3
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -45,13 +45,16 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
+| FORTRESS-06 | IN PROGRESS — F06A ONLY |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-07 | NOT STARTED |
 | Previous completed phase | Phase 7 — Memory Platform |
 | Next planned phase | Phase 9 — Workflow & Automation Platform |
 | Long-term release target | JAOS v1.0 |
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | ADR-0011 / FORTRESS-05 CLOSURE RECORDED |
+| Documentation state | F06A MANIFEST AND IMPORT-GUARD CANDIDATE RECORDED |
 
 ---
 
@@ -86,9 +89,9 @@ RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled Step 7 remediation.
 
 Step 7 implementation is in progress. RAA-005 and RAA-008 are resolved with
-evidence. RAA-002 and RAA-007 are partially resolved under ADR-0011. RAA-009
-remains open and deferred; other unresolved findings remain unresolved. Step 8
-and Fortress certification have not begun.
+evidence. RAA-002 and RAA-007 are partially resolved under ADR-0011. RAA-003
+remains open. RAA-009 remains open and deferred; other unresolved findings
+remain unresolved. Step 8 and Fortress certification have not begun.
 
 FORTRESS-05 is COMPLETE AND VERIFIED at workstream level under ADR-0011. The
 production launcher reaches
@@ -101,13 +104,21 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
+FORTRESS-06 is now IN PROGRESS through F06A only. Its authoritative 33-entry
+legacy/quarantine manifest and the matching canonical import guards are an
+IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working tree. Focused,
+platform, composition, and full configured suites passed. No legacy source has
+moved or been deleted, no runtime data has migrated, F06B and later slices have
+not started, and FORTRESS-07 has not started.
+
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not production request-routed.
 `MemoryContextSource`/`MemorySearchEngine` remains deferred with RAA-009.
 Advanced reasoning, planning, decision, agents, execution proposals, and
-autonomy remain paused. Compatibility fallbacks, the lazy Intelligence facade,
-and legacy quarantine remain FORTRESS-06 debt; Tool control-policy hardening
-remains FORTRESS-07.
+autonomy remain paused. Compatibility fallbacks and the lazy Intelligence
+facade remain later FORTRESS-06 debt; classified legacy systems remain in place
+behind the F06A non-reachability guard. Tool control-policy hardening remains
+FORTRESS-07.
 
 The controlled Step 7 workflow is:
 
@@ -548,11 +559,13 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-1. Preserve the verified FORTRESS-01 through FORTRESS-05 state.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the F06A
+   implemented-and-verified candidate.
 2. Continue only separately authorized Step 7 remediation.
 3. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
    architecture decision and implementation are authorized.
-4. Do not begin FORTRESS-06 without explicit Founder authorization.
+4. Do not begin F06B or any later FORTRESS-06 slice without separate Founder
+   authorization; do not move or delete legacy source.
 5. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
 6. Produce the Step 7 report for Founder review when all Step 7 work is done.

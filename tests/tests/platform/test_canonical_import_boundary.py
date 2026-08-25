@@ -1,4 +1,4 @@
-"""FORTRESS-02I canonical import-boundary architecture guard.
+"""FORTRESS-02I/FORTRESS-06A canonical import-boundary architecture guard.
 
 Boundary definition
 -------------------
@@ -33,23 +33,141 @@ _REPOSITORY_ROOT = Path(__file__).resolve().parents[3]
 
 CANONICAL_ENTRY_POINT = "run_jaos.py"
 
-FORBIDDEN_TOP_LEVEL_MODULES = frozenset(
+_PREEXISTING_FORBIDDEN_TOP_LEVEL_MODULES = frozenset(
     {
         "agent",
         "agents",
         "autonomous",
-        "brain",
-        "memory",
-        "core",
-        "executive_brain",
-        "kernel",
-        "main",
         "planning",
         "reasoning",
         "tests",
+    }
+)
+
+F06_QUARANTINE_TOP_LEVEL_MODULES = frozenset(
+    {
+        "brain",
+        "communication",
+        "core",
+        "dashboard",
+        "development",
+        "engineering",
+        "executive_brain",
+        "infrastructure",
+        "kernel",
+        "knowledge",
+        "main",
+        "memory",
+        "pc_control",
+        "security",
+        "system_services",
         "workflow",
     }
 )
+
+F06_ARCHIVE_SAFE_LATER_TOP_LEVEL_MODULES = frozenset(
+    {
+        "infrastructure_intelligence_core",
+        "phase14_integration_test",
+        "plugins",
+        "reasoning_assumption",
+        "test_logger",
+    }
+)
+
+F06_FUTURE_QUARANTINE_NAMESPACE = "legacy_quarantine"
+
+F06_MANIFEST_GUARDED_TOP_LEVEL_MODULES = frozenset(
+    {
+        *F06_QUARANTINE_TOP_LEVEL_MODULES,
+        *F06_ARCHIVE_SAFE_LATER_TOP_LEVEL_MODULES,
+        F06_FUTURE_QUARANTINE_NAMESPACE,
+    }
+)
+
+FORBIDDEN_TOP_LEVEL_MODULES = frozenset(
+    {
+        *_PREEXISTING_FORBIDDEN_TOP_LEVEL_MODULES,
+        *F06_MANIFEST_GUARDED_TOP_LEVEL_MODULES,
+    }
+)
+
+F06_MANIFEST_PATH = (
+    _REPOSITORY_ROOT
+    / "docs"
+    / "architecture"
+    / "FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md"
+)
+
+_F06_GUARD_START = "<!-- F06A-GUARDED-TOP-LEVEL-MODULES:START -->"
+_F06_GUARD_END = "<!-- F06A-GUARDED-TOP-LEVEL-MODULES:END -->"
+_F06_CLASSIFICATION_START = "<!-- F06A-CLASSIFICATION-ENTRIES:START -->"
+_F06_CLASSIFICATION_END = "<!-- F06A-CLASSIFICATION-ENTRIES:END -->"
+_EXPECTED_F06_CLASSIFICATION_COUNTS = {
+    "A": 8,
+    "B": 3,
+    "D": 16,
+    "E": 2,
+    "F": 4,
+}
+_EXPECTED_F06_CLASSIFIED_PATHS = {
+    "A": frozenset(
+        {
+            "run_jaos.py",
+            "jaos_platform",
+            "jaos.composition",
+            "jaos.ai",
+            "jaos.memory",
+            "jaos.executive",
+            "jaos.tools",
+            "jaos.intelligence.conversation",
+        }
+    ),
+    "B": frozenset(
+        {
+            (
+                "jaos.cli.command_dispatcher.CommandDispatcher "
+                "self-construction fallback"
+            ),
+            "jaos.cli.shell.JAOSShell dispatcher fallback",
+            "jaos.intelligence lazy facades",
+        }
+    ),
+    "D": frozenset(
+        {
+            "brain/",
+            "communication/",
+            "core/",
+            "dashboard/",
+            "development/",
+            "engineering/",
+            "executive_brain/",
+            "infrastructure/",
+            "kernel/",
+            "knowledge/",
+            "memory/",
+            "pc_control/",
+            "security/",
+            "system_services/",
+            "workflow/",
+            "main.py",
+        }
+    ),
+    "E": frozenset(
+        {
+            "phase14_integration_test.py",
+            "kernel/jaos_kernel_backup.py",
+        }
+    ),
+    "F": frozenset(
+        {
+            "plugins/",
+            "test_logger.py",
+            "infrastructure_intelligence_core.py",
+            "reasoning_assumption.py",
+        }
+    ),
+}
 
 FORBIDDEN_CANONICAL_MODULE_PREFIXES = (
     "jaos.intelligence.context.memory_context_source",
@@ -110,6 +228,23 @@ def _collect_imports(node: ast.AST, modules: set[str], relative: list[str]) -> N
                 relative.append(child.module or "")
             elif child.module:
                 modules.add(child.module)
+        elif isinstance(child, ast.Call) and child.args:
+            literal_module = child.args[0]
+            if isinstance(literal_module, ast.Constant) and isinstance(
+                literal_module.value,
+                str,
+            ):
+                is_import_module = (
+                    isinstance(child.func, ast.Name)
+                    and child.func.id in {"__import__", "import_module"}
+                ) or (
+                    isinstance(child.func, ast.Attribute)
+                    and isinstance(child.func.value, ast.Name)
+                    and child.func.value.id == "importlib"
+                    and child.func.attr == "import_module"
+                )
+                if is_import_module:
+                    modules.add(literal_module.value)
 
         _collect_imports(child, modules, relative)
 
@@ -214,6 +349,84 @@ def _synthetic_canonical_tree(root: Path, canonical_body: str) -> None:
     _write_module(root, "core/engine.py", "")
     _write_module(root, "jaos/tools/__init__.py", "")
     _write_module(root, "jaos/tools/tool_manager.py", "")
+    _write_module(root, "jaos/ai/__init__.py", "")
+    _write_module(root, "jaos/composition/__init__.py", "")
+    _write_module(root, "jaos/executive/__init__.py", "")
+    _write_module(root, "jaos/intelligence/__init__.py", "")
+    _write_module(root, "jaos/intelligence/conversation/__init__.py", "")
+    _write_module(root, "jaos/memory/__init__.py", "")
+    _write_module(root, "jaos_platform/__init__.py", "")
+
+
+def _manifest_section(source: str, start: str, end: str) -> str:
+    try:
+        return source.split(start, maxsplit=1)[1].split(end, maxsplit=1)[0]
+    except IndexError as error:
+        raise AssertionError(
+            f"manifest section markers are missing: {start!r}, {end!r}"
+        ) from error
+
+
+def _manifest_guarded_top_level_modules(source: str) -> frozenset[str]:
+    section = _manifest_section(source, _F06_GUARD_START, _F06_GUARD_END)
+    modules = {
+        line.removeprefix("- `").removesuffix("`")
+        for line in section.splitlines()
+        if line.startswith("- `") and line.endswith("`")
+    }
+    return frozenset(modules)
+
+
+def _manifest_classification_counts(source: str) -> dict[str, int]:
+    section = _manifest_section(
+        source,
+        _F06_CLASSIFICATION_START,
+        _F06_CLASSIFICATION_END,
+    )
+    counts: dict[str, int] = {}
+
+    for line in section.splitlines():
+        if not line.startswith("| `"):
+            continue
+
+        columns = [column.strip() for column in line.strip("|").split("|")]
+        classification = columns[1]
+        code = classification.split(maxsplit=1)[0]
+        counts[code] = counts.get(code, 0) + 1
+
+    return counts
+
+
+def _manifest_classified_paths(
+    source: str,
+) -> dict[str, frozenset[str]]:
+    section = _manifest_section(
+        source,
+        _F06_CLASSIFICATION_START,
+        _F06_CLASSIFICATION_END,
+    )
+    classified_paths: dict[str, set[str]] = {}
+    seen_paths: set[str] = set()
+
+    for line in section.splitlines():
+        if not line.startswith("| `"):
+            continue
+
+        columns = [column.strip() for column in line.strip("|").split("|")]
+        path = columns[0].removeprefix("`").removesuffix("`")
+        classification = columns[1]
+        code = classification.split(maxsplit=1)[0]
+
+        if path in seen_paths:
+            raise AssertionError(f"duplicate manifest path: {path!r}")
+
+        seen_paths.add(path)
+        classified_paths.setdefault(code, set()).add(path)
+
+    return {
+        code: frozenset(paths)
+        for code, paths in classified_paths.items()
+    }
 
 
 def test_canonical_closure_has_no_legacy_dependency() -> None:
@@ -226,6 +439,26 @@ def test_canonical_closure_has_no_legacy_dependency() -> None:
 
     assert report["violations"] == []
     assert report["reached_modules"], "the closure must not be empty"
+
+
+def test_canonical_closure_contains_no_f06_manifest_guarded_root() -> None:
+    """F06A: the real launcher closure contains no classified F06 root."""
+
+    report = analyze_import_closure(
+        _REPOSITORY_ROOT,
+        CANONICAL_ENTRY_POINT,
+    )
+    reached = report["reached_modules"]
+    assert isinstance(reached, set)
+
+    reached_top_levels = {
+        module.split(".", maxsplit=1)[0] for module in reached
+    }
+
+    assert report["violations"] == []
+    assert reached_top_levels.isdisjoint(
+        F06_MANIFEST_GUARDED_TOP_LEVEL_MODULES
+    )
 
 
 def test_canonical_closure_uses_only_absolute_imports() -> None:
@@ -319,6 +552,128 @@ def test_forbidden_legacy_imports_are_detected(
 
 
 @pytest.mark.parametrize(
+    "forbidden_root",
+    sorted(F06_QUARANTINE_TOP_LEVEL_MODULES),
+)
+def test_each_f06_quarantine_root_is_detected(
+    tmp_path: Path,
+    forbidden_root: str,
+) -> None:
+    """F06A: every classified quarantine root is rejected synthetically."""
+
+    _synthetic_canonical_tree(
+        tmp_path,
+        f"import {forbidden_root}\n\n\nclass JAOSShell:\n    pass\n",
+    )
+
+    report = analyze_import_closure(tmp_path, "run_jaos.py")
+    violations = report["violations"]
+
+    assert isinstance(violations, list)
+    assert any(forbidden_root in violation for violation in violations)
+
+
+@pytest.mark.parametrize(
+    "forbidden_root",
+    sorted(F06_ARCHIVE_SAFE_LATER_TOP_LEVEL_MODULES),
+)
+def test_archive_and_safe_later_roots_remain_outside_production(
+    tmp_path: Path,
+    forbidden_root: str,
+) -> None:
+    """Archive and safe-later sources must not become canonical imports."""
+
+    _synthetic_canonical_tree(
+        tmp_path,
+        f"import {forbidden_root}\n\n\nclass JAOSShell:\n    pass\n",
+    )
+
+    report = analyze_import_closure(tmp_path, "run_jaos.py")
+
+    assert report["violations"]
+
+
+def test_future_quarantine_namespace_is_forbidden(tmp_path: Path) -> None:
+    """F06A reserves the future quarantine namespace before any move."""
+
+    _synthetic_canonical_tree(
+        tmp_path,
+        "import legacy_quarantine\n\n\nclass JAOSShell:\n    pass\n",
+    )
+
+    report = analyze_import_closure(tmp_path, "run_jaos.py")
+
+    assert any(
+        F06_FUTURE_QUARANTINE_NAMESPACE in violation
+        for violation in report["violations"]
+    )
+
+
+def test_archived_shadow_kernel_module_is_forbidden(tmp_path: Path) -> None:
+    """The archive classification cannot bypass the root kernel guard."""
+
+    _synthetic_canonical_tree(
+        tmp_path,
+        "import kernel.jaos_kernel_backup\n\n\nclass JAOSShell:\n    pass\n",
+    )
+
+    report = analyze_import_closure(tmp_path, "run_jaos.py")
+
+    assert any(
+        "kernel.jaos_kernel_backup" in violation
+        for violation in report["violations"]
+    )
+
+
+@pytest.mark.parametrize(
+    "dynamic_import",
+    (
+        '__import__("brain.goal_tracker")',
+        'import importlib\nimportlib.import_module("core.engine")',
+        'from importlib import import_module\nimport_module("memory.long_term_memory")',
+    ),
+)
+def test_literal_dynamic_quarantine_import_is_detected(
+    tmp_path: Path,
+    dynamic_import: str,
+) -> None:
+    """Literal dynamic imports cannot bypass the canonical static guard."""
+
+    _synthetic_canonical_tree(
+        tmp_path,
+        f"{dynamic_import}\n\n\nclass JAOSShell:\n    pass\n",
+    )
+
+    report = analyze_import_closure(tmp_path, "run_jaos.py")
+
+    assert report["violations"]
+
+
+def test_f06_manifest_guard_contract_matches_boundary_guard() -> None:
+    """The authoritative manifest and executable guard cannot silently drift."""
+
+    source = F06_MANIFEST_PATH.read_text(encoding="utf-8")
+
+    assert _manifest_guarded_top_level_modules(source) == (
+        F06_MANIFEST_GUARDED_TOP_LEVEL_MODULES
+    )
+    assert _manifest_classification_counts(source) == (
+        _EXPECTED_F06_CLASSIFICATION_COUNTS
+    )
+    assert _manifest_classified_paths(source) == (
+        _EXPECTED_F06_CLASSIFIED_PATHS
+    )
+
+
+def test_preexisting_and_f06_guard_ownership_is_disjoint() -> None:
+    """Every forbidden top-level identity has one guard-policy owner."""
+
+    assert _PREEXISTING_FORBIDDEN_TOP_LEVEL_MODULES.isdisjoint(
+        F06_MANIFEST_GUARDED_TOP_LEVEL_MODULES
+    )
+
+
+@pytest.mark.parametrize(
     "deferred_import",
     [
         "from jaos.intelligence.decision import DefaultDecisionEngine",
@@ -346,19 +701,33 @@ def test_deferred_intelligence_imports_are_detected(
     assert report["violations"]
 
 
-def test_safe_canonical_import_passes(tmp_path: Path) -> None:
-    """G5: a canonical jaos.* import is allowed."""
+@pytest.mark.parametrize(
+    "canonical_module",
+    (
+        "jaos.ai",
+        "jaos.composition",
+        "jaos.executive",
+        "jaos.intelligence.conversation",
+        "jaos.memory",
+        "jaos.tools",
+        "jaos_platform",
+    ),
+)
+def test_safe_canonical_import_passes(
+    tmp_path: Path,
+    canonical_module: str,
+) -> None:
+    """G5/F06A: canonical jaos.* and jaos_platform imports remain allowed."""
 
     _synthetic_canonical_tree(
         tmp_path,
-        "from jaos.tools.tool_manager import ToolManager\n\n\n"
-        "class JAOSShell:\n    pass\n",
+        f"import {canonical_module}\n\n\nclass JAOSShell:\n    pass\n",
     )
 
     report = analyze_import_closure(tmp_path, "run_jaos.py")
 
     assert report["violations"] == []
-    assert "jaos.tools.tool_manager" in report["reached_modules"]
+    assert canonical_module in report["reached_modules"]
 
 
 def test_type_checking_only_import_is_not_a_runtime_dependency(

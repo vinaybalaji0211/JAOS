@@ -1,18 +1,18 @@
 # JAOS Next Actions
 
-Version: 4.2
+Version: 4.3
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
-Last Synchronized: 2026-08-24
+Last Synchronized: 2026-08-25
 Certified Release: v0.9.0-alpha
 Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 Current Stabilization Activity: Step 7 — Bug Fixing and Regression
-Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 not started
-Exact Next Action: Preserve FORTRESS-05 closure and continue only separately authorized Step 7 work without beginning FORTRESS-06
+Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06A only
+Exact Next Action: Preserve the F06A implemented-and-verified candidate; do not begin F06B or move legacy source
 
 ---
 
@@ -63,6 +63,9 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
+| FORTRESS-06 | IN PROGRESS — F06A ONLY |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-07 | NOT STARTED |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Full regression certification | PENDING |
@@ -96,10 +99,10 @@ This pause is not:
 
 ## 3. Immediate Priority
 
-The immediate priority is to preserve the FORTRESS-01 governance checkpoint and
-the verified FORTRESS-02 through FORTRESS-05 state, continue only separately
-authorized Step 7 work, and avoid beginning FORTRESS-06 without separate
-authorization.
+The immediate priority is to preserve the FORTRESS-01 governance checkpoint,
+the verified FORTRESS-02 through FORTRESS-05 state, and the separately
+authorized F06A implemented-and-verified candidate. Do not begin F06B, move
+legacy source, or migrate runtime data.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -123,9 +126,9 @@ controlled remediation.
 RAA-005 and RAA-008 are resolved with evidence. RAA-002 and RAA-007 are
 partially resolved under ADR-0011: request routing remains deferred for
 RAA-002, and compatibility self-construction remains FORTRESS-06 debt for
-RAA-007. RAA-009 remains open and deferred; other unresolved RAA findings
-remain unresolved. Step 7 remains in progress; neither Step 8 nor Fortress
-certification has begun.
+RAA-007. RAA-003 remains open. RAA-009 remains open and deferred; other
+unresolved RAA findings remain unresolved. Step 7 remains in progress; neither
+Step 8 nor Fortress certification has begun.
 
 The controlled Step 7 workflow is:
 
@@ -496,6 +499,8 @@ The following actions are authorized:
 - Preserve Step 4, Step 5, and Step 6 completion evidence.
 - Run non-mutating documentation and repository checks.
 - Run `git diff --check`.
+- Implement and verify only the separately authorized F06A manifest and
+  canonical import-guard slice without moving legacy source or runtime data.
 
 FORTRESS-01 authorized only the governance and documentation baseline it
 recorded. It did not authorize later implementation. FORTRESS-02 slices 02A
@@ -503,7 +508,8 @@ through 02K, FORTRESS-03 slices 03A through 03J, FORTRESS-04, and FORTRESS-05
 slices 05A through 05E were each implemented under separate authorization.
 FORTRESS-02 through FORTRESS-04 are verified by sections 7.7 through 7.9;
 FORTRESS-05 is verified under ADR-0011 by the closure evidence in section 7.10.
-No authorization for FORTRESS-06, Step 8, or major Phase 8 expansion exists.
+FORTRESS-06 is authorized only through F06A. F06B and later slices, Step 8, and
+major Phase 8 expansion are not authorized.
 
 Each change must remain reviewable and recoverable.
 
@@ -513,7 +519,8 @@ Each change must remain reviewable and recoverable.
 
 Do not:
 
-- Begin FORTRESS-06.
+- Begin F06B or any later FORTRESS-06 slice.
+- Move or delete legacy source, or migrate runtime data.
 - Claim the Fortress Program certified.
 - Modify production code, tests, or runtime data without separate
   authorization.
@@ -807,7 +814,8 @@ than rapidly changing implementation.
 4. Continue only separately authorized Step 7 remediation.
 5. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7 until
    Step 7 is complete and approved.
-6. Do not begin FORTRESS-06 without separate authorization.
+6. Verify and preserve the separately authorized F06A implementation; do not
+   begin F06B or any later slice, move legacy source, or migrate runtime data.
 7. Execute the skipped directory-symlink escape rejection check in an elevated
    or capable environment before Fortress certification.
 8. Keep major Phase 8 expansion paused until Step 8 and Fortress certification
@@ -826,10 +834,13 @@ Fortress gate passes.
 
 FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at workstream level,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
-sections 7.7 through 7.10. RAA-002 and RAA-007 remain partially resolved, and
-RAA-009 remains open. Continue only separately authorized Step 7 work. Do not
-begin FORTRESS-06, claim Fortress Program certification, enter Step 8, resume
-MS-0025E, or resume major Phase 8 expansion.
+sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through F06A only; its
+manifest and import guards are an IMPLEMENTED AND VERIFIED CANDIDATE in the
+uncommitted working tree. No legacy source has moved or been deleted, no
+runtime data has migrated, F06B and later slices have not started, and
+FORTRESS-07 has not started. RAA-003 remains open, RAA-007 remains partially
+resolved, and RAA-009 remains open. Do not claim Fortress Program
+certification, enter Step 8, resume MS-0025E, or resume major Phase 8 expansion.
 
 The following remain explicitly open and unchanged: the directory-symlink
 escape validation is unverified on this host; composed Memory is not used by

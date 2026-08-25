@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 3.2
+Version: 3.3
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -71,8 +71,8 @@ Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
 RAA-001 through RAA-009 and SHT-001 through SHT-006 are authorized for
 controlled Step 7 remediation. RAA-005 and RAA-008 are resolved with evidence.
-RAA-002 and RAA-007 are partially resolved; RAA-009 remains open and deferred;
-other unresolved findings remain unresolved.
+RAA-002 and RAA-007 are partially resolved; RAA-003 remains open; RAA-009
+remains open and deferred; other unresolved findings remain unresolved.
 
 Step 5 — Full Automated Testing remains COMPLETED with the verified automated
 baseline of 1,590 tests collected and 1,590 tests passed.
@@ -86,7 +86,11 @@ with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
 recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
-FORTRESS-06 has not started and awaits explicit Founder authorization.
+FORTRESS-06 is IN PROGRESS through F06A only. The authoritative manifest and
+canonical import guards are an IMPLEMENTED AND VERIFIED CANDIDATE in the
+uncommitted working tree. No legacy source has moved or been deleted, no
+runtime data has migrated, F06B and later slices have not started, and
+FORTRESS-07 has not started.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -133,6 +137,9 @@ The objectives of this sprint are to:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
+| FORTRESS-06 | IN PROGRESS — F06A ONLY |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-07 | NOT STARTED |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
@@ -454,10 +461,12 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-1. Preserve the verified FORTRESS-01 through FORTRESS-05 state.
+1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the F06A
+   implemented-and-verified candidate.
 2. Continue only separately authorized Step 7 remediation.
 3. Keep RAA-009 and the Memory-context adapter open/deferred.
-4. Do not begin FORTRESS-06 without explicit Founder authorization.
+4. Do not begin F06B or any later FORTRESS-06 slice without separate Founder
+   authorization; do not move or delete legacy source.
 5. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
 6. Produce the Step 7 report for Founder review when Step 7 is complete.
@@ -486,6 +495,9 @@ This sprint is complete only when:
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
+| FORTRESS-06 | IN PROGRESS — F06A ONLY |
+| FORTRESS-06A | IMPLEMENTED AND VERIFIED CANDIDATE — UNCOMMITTED |
+| FORTRESS-07 | NOT STARTED |
 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
 | Phase 8 Resume | PENDING |
 
@@ -507,6 +519,16 @@ Current FORTRESS-05 state:
 COMPLETE AND VERIFIED at workstream level under ADR-0011; RAA-002 and RAA-007
 remain partially resolved, RAA-009 remains open, and overall Fortress
 certification has not started.
+
+Current FORTRESS-06 state:
+
+IN PROGRESS through F06A only. The 33-entry manifest and 22 guarded top-level
+identities are an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working
+tree. The focused suite passed 55; platform passed 363 with one skip;
+composition passed 45; and the full configured suite passed 2,037 with one
+skip. No legacy source has moved or been deleted, no runtime data has migrated,
+and F06B and later slices have not started. RAA-003 remains OPEN and RAA-007
+remains PARTIALLY RESOLVED.
 
 Current activity:
 
