@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 3.6
+Version: 3.7
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -77,7 +77,7 @@ remains open and deferred; other unresolved findings remain unresolved.
 Step 5 — Full Automated Testing remains COMPLETED with the verified automated
 baseline of 1,590 tests collected and 1,590 tests passed.
 
-Step 8 — Stabilization Certification remains PENDING — BLOCKED BY STEP 7.
+Step 8 — Stabilization Certification remains NOT STARTED — BLOCKED BY STEP 7.
 
 The Founder-approved Fortress Program is now the mandatory hard gate before
 major Phase 8 expansion. FORTRESS-01 has recorded the governance baseline.
@@ -86,14 +86,17 @@ with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
 recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
-FORTRESS-06 is IN PROGRESS through F06C. F06A is IMPLEMENTED AND VERIFIED —
+FORTRESS-06 is IN PROGRESS through F06D2A. F06A is IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is IMPLEMENTED AND VERIFIED
 — COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is IMPLEMENTED AND
 VERIFIED — COMMITTED AND PUSHED at checkpoint `0a2ea60`: the CLI surfaces require
 injected collaborators and canonical composition/runtime retains lifecycle
-ownership. RAA-007 is resolved with evidence. No other legacy source moved or
-was deleted, no runtime data migrated, F06D and later slices have not started,
-and FORTRESS-07 has not started.
+ownership. F06D is IN PROGRESS. F06D1 is IMPLEMENTED AND VERIFIED — COMMITTED
+AND PUSHED at checkpoint `51818d2`; F06D2A is IMPLEMENTED AND VERIFIED —
+COMMITTED AND PUSHED at checkpoint `95adce4`. Configured legacy-facing files
+progressed from 67 at baseline to 59 after F06D1 and 52 after F06D2A. F06D is
+not complete, F06D2B and later slices have not started, RAA-003 remains OPEN,
+RAA-007 is RESOLVED WITH EVIDENCE, and FORTRESS-07 has not started.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -129,6 +132,7 @@ The objectives of this sprint are to:
 | Active milestone | MS-0025E — Reasoning and Planning Intelligence |
 | Phase 8 execution | Major expansion paused — Fortress hard gate |
 | Stabilization step | Step 7 — Bug Fixing and Regression — IN PROGRESS |
+| Step 8 — Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Fortress Program | ACTIVE — mandatory hard gate |
 | FORTRESS-01 | IMPLEMENTED — governance baseline recorded |
 | FORTRESS-02 | COMPLETE AND VERIFIED |
@@ -140,12 +144,17 @@ The objectives of this sprint are to:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
-| FORTRESS-06D+ | NOT STARTED |
+| FORTRESS-06D | IN PROGRESS |
+| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
+| RAA-003 | OPEN |
+| RAA-007 | RESOLVED WITH EVIDENCE |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
@@ -206,7 +215,7 @@ The approved stabilization order is mandatory.
 | 5 | Full Automated Testing | COMPLETED |
 | 6 | JAOS Shell Testing | COMPLETED WITH FINDINGS |
 | 7 | Bug Fixing and Regression | IN PROGRESS |
-| 8 | Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
+| 8 | Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | 9 | Resume Phase 8 | PENDING |
 
 The sequence must not be skipped or reordered without an approved engineering
@@ -254,6 +263,12 @@ Conversation Intelligence. The focused remediation suite passed 85 tests; the
 related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors.
 
+FORTRESS-06 is IN PROGRESS through F06D2A, and F06D is IN PROGRESS. F06D1 is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `51818d2`; F06D2A is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`. Configured
+legacy-facing files progressed 67 baseline -> 59 after F06D1 -> 52 after
+F06D2A. F06D is not complete, and F06D2B and later slices have not started.
+
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not live-request routed. The Memory-context adapter and
 RAA-009 remain deferred. Advanced reasoning, planning, decision, agents,
@@ -271,7 +286,7 @@ The controlled Step 7 workflow is:
 6. Produce the Step 7 report for Founder review.
 
 Step 8 — Stabilization Certification has not begun and remains
-PENDING — BLOCKED BY STEP 7.
+NOT STARTED — BLOCKED BY STEP 7.
 
 MS-0025E and Phase 8 implementation remain paused.
 
@@ -468,22 +483,29 @@ This sprint is complete only when:
 ## 15. Immediate Next Actions
 
 1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the committed
-   and pushed F06A/F06B/F06C checkpoints.
-2. Continue only separately authorized Step 7 remediation.
-3. Keep RAA-009 and the Memory-context adapter open/deferred.
-4. Do not begin F06D or any later FORTRESS-06 slice without separate Founder
-   authorization; do not move or delete any additional legacy source.
-5. Execute the skipped directory-symlink escape check on a capable host before
+   and pushed F06A/F06B/F06C/F06D1/F06D2A checkpoints.
+2. Proceed next only with FORTRESS-06D2B — canonical Core Tool Platform test
+   adjudication/migration:
+   - read and verify current canonical coverage;
+   - port meaningful requirements;
+   - quarantine shadow-only test evidence;
+   - do not weaken canonical policy; and
+   - do not redesign FORTRESS-07 policy inside F06D2B.
+3. Continue only separately authorized Step 7 remediation.
+4. Keep RAA-009 and the Memory-context adapter open/deferred.
+5. Do not begin any F06D slice after F06D2B without separate Founder
+   authorization; do not move or delete legacy source outside F06D2B scope.
+6. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
-6. Produce the Step 7 report for Founder review when Step 7 is complete.
-7. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
+7. Produce the Step 7 report for Founder review when Step 7 is complete.
+8. Keep Step 8 — Stabilization Certification NOT STARTED — BLOCKED BY STEP 7
    until Step 7 is complete and approved.
-8. Resume MS-0025E only after Step 8 and Fortress certification and explicit
+9. Resume MS-0025E only after Step 8 and Fortress certification and explicit
    Founder authorization.
-9. Complete the remaining Phase 8 milestones.
-10. Certify and release v0.10.0-alpha.
-11. Complete remaining Memory Platform production work.
-12. Begin Phase 9 — Workflow & Automation Platform.
+10. Complete the remaining Phase 8 milestones.
+11. Certify and release v0.10.0-alpha.
+12. Complete remaining Memory Platform production work.
+13. Begin Phase 9 — Workflow & Automation Platform.
 
 ---
 
@@ -501,13 +523,16 @@ This sprint is complete only when:
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
-| FORTRESS-06D+ | NOT STARTED |
+| FORTRESS-06D | IN PROGRESS |
+| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
-| Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
+| Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Phase 8 Resume | PENDING |
 
 Overall sprint status:
@@ -522,7 +547,8 @@ Newer Fortress checkpoints:
 
 `f9b054e` (FORTRESS-05A/05B), `1df73e3` (FORTRESS-05C), `cf26693`
 (FORTRESS-05D), `bc54d36` (FORTRESS-05 closure), `92aa9d7` (FORTRESS-06A),
-`eea8190` (FORTRESS-06B), and `0a2ea60` (FORTRESS-06C)
+`eea8190` (FORTRESS-06B), `0a2ea60` (FORTRESS-06C), `51818d2`
+(FORTRESS-06D1), and `95adce4` (FORTRESS-06D2A)
 
 FORTRESS-05 checkpoint state:
 
@@ -532,16 +558,20 @@ Overall Fortress certification has not started.
 
 Current FORTRESS-06 state:
 
-IN PROGRESS through F06C. F06A's 33-entry manifest and 22 guarded top-level
+IN PROGRESS through F06D2A. F06A's 33-entry manifest and 22 guarded top-level
 identities are IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`.
 F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`. F06C is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0a2ea60`. The
 focused F06C run passed 125 tests; the affected ladder passed 583 with one skip;
 disposable launcher/lifecycle checks passed 4; the full configured suite passed
 2,047 with one skip; repository-root collection found 2,048 tests;
-and Ruff passed. All commands exited 0. No other legacy source moved or was
-deleted, no runtime data migrated, and F06D and later slices have not started.
-RAA-003 remains OPEN and RAA-007 is RESOLVED WITH EVIDENCE.
+and Ruff passed. All commands exited 0. F06D is IN PROGRESS. F06D1 is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `51818d2`; F06D2A is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`. Configured
+legacy-facing files progressed 67 baseline -> 59 after F06D1 -> 52 after
+F06D2A. F06D is not complete, F06D2B and later slices have not started, no
+production code changed, and no runtime data migrated. RAA-003 remains OPEN,
+RAA-007 is RESOLVED WITH EVIDENCE, and FORTRESS-07 has not started.
 
 Current activity:
 

@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.6
+Version: 4.7
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -34,6 +34,8 @@ The Git repository remains the permanent source of truth for JAOS.
 | Current milestone | MS-0025E — Reasoning and Planning Intelligence |
 | Phase execution | Major expansion paused — Fortress hard gate |
 | Active engineering activity | Step 7 — Bug Fixing and Regression |
+| Step 7 | IN PROGRESS |
+| Step 8 — Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Fortress Program | ACTIVE — mandatory hard gate |
 | FORTRESS-01 | IMPLEMENTED — governance baseline recorded |
 | FORTRESS-02 | COMPLETE AND VERIFIED |
@@ -45,19 +47,24 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06C |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
-| FORTRESS-06D+ | NOT STARTED |
+| FORTRESS-06D | IN PROGRESS |
+| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
+| RAA-003 | OPEN |
+| RAA-007 | RESOLVED WITH EVIDENCE |
 | Previous completed phase | Phase 7 — Memory Platform |
 | Next planned phase | Phase 9 — Workflow & Automation Platform |
 | Long-term release target | JAOS v1.0 |
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | F06C COMMITTED/PUSHED CHECKPOINT RECORDED |
+| Documentation state | F06D2A COMMITTED/PUSHED CHECKPOINT RECORDED |
 
 ---
 
@@ -107,7 +114,7 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
-FORTRESS-06 is now IN PROGRESS through F06C. F06A's authoritative 33-entry
+FORTRESS-06 is now IN PROGRESS through F06D2A. F06A's authoritative 33-entry
 manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
 unsupported root test-shaped scripts byte-for-byte under non-Python
@@ -124,10 +131,18 @@ The focused run passed 125 tests; the affected ladder passed 583 with one skip;
 disposable launcher/lifecycle checks passed 4; the full configured suite passed
 2,047 with one skip; repository-root collection found 2,048 tests; and Ruff
 passed. All commands exited 0. F06C is IMPLEMENTED AND VERIFIED — COMMITTED
-AND PUSHED at checkpoint `0a2ea60`. RAA-007 is resolved with evidence. No
-other legacy source moved or was deleted, no runtime data
-migrated, F06D and later slices have not started, and FORTRESS-07 has not
-started.
+AND PUSHED at checkpoint `0a2ea60`. RAA-007 is RESOLVED WITH EVIDENCE.
+
+F06D is IN PROGRESS. F06D1 quarantined eight duplicate AI and Core configured
+tests and is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`51818d2`. F06D2A migrated the seven configured filesystem-tool test files to
+canonical `jaos.tools.filesystem` coverage while preserving the legacy
+payloads as non-Python archives. It is IMPLEMENTED AND VERIFIED — COMMITTED
+AND PUSHED at checkpoint `95adce4`. Configured legacy-facing files progressed
+from 67 at the F06D baseline to 59 after F06D1 and 52 after F06D2A.
+
+F06D is not complete. F06D2B and later slices have not started. No production
+code changed, no runtime data migrated, and FORTRESS-07 has not started.
 
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not production request-routed.
@@ -165,7 +180,7 @@ Step 4 — Runtime Architecture Audit remains COMPLETED and recorded in:
 `docs/engineering/RUNTIME_ARCHITECTURE_AUDIT.md`
 
 Step 8 — Stabilization Certification has not begun and remains
-PENDING — BLOCKED BY STEP 7.
+NOT STARTED — BLOCKED BY STEP 7.
 
 Nothing from Phase 8 is being discarded or restarted. The Founder-approved
 Fortress gate is recorded in `docs/architecture/FORTRESS_PROGRAM.md`.
@@ -188,7 +203,7 @@ The approved stabilization sequence is:
 5. Full Automated Testing — COMPLETED
 6. JAOS Shell Testing — COMPLETED WITH FINDINGS
 7. Bug Fixing and Regression — IN PROGRESS
-8. Stabilization Certification — PENDING — BLOCKED BY STEP 7
+8. Stabilization Certification — NOT STARTED — BLOCKED BY STEP 7
 9. Resume Phase 8 — PENDING
 
 The sequence must not be skipped or reordered without an approved engineering
@@ -578,23 +593,30 @@ gate passes.
 ## 15. Immediate Next Actions
 
 1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the committed
-   and pushed F06A/F06B/F06C checkpoints.
-2. Continue only separately authorized Step 7 remediation.
-3. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
+   and pushed F06A/F06B/F06C/F06D1/F06D2A checkpoints.
+2. Proceed next only with FORTRESS-06D2B — canonical Core Tool Platform test
+   adjudication/migration:
+   - read and verify current canonical coverage;
+   - port meaningful requirements;
+   - quarantine shadow-only test evidence;
+   - do not weaken canonical policy; and
+   - do not redesign FORTRESS-07 policy inside F06D2B.
+3. Continue only separately authorized Step 7 remediation.
+4. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
    architecture decision and implementation are authorized.
-4. Do not begin F06D or any later FORTRESS-06 slice without separate Founder
-   authorization; do not move or delete any additional legacy source.
-5. Execute the skipped directory-symlink escape check on a capable host before
+5. Do not begin any F06D slice after F06D2B without separate Founder
+   authorization; do not move or delete legacy source outside F06D2B scope.
+6. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
-6. Produce the Step 7 report for Founder review when all Step 7 work is done.
-7. Keep Step 8 — Stabilization Certification PENDING — BLOCKED BY STEP 7
+7. Produce the Step 7 report for Founder review when all Step 7 work is done.
+8. Keep Step 8 — Stabilization Certification NOT STARTED — BLOCKED BY STEP 7
    until Step 7 is complete and approved.
-8. Resume MS-0025E only after Step 8 and Fortress certification and explicit
+9. Resume MS-0025E only after Step 8 and Fortress certification and explicit
    Founder authorization.
-9. Complete the remaining Phase 8 milestones.
-10. Certify and release v0.10.0-alpha.
-11. Complete remaining Memory Platform production work.
-12. Begin Phase 9 — Workflow & Automation Platform.
+10. Complete the remaining Phase 8 milestones.
+11. Certify and release v0.10.0-alpha.
+12. Complete remaining Memory Platform production work.
+13. Begin Phase 9 — Workflow & Automation Platform.
 
 ---
 
@@ -615,7 +637,7 @@ gate passes.
 | JAOS Shell testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
-| Stabilization Certification | PENDING — BLOCKED BY STEP 7 |
+| Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Full regression certification | PENDING |
 | v0.10.0-alpha readiness | NOT YET CERTIFIED |
 
