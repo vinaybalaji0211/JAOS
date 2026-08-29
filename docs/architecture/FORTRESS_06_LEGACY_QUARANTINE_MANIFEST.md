@@ -2,13 +2,14 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.4
+Document Version: 1.5
 
 Certified Repository Baseline: v0.9.0-alpha
 
 Development Target: v0.10.0-alpha
 
-Status: In Progress — F06D1 implemented and verified candidate; F06D2+ not started
+Status: In Progress — F06D1 committed and pushed; F06D2A implemented and
+verified candidate; F06D2B+ not started
 
 Owner and Approval Authority: Founder Vinay B
 
@@ -55,6 +56,15 @@ F06D1 quarantines eight duplicate AI and Core configured test files to
 `legacy_quarantine/tests/` as byte-identical, non-Python `.py.legacy` artifacts
 without deleting them. Configured legacy-importing test files reduce from 67
 to 59, and 50 source test definitions are retired from configured execution.
+It is committed and pushed at checkpoint `51818d2`.
+
+F06D2A archives the seven `executive_brain` filesystem-tool configured test
+files to `legacy_quarantine/tests/tools/filesystem/` as byte-identical,
+non-Python `.py.legacy` artifacts and replaces the seven configured paths with
+canonical `jaos.tools.filesystem` tests. Configured legacy-importing test files
+reduce from 59 to 52, 56 source test definitions are retired from configured
+execution, and 100 canonical configured tests take their place. No production
+code changed.
 
 The authoritative runtime-state artifact and writer metadata remains in
 `jaos_platform/runtime_state_inventory.py`. This manifest records which source
@@ -106,7 +116,7 @@ slice that updates this manifest and its evidence together.
 | `dashboard/` | D — QUARANTINE | Top-level satellite interface stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
 | `development/` | D — QUARANTINE | Top-level development-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
 | `engineering/` | D — QUARANTINE | Top-level engineering-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
-| `executive_brain/` | D — QUARANTINE | Parallel Executive, planning, registry, Memory, AI-provider, and Tool authority. | Unreachable from `run_jaos.py`. | Forty-six configured direct importers (F06D1 quarantined six AI duplicate tests). | The legacy file tool owns no internal runtime-state artifact. | F06D and F06E. | PROHIBITED until configured-test migration, caller inventory, relocation plan, and rollback evidence pass. |
+| `executive_brain/` | D — QUARANTINE | Parallel Executive, planning, registry, Memory, AI-provider, and Tool authority. | Unreachable from `run_jaos.py`. | Thirty-nine configured direct importers (F06D1 quarantined six AI duplicate tests; F06D2A archived the seven filesystem-tool tests). | The legacy file tool owns no internal runtime-state artifact. | F06D and F06E. | PROHIBITED until configured-test migration, caller inventory, relocation plan, and rollback evidence pass. |
 | `infrastructure/` | D — QUARANTINE | Top-level provider and infrastructure-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
 | `kernel/` | D — QUARANTINE | Parallel boot, kernel, lifecycle, registry, permission, and runtime-context authorities. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication, caller inventory, and rollback evidence pass. |
 | `knowledge/` | D — QUARANTINE | Top-level knowledge-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication and F06E relocation approval. |
@@ -144,8 +154,10 @@ Classification counts:
 The quarantine namespace is the top-level module identity
 `legacy_quarantine`. F06A reserved and forbade that identity before any source
 moved. F06B creates only `legacy_quarantine/tests/` for two non-Python archive
-payloads. Neither directory contains `__init__.py`, and no file under it has a
-recognized Python import suffix. Because the repository root is on
+payloads; F06D1 adds `tests/ai/` and `tests/core/`, and F06D2A adds
+`tests/tools/filesystem/`, for further non-Python archive payloads. No
+directory under `legacy_quarantine` contains `__init__.py`, and no file under it
+has a recognized Python import suffix. Because the repository root is on
 `sys.path`, the directory can still be represented by Python as a PEP 420
 namespace; it is not a regular package and contains no importable payload.
 The F06A guard therefore remains the production non-reachability authority and
@@ -334,10 +346,69 @@ and major Phase 8 expansion remains PAUSED.
 
 ---
 
-## 9. Update History
+## 9. F06D2A Current State and Stop Boundary
+
+F06D2A is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working
+tree. It addresses configured filesystem-tool test authority only:
+
+- Seven configured files carrying 56 legacy `executive_brain` filesystem-tool
+  tests were adjudicated. Each legacy payload is preserved byte-identically at
+  `legacy_quarantine/tests/tools/filesystem/<name>.py.legacy`, verified by
+  SHA-256 equality against the pre-change configured file.
+- The same seven configured paths now hold 100 canonical tests that import only
+  `jaos.tools` and `jaos.tools.filesystem`. Because the configured paths survive
+  with new content, Git records seven modifications plus seven additions rather
+  than renames.
+- Nine legacy requirements were intentionally not preserved: seven per-tool
+  `TypeError` request-type guards that the canonical result model replaces with
+  `ToolResult(success=False)`; the search "pattern is mandatory" requirement,
+  which `SearchFileTool.DEFAULT_PATTERN` supersedes; and the legacy rename's
+  ability to create a destination directory, which the canonical `new_name`
+  containment rule deliberately forbids.
+- No production code changed. Two production observations were recorded for a
+  later authorized slice: only `DeleteFileTool` carries an approval policy, and
+  `RenameFileTool`'s `..` rejection comes from its destination-exists check
+  rather than its name-containment check.
+- Configured legacy-importing test files reduce from 59 to 52, recomputed
+  mechanically by AST inspection.
+- `tests/tests/platform/test_collection_containment.py` gained two checks
+  proving the seven archives are non-Python, non-importable, still carry the
+  original `executive_brain` source, and that the seven configured replacements
+  import `jaos` and no legacy root. No second quarantine-test framework was
+  created, and `legacy_quarantine` still contains no `__init__.py`.
+- The remaining 19 legacy `tests/tests/tools` files and the 428 direct
+  `tests/*.py` legacy scripts are untouched and remain later F06 debt.
+
+Verified F06D2A evidence, all exit code 0 under Python 3.14.6 and pytest 9.1.1
+with `PYTHONDONTWRITEBYTECODE=1`, `-B`, `-p no:cacheprovider`, and a unique
+external `--basetemp` per gate:
+
+- focused filesystem tests: 100 passed;
+- focused filesystem plus containment and import boundary: 171 passed;
+- tools suite: 226 passed;
+- platform suite: 367 passed, 1 skipped;
+- composition suite: 49 passed;
+- integration suite: 64 passed;
+- full configured `tests/tests`: 2,044 passed, 1 skipped;
+- configured, `tests/`, and repository-root collection: 2,045 collected each;
+- Ruff 0.16.1 `check` on all eight changed Python files: all checks passed.
+
+The one skip remains the Windows directory-symlink privilege limitation at
+`tests/tests/platform/test_runtime_paths.py:312` (`WinError 1314`).
+
+F06D2A does not complete F06D. RAA-003 remains OPEN, RAA-007 remains RESOLVED
+WITH EVIDENCE, F06D2B and later slices have not started, FORTRESS-07 has not
+started, Step 7 remains IN PROGRESS, Step 8 remains NOT STARTED — BLOCKED BY
+STEP 7, Fortress certification remains NOT STARTED, and major Phase 8 expansion
+remains PAUSED.
+
+---
+
+## 10. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-25 | 1.5 | Recorded F06D2A's seven-file filesystem-tool test migration, byte-identical archives, 59 -> 52 legacy-facing reduction, and verification evidence; synchronized F06D1 to its committed checkpoint `51818d2`. FORTRESS-06 remains in progress, F06D is not complete, and F06D2B+ remains not started. |
 | 2026-08-25 | 1.3 | Synchronized F06C current-state wording with committed and pushed checkpoint `0a2ea60`; FORTRESS-06 remains in progress, F06D+ remains not started, and certification gates remain unchanged. |
 | 2026-08-25 | 1.2 | Recorded F06C's verified injected CLI adapters, canonical lifecycle ownership, exact verification evidence, and RAA-007 resolution. FORTRESS-06 remains in progress and F06D+ remains not started. |
 | 2026-08-25 | 1.1 | Recorded F06B's exact two-artifact non-Python archive move, importlib pytest configuration, collection-collision remediation, and unchanged stop boundary. |

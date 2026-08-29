@@ -101,12 +101,13 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D1 |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
-| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED CANDIDATE |
-| FORTRESS-06D2+ | NOT STARTED |
+| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED CANDIDATE |
+| FORTRESS-06D2B+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-002 | PARTIALLY RESOLVED |
@@ -134,11 +135,14 @@ authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
 Program is not certified. FORTRESS-06 is in progress through the separately
-authorized and verified F06C CLI composition-root removal slice. F06B moved
+authorized F06D2A configured filesystem-tool test migration. F06B moved
 only two unsupported root test-shaped scripts as byte-identical non-Python
-archives, and F06C made the canonical CLI surfaces injected adapters; no other
-legacy source moved or was deleted, no runtime data migrated, F06D and later
-slices have not started, and major Phase 8 expansion remains paused.
+archives, F06C made the canonical CLI surfaces injected adapters, F06D1
+quarantined eight duplicate AI and Core configured tests, and F06D2A replaced
+seven configured filesystem-tool test files with canonical `jaos.tools`
+coverage while archiving their legacy payloads; no legacy production source
+moved or was deleted, no runtime data migrated, F06D is not complete, F06D2B
+and later slices have not started, and major Phase 8 expansion remains paused.
 
 ---
 
@@ -1233,9 +1237,126 @@ Verified F06D1 evidence, all exit code 0:
 | Ruff 0.16.1 | `tests/tests/platform/test_collection_containment.py` | All checks passed |
 
 The skip remains the Windows directory-symlink privilege limitation (`WinError
-1314`). F06D1 is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted
-working tree. RAA-003 remains OPEN, F06D2+ remains not started, Step 8 remains
-blocked, and major Phase 8 expansion remains paused.
+1314`). F06D1 is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`51818d2`. RAA-003 remains OPEN, Step 8 remains blocked, and major Phase 8
+expansion remains paused.
+
+### 7.15 FORTRESS-06D2A — Migrate Canonical Filesystem-Tool Requirements
+
+Date: 2026-08-25. F06D2A implementation is authorized to remove configured-suite
+dependence on the retired `executive_brain` filesystem tool implementations
+while preserving every meaningful filesystem-tool requirement against canonical
+`jaos.tools.filesystem`.
+
+Unlike F06D1, these seven configured paths were not pure duplicates of stronger
+canonical evidence: before F06D2A the configured suite contained **no** canonical
+filesystem-tool behavior test. The only configured references to
+`jaos.tools.filesystem` were the runtime-path literal guard and the
+runtime-state-inventory exclusion check, neither of which exercises a tool. The
+requirements existed only in the retired
+`executive_brain` tests and in the excluded flat `tests/test_*_file_tool.py`
+scripts. F06D2A therefore adjudicated each requirement against the current
+production contract and re-established it inside the configured suite.
+
+Seven legacy configured files carrying 56 source tests were adjudicated:
+
+| Legacy configured file | Legacy tests | Canonical replacement tests |
+|---|---:|---:|
+| `tests/tests/tools/test_read_file_tool.py` | 7 | 12 |
+| `tests/tests/tools/test_write_file_tool.py` | 8 | 14 |
+| `tests/tests/tools/test_copy_file_tool.py` | 8 | 14 |
+| `tests/tests/tools/test_delete_file_tool.py` | 7 | 10 |
+| `tests/tests/tools/test_move_file_tool.py` | 8 | 14 |
+| `tests/tests/tools/test_rename_file_tool.py` | 8 | 16 |
+| `tests/tests/tools/test_search_file_tool.py` | 10 | 20 |
+| Total | 56 | 100 |
+
+Each configured path keeps its filename and now imports only `jaos.tools` and
+`jaos.tools.filesystem`. The legacy payloads are preserved byte-identically as
+non-Python archives under
+`legacy_quarantine/tests/tools/filesystem/*.py.legacy`. Because the configured
+paths survive with new canonical content, Git records these as seven modified
+files plus seven added archives rather than as renames; SHA-256 equality between
+each pre-change configured file and its archive is the preservation evidence.
+
+Nine legacy requirements were intentionally not preserved:
+
+- Seven `execute("invalid-request")` `TypeError` guards, one per tool. The
+  canonical `ToolInterface` accepts a typed frozen `ToolRequest` and the
+  canonical result model reports invalid input as `ToolResult(success=False)`
+  instead of raising. No canonical contract promises request-type validation
+  inside a tool.
+- `test_search_requires_pattern`. `SearchFileTool.DEFAULT_PATTERN` is `"*"`, so
+  an omitted pattern is valid. The canonical default and the blank-pattern
+  rejection are both asserted instead.
+- `test_rename_creates_destination_directory`. The canonical `RenameFileTool`
+  takes a bare `new_name` and deliberately refuses any name containing a path,
+  so a rename cannot relocate a file. Preserving the legacy behavior would have
+  weakened canonical containment; the containment rule is asserted instead,
+  including relative-path, absolute-path, and parent-traversal rejection.
+
+Canonical requirements now proven for all seven tools include full metadata
+contracts (name, version, permissions, capabilities, approval policy, risk
+level, status), missing/blank/non-string payload handling, missing-path and
+wrong-type path handling, directory-source and directory-destination rejection,
+overwrite behavior for write, copy, and move, UTF-8 text and byte-length
+semantics, `ToolManager` execution with audit records, permission denial with
+`ToolPermissionError` plus its audit record, the `DANGEROUS` delete approval
+gate in both blocked and approved states, permission-before-approval ordering,
+search defaults, recursion, directory exclusion, and `max_results` bounding,
+and a per-tool containment assertion that every effect stays inside the
+pytest-owned `tmp_path` root.
+
+Two production observations were recorded without changing production code,
+because F06D2A forbids it and neither is a canonical defect:
+
+- Only `DeleteFileTool` carries an approval policy. `WriteFileTool`,
+  `CopyFileTool`, `MoveFileTool`, and `RenameFileTool` can overwrite or remove
+  caller-named data at `ToolApprovalLevel.NONE`. The current contract is
+  asserted as-is; any policy change belongs to a separately authorized slice.
+- `RenameFileTool` rejects a `new_name` of `..` through its
+  destination-already-exists check rather than its name-containment check, and
+  `SearchFileTool` accepts a `bool` `max_results` because `bool` subclasses
+  `int`. Containment and bounding still hold in both cases, so the configured
+  tests assert the observable outcome rather than the incidental reason.
+
+`tests/tests/platform/test_collection_containment.py` gained two checks: the
+seven archives exist as non-Python `.py.legacy` payloads that carry the original
+`executive_brain` source and are not importable from their archive directory,
+and the seven configured replacements statically import `jaos` and no legacy
+root. Configured legacy-importing files decrease from 59 to 52, recomputed
+mechanically by AST inspection of every configured test file.
+
+Verified F06D2A evidence, all exit code 0:
+
+| Gate | Target and options after `pytest` | Result |
+|---|---|---|
+| Focused filesystem | the seven changed `tests/tests/tools` files `-q` | 100 passed |
+| Focused containment and boundary | the seven files plus `tests/tests/platform/test_collection_containment.py tests/tests/platform/test_canonical_import_boundary.py -q` | 171 passed |
+| Tools suite | `tests/tests/tools -q` | 226 passed |
+| Platform suite | `tests/tests/platform -q` | 367 passed, 1 skipped |
+| Composition suite | `tests/tests/composition -q` | 49 passed |
+| Integration suite | `tests/tests/integration -q` | 64 passed |
+| Full configured | `tests/tests -q` | 2,044 passed, 1 skipped |
+| Configured collection | `tests/tests --collect-only -q` | 2,045 collected |
+| `tests/` collection | `tests/ --collect-only -q` | 2,045 collected |
+| Repository-root collection | `. --collect-only -q` | 2,045 collected |
+| Ruff 0.16.1 | `ruff check` on the eight changed Python files | All checks passed |
+
+Every pytest gate ran under Python 3.14.6 and pytest 9.1.1 as
+`PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -B -m pytest` with
+`-p no:cacheprovider` and a unique external `--basetemp`. The full configured
+count moves from 1,998 to 2,044: 56 legacy tests retired, 100 canonical tests
+added, and 2 containment checks added. The one skip remains the Windows
+directory-symlink privilege limitation at
+`tests/tests/platform/test_runtime_paths.py:312` (`WinError 1314`).
+
+F06D2A is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working
+tree. It moves no production code, migrates no runtime data, and touches none of
+the 428 flat `tests/*.py` legacy scripts. RAA-003 remains OPEN, RAA-007 remains
+RESOLVED WITH EVIDENCE, F06D is not complete, F06D2B and later slices have not
+started, FORTRESS-07 has not started, Step 8 remains blocked, Fortress
+certification has not started, and major Phase 8 expansion remains paused.
 
 ---
 

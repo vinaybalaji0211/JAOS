@@ -13,6 +13,7 @@ collision and represents the two root artifacts as non-Python archives.
 
 from __future__ import annotations
 
+import ast
 import configparser
 import fnmatch
 import importlib.machinery
@@ -506,3 +507,95 @@ def test_f06d1_quarantined_tests_are_non_python_archives() -> None:
             assert not (
                 directory / "__init__.py"
             ).exists(), f"No __init__.py allowed in {directory}"
+
+
+_F06D2A_FILESYSTEM_TOOL_STEMS = (
+    "test_copy_file_tool",
+    "test_delete_file_tool",
+    "test_move_file_tool",
+    "test_read_file_tool",
+    "test_rename_file_tool",
+    "test_search_file_tool",
+    "test_write_file_tool",
+)
+
+_F06D2A_ARCHIVE_ROOT = _ARCHIVE_TESTS_ROOT / "tools" / "filesystem"
+
+_FORBIDDEN_TEST_IMPORT_ROOTS = frozenset(
+    {
+        "brain",
+        "core",
+        "executive_brain",
+        "kernel",
+        "legacy_quarantine",
+        "memory",
+    }
+)
+
+
+def _imported_top_level_roots(source_path: Path) -> frozenset[str]:
+    """Return the statically imported top-level module names of a file."""
+
+    tree = ast.parse(source_path.read_text(encoding="utf-8"))
+    roots: set[str] = set()
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            for alias in node.names:
+                roots.add(alias.name.split(".")[0])
+        elif isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            roots.add(node.module.split(".")[0])
+
+    return frozenset(roots)
+
+
+def test_f06d2a_filesystem_tool_archives_are_non_python() -> None:
+    """F06D2A preserves the 7 legacy filesystem tests outside execution."""
+
+    assert _F06D2A_ARCHIVE_ROOT.is_dir()
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    archived_names = {
+        path.name for path in _F06D2A_ARCHIVE_ROOT.iterdir() if path.is_file()
+    }
+
+    assert archived_names == {
+        f"{stem}.py.legacy" for stem in _F06D2A_FILESYSTEM_TOOL_STEMS
+    }
+
+    for archived_name in sorted(archived_names):
+        archive_path = _F06D2A_ARCHIVE_ROOT / archived_name
+
+        assert not archived_name.endswith(import_suffixes)
+        assert "executive_brain" in archive_path.read_text(encoding="utf-8")
+
+    for directory in (_F06D2A_ARCHIVE_ROOT, _F06D2A_ARCHIVE_ROOT.parent):
+        assert not (directory / "__init__.py").exists()
+
+    for stem in _F06D2A_FILESYSTEM_TOOL_STEMS:
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                stem,
+                [str(_F06D2A_ARCHIVE_ROOT)],
+            )
+            is None
+        )
+
+
+def test_f06d2a_configured_filesystem_tests_import_only_canonical_tools() -> None:
+    """F06D2A's configured replacements depend on ``jaos.tools`` alone."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests" / "tools"
+
+    for stem in _F06D2A_FILESYSTEM_TOOL_STEMS:
+        configured_path = configured_root / f"{stem}.py"
+
+        assert configured_path.is_file()
+
+        roots = _imported_top_level_roots(configured_path)
+
+        assert "jaos" in roots
+        assert not roots & _FORBIDDEN_TEST_IMPORT_ROOTS, (
+            f"{configured_path.name} must not import legacy roots: "
+            f"{sorted(roots & _FORBIDDEN_TEST_IMPORT_ROOTS)}"
+        )
