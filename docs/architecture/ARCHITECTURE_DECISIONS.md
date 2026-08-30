@@ -2,7 +2,7 @@
 
 
 
-Version: 1.4
+Version: 1.5
 
 Status: ACTIVE
 
@@ -1091,6 +1091,142 @@ Approved By
 
 
 Founder Vinay B — 2026-08-30
+
+
+
+\---
+
+
+
+\# ADR-0013
+
+
+
+Title
+
+
+
+FORTRESS-06 Legacy Executive WorkingMemory Compatibility Clarification
+
+
+
+Status
+
+
+
+ACCEPTED — Founder-approved 2026-08-31
+
+
+
+Context
+
+
+
+The active Phase 7 Memory requirements preserved the exact Executive
+`WorkingMemory` API and required regression coverage for the existing Executive
+Working Memory APIs. That wording would preserve the concrete
+`executive_brain.memory.WorkingMemory`, `MemoryManager`, and `MemoryRegistry`
+implementations as an execution/context-memory authority even though the
+Founder-approved Fortress production graph assigns persistent Memory authority
+to canonical `MemoryStore`/`SQLiteStore` and contains no legacy Executive Memory
+authority.
+
+
+
+Keeping the exact API permanently stable would retain a shadow Memory,
+composition, and transient-context path and conflict with Fortress architectural
+unification.
+
+
+
+Decision
+
+
+
+The Phase 7 requirement that the current Executive `WorkingMemory` API remain
+stable is superseded as an exact implementation and API compatibility
+requirement. The exact `executive_brain.memory.WorkingMemory`,
+`executive_brain.memory.MemoryManager`, and
+`executive_brain.memory.MemoryRegistry` implementations are historical shadow
+architecture, not permanent canonical runtime authorities.
+
+
+
+Their useful logical responsibilities remain preserved and are assigned or
+deferred as follows:
+
+- persistent Memory is owned by canonical `MemoryStore`/`SQLiteStore`;
+- active request and transient session/context state require a future approved
+  Context Platform or task-session-context owner;
+- transient mission, plan, decision, and result references require explicit
+  future canonical owners when Phase 8 resumes, while durable forms belong to
+  FORTRESS-08 where applicable;
+- working-memory health, readiness, and degradation semantics belong to
+  FORTRESS-10;
+- Experience Memory belongs to a separate future Experience Memory Platform;
+  and
+- `MemoryContextSource`/`MemorySearchEngine` coupling remains governed by
+  RAA-009, which remains OPEN — DEFERRED.
+
+
+
+Fortress creates no replacement `WorkingMemory` platform or runtime authority.
+Future owners must define their contracts deliberately through approved
+governance before implementation resumes.
+
+
+
+FORTRESS-06 Memory Disposition
+
+
+
+The read-only Memory adjudication identified four configured legacy Memory test
+files containing 30 source tests. Two were clear quarantine candidates:
+`tests/tests/integration/test_memory_runtime_integration.py` and
+`tests/tests/memory/test_memory_registry.py`. Two were previously Founder-gated
+by the exact compatibility conflict:
+`tests/tests/memory/test_memory_manager.py` and
+`tests/tests/memory/test_working_memory.py`.
+
+
+
+This decision makes all four files governance-approved quarantine candidates.
+Their controlled quarantine remains a separate implementation task requiring
+current verification. No test, production source, or quarantine artifact is
+moved or modified by this governance decision, and the legacy production Memory
+modules remain untouched pending their approved FORTRESS-06 production-source
+and compatibility disposition.
+
+
+
+Current counts remain 19 configured legacy-facing files and six configured
+`executive_brain` importers. Only after successful controlled implementation are
+the projected counts 19 -> 15 and 6 -> 2. The projected remaining importers are
+the OpenAI and Ollama provider tests.
+
+
+
+Consequences
+
+
+
+- Phase 7's logical transient-state, association, reset, observability, and
+  persistent-Memory responsibilities remain preserved without preserving the
+  exact legacy classes or self-registration behavior.
+- This decision does not create transient-context APIs, implement Context or
+  Experience Memory, change canonical Memory storage, resolve RAA-009, begin
+  FORTRESS-08 or FORTRESS-10, resume Phase 8, or perform Memory quarantine.
+- RAA-003 remains OPEN and RAA-009 remains OPEN — DEFERRED.
+- F06D and FORTRESS-06 remain IN PROGRESS; Step 8 and Fortress certification
+  remain NOT STARTED, and major Phase 8 expansion remains PAUSED.
+
+
+
+Approved By
+
+
+
+Founder Vinay B — 2026-08-31
 
 
 

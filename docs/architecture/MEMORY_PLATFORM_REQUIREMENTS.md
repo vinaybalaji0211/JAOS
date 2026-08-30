@@ -2,7 +2,7 @@
 
 
 
-Version: 1.0
+Version: 1.1
 
 
 
@@ -162,7 +162,8 @@ The Tool Platform must not directly mutate memory storage unless routed through 
 
 
 
-The following existing Executive Platform components must remain operational:
+Founder clarification — ADR-0013 (2026-08-31): the former exact compatibility
+requirement for these Executive Memory implementations is superseded:
 
 
 
@@ -178,11 +179,14 @@ executive\_brain.memory.memory\_manager.MemoryManager
 
 
 
-Existing public behavior must remain compatible unless an intentional API change is documented and approved.
+These exact `executive_brain.memory` implementations are historical shadow
+architecture, not permanent canonical runtime authorities. ADR-0013 is the
+documented and approved intentional compatibility change.
 
 
 
-The existing Executive MemoryManager remains responsible for current execution state, including:
+The logical responsibilities previously represented by the Executive
+`MemoryManager` remain preserved:
 
 
 
@@ -198,13 +202,29 @@ The existing Executive MemoryManager remains responsible for current execution s
 
 \* Active execution context.
 
+\* Clear/reset behavior where required by a future approved owner.
+
+\* Observability, health, readiness, and degradation responsibility.
 
 
-Persistent memory responsibilities must not be added directly to the Executive MemoryManager.
+
+Persistent Memory remains owned by canonical `MemoryStore`/`SQLiteStore`.
 
 
 
-Integration with the new Memory Platform must use composition or an explicit gateway.
+Active request and transient session/context state require a future approved
+Context Platform or task-session-context owner. Mission, plan, decision, and
+result references require explicit canonical owners when Phase 8 resumes;
+durable forms belong to FORTRESS-08 where applicable. Working-memory health,
+readiness, and degradation belong to FORTRESS-10. Experience Memory remains a
+separate future Experience Memory Platform responsibility.
+
+
+
+Future owners must deliberately define their contracts through approved
+governance before implementation. This clarification creates no replacement
+`WorkingMemory`, `MemoryManager`, or `MemoryRegistry` runtime authority and does
+not authorize legacy self-registration or composition behavior.
 
 
 
@@ -348,11 +368,15 @@ It must support:
 
 
 
-The current Executive WorkingMemory API must remain stable.
+These are preserved logical responsibilities, not a requirement to retain the
+exact `executive_brain.memory.WorkingMemory` API or implementation. ADR-0013
+supersedes that exact API-stability requirement.
 
 
 
-Phase 7 may add a bridge between Executive Working Memory and the Memory Platform, but the two responsibilities must remain distinct.
+Persistent Memory remains distinct from future transient-context ownership. No
+replacement Working Memory platform, bridge, or runtime authority is authorized
+by this clarification.
 
 
 
@@ -1326,7 +1350,9 @@ Phase 7 must include:
 
 \* Corrupted-storage behavior tests.
 
-\* Regression tests for existing Executive Working Memory APIs.
+\* Regression evidence for preserved logical responsibilities against their
+approved canonical owners; ADR-0013 removes the mandate to preserve the exact
+legacy Executive Working Memory APIs.
 
 
 
