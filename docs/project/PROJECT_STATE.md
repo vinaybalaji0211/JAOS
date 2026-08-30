@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.9
+Version: 5.0
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -47,7 +47,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2C; F06D2D READY FOR CONTROLLED IMPLEMENTATION |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2D IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -59,15 +59,17 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-06D2C | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `1862f78` |
 | ADR-0012 | ACCEPTED — FOUNDER-APPROVED 2026-08-30 |
 | FORTRESS-06D2D governance | RECORDED — COMMITTED AND PUSHED AT `b4f3633` |
-| FORTRESS-06D2D | ADJUDICATED — GOVERNANCE DECISION APPROVED — IMPLEMENTATION NOT STARTED — READY FOR CONTROLLED IMPLEMENTATION |
+| FORTRESS-06D2D pre-implementation project-state sync | RECORDED — COMMITTED AND PUSHED AT `7d72e70` |
+| FORTRESS-06D2D | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `30cf2aa` |
+| FORTRESS-06D2E | NOT STARTED |
 | FORTRESS-06D2E+ | NOT STARTED |
-| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 |
-| Current configured legacy-facing files | 44 |
-| Current `executive_brain` importers | 31 |
-| Projected post-F06D2D only | Legacy-facing 44 -> 35; `executive_brain` importers 31 -> 22 |
-| F06D2D inventory | 9 configured manager/registry files — 94 source tests |
-| F06D2D canonical prerequisite | Aggregate `ExecutiveController` execution metrics coverage |
-| Remaining prototype-tool debt | 16 `executive_brain.tools.core` importers — OWNED BY F06D2E |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 |
+| Current configured legacy-facing files | 35 |
+| Current `executive_brain` importers | 22 |
+| Remaining `executive_brain` importer partition | 16 F06D2E prototype tools; 4 later Memory adjudication; 2 provider evidence / F09 |
+| F06D2D retirement | 9 configured manager/registry files — 94 source tests |
+| F06D2D canonical coverage | Aggregate `ExecutiveController` execution metrics coverage added before retirement |
+| F06D2D preservation | 9 byte/blob-identical `*.py.legacy` archives; no production change; no runtime-data migration |
 | FORTRESS-07 | NOT STARTED |
 | RAA-003 | OPEN |
 | RAA-007 | RESOLVED WITH EVIDENCE |
@@ -78,7 +80,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
 | Phase 8 major expansion | PAUSED |
-| Documentation state | F06D2D GOVERNANCE CHECKPOINT `b4f3633` RECORDED; PROJECT-STATE SYNC IN PROGRESS |
+| Documentation state | F06D2D IMPLEMENTATION CHECKPOINT `30cf2aa` RECORDED; PROJECT-STATE SYNC IN PROGRESS |
 
 ---
 
@@ -128,8 +130,8 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
-FORTRESS-06 is IN PROGRESS through F06D2C, with F06D2D adjudicated and ready for
-controlled implementation. F06A's authoritative 33-entry
+FORTRESS-06 is IN PROGRESS through the completed F06D2D implementation. F06A's
+authoritative 33-entry
 manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
 unsupported root test-shaped scripts byte-for-byte under non-Python
@@ -166,8 +168,7 @@ the two still-valid requirements with configured canonical
 and safe blank/whitespace failure without `ToolManager` execution. F06D2C is
 COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `1862f78`.
 It reduced configured legacy-facing files from 48 to 44 and configured
-`executive_brain` importers from 35 to 31. The full configured progression is
-67 -> 59 -> 52 -> 48 -> 44.
+`executive_brain` importers from 35 to 31.
 
 ADR-0012 is ACCEPTED — Founder-approved 2026-08-30 — and its governance record
 is committed and pushed at `b4f3633`. It clarifies that historic Phase 8
@@ -175,19 +176,22 @@ manager/registry names are responsibility labels, not permanent runtime
 authority for the exact `executive_brain.managers.*` or
 `executive_brain.registries.*` implementations.
 
-F06D2D is ADJUDICATED, its GOVERNANCE DECISION is APPROVED, implementation is
-NOT STARTED, and it is READY FOR CONTROLLED IMPLEMENTATION. Its inventory is
-nine configured manager/registry files carrying 94 source tests. Configured
-canonical aggregate `ExecutiveController` execution metrics coverage must be
-added before retirement. Current counts remain 44 configured legacy-facing
-files and 31 `executive_brain` importers; the projected post-F06D2D counts only
-are 35 and 22, respectively: 44 -> 35 and 31 -> 22.
+The pre-implementation project-state sync is committed and pushed at `7d72e70`.
+F06D2D is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
+`30cf2aa`. It added configured aggregate `ExecutiveController` execution
+metrics coverage before retiring nine configured manager/registry files
+carrying 94 source tests. Nine byte/blob-identical `*.py.legacy` archives
+preserve their payloads. No production code changed and no runtime-data
+migration occurred. It reduced configured legacy-facing files 44 -> 35 and
+configured `executive_brain` importers 31 -> 22. The full configured
+legacy-facing progression is 67 -> 59 -> 52 -> 48 -> 44 -> 35.
 
 F06D is not complete and FORTRESS-06 is not complete. F06D2E and later slices
-have not started. The remaining 16 `executive_brain.tools.core` prototype-tool
-importers remain owned by F06D2E. Legacy Memory tests remain assigned to the
-later Memory adjudication; provider tests remain assigned to later provider
-evidence/F09. F07 retains permission, approval, audit, and risk ownership; F08
+have not started. The 22 remaining configured `executive_brain` importers are
+partitioned explicitly: 16 prototype-tool importers belong to F06D2E, four
+legacy Memory importers remain for later Memory adjudication, and two provider
+importers remain for later provider evidence/F09. F07 retains permission,
+approval, audit, and risk ownership; F08
 retains durable persistence, recovery, and replay; F10 retains health and
 degradation; and F11 retains security, chaos, and CI. No production code or
 runtime data changed, FORTRESS-07 has not started, and major Phase 8 expansion
@@ -641,34 +645,38 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-Preserve the verified prior Fortress state and all committed and pushed
-checkpoints through the F06D2D governance checkpoint `b4f3633`.
+Preserve all verified and pushed Fortress checkpoints through the F06D2D
+implementation checkpoint `30cf2aa`.
 
-The exact next action is FORTRESS-06D2D — controlled implementation of manager /
-registry shadow-test retirement:
+The exact next action is FORTRESS-06D2E — prototype browser / Windows /
+development tool-test adjudication and quarantine. F06D2E is NOT STARTED.
 
-1. Add configured canonical `ExecutiveController` aggregate metrics coverage.
-2. Verify canonical behavior without production redesign.
-3. Preserve the nine legacy test payloads byte/blob-identically.
-4. Quarantine the nine configured manager/registry tests as `*.py.legacy`.
-5. Extend the existing containment authority minimally.
-6. Mechanically verify 44 -> 35 configured legacy-facing files and 31 -> 22
-   `executive_brain` importers.
-7. Run proportional and full regression.
-8. Update architecture evidence.
-9. Checkpoint F06D2D before moving to F06D2E.
-10. Continue only separately authorized Step 7 remediation.
-11. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
-   architecture decision and implementation are authorized.
-12. Do not begin F06D2E or any later slice without separate Founder
-    authorization.
-13. Execute the skipped directory-symlink escape check on a capable host before
-   Fortress certification.
-14. Produce the Step 7 report for Founder review when all Step 7 work is done.
-15. Keep Step 8 — Stabilization Certification NOT STARTED — BLOCKED BY STEP 7
-    until Step 7 is complete and approved.
-16. Resume MS-0025E only after Step 8 and Fortress certification and explicit
-    Founder authorization.
+The exact configured F06D2E inventory is:
+
+- Browser: `test_browser_automation_tool.py`, `test_cookies_tool.py`,
+  `test_downloads_tool.py`, `test_tabs_tool.py`, `test_web_search_tool.py`.
+- Windows/Desktop: `test_clipboard_tool.py`, `test_close_application_tool.py`,
+  `test_launch_application_tool.py`, `test_notification_tool.py`,
+  `test_process_manager_tool.py`, `test_services_tool.py`.
+- Development / VS Code: `test_build_tool.py`, `test_debug_tool.py`,
+  `test_git_tool.py`, `test_project_tool.py`, `test_run_tool.py`.
+
+Do not infer a post-D2E count before mechanical adjudication. Continue only
+separately authorized Step 7 remediation. Keep RAA-009 and the Memory-context
+adapter open/deferred unless a separate architecture decision and
+implementation are authorized.
+
+Do not begin F06D2E implementation or any later slice without separate Founder
+authorization. Execute the skipped directory-symlink escape check on a capable
+host before Fortress certification.
+
+Produce the Step 7 report for Founder review when all Step 7 work is done.
+
+Keep Step 8 — Stabilization Certification NOT STARTED — BLOCKED BY STEP 7
+until Step 7 is complete and approved.
+
+Resume MS-0025E only after Step 8 and Fortress certification and explicit
+Founder authorization.
 
 ---
 
