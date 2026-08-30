@@ -599,3 +599,140 @@ def test_f06d2a_configured_filesystem_tests_import_only_canonical_tools() -> Non
             f"{configured_path.name} must not import legacy roots: "
             f"{sorted(roots & _FORBIDDEN_TEST_IMPORT_ROOTS)}"
         )
+
+
+_F06D2B_TOOL_PLATFORM_STEMS = (
+    "test_tool_interface",
+    "test_tool_manager",
+    "test_tool_models",
+    "test_tool_registry",
+)
+
+_F06D2B_ARCHIVE_ROOT = _ARCHIVE_TESTS_ROOT / "tools" / "core"
+
+
+def test_f06d2b_tool_platform_archives_are_non_python() -> None:
+    """F06D2B preserves the 4 legacy Tool Platform tests outside execution."""
+
+    assert _F06D2B_ARCHIVE_ROOT.is_dir()
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    archived_names = {
+        path.name for path in _F06D2B_ARCHIVE_ROOT.iterdir() if path.is_file()
+    }
+
+    assert archived_names == {
+        f"{stem}.py.legacy" for stem in _F06D2B_TOOL_PLATFORM_STEMS
+    }
+
+    for archived_name in sorted(archived_names):
+        archive_path = _F06D2B_ARCHIVE_ROOT / archived_name
+
+        assert not archived_name.endswith(import_suffixes)
+        assert "executive_brain.tools.core" in archive_path.read_text(
+            encoding="utf-8"
+        )
+
+    assert not (_F06D2B_ARCHIVE_ROOT / "__init__.py").exists()
+
+    for stem in _F06D2B_TOOL_PLATFORM_STEMS:
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                stem,
+                [str(_F06D2B_ARCHIVE_ROOT)],
+            )
+            is None
+        )
+
+
+def test_f06d2b_configured_tool_platform_tests_import_only_canonical_tools() -> None:
+    """F06D2B's configured replacements depend on ``jaos.tools`` alone."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests" / "tools"
+
+    for stem in _F06D2B_TOOL_PLATFORM_STEMS:
+        configured_path = configured_root / f"{stem}.py"
+
+        assert configured_path.is_file()
+
+        roots = _imported_top_level_roots(configured_path)
+
+        assert "jaos" in roots
+        assert not roots & _FORBIDDEN_TEST_IMPORT_ROOTS, (
+            f"{configured_path.name} must not import legacy roots: "
+            f"{sorted(roots & _FORBIDDEN_TEST_IMPORT_ROOTS)}"
+        )
+
+
+_F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS = (
+    "test_browser_automation_tool",
+    "test_build_tool",
+    "test_clipboard_tool",
+    "test_close_application_tool",
+    "test_cookies_tool",
+    "test_debug_tool",
+    "test_downloads_tool",
+    "test_git_tool",
+    "test_launch_application_tool",
+    "test_notification_tool",
+    "test_process_manager_tool",
+    "test_project_tool",
+    "test_run_tool",
+    "test_services_tool",
+    "test_tabs_tool",
+    "test_web_search_tool",
+)
+
+
+def _imports_legacy_tool_platform(source_path: Path) -> bool:
+    """Return whether a file statically imports ``executive_brain.tools.core``."""
+
+    tree = ast.parse(source_path.read_text(encoding="utf-8"))
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom) and node.level == 0 and node.module:
+            modules = (node.module,)
+        elif isinstance(node, ast.Import):
+            modules = tuple(alias.name for alias in node.names)
+        else:
+            continue
+
+        if any(
+            module.startswith("executive_brain.tools.core") for module in modules
+        ):
+            return True
+
+    return False
+
+
+def test_f06d2b_migrated_paths_no_longer_depend_on_the_legacy_tool_platform() -> None:
+    """The four adjudicated paths carry no ``executive_brain.tools.core`` import.
+
+    The remaining legacy Tool Platform importers are the prototype browser,
+    Windows, and development per-tool configured tests owned by FORTRESS-06D2E.
+    Pinning that inventory keeps the residue visible and prevents it from
+    silently growing while F06D2E is unstarted.
+    """
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+
+    offenders = sorted(
+        configured_path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for configured_path in configured_root.rglob("*.py")
+        if "__pycache__" not in configured_path.parts
+        and _imports_legacy_tool_platform(configured_path)
+    )
+
+    for stem in _F06D2B_TOOL_PLATFORM_STEMS:
+        migrated_path = (
+            (configured_root / "tools" / f"{stem}.py")
+            .relative_to(_REPOSITORY_ROOT)
+            .as_posix()
+        )
+
+        assert migrated_path not in offenders
+
+    assert offenders == sorted(
+        f"tests/tests/tools/{stem}.py"
+        for stem in _F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS
+    )

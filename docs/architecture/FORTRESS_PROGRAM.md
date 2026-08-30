@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.13
+Document Version: 1.15
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,13 +101,14 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2B |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
-| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED CANDIDATE |
-| FORTRESS-06D2B+ | NOT STARTED |
+| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B | IMPLEMENTED AND VERIFIED |
+| FORTRESS-06D2C+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-002 | PARTIALLY RESOLVED |
@@ -135,13 +136,14 @@ authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
 Program is not certified. FORTRESS-06 is in progress through the separately
-authorized F06D2A configured filesystem-tool test migration. F06B moved
+authorized F06D2B configured Tool Platform test adjudication. F06B moved
 only two unsupported root test-shaped scripts as byte-identical non-Python
 archives, F06C made the canonical CLI surfaces injected adapters, F06D1
-quarantined eight duplicate AI and Core configured tests, and F06D2A replaced
+quarantined eight duplicate AI and Core configured tests, F06D2A replaced
 seven configured filesystem-tool test files with canonical `jaos.tools`
-coverage while archiving their legacy payloads; no legacy production source
-moved or was deleted, no runtime data migrated, F06D is not complete, F06D2B
+coverage while archiving their legacy payloads, and F06D2B did the same for the
+four configured Tool Platform core test files; no legacy production source
+moved or was deleted, no runtime data migrated, F06D is not complete, F06D2C
 and later slices have not started, and major Phase 8 expansion remains paused.
 
 ---
@@ -1351,10 +1353,164 @@ added, and 2 containment checks added. The one skip remains the Windows
 directory-symlink privilege limitation at
 `tests/tests/platform/test_runtime_paths.py:312` (`WinError 1314`).
 
-F06D2A is an IMPLEMENTED AND VERIFIED CANDIDATE in the uncommitted working
-tree. It moves no production code, migrates no runtime data, and touches none of
+F06D2A is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
+`95adce4`. It moves no production code, migrates no runtime data, and touches
+none of the 428 flat `tests/*.py` legacy scripts. RAA-003 remains OPEN, RAA-007
+remains RESOLVED WITH EVIDENCE, F06D is not complete, FORTRESS-07 has not
+started, Step 8 remains blocked, Fortress certification has not started, and
+major Phase 8 expansion remains paused.
+
+---
+
+### 7.16 FORTRESS-06D2B - Adjudicate and Migrate the Canonical Tool Platform Core
+
+Date: 2026-08-30. F06D2B implementation is authorized to remove configured-suite
+dependence on the retired `executive_brain.tools.core` Tool Platform while
+preserving every architecturally valid requirement against canonical
+`jaos.tools`.
+
+Four legacy configured files carrying 25 source tests were adjudicated. The
+baseline reconciled mechanically by AST inspection before any edit:
+
+| Legacy configured file | Legacy tests | Canonical replacement tests |
+|---|---:|---:|
+| `tests/tests/tools/test_tool_interface.py` | 3 | 4 |
+| `tests/tests/tools/test_tool_models.py` | 5 | 6 |
+| `tests/tests/tools/test_tool_registry.py` | 9 | 5 |
+| `tests/tests/tools/test_tool_manager.py` | 8 | 4 |
+| Total | 25 | 19 |
+
+Before F06D2B the configured suite contained no canonical Tool Platform core
+behavior test. The canonical interface, model, registry, and manager contracts
+were proven only by the excluded flat scripts `tests/test_tool_platform_core.py`,
+`tests/test_tool_permission_audit.py`, `tests/test_tool_approval.py`,
+`tests/test_tool_audit.py`, and `tests/test_tool_capabilities.py`, which
+`tests/conftest.py` removes from every directory-based invocation. Those scripts
+were used as requirement evidence only and were neither copied nor executed.
+The configured coverage that did exist was indirect: the F06D2A filesystem-tool
+tests exercise `ToolManager` with `ToolPermissionManager`, the `DANGEROUS`
+delete approval gate, and `list_audit_records`, and
+`tests/tests/composition/test_canonical_composition_invariants.py` proves the
+composed `ToolManager` owns a `ToolPermissionManager`, a `ToolApprovalManager`,
+and a `ToolAuditLogger`.
+
+The canonical contract differs from the retired one in ways that decide the
+adjudication:
+
+- Tool identity moved from a `tool_name` property to `ToolInterface.metadata()`.
+- `ToolResponse(status, message, data)` became
+  `ToolResult(success, output, error, created_at)`.
+- `ToolStatus` changed meaning. It was execution outcome
+  (`SUCCESS`/`FAILURE`); it is now tool availability
+  (`AVAILABLE`/`UNAVAILABLE`/`DISABLED`), and execution outcome moved to
+  `ToolResult.success`.
+- `ToolRequest.parameters` became `ToolRequest.payload`, the model is frozen,
+  and it carries `approved`.
+- Registry and manager errors are typed: `ToolAlreadyRegisteredError` and
+  `ToolNotFoundError` replace bare `ValueError` and `KeyError`.
+- Enumeration returns a sorted `tuple` rather than a `list`.
+- The legacy manager executed a tool directly. The canonical `ToolManager`
+  delegates to `ToolExecutionEngine`, which enforces availability, permissions,
+  and approval before execution and records an audit entry on every path.
+
+Ten legacy requirements were intentionally not preserved:
+
+- `test_tool_status_values` in its legacy form. `ToolStatus.SUCCESS` and
+  `ToolStatus.FAILURE` do not exist canonically. The requirement survives as
+  stable canonical availability values, and execution outcome is asserted
+  through `ToolResult.success`.
+- `test_registry_property`. The canonical `ToolManager` deliberately does not
+  expose its registry. Preserving that accessor would document an escape hatch
+  around the execution engine's permission, approval, and audit chain, which
+  FORTRESS-06D2B's safety boundary forbids. The underlying requirement - that
+  the manager owns a registry - is proven through `register_tool`, `has_tool`,
+  `list_tools`, and routed execution instead.
+- `test_register_invalid_tool` and `test_execute_invalid_request`. The canonical
+  registry and manager rely on the `ToolInterface` ABC and typed parameters
+  rather than runtime `isinstance` guards, so neither raises `TypeError`.
+- `test_unregister_tool`, `test_unregister_missing_tool`, and `test_clear` for
+  the registry, and `test_unregister_tool` for the manager. Canonical
+  `ToolRegistry` and `ToolManager` expose no deregistration or bulk-clear
+  surface at all, so these requirements have no canonical owner.
+- `test_count`. There is no canonical `count()`. The requirement survives as the
+  length of the canonical `list_tools()` enumeration.
+
+Canonical requirements now proven in the configured suite include the abstract
+`ToolInterface` contract for both `metadata` and `execute`, metadata-declared
+tool identity, the `ToolRequest`-to-`ToolResult` execution contract, canonical
+`ToolStatus` values, `ToolRequest` and `ToolResult` defaults and payload/output
+carriage, blank-`tool_name` rejection at request construction, registry
+registration with instance-identity lookup, duplicate rejection, missing lookup,
+empty-registry state, sorted tuple enumeration with its length, manager-owned
+registration and enumeration, and manager execution routing.
+
+The two execution requirements route through the real `ToolManager` rather than
+`ToolExecutionEngine` or a tool instance, and assert the audit trail the
+canonical chain produces: a routed success records exactly one successful audit
+entry, and an unknown tool fails at registry lookup before execution and leaves
+the audit log empty. No test reaches around `ToolManager`,
+`ToolPermissionManager`, `ToolApprovalManager`, or `ToolAuditLogger` to
+manufacture evidence for behavior production obtains through them. Interface,
+model, and registry requirements are still tested directly against those
+objects, which is their architecturally correct level.
+
+No production code changed and no FORTRESS-07 policy was redesigned. Three
+observations were recorded for a later separately authorized slice:
+
+- `ToolRegistry.register` raises `AttributeError` rather than a typed
+  `ToolRegistryError` when handed a non-tool object, and `ToolManager.execute`
+  raises `AttributeError` when handed a non-`ToolRequest`. Both are input-typing
+  robustness gaps, not permission, approval, or audit policy gaps.
+- Canonical tool deregistration and registry reset have no owner. The registry
+  is append-only for the lifetime of the process.
+- The canonical `ToolRequest`, `ToolResult`, `ToolMetadata`, and
+  `ToolApprovalPolicy` models are frozen dataclasses, and no configured test
+  asserts that immutability. This is not a legacy requirement; it is a canonical
+  coverage gap recorded without change.
+
+`tests/tests/platform/test_collection_containment.py` gained three checks: the
+four archives exist as non-Python `.py.legacy` payloads that carry the original
+`executive_brain.tools.core` source and are not importable from their archive
+directory; the four configured replacements statically import `jaos` and no
+legacy root; and no configured test at the four adjudicated paths imports
+`executive_brain.tools.core`, with the remaining sixteen configured importers
+pinned by name as FORTRESS-06D2E prototype-tool test debt so the residue cannot
+grow silently. No second quarantine framework was created and `legacy_quarantine`
+still contains no `__init__.py`.
+
+Configured legacy-importing files decrease from 52 to 48 and configured
+`executive_brain` importers from 39 to 35, both recomputed mechanically by AST
+inspection of every configured test file against the F06A guarded top-level
+identity list.
+
+Verified F06D2B evidence, all exit code 0:
+
+| Gate | Target and options after `pytest` | Result |
+|---|---|---|
+| Focused Tool Platform | the four changed `tests/tests/tools` files `-q` | 19 passed |
+| Containment and boundary | `tests/tests/platform/test_collection_containment.py tests/tests/platform/test_canonical_import_boundary.py -q` | 74 passed |
+| Tools suite | `tests/tests/tools -q` | 220 passed |
+| Platform suite | `tests/tests/platform -q` | 370 passed, 1 skipped |
+| Composition suite | `tests/tests/composition -q` | 49 passed |
+| Integration suite | `tests/tests/integration -q` | 64 passed |
+| Full configured | `tests/tests -q` | 2,041 passed, 1 skipped |
+| Configured collection | `--collect-only -q` | 2,042 collected |
+| `tests/` collection | `tests/ --collect-only -q` | 2,042 collected |
+| Repository-root collection | `. --collect-only -q` | 2,042 collected |
+| Ruff 0.16.1 | `ruff check` on the five changed Python files | All checks passed |
+
+Every pytest gate ran under Python 3.14.6 and pytest 9.1.1 as
+`PYTHONDONTWRITEBYTECODE=1 .venv/Scripts/python.exe -B -m pytest` with
+`-p no:cacheprovider` and a unique external `--basetemp`. The full configured
+count moves from 2,044 to 2,041: 25 legacy tests retired, 19 canonical tests
+added, and 3 containment checks added. The one skip remains the Windows
+directory-symlink privilege limitation at
+`tests/tests/platform/test_runtime_paths.py:312` (`WinError 1314`).
+
+F06D2B is IMPLEMENTED AND VERIFIED. It moves no production code, migrates no
+runtime data, and touches none of
 the 428 flat `tests/*.py` legacy scripts. RAA-003 remains OPEN, RAA-007 remains
-RESOLVED WITH EVIDENCE, F06D is not complete, F06D2B and later slices have not
+RESOLVED WITH EVIDENCE, F06D is not complete, F06D2C and later slices have not
 started, FORTRESS-07 has not started, Step 8 remains blocked, Fortress
 certification has not started, and major Phase 8 expansion remains paused.
 
@@ -1414,6 +1570,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-30 | 1.15 | Recorded F06D2B's adjudication of 4 configured Tool Platform test files carrying 25 legacy tests, their byte-identical `.py.legacy` archives under `legacy_quarantine/tests/tools/core/`, 19 canonical `jaos.tools` replacement tests, 10 dropped legacy requirements, 3 recorded non-FORTRESS-07 observations, and the 52 -> 48 legacy-facing reduction (39 -> 35 `executive_brain` importers). Full configured suite 2,041 passed, 1 skipped; all three collection shapes 2,042 collected; Ruff clean. F06D2B is IMPLEMENTED AND VERIFIED. Synchronized F06D2A to its committed checkpoint `95adce4`. FORTRESS-06 remains in progress, F06D is not complete, and F06D2C+ remains not started. |
 | 2026-08-25 | 1.14 | Recorded F06D1's exact quarantine of 8 duplicate AI/Core configured tests (50 tests retired) to `legacy_quarantine/tests/` as `.py.legacy` artifacts; verified 59 legacy-importing files remaining; full configured suite 1,998 passed, 1 skipped; root collection 1,999 collected; F06D1 is IMPLEMENTED AND VERIFIED CANDIDATE. |
 | 2026-08-25 | 1.13 | Synchronized F06C current-state wording with committed and pushed checkpoint `0a2ea60`; FORTRESS-06 remains in progress through F06C, while F06D+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
 | 2026-08-25 | 1.12 | Recorded F06C's mandatory injected CLI adapters, canonical lifecycle ownership, exact green verification evidence, and RAA-007 resolution. FORTRESS-06 remains in progress through F06C; F06D+, FORTRESS-07, Step 8, certification, and Phase 8 resumption remain unstarted or blocked. |
