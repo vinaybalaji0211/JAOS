@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 4.7
+Version: 4.8
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -47,14 +47,17 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2B |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D | IN PROGRESS |
-| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
-| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
-| FORTRESS-06D2B+ | NOT STARTED |
+| FORTRESS-06D1 | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0ea8e2e` |
+| FORTRESS-06D2C+ | NOT STARTED |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 |
+| Remaining prototype-tool debt | 16 `executive_brain.tools.core` importers — OWNED BY F06D2E |
 | FORTRESS-07 | NOT STARTED |
 | RAA-003 | OPEN |
 | RAA-007 | RESOLVED WITH EVIDENCE |
@@ -64,7 +67,8 @@ The Git repository remains the permanent source of truth for JAOS.
 | Overall project health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
-| Documentation state | F06D2A COMMITTED/PUSHED CHECKPOINT RECORDED |
+| Phase 8 major expansion | PAUSED |
+| Documentation state | F06D2B COMMITTED/PUSHED CHECKPOINT RECORDED |
 
 ---
 
@@ -114,7 +118,7 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
-FORTRESS-06 is now IN PROGRESS through F06D2A. F06A's authoritative 33-entry
+FORTRESS-06 is now IN PROGRESS through F06D2B. F06A's authoritative 33-entry
 manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
 unsupported root test-shaped scripts byte-for-byte under non-Python
@@ -138,10 +142,17 @@ tests and is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at checkpoint
 `51818d2`. F06D2A migrated the seven configured filesystem-tool test files to
 canonical `jaos.tools.filesystem` coverage while preserving the legacy
 payloads as non-Python archives. It is IMPLEMENTED AND VERIFIED — COMMITTED
-AND PUSHED at checkpoint `95adce4`. Configured legacy-facing files progressed
-from 67 at the F06D baseline to 59 after F06D1 and 52 after F06D2A.
+AND PUSHED at checkpoint `95adce4`. F06D2B adjudicated the four configured Tool
+Platform core test files against canonical `jaos.tools` coverage while
+preserving their legacy payloads as non-Python archives. It is IMPLEMENTED AND
+VERIFIED — COMMITTED AND PUSHED at checkpoint `0ea8e2e`.
 
-F06D is not complete. F06D2B and later slices have not started. No production
+Configured legacy-facing files progressed 67 -> 59 -> 52 -> 48. During F06D2B,
+configured `executive_brain` importers progressed 39 -> 35. The remaining 16
+`executive_brain.tools.core` importers are prototype-tool test debt owned by
+F06D2E.
+
+F06D is not complete. F06D2C and later slices have not started. No production
 code changed, no runtime data migrated, and FORTRESS-07 has not started.
 
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
@@ -593,19 +604,22 @@ gate passes.
 ## 15. Immediate Next Actions
 
 1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the committed
-   and pushed F06A/F06B/F06C/F06D1/F06D2A checkpoints.
-2. Proceed next only with FORTRESS-06D2B — canonical Core Tool Platform test
-   adjudication/migration:
-   - read and verify current canonical coverage;
-   - port meaningful requirements;
-   - quarantine shadow-only test evidence;
-   - do not weaken canonical policy; and
-   - do not redesign FORTRESS-07 policy inside F06D2B.
+   and pushed F06A/F06B/F06C/F06D1/F06D2A/F06D2B checkpoints.
+2. Proceed next only with FORTRESS-06D2C — ExecutiveBrain / executive pipeline
+   runtime-test retirement:
+   - adjudicate the monolithic ExecutiveBrain and executive pipeline configured
+     tests;
+   - preserve any still-valid requirements against canonical
+     `ExecutiveController` / `PlatformComposition`;
+   - quarantine obsolete shadow-runtime evidence;
+   - do not touch manager/registry tests yet;
+   - do not touch prototype browser/Windows/development tool tests; and
+   - do not redesign FORTRESS-07 policy.
 3. Continue only separately authorized Step 7 remediation.
 4. Keep RAA-009 and the Memory-context adapter open/deferred unless a separate
    architecture decision and implementation are authorized.
-5. Do not begin any F06D slice after F06D2B without separate Founder
-   authorization; do not move or delete legacy source outside F06D2B scope.
+5. Do not begin any F06D slice after F06D2C without separate Founder
+   authorization; do not move or delete legacy source outside F06D2C scope.
 6. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
 7. Produce the Step 7 report for Founder review when all Step 7 work is done.

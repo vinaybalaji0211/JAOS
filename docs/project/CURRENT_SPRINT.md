@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 3.7
+Version: 3.8
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -86,17 +86,21 @@ with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
 recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
-FORTRESS-06 is IN PROGRESS through F06D2A. F06A is IMPLEMENTED AND VERIFIED —
+FORTRESS-06 is IN PROGRESS through F06D2B. F06A is IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is IMPLEMENTED AND VERIFIED
 — COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is IMPLEMENTED AND
 VERIFIED — COMMITTED AND PUSHED at checkpoint `0a2ea60`: the CLI surfaces require
 injected collaborators and canonical composition/runtime retains lifecycle
 ownership. F06D is IN PROGRESS. F06D1 is IMPLEMENTED AND VERIFIED — COMMITTED
 AND PUSHED at checkpoint `51818d2`; F06D2A is IMPLEMENTED AND VERIFIED —
-COMMITTED AND PUSHED at checkpoint `95adce4`. Configured legacy-facing files
-progressed from 67 at baseline to 59 after F06D1 and 52 after F06D2A. F06D is
-not complete, F06D2B and later slices have not started, RAA-003 remains OPEN,
-RAA-007 is RESOLVED WITH EVIDENCE, and FORTRESS-07 has not started.
+COMMITTED AND PUSHED at checkpoint `95adce4`; F06D2B is IMPLEMENTED AND
+VERIFIED — COMMITTED AND PUSHED at checkpoint `0ea8e2e`. Configured
+legacy-facing files progressed 67 -> 59 -> 52 -> 48. During F06D2B, configured
+`executive_brain` importers progressed 39 -> 35. The remaining 16
+`executive_brain.tools.core` importers are prototype-tool test debt owned by
+F06D2E. F06D is not complete, F06D2C and later slices have not started,
+RAA-003 remains OPEN, RAA-007 is RESOLVED WITH EVIDENCE, and FORTRESS-07 has
+not started.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -144,14 +148,17 @@ The objectives of this sprint are to:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2B |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D | IN PROGRESS |
-| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
-| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
-| FORTRESS-06D2B+ | NOT STARTED |
+| FORTRESS-06D1 | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0ea8e2e` |
+| FORTRESS-06D2C+ | NOT STARTED |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 |
+| Remaining prototype-tool debt | 16 `executive_brain.tools.core` importers — OWNED BY F06D2E |
 | FORTRESS-07 | NOT STARTED |
 | RAA-003 | OPEN |
 | RAA-007 | RESOLVED WITH EVIDENCE |
@@ -159,6 +166,7 @@ The objectives of this sprint are to:
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
+| Phase 8 major expansion | PAUSED |
 | Full regression certification | PENDING |
 
 ---
@@ -263,11 +271,14 @@ Conversation Intelligence. The focused remediation suite passed 85 tests; the
 related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors.
 
-FORTRESS-06 is IN PROGRESS through F06D2A, and F06D is IN PROGRESS. F06D1 is
+FORTRESS-06 is IN PROGRESS through F06D2B, and F06D is IN PROGRESS. F06D1 is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `51818d2`; F06D2A is
-IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`. Configured
-legacy-facing files progressed 67 baseline -> 59 after F06D1 -> 52 after
-F06D2A. F06D is not complete, and F06D2B and later slices have not started.
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`; F06D2B is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0ea8e2e`. Configured
+legacy-facing files progressed 67 -> 59 -> 52 -> 48, and configured
+`executive_brain` importers progressed 39 -> 35 during F06D2B. The remaining
+16 `executive_brain.tools.core` importers are prototype-tool test debt owned by
+F06D2E. F06D is not complete, and F06D2C and later slices have not started.
 
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not live-request routed. The Memory-context adapter and
@@ -483,18 +494,21 @@ This sprint is complete only when:
 ## 15. Immediate Next Actions
 
 1. Preserve the verified FORTRESS-01 through FORTRESS-05 state and the committed
-   and pushed F06A/F06B/F06C/F06D1/F06D2A checkpoints.
-2. Proceed next only with FORTRESS-06D2B — canonical Core Tool Platform test
-   adjudication/migration:
-   - read and verify current canonical coverage;
-   - port meaningful requirements;
-   - quarantine shadow-only test evidence;
-   - do not weaken canonical policy; and
-   - do not redesign FORTRESS-07 policy inside F06D2B.
+   and pushed F06A/F06B/F06C/F06D1/F06D2A/F06D2B checkpoints.
+2. Proceed next only with FORTRESS-06D2C — ExecutiveBrain / executive pipeline
+   runtime-test retirement:
+   - adjudicate the monolithic ExecutiveBrain and executive pipeline configured
+     tests;
+   - preserve any still-valid requirements against canonical
+     `ExecutiveController` / `PlatformComposition`;
+   - quarantine obsolete shadow-runtime evidence;
+   - do not touch manager/registry tests yet;
+   - do not touch prototype browser/Windows/development tool tests; and
+   - do not redesign FORTRESS-07 policy.
 3. Continue only separately authorized Step 7 remediation.
 4. Keep RAA-009 and the Memory-context adapter open/deferred.
-5. Do not begin any F06D slice after F06D2B without separate Founder
-   authorization; do not move or delete legacy source outside F06D2B scope.
+5. Do not begin any F06D slice after F06D2C without separate Founder
+   authorization; do not move or delete legacy source outside F06D2C scope.
 6. Execute the skipped directory-symlink escape check on a capable host before
    Fortress certification.
 7. Produce the Step 7 report for Founder review when Step 7 is complete.
@@ -523,14 +537,15 @@ This sprint is complete only when:
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2B |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D | IN PROGRESS |
-| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
-| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
-| FORTRESS-06D2B+ | NOT STARTED |
+| FORTRESS-06D1 | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0ea8e2e` |
+| FORTRESS-06D2C+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Phase 8 Resume | PENDING |
@@ -548,7 +563,8 @@ Newer Fortress checkpoints:
 `f9b054e` (FORTRESS-05A/05B), `1df73e3` (FORTRESS-05C), `cf26693`
 (FORTRESS-05D), `bc54d36` (FORTRESS-05 closure), `92aa9d7` (FORTRESS-06A),
 `eea8190` (FORTRESS-06B), `0a2ea60` (FORTRESS-06C), `51818d2`
-(FORTRESS-06D1), and `95adce4` (FORTRESS-06D2A)
+(FORTRESS-06D1), `95adce4` (FORTRESS-06D2A), and `0ea8e2e`
+(FORTRESS-06D2B)
 
 FORTRESS-05 checkpoint state:
 
@@ -558,7 +574,7 @@ Overall Fortress certification has not started.
 
 Current FORTRESS-06 state:
 
-IN PROGRESS through F06D2A. F06A's 33-entry manifest and 22 guarded top-level
+IN PROGRESS through F06D2B. F06A's 33-entry manifest and 22 guarded top-level
 identities are IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`.
 F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`. F06C is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0a2ea60`. The
@@ -567,9 +583,12 @@ disposable launcher/lifecycle checks passed 4; the full configured suite passed
 2,047 with one skip; repository-root collection found 2,048 tests;
 and Ruff passed. All commands exited 0. F06D is IN PROGRESS. F06D1 is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `51818d2`; F06D2A is
-IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`. Configured
-legacy-facing files progressed 67 baseline -> 59 after F06D1 -> 52 after
-F06D2A. F06D is not complete, F06D2B and later slices have not started, no
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`; F06D2B is
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0ea8e2e`. Configured
+legacy-facing files progressed 67 -> 59 -> 52 -> 48, and configured
+`executive_brain` importers progressed 39 -> 35 during F06D2B. The remaining
+16 `executive_brain.tools.core` importers are prototype-tool test debt owned by
+F06D2E. F06D is not complete, F06D2C and later slices have not started, no
 production code changed, and no runtime data migrated. RAA-003 remains OPEN,
 RAA-007 is RESOLVED WITH EVIDENCE, and FORTRESS-07 has not started.
 

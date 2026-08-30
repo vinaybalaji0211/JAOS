@@ -1,18 +1,18 @@
 # JAOS Next Actions
 
-Version: 4.7
+Version: 4.8
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
-Last Synchronized: 2026-08-29
+Last Synchronized: 2026-08-30
 Certified Release: v0.9.0-alpha
 Development Target: v0.10.0-alpha
 Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 Current Stabilization Activity: Step 7 — Bug Fixing and Regression
-Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06D2A
-Exact Next Action: FORTRESS-06D2B — canonical Core Tool Platform test adjudication/migration
+Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06D2B
+Exact Next Action: FORTRESS-06D2C — ExecutiveBrain / executive pipeline runtime-test retirement
 
 ---
 
@@ -63,14 +63,17 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2A |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2B |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D | IN PROGRESS |
-| FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
-| FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
-| FORTRESS-06D2B+ | NOT STARTED |
+| FORTRESS-06D1 | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
+| FORTRESS-06D2A | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
+| FORTRESS-06D2B | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0ea8e2e` |
+| FORTRESS-06D2C+ | NOT STARTED |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 |
+| Remaining prototype-tool debt | 16 `executive_brain.tools.core` importers — OWNED BY F06D2E |
 | FORTRESS-07 | NOT STARTED |
 | RAA-003 | OPEN |
 | RAA-007 | RESOLVED WITH EVIDENCE |
@@ -79,6 +82,7 @@ It must not direct engineers to repeat completed planning or implementation.
 | Full regression certification | PENDING |
 | Stabilization certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Fortress certification | NOT STARTED |
+| Phase 8 major expansion | PAUSED |
 | Phase 8 release readiness | NOT YET CERTIFIED |
 
 Phase 7 — Memory Platform is complete, certified, released, tagged, and pushed as:
@@ -110,16 +114,20 @@ This pause is not:
 The immediate priority is to preserve the FORTRESS-01 governance checkpoint,
 the verified FORTRESS-02 through FORTRESS-05 state, F06A checkpoint `92aa9d7`,
 F06B checkpoint `eea8190`, F06C checkpoint `0a2ea60`, F06D1 checkpoint
-`51818d2`, and F06D2A checkpoint `95adce4`. F06D is IN PROGRESS; configured
-legacy-facing files progressed from 67 at baseline to 59 after F06D1 and 52
-after F06D2A. F06D is not complete, and F06D2B and later slices have not
-started.
+`51818d2`, F06D2A checkpoint `95adce4`, and F06D2B checkpoint `0ea8e2e`. F06D
+is IN PROGRESS; configured legacy-facing files progressed 67 -> 59 -> 52 -> 48,
+and configured `executive_brain` importers progressed 39 -> 35 during F06D2B.
+The remaining 16 `executive_brain.tools.core` importers are prototype-tool test
+debt owned by F06D2E. F06D is not complete, and F06D2C and later slices have
+not started.
 
-The next authorized engineering action is FORTRESS-06D2B — canonical Core Tool
-Platform test adjudication/migration. Its boundary is to read and verify current
-canonical coverage, port meaningful requirements, quarantine shadow-only test
-evidence, preserve canonical policy without weakening it, and perform no
-FORTRESS-07 policy redesign inside F06D2B.
+The next authorized engineering action is FORTRESS-06D2C — ExecutiveBrain /
+executive pipeline runtime-test retirement. Its boundary is to adjudicate the
+monolithic ExecutiveBrain and executive pipeline configured tests, preserve any
+still-valid requirements against canonical `ExecutiveController` /
+`PlatformComposition`, quarantine obsolete shadow-runtime evidence, leave
+manager/registry tests and prototype browser/Windows/development tool tests
+untouched, and perform no FORTRESS-07 policy redesign.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -519,11 +527,11 @@ The following actions are authorized:
   and F06B collection/package-collision remediation evidence.
 - Preserve the separately authorized and verified F06C injected-adapter and
   RAA-007 closure evidence.
-- Preserve the separately authorized and verified F06D1 and F06D2A test
-  migration evidence and checkpoints `51818d2` and `95adce4`.
-- Proceed next only with FORTRESS-06D2B — canonical Core Tool Platform test
-  adjudication/migration — within the recorded coverage, requirement,
-  quarantine, and policy-preservation boundary.
+- Preserve the separately authorized and verified F06D1, F06D2A, and F06D2B
+  test migration evidence and checkpoints `51818d2`, `95adce4`, and `0ea8e2e`.
+- Proceed next only with FORTRESS-06D2C — ExecutiveBrain / executive pipeline
+  runtime-test retirement — within the recorded adjudication, canonical
+  requirement-preservation, quarantine, exclusion, and policy boundary.
 
 FORTRESS-01 authorized only the governance and documentation baseline it
 recorded. It did not authorize later implementation. FORTRESS-02 slices 02A
@@ -531,8 +539,8 @@ through 02K, FORTRESS-03 slices 03A through 03J, FORTRESS-04, and FORTRESS-05
 slices 05A through 05E were each implemented under separate authorization.
 FORTRESS-02 through FORTRESS-04 are verified by sections 7.7 through 7.9;
 FORTRESS-05 is verified under ADR-0011 by the closure evidence in section 7.10.
-FORTRESS-06 has proceeded through separately authorized F06D2A. F06D remains
-IN PROGRESS and is not complete. F06D2B is the next authorized checkpoint;
+FORTRESS-06 has proceeded through separately authorized F06D2B. F06D remains
+IN PROGRESS and is not complete. F06D2C is the next authorized checkpoint;
 later F06D slices, Step 8, and major Phase 8 expansion are not authorized.
 
 Each change must remain reviewable and recoverable.
@@ -543,10 +551,11 @@ Each change must remain reviewable and recoverable.
 
 Do not:
 
-- Begin any F06D slice after F06D2B.
-- Broaden F06D2B beyond canonical Core Tool Platform test adjudication and
-  migration, weaken canonical policy, or redesign FORTRESS-07 policy inside it.
-- Move or delete legacy source outside the F06D2B boundary, or migrate runtime
+- Begin any F06D slice after F06D2C.
+- Broaden F06D2C beyond the monolithic ExecutiveBrain and executive pipeline
+  configured tests; touch manager/registry tests or prototype
+  browser/Windows/development tool tests; or redesign FORTRESS-07 policy.
+- Move or delete legacy source outside the F06D2C boundary, or migrate runtime
   data.
 - Claim the Fortress Program certified.
 - Modify production code, tests, or runtime data without separate
@@ -842,13 +851,16 @@ than rapidly changing implementation.
 5. Keep Step 8 — Stabilization Certification NOT STARTED — BLOCKED BY STEP 7 until
    Step 7 is complete and approved.
 6. Preserve the separately authorized and verified F06A, F06B, F06C, F06D1,
-   and F06D2A implementation and checkpoints.
-7. Proceed next only with FORTRESS-06D2B — canonical Core Tool Platform test
-   adjudication/migration: read and verify current canonical coverage, port
-   meaningful requirements, quarantine shadow-only test evidence, do not weaken
-   canonical policy, and do not redesign FORTRESS-07 policy inside F06D2B.
-8. Do not begin any F06D slice after F06D2B, move legacy source outside the
-   F06D2B boundary, or migrate runtime data.
+   F06D2A, and F06D2B implementation and checkpoints.
+7. Proceed next only with FORTRESS-06D2C — ExecutiveBrain / executive pipeline
+   runtime-test retirement: adjudicate the monolithic ExecutiveBrain and
+   executive pipeline configured tests; preserve any still-valid requirements
+   against canonical `ExecutiveController` / `PlatformComposition`; quarantine
+   obsolete shadow-runtime evidence; do not touch manager/registry tests yet;
+   do not touch prototype browser/Windows/development tool tests; and do not
+   redesign FORTRESS-07 policy.
+8. Do not begin any F06D slice after F06D2C, move legacy source outside the
+   F06D2C boundary, or migrate runtime data.
 9. Execute the skipped directory-symlink escape rejection check in an elevated
    or capable environment before Fortress certification.
 10. Keep major Phase 8 expansion paused until Step 8 and Fortress certification
@@ -867,25 +879,31 @@ Fortress gate passes.
 
 FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at workstream level,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
-sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through F06D2A. F06A is
+sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through F06D2B. F06A is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`; F06B is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`; and F06C is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0a2ea60`. F06D is IN
 PROGRESS. F06D1 is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
 `51818d2`; F06D2A is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
-`95adce4`. Configured legacy-facing files progressed 67 baseline -> 59 after
-F06D1 -> 52 after F06D2A. F06D is not complete, F06D2B and later slices have
-not started, no production code changed, and no runtime data migrated.
-RAA-003 remains OPEN, RAA-007 is RESOLVED WITH EVIDENCE, RAA-009 remains open,
-and FORTRESS-07 has not started. Step 7 remains IN PROGRESS; Step 8 remains NOT
+`95adce4`; F06D2B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
+`0ea8e2e`. Configured legacy-facing files progressed 67 -> 59 -> 52 -> 48, and
+configured `executive_brain` importers progressed 39 -> 35 during F06D2B. The
+remaining 16 `executive_brain.tools.core` importers are prototype-tool test debt
+owned by F06D2E. F06D is not complete, F06D2C and later slices have not
+started, no production code changed, and no runtime data migrated. RAA-003
+remains OPEN, RAA-007 is RESOLVED WITH EVIDENCE, RAA-009 remains open, and
+FORTRESS-07 has not started. Step 7 remains IN PROGRESS; Step 8 remains NOT
 STARTED — BLOCKED BY STEP 7; Fortress certification remains NOT STARTED; and
 major Phase 8 expansion remains PAUSED.
 
-The next authorized action is FORTRESS-06D2B — canonical Core Tool Platform
-test adjudication/migration. Read and verify current canonical coverage, port
-meaningful requirements, quarantine shadow-only test evidence, do not weaken
-canonical policy, and perform no FORTRESS-07 policy redesign inside F06D2B.
-Do not authorize or begin implementation beyond that checkpoint.
+The next authorized action is FORTRESS-06D2C — ExecutiveBrain / executive
+pipeline runtime-test retirement. Adjudicate the monolithic ExecutiveBrain and
+executive pipeline configured tests; preserve any still-valid requirements
+against canonical `ExecutiveController` / `PlatformComposition`; quarantine
+obsolete shadow-runtime evidence; do not touch manager/registry tests yet; do
+not touch prototype browser/Windows/development tool tests; and do not redesign
+FORTRESS-07 policy. Do not authorize or begin implementation beyond that
+checkpoint.
 
 The following remain explicitly open and unchanged: the directory-symlink
 escape behavior remains unverified on this host because the preserved test is
