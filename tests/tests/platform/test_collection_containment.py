@@ -16,6 +16,7 @@ from __future__ import annotations
 import ast
 import configparser
 import fnmatch
+import hashlib
 import importlib.machinery
 import importlib.util
 import os
@@ -845,3 +846,154 @@ def test_f06d2c_retires_only_the_authorized_executive_importers() -> None:
         "tests/tests/integration/test_memory_runtime_integration.py"
         in executive_importers
     )
+
+
+_F06D2D_ARCHIVE_RECORDS = (
+    (
+        "tests/tests/manager_layer/test_decision_manager.py",
+        (
+            "legacy_quarantine/tests/executive/managers/"
+            "test_decision_manager.py.legacy"
+        ),
+        "ba1b17667115e75129ed8b5c27a24a433b96d71991ddcd7ea6c763588cef4e5a",
+    ),
+    (
+        "tests/tests/manager_layer/test_execution_manager.py",
+        (
+            "legacy_quarantine/tests/executive/managers/"
+            "test_execution_manager.py.legacy"
+        ),
+        "229639f71adbcb519c62fc1fee8c7f4b708169d469115f61fdd45971c1d88997",
+    ),
+    (
+        "tests/tests/manager_layer/test_mission_manager.py",
+        (
+            "legacy_quarantine/tests/executive/managers/"
+            "test_mission_manager.py.legacy"
+        ),
+        "60b4d90e80ca2750109fcfae23e1c42b960302ee0fb6dd9eeccc9640af193b88",
+    ),
+    (
+        "tests/tests/manager_layer/test_planning_manager.py",
+        (
+            "legacy_quarantine/tests/executive/managers/"
+            "test_planning_manager.py.legacy"
+        ),
+        "a56b590b241de2aec25b1bfa3c6c1f513ccd91e3d134cd963a5d0054adbea516",
+    ),
+    (
+        "tests/tests/manager_layer/test_registry_manager.py",
+        (
+            "legacy_quarantine/tests/executive/managers/"
+            "test_registry_manager.py.legacy"
+        ),
+        "473bd4914180c0be406bb69a319183c5759149ec75b1cf8614e44390419eadcd",
+    ),
+    (
+        "tests/tests/manager_layer/test_result_manager.py",
+        (
+            "legacy_quarantine/tests/executive/managers/"
+            "test_result_manager.py.legacy"
+        ),
+        "15c84c43aadbecc91a0e8f82cd8e300510c9ad5c7909b5b973f06e16ec52e628",
+    ),
+    (
+        "tests/tests/registry_layer/test_execution_plan_registry.py",
+        (
+            "legacy_quarantine/tests/executive/registries/"
+            "test_execution_plan_registry.py.legacy"
+        ),
+        "6174dd08b9ad419684b4994f0bc2ebe2053892cad804959bd8916efbb647a111",
+    ),
+    (
+        "tests/tests/registry_layer/test_mission_registry.py",
+        (
+            "legacy_quarantine/tests/executive/registries/"
+            "test_mission_registry.py.legacy"
+        ),
+        "e91aadb273f1175d424ad4e4a5a70e4c39aebfc1256931bba4677a2803c6b0e6",
+    ),
+    (
+        "tests/tests/registry_layer/test_result_registry.py",
+        (
+            "legacy_quarantine/tests/executive/registries/"
+            "test_result_registry.py.legacy"
+        ),
+        "ae977136dcd578136ba074d9bd741d6c69f1fbd710e103aa382508be0440ea7e",
+    ),
+)
+
+_F06D2D_DEFERRED_MEMORY_IMPORTERS = frozenset(
+    {
+        "tests/tests/integration/test_memory_runtime_integration.py",
+        "tests/tests/memory/test_memory_manager.py",
+        "tests/tests/memory/test_memory_registry.py",
+        "tests/tests/memory/test_working_memory.py",
+    }
+)
+
+_F06D2D_DEFERRED_PROVIDER_IMPORTERS = frozenset(
+    {
+        "tests/tests/ai/test_ollama_provider.py",
+        "tests/tests/ai/test_openai_provider.py",
+    }
+)
+
+
+def test_f06d2d_manager_registry_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """D2D archives nine byte-identical payloads outside Python collection."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+
+    for former_relpath, archive_relpath, expected_sha256 in _F06D2D_ARCHIVE_RECORDS:
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+        assert hashlib.sha256(archive_path.read_bytes()).hexdigest() == expected_sha256
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+
+    legacy_quarantine_root = _REPOSITORY_ROOT / "legacy_quarantine"
+    assert not tuple(legacy_quarantine_root.rglob("__init__.py"))
+
+
+def test_f06d2d_retires_only_manager_registry_importers() -> None:
+    """D2D leaves the exact D2E, Memory, and provider inventories intact."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+    executive_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_root.rglob("*.py")
+        if "__pycache__" not in path.parts
+        and "executive_brain" in _imported_top_level_roots(path)
+    }
+    expected_tool_importers = {
+        f"tests/tests/tools/{stem}.py"
+        for stem in _F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS
+    }
+
+    assert executive_importers == (
+        expected_tool_importers
+        | _F06D2D_DEFERRED_MEMORY_IMPORTERS
+        | _F06D2D_DEFERRED_PROVIDER_IMPORTERS
+    )
+    assert len(executive_importers) == 22
+    assert len(expected_tool_importers) == 16
+    assert len(_F06D2D_DEFERRED_MEMORY_IMPORTERS) == 4
+    assert len(_F06D2D_DEFERRED_PROVIDER_IMPORTERS) == 2
