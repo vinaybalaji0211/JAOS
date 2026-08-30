@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.16
+Document Version: 1.17
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,15 +101,16 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2C IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2C IMPLEMENTED AND VERIFIED; F06D2D ADJUDICATED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
 | FORTRESS-06D1 | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `51818d2` |
 | FORTRESS-06D2A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `95adce4` |
 | FORTRESS-06D2B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0ea8e2e` |
-| FORTRESS-06D2C | IMPLEMENTED AND VERIFIED |
-| FORTRESS-06D2D+ | NOT STARTED |
+| FORTRESS-06D2C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `1862f78` |
+| FORTRESS-06D2D | ADJUDICATED — GOVERNANCE DECISION APPROVED — IMPLEMENTATION NOT STARTED — READY FOR CONTROLLED IMPLEMENTATION AFTER THIS GOVERNANCE CHANGE IS CHECKPOINTED |
+| FORTRESS-06D2E+ | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
 | RAA-002 | PARTIALLY RESOLVED |
@@ -145,8 +146,10 @@ seven configured filesystem-tool test files with canonical `jaos.tools`
 coverage while archiving their legacy payloads, F06D2B did the same for four
 configured Tool Platform core test files, and F06D2C retired four monolithic
 ExecutiveBrain/pipeline configured files while adding two canonical Executive
-source tests. No legacy production source moved or was deleted, no runtime data
-migrated, F06D is not complete, F06D2D+ has not started, and major Phase 8
+source tests. ADR-0012 now records the Founder-approved interpretation required
+for the adjudicated F06D2D manager/registry test plan; F06D2D implementation
+has not started. No legacy production source moved or was deleted, no runtime
+data migrated, F06D is not complete, F06D2E+ has not started, and major Phase 8
 expansion remains paused.
 
 ---
@@ -1619,10 +1622,72 @@ reasoning/planning remain deferred and unchanged.
 
 FORTRESS-06D2C — IMPLEMENTED AND VERIFIED. It moves no production code and
 completes neither F06D nor FORTRESS-06.
-RAA-003 remains OPEN, RAA-007 remains RESOLVED WITH EVIDENCE, F06D2D+ and
-FORTRESS-07 remain NOT STARTED, Step 8 remains NOT STARTED — BLOCKED BY STEP 7,
-Fortress certification remains NOT STARTED, and major Phase 8 expansion remains
+RAA-003 remains OPEN and RAA-007 remains RESOLVED WITH EVIDENCE. F06D2D is
+ADJUDICATED with its governance decision approved, but implementation remains
+NOT STARTED. F06D2E+ and FORTRESS-07 remain NOT STARTED, Step 8 remains NOT
+STARTED — BLOCKED BY STEP 7, Fortress certification remains NOT STARTED, and
+major Phase 8 expansion remains PAUSED.
+
+---
+
+### 7.18 FORTRESS-06D2D — Manager and Registry Shadow-Test Governance
+
+Date: 2026-08-30. ADR-0012 records the Founder-approved clarification that
+older Phase 8 manager and registry names are logical responsibility labels and
+historical integration boundaries. They do not grant canonical runtime
+authority to the exact `executive_brain.managers.*` or
+`executive_brain.registries.*` implementations. Those exact implementations
+remain shadow architecture and controlled FORTRESS-06 quarantine candidates.
+
+The read-only F06D2D adjudication found exactly nine configured files carrying
+94 source tests:
+
+| Adjudicated configured file | Source tests |
+|---|---:|
+| `tests/tests/manager_layer/test_decision_manager.py` | 10 |
+| `tests/tests/manager_layer/test_execution_manager.py` | 9 |
+| `tests/tests/manager_layer/test_mission_manager.py` | 14 |
+| `tests/tests/manager_layer/test_planning_manager.py` | 8 |
+| `tests/tests/manager_layer/test_registry_manager.py` | 7 |
+| `tests/tests/manager_layer/test_result_manager.py` | 9 |
+| `tests/tests/registry_layer/test_execution_plan_registry.py` | 13 |
+| `tests/tests/registry_layer/test_mission_registry.py` | 12 |
+| `tests/tests/registry_layer/test_result_registry.py` | 12 |
+| Total | 94 |
+
+The technical retirement plan is approved. Before any of these configured
+legacy tests may be retired, the configured canonical Executive suite must add
+the one uncovered valid requirement: aggregate `ExecutiveController` execution
+metrics for executed, succeeded, and failed plans and their success rate.
+
+Current configured counts remain:
+
+- configured legacy-facing files: 44;
+- configured `executive_brain` importers: 31.
+
+The projected post-F06D2D impact is 44 -> 35 legacy-facing files and 31 -> 22
+`executive_brain` importers. These projections are not current implemented
+counts. No test or production file has been moved, quarantined, rewritten, or
+deleted by this governance change.
+
+FORTRESS-06D2D is ADJUDICATED, its GOVERNANCE DECISION IS APPROVED, and its
+IMPLEMENTATION IS NOT STARTED. Once this governance change is checkpointed,
+F06D2D is READY FOR CONTROLLED IMPLEMENTATION under separate implementation
+authorization.
+
+Future mission lifecycle, goal/mission intelligence, operational planning,
+decision lifecycle, result lifecycle, durable identifier/query state,
+persistence, recovery, and replay responsibilities remain conceptually
+preserved. They require explicitly approved canonical owners before resumed
+implementation. FORTRESS-07 continues to own permission, approval, audit, and
+risk policy; FORTRESS-08 continues to own durable persistence, recovery, and
+replay. Neither workstream starts here, and major Phase 8 expansion remains
 PAUSED.
+
+F06D and FORTRESS-06 remain IN PROGRESS. RAA-003 remains OPEN, RAA-007 remains
+RESOLVED WITH EVIDENCE, F06D2E+ and FORTRESS-07 remain NOT STARTED, Step 8
+remains NOT STARTED — BLOCKED BY STEP 7, and Fortress certification remains NOT
+STARTED.
 
 ---
 
@@ -1680,6 +1745,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-30 | 1.17 | Added Founder-approved ADR-0012 and recorded F06D2D's adjudicated 9-file / 94-source-test manager/registry inventory, approved technical retirement plan, required aggregate Executive metrics coverage, unchanged current counts of 44 legacy-facing files and 31 `executive_brain` importers, projected 44 -> 35 and 31 -> 22 impact, and implementation-not-started boundary. F06D and FORTRESS-06 remain in progress; RAA-003 remains open; F07, Step 8, Fortress certification, and major Phase 8 expansion remain unstarted, blocked, or paused. |
 | 2026-08-30 | 1.16 | Recorded F06D2C's exact 4-file / 22-source-test ExecutiveBrain and pipeline retirement, four byte/blob-identical non-Python archives, two canonical Executive source tests, three containment checks, corrected in-memory writer finding, 48 -> 44 legacy-facing reduction, and 35 -> 31 `executive_brain` importer reduction. Full configured suite 2,025 passed, 1 skipped; repository-root collection found 2,026 tests; Ruff passed. F06D2C is IMPLEMENTED AND VERIFIED; F06D and FORTRESS-06 remain in progress, and later slices remain unstarted. |
 | 2026-08-30 | 1.15 | Recorded F06D2B's adjudication of 4 configured Tool Platform test files carrying 25 legacy tests, their byte-identical `.py.legacy` archives under `legacy_quarantine/tests/tools/core/`, 19 canonical `jaos.tools` replacement tests, 10 dropped legacy requirements, 3 recorded non-FORTRESS-07 observations, and the 52 -> 48 legacy-facing reduction (39 -> 35 `executive_brain` importers). Full configured suite 2,041 passed, 1 skipped; all three collection shapes 2,042 collected; Ruff clean. F06D2B is IMPLEMENTED AND VERIFIED. Synchronized F06D2A to its committed checkpoint `95adce4`. FORTRESS-06 remains in progress, F06D is not complete, and F06D2C+ remains not started. |
 | 2026-08-25 | 1.14 | Recorded F06D1's exact quarantine of 8 duplicate AI/Core configured tests (50 tests retired) to `legacy_quarantine/tests/` as `.py.legacy` artifacts; verified 59 legacy-importing files remaining; full configured suite 1,998 passed, 1 skipped; root collection 1,999 collected; F06D1 is IMPLEMENTED AND VERIFIED CANDIDATE. |

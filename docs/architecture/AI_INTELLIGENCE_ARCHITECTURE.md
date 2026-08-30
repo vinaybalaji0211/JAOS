@@ -1,6 +1,6 @@
 # JAOS AI Intelligence Architecture
 
-Version: 1.0
+Version: 1.1
 Status: PROPOSED
 Phase: Phase 8 — AI Intelligence Platform
 Owner: Vinay B
@@ -49,6 +49,19 @@ The platform uses:
 
 The AI Intelligence Platform does not directly control operating-system
 resources or execute tools.
+
+**Founder clarification — ADR-0012.** References in this document to
+ExecutiveBrain, Manager Layer, MissionManager, PlanningManager,
+DecisionManager, ExecutionManager, ResultManager, RegistryManager, or Registry
+Layer identify logical responsibilities and historical integration boundaries.
+They do not grant canonical runtime authority to the exact
+`executive_brain.managers.*` or `executive_brain.registries.*`
+implementations. Canonical runtime authority is defined by the
+Founder-approved Fortress composition graph. Still-required mission, planning,
+decision, result, persistence, recovery, or replay responsibilities must
+receive explicit canonical ownership through approved governance before
+resumed implementation. This clarification does not resume Phase 8 or
+authorize new capability work.
 
 ---
 

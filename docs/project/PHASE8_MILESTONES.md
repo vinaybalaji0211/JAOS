@@ -1,6 +1,6 @@
 # JAOS Phase 8 Milestones
 
-Version: 1.2
+Version: 1.3
 Status: ACTIVE
 Phase: Phase 8 — AI Intelligence Platform
 Release Target: v0.10.0-alpha
@@ -24,6 +24,21 @@ The governing documents are:
 - `docs/architecture/AI_INTELLIGENCE_REQUIREMENTS.md`
 - `docs/architecture/FORTRESS_PROGRAM.md`
 - `docs/project/NEXT_ACTIONS.md`
+
+**Founder clarification — ADR-0012.** References in this document to
+ExecutiveBrain, Manager Layer, MissionManager, PlanningManager,
+DecisionManager, ExecutionManager, ResultManager, RegistryManager, or Registry
+Layer identify logical responsibilities and historical integration boundaries.
+They do not grant canonical runtime authority to the exact
+`executive_brain.managers.*` or `executive_brain.registries.*`
+implementations. Canonical runtime authority is defined by the
+Founder-approved Fortress composition graph. Still-required mission, planning,
+decision, result, persistence, recovery, or replay responsibilities must
+receive explicit canonical ownership through approved governance before
+resumed implementation. Within this document, "retains ownership" means that
+the responsibility remains explicitly owned; it does not preserve a legacy
+class or pre-select a future canonical owner. This clarification does not
+resume Phase 8 or authorize new capability work.
 
 ---
 

@@ -2,7 +2,7 @@
 
 
 
-Version: 1.3
+Version: 1.4
 
 Status: ACTIVE
 
@@ -944,6 +944,153 @@ Approved By
 
 
 Founder Vinay B — 2026-08-24
+
+
+
+\---
+
+
+
+\# ADR-0012
+
+
+
+Title
+
+
+
+FORTRESS-06 Legacy Executive Manager and Registry Responsibility Clarification
+
+
+
+Status
+
+
+
+Accepted — Founder-approved 2026-08-30
+
+
+
+Context
+
+
+
+Older Phase 8 requirements, architecture, and milestone documents name
+ExecutiveBrain, MissionManager, PlanningManager, DecisionManager,
+ExecutionManager, ResultManager, RegistryManager, and Registry Layer as
+responsibility or integration boundaries.
+
+
+
+Those names can be misread as granting permanent production authority to the
+exact legacy implementations under `executive_brain.managers` and
+`executive_brain.registries`. The Founder-approved Fortress composition and
+verified production graph contain no such authority.
+
+
+
+Decision
+
+
+
+The manager and registry names preserved in older Phase 8 documents are logical
+responsibility labels and historical integration boundaries. They do not
+designate the exact `executive_brain.managers.*` or
+`executive_brain.registries.*` implementations as canonical runtime
+authorities.
+
+
+
+The exact legacy manager and registry implementations are shadow architecture
+and may be retired through controlled FORTRESS-06 migration and quarantine.
+
+
+
+Canonical runtime authority remains:
+
+
+
+```text
+PlatformRuntime
+  -> PlatformComposition
+     -> ToolManager
+     -> AIManager
+     -> ExecutiveController
+     -> MemoryStore
+     -> ConversationOrchestrator
+```
+
+
+
+No legacy MissionManager, PlanningManager, DecisionManager, ExecutionManager,
+ResultManager, RegistryManager, or subordinate `executive_brain` registry
+becomes part of canonical production composition merely because an older
+Phase 8 document names the corresponding responsibility.
+
+
+
+Mission lifecycle, goal and mission intelligence, operational planning,
+decision lifecycle, execution-result lifecycle, durable identifiers and
+queries, persistence, recovery, and replay remain conceptually preserved.
+Before resumed implementation, each responsibility must be deliberately
+assigned to a canonical authority or a separately approved future platform
+through approved governance.
+
+
+
+This decision does not authorize new planning, mission execution, autonomous
+behavior, decision routing, persistence or replay, a new registry system, or
+resumed Phase 8 expansion. FORTRESS-07 retains permission, approval, audit, and
+risk ownership. FORTRESS-08 retains durable persistence, recovery, and replay
+ownership. RAA-003 remains OPEN.
+
+
+
+FORTRESS-06D2D Disposition
+
+
+
+The read-only adjudication identified nine configured manager and registry test
+files containing 94 source tests. Their technical retirement plan is approved,
+subject to first adding configured canonical coverage for aggregate
+`ExecutiveController` execution metrics.
+
+
+
+Current configured counts remain 44 legacy-facing files and 31
+`executive_brain` importers. The projected post-F06D2D counts are 35 and 22,
+respectively: 44 -> 35 and 31 -> 22. These projected counts are not current
+implemented results.
+
+
+
+FORTRESS-06D2D implementation remains NOT STARTED. Recording and checkpointing
+this governance decision makes FORTRESS-06D2D READY FOR CONTROLLED
+IMPLEMENTATION under separate implementation authorization.
+
+
+
+Consequences
+
+
+
+- Older Phase 8 documents retain their historical responsibility language and
+  receive narrow annotations referring to this decision.
+- FORTRESS-06 must not preserve shadow implementations solely to preserve
+  historic class names.
+- Future owners for the preserved logical responsibilities must be approved
+  explicitly before their implementation resumes.
+- This decision does not complete F06D, FORTRESS-06, Step 7, Step 8, or
+  Fortress certification and does not begin FORTRESS-07, FORTRESS-08, or major
+  Phase 8 expansion.
+
+
+
+Approved By
+
+
+
+Founder Vinay B — 2026-08-30
 
 
 
