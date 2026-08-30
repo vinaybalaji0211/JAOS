@@ -736,3 +736,112 @@ def test_f06d2b_migrated_paths_no_longer_depend_on_the_legacy_tool_platform() ->
         f"tests/tests/tools/{stem}.py"
         for stem in _F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS
     )
+
+
+_F06D2C_ARCHIVE_PAIRS = (
+    (
+        "tests/tests/brain/test_executive_brain.py",
+        (
+            "legacy_quarantine/tests/executive/brain/"
+            "test_executive_brain.py.legacy"
+        ),
+    ),
+    (
+        "tests/tests/integration/test_executive_pipeline.py",
+        (
+            "legacy_quarantine/tests/executive/pipeline/"
+            "test_executive_pipeline.py.legacy"
+        ),
+    ),
+    (
+        "tests/tests/integration/test_executive_pipeline_v2.py",
+        (
+            "legacy_quarantine/tests/executive/pipeline/"
+            "test_executive_pipeline_v2.py.legacy"
+        ),
+    ),
+    (
+        "tests/tests/integration/test_executive_runtime.py",
+        (
+            "legacy_quarantine/tests/executive/runtime/"
+            "test_executive_runtime.py.legacy"
+        ),
+    ),
+)
+_F06D2C_CANONICAL_TEST_PATH = (
+    _REPOSITORY_ROOT
+    / "tests"
+    / "tests"
+    / "executive"
+    / "test_canonical_executive_controller.py"
+)
+_F06D2C_DEFERRED_MEMORY_RUNTIME_PATH = (
+    _REPOSITORY_ROOT
+    / "tests"
+    / "tests"
+    / "integration"
+    / "test_memory_runtime_integration.py"
+)
+
+
+def test_f06d2c_executive_archives_are_non_python_and_non_collectable(
+    pytestconfig: pytest.Config,
+) -> None:
+    """F06D2C preserves exactly four Executive test payloads outside execution."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+
+    for former_relpath, archive_relpath in _F06D2C_ARCHIVE_PAIRS:
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+        assert "executive_brain" in archive_path.read_text(encoding="utf-8")
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+        assert not (archive_path.parent / "__init__.py").exists()
+
+
+def test_f06d2c_canonical_executive_test_uses_only_canonical_authorities() -> None:
+    """The D2C replacement reaches canonical JAOS and no legacy import root."""
+
+    assert _F06D2C_CANONICAL_TEST_PATH.is_file()
+
+    roots = _imported_top_level_roots(_F06D2C_CANONICAL_TEST_PATH)
+
+    assert roots == frozenset({"jaos", "pathlib", "pytest", "unittest"})
+    assert not roots & _FORBIDDEN_TEST_IMPORT_ROOTS
+
+
+def test_f06d2c_retires_only_the_authorized_executive_importers() -> None:
+    """The adjacent legacy Memory/runtime test remains executable and deferred."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+    executive_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_root.rglob("*.py")
+        if "__pycache__" not in path.parts
+        and "executive_brain" in _imported_top_level_roots(path)
+    }
+
+    assert not {
+        former_relpath for former_relpath, _archive in _F06D2C_ARCHIVE_PAIRS
+    } & executive_importers
+    assert _F06D2C_DEFERRED_MEMORY_RUNTIME_PATH.is_file()
+    assert (
+        "tests/tests/integration/test_memory_runtime_integration.py"
+        in executive_importers
+    )
