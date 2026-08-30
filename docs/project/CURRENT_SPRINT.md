@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 4.0
+Version: 4.1
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -86,7 +86,7 @@ with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
 recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
-FORTRESS-06 is IN PROGRESS through the completed F06D2D implementation. F06A
+FORTRESS-06 is IN PROGRESS through the completed F06D2E implementation. F06A
 is IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is IMPLEMENTED AND VERIFIED
 — COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is IMPLEMENTED AND
@@ -116,14 +116,40 @@ files carrying 94 source tests into nine byte/blob-identical `*.py.legacy`
 archives. No production code changed and no runtime-data migration occurred.
 Configured legacy-facing files moved 44 -> 35 and configured `executive_brain`
 importers moved 31 -> 22.
+The F06D2D completion-state sync is committed and pushed at `cd65af5`.
 
-The configured legacy-facing progression is 67 -> 59 -> 52 -> 48 -> 44 -> 35.
-The remaining 22 configured `executive_brain` importers are partitioned as 16
-F06D2E prototype tools, four later Memory-adjudication importers, and two later
-provider-evidence/F09 importers. F06D2E has not started. F06D and FORTRESS-06
-are not complete,
+F06D2E is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
+`10996c6`. It retired 16 configured prototype-tool files carrying 101 source
+tests, all pytest-collectable: Browser 5 files / 32 tests, Windows/Desktop 6 / 39,
+and Development/VS Code 5 / 30. All payloads are preserved byte/blob-identically
+as 16 `*.py.legacy` archives. Generic Tool Platform requirements were already
+covered canonically, so no replacement capability test was required. Two
+containment tests reconcile collection as 1,935 - 101 + 2 = 1,836. The full
+configured suite passed 1,835 with one skip; root collection found 1,836. No
+production code changed, no runtime-data migration occurred, and production
+prototype sources remain untouched for F06E.
+
+The configured legacy-facing progression is
+67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19. F06D2E achieved 35 -> 19 configured
+legacy-facing files and 22 -> 6 configured `executive_brain` importers. The six
+remaining importers are four legacy Memory tests and two provider tests. The
+19-file residue partitions into those six importers, ten satellite/runtime
+integrations, and three platform/core/kernel/config files; none has yet been
+adjudicated. F06D and FORTRESS-06 are not complete,
 RAA-003 remains OPEN, RAA-007 is RESOLVED WITH EVIDENCE, and FORTRESS-07 has
 not started.
+
+The exact six `executive_brain` importers are the four Memory files
+`tests/tests/integration/test_memory_runtime_integration.py`,
+`tests/tests/memory/test_memory_manager.py`,
+`tests/tests/memory/test_memory_registry.py`, and
+`tests/tests/memory/test_working_memory.py`, plus the two provider files
+`tests/tests/ai/test_ollama_provider.py` and
+`tests/tests/ai/test_openai_provider.py`. The other 13 legacy-facing files are
+ten satellite/runtime integrations for communication, dashboard, development,
+engineering, infrastructure, knowledge, `pc_control`, security,
+`system_services`, and workflow, plus `test_config_containment.py`,
+`test_core_runtime_integration.py`, and `test_kernel_runtime_integration.py`.
 
 No completed Phase 8 work is being removed or restarted.
 
@@ -171,7 +197,7 @@ The objectives of this sprint are to:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2D IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2E IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -185,18 +211,25 @@ The objectives of this sprint are to:
 | FORTRESS-06D2D governance | RECORDED — COMMITTED AND PUSHED AT `b4f3633` |
 | FORTRESS-06D2D pre-implementation project-state sync | RECORDED — COMMITTED AND PUSHED AT `7d72e70` |
 | FORTRESS-06D2D | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `30cf2aa` |
-| FORTRESS-06D2E | NOT STARTED |
-| FORTRESS-06D2E+ | NOT STARTED |
-| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 |
-| Current configured legacy-facing files | 35 |
-| Current `executive_brain` importers | 22 |
-| Remaining `executive_brain` importer partition | 16 F06D2E prototype tools; 4 later Memory adjudication; 2 provider evidence / F09 |
+| FORTRESS-06D2D completion-state sync | COMPLETE — COMMITTED AND PUSHED AT `cd65af5` |
+| FORTRESS-06D2E | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `10996c6` |
+| FORTRESS-06D Memory adjudication | NOT STARTED — next action is read-only review of four legacy Memory importers |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 |
+| Current configured legacy-facing files | 19 |
+| Current `executive_brain` importers | 6 |
+| Remaining `executive_brain` importer partition | 4 legacy Memory importers; 2 provider importers — separate future adjudications |
+| Remaining configured legacy-facing partition | 6 `executive_brain`; 10 satellite/runtime integrations; 3 platform/core/kernel/config |
 | F06D2D retirement | 9 configured manager/registry files — 94 source tests |
 | F06D2D canonical coverage | Aggregate `ExecutiveController` execution metrics coverage added before retirement |
 | F06D2D preservation | 9 byte/blob-identical `*.py.legacy` archives; no production change; no runtime-data migration |
+| F06D2E retirement | 16 configured prototype-tool files — 101 source tests, all pytest-collectable |
+| F06D2E preservation | 16 byte/blob-identical `*.py.legacy` archives; production prototypes untouched for F06E |
+| F06D2E collection reconciliation | 1,935 - 101 + 2 containment tests = 1,836 collected |
+| F06D2E regression | Full configured suite: 1,835 passed, 1 skipped; root collection: 1,836 |
 | FORTRESS-07 | NOT STARTED |
 | RAA-003 | OPEN |
 | RAA-007 | RESOLVED WITH EVIDENCE |
+| RAA-009 | OPEN — DEFERRED |
 | Resume point | MS-0025E — Reasoning and Planning Intelligence |
 | Repository health | STABILIZATION IN PROGRESS |
 | Architecture health | FORTRESS HARDENING REQUIRED |
@@ -306,7 +339,7 @@ Conversation Intelligence. The focused remediation suite passed 85 tests; the
 related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors.
 
-FORTRESS-06 is IN PROGRESS through F06D2D, and F06D is IN PROGRESS. F06D1 is
+FORTRESS-06 is IN PROGRESS through F06D2E, and F06D is IN PROGRESS. F06D1 is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `51818d2`; F06D2A is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`; F06D2B is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0ea8e2e`; the D2B
@@ -328,10 +361,17 @@ production code changed and no runtime-data migration occurred. Configured
 legacy-facing files progressed 67 -> 59 -> 52 -> 48 -> 44 -> 35, and configured
 `executive_brain` importers moved 31 -> 22.
 
-F06D and FORTRESS-06 are not complete. F06D2E and later slices have not
-started. The remaining 22 configured `executive_brain` importers partition as
-16 F06D2E prototype tools, four later Memory-adjudication importers, and two
-later provider-evidence/F09 importers. F07 owns permission,
+F06D2E is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
+`10996c6`. It retired 16 configured prototype-tool files / 101 pytest-collectable
+source tests into 16 byte/blob-identical archives. No replacement capability
+test was required; two containment tests reconcile root collection as
+1,935 - 101 + 2 = 1,836. Full configured regression passed 1,835 with one skip.
+It achieved 35 -> 19 legacy-facing files and 22 -> 6 `executive_brain`
+importers, without production changes or runtime-data migration.
+
+F06D and FORTRESS-06 are not complete. The next action is the NOT STARTED,
+read-only FORTRESS-06D Memory adjudication of four legacy Memory importers. The
+two provider importers remain a separate later adjudication. F07 owns permission,
 approval, audit, and risk; F08 owns durable persistence, recovery, and replay;
 F10 owns health and degradation; F11 owns security, chaos, and CI.
 
@@ -548,26 +588,23 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-Preserve all verified and pushed Fortress checkpoints through the F06D2D
-implementation checkpoint `30cf2aa`.
+Preserve all verified and pushed Fortress checkpoints through the F06D2E
+implementation checkpoint `10996c6`.
 
-The exact next action is FORTRESS-06D2E — prototype browser / Windows /
-development tool-test adjudication and quarantine. F06D2E is NOT STARTED.
+The exact next action is FORTRESS-06D Memory adjudication — read-only review of
+the remaining four legacy Memory importers:
 
-The exact configured F06D2E inventory is:
+- `tests/tests/integration/test_memory_runtime_integration.py`;
+- `tests/tests/memory/test_memory_manager.py`;
+- `tests/tests/memory/test_memory_registry.py`; and
+- `tests/tests/memory/test_working_memory.py`.
 
-- Browser: `test_browser_automation_tool.py`, `test_cookies_tool.py`,
-  `test_downloads_tool.py`, `test_tabs_tool.py`, `test_web_search_tool.py`.
-- Windows/Desktop: `test_clipboard_tool.py`, `test_close_application_tool.py`,
-  `test_launch_application_tool.py`, `test_notification_tool.py`,
-  `test_process_manager_tool.py`, `test_services_tool.py`.
-- Development / VS Code: `test_build_tool.py`, `test_debug_tool.py`,
-  `test_git_tool.py`, `test_project_tool.py`, `test_run_tool.py`.
-
-Do not infer a post-D2E count before mechanical adjudication. Continue only
-separately authorized Step 7 remediation. Keep RAA-009 and the Memory-context
-adapter open/deferred. Do not begin F06D2E implementation or any later slice
-without separate Founder authorization. Keep Step 8 — Stabilization
+The Memory adjudication is NOT STARTED. The two provider importers remain
+separate. Do not migrate Memory production code; change `MemoryStore`,
+`SQLiteStore`, `MemoryContextSource`, or persistence ownership; implement
+Experience Memory or advanced Memory expansion; resolve RAA-009; or begin F08
+persistence/recovery/replay. RAA-009 remains OPEN — DEFERRED. Continue only
+separately authorized Step 7 remediation. Keep Step 8 — Stabilization
 Certification NOT STARTED — BLOCKED BY STEP 7 until Step 7 is complete and
 approved. Resume MS-0025E only after Step 8 and Fortress certification and
 explicit Founder authorization.
@@ -588,7 +625,7 @@ explicit Founder authorization.
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2D IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D2E IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -598,7 +635,8 @@ explicit Founder authorization.
 | FORTRESS-06D2B | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0ea8e2e` |
 | FORTRESS-06D2C | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `1862f78` |
 | FORTRESS-06D2D | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `30cf2aa` |
-| FORTRESS-06D2E+ | NOT STARTED |
+| FORTRESS-06D2E | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `10996c6` |
+| FORTRESS-06D Memory adjudication | NOT STARTED — READ-ONLY NEXT ACTION |
 | FORTRESS-07 | NOT STARTED |
 | Stabilization Certification | NOT STARTED — BLOCKED BY STEP 7 |
 | Phase 8 Resume | PENDING |
@@ -619,7 +657,8 @@ Newer Fortress checkpoints:
 (FORTRESS-06D1), `95adce4` (FORTRESS-06D2A), `0ea8e2e`
 (FORTRESS-06D2B), `947115f` (F06D2B project-state sync), `1862f78`
 (FORTRESS-06D2C), `b4f3633` (F06D2D governance), `7d72e70` (F06D2D
-pre-implementation project-state sync), and `30cf2aa` (F06D2D implementation)
+pre-implementation project-state sync), `30cf2aa` (F06D2D implementation),
+`cd65af5` (F06D2D completion-state sync), and `10996c6` (F06D2E implementation)
 
 FORTRESS-05 checkpoint state:
 
@@ -629,7 +668,7 @@ Overall Fortress certification has not started.
 
 Current FORTRESS-06 state:
 
-IN PROGRESS through F06D2D. F06A's 33-entry manifest and 22 guarded top-level
+IN PROGRESS through F06D2E. F06A's 33-entry manifest and 22 guarded top-level
 identities are IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `92aa9d7`.
 F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`. F06C is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0a2ea60`. The
@@ -651,11 +690,16 @@ COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `30cf2aa`. It
 added aggregate Executive metrics coverage before retiring nine files / 94
 source tests into nine byte/blob-identical archives. Configured legacy-facing
 files moved 44 -> 35 and configured `executive_brain` importers moved 31 -> 22.
-The remaining 22 partition as 16 F06D2E prototype tools, four later Memory
-importers, and two later provider/F09 importers. F06D2E remains NOT STARTED.
-F06D and FORTRESS-06 are not complete. No production code or runtime data
-changed. RAA-003 remains OPEN, RAA-007 is RESOLVED WITH EVIDENCE, and
-FORTRESS-07 has not started.
+F06D2E is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
+`10996c6`: 16 configured prototype-tool files / 101 pytest-collectable tests
+were retired into 16 byte/blob-identical archives. Two containment tests
+reconcile 1,935 - 101 + 2 = 1,836 collected. Full configured regression passed
+1,835 with one skip. Legacy-facing files moved 35 -> 19 and
+`executive_brain` importers moved 22 -> 6. The remaining six are four Memory
+and two provider importers assigned to separate future adjudications. F06D and
+FORTRESS-06 are not complete. No production code or runtime data changed.
+RAA-003 remains OPEN, RAA-007 is RESOLVED WITH EVIDENCE, RAA-009 remains OPEN —
+DEFERRED, and FORTRESS-07 has not started.
 
 Current activity:
 
