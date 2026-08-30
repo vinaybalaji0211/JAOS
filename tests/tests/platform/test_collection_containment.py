@@ -665,7 +665,7 @@ def test_f06d2b_configured_tool_platform_tests_import_only_canonical_tools() -> 
         )
 
 
-_F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS = (
+_F06D2E_PROTOTYPE_TOOL_TEST_STEMS = (
     "test_browser_automation_tool",
     "test_build_tool",
     "test_clipboard_tool",
@@ -709,10 +709,8 @@ def _imports_legacy_tool_platform(source_path: Path) -> bool:
 def test_f06d2b_migrated_paths_no_longer_depend_on_the_legacy_tool_platform() -> None:
     """The four adjudicated paths carry no ``executive_brain.tools.core`` import.
 
-    The remaining legacy Tool Platform importers are the prototype browser,
-    Windows, and development per-tool configured tests owned by FORTRESS-06D2E.
-    Pinning that inventory keeps the residue visible and prevents it from
-    silently growing while F06D2E is unstarted.
+    FORTRESS-06D2E subsequently retired the prototype browser, Windows, and
+    development residue, so no configured test may import that shadow core.
     """
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
@@ -733,10 +731,8 @@ def test_f06d2b_migrated_paths_no_longer_depend_on_the_legacy_tool_platform() ->
 
         assert migrated_path not in offenders
 
-    assert offenders == sorted(
-        f"tests/tests/tools/{stem}.py"
-        for stem in _F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS
-    )
+    assert len(_F06D2E_PROTOTYPE_TOOL_TEST_STEMS) == 16
+    assert offenders == []
 
 
 _F06D2C_ARCHIVE_PAIRS = (
@@ -973,8 +969,8 @@ def test_f06d2d_manager_registry_archives_preserve_exact_payloads(
     assert not tuple(legacy_quarantine_root.rglob("__init__.py"))
 
 
-def test_f06d2d_retires_only_manager_registry_importers() -> None:
-    """D2D leaves the exact D2E, Memory, and provider inventories intact."""
+def test_f06d2d_deferred_memory_and_provider_inventories_remain() -> None:
+    """D2D's deferred Memory/provider residue remains after D2E retirement."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
     executive_importers = {
@@ -983,17 +979,262 @@ def test_f06d2d_retires_only_manager_registry_importers() -> None:
         if "__pycache__" not in path.parts
         and "executive_brain" in _imported_top_level_roots(path)
     }
-    expected_tool_importers = {
+    retired_tool_importers = {
         f"tests/tests/tools/{stem}.py"
-        for stem in _F06D2E_REMAINING_LEGACY_TOOL_TEST_STEMS
+        for stem in _F06D2E_PROTOTYPE_TOOL_TEST_STEMS
     }
 
+    assert not retired_tool_importers & executive_importers
     assert executive_importers == (
-        expected_tool_importers
-        | _F06D2D_DEFERRED_MEMORY_IMPORTERS
+        _F06D2D_DEFERRED_MEMORY_IMPORTERS
         | _F06D2D_DEFERRED_PROVIDER_IMPORTERS
     )
-    assert len(executive_importers) == 22
-    assert len(expected_tool_importers) == 16
+    assert len(executive_importers) == 6
+    assert len(retired_tool_importers) == 16
     assert len(_F06D2D_DEFERRED_MEMORY_IMPORTERS) == 4
     assert len(_F06D2D_DEFERRED_PROVIDER_IMPORTERS) == 2
+
+
+_F06D2E_ARCHIVE_RECORDS = (
+    (
+        "tests/tests/tools/test_browser_automation_tool.py",
+        (
+            "legacy_quarantine/tests/tools/browser/"
+            "test_browser_automation_tool.py.legacy"
+        ),
+        "e68acf8fc99a0f01549269ab1fdedaf1dfb23b842312b49da0d8ab619b2c44b8",
+    ),
+    (
+        "tests/tests/tools/test_cookies_tool.py",
+        "legacy_quarantine/tests/tools/browser/test_cookies_tool.py.legacy",
+        "76cf2a665f39bb9a61081c4e26b90903127a9fe85b528653b6248a511162e5e8",
+    ),
+    (
+        "tests/tests/tools/test_downloads_tool.py",
+        "legacy_quarantine/tests/tools/browser/test_downloads_tool.py.legacy",
+        "0f996ef7d135b2dbd56560b206e0ef693551a54617a65ea1b73919dc42a2a8d6",
+    ),
+    (
+        "tests/tests/tools/test_tabs_tool.py",
+        "legacy_quarantine/tests/tools/browser/test_tabs_tool.py.legacy",
+        "bee2d7bffb76e60522ed7bf1cc32128609715165bbd1ca21068988fb8b94b9c6",
+    ),
+    (
+        "tests/tests/tools/test_web_search_tool.py",
+        "legacy_quarantine/tests/tools/browser/test_web_search_tool.py.legacy",
+        "29411462583b8f8907601a929ecf83baf0b8f54b753d99d8cbee72a6f5419485",
+    ),
+    (
+        "tests/tests/tools/test_clipboard_tool.py",
+        "legacy_quarantine/tests/tools/windows/test_clipboard_tool.py.legacy",
+        "92665f98366b589962fd70f02f62e7694013b9efc43c617444f2e724b81cc745",
+    ),
+    (
+        "tests/tests/tools/test_close_application_tool.py",
+        (
+            "legacy_quarantine/tests/tools/windows/"
+            "test_close_application_tool.py.legacy"
+        ),
+        "dd385440ab3e943c6b1fa7e4c29668ca5b40f4e8e8738d7314ff81240b2546d1",
+    ),
+    (
+        "tests/tests/tools/test_launch_application_tool.py",
+        (
+            "legacy_quarantine/tests/tools/windows/"
+            "test_launch_application_tool.py.legacy"
+        ),
+        "a6e234a6a698044c9615cb6e8210cc418c6375f7813ed0c14776f0e5f25abf82",
+    ),
+    (
+        "tests/tests/tools/test_notification_tool.py",
+        "legacy_quarantine/tests/tools/windows/test_notification_tool.py.legacy",
+        "0bb6181c2e446d8c4821570d237bcbfb4e3e17538dc67047ac64966a3a829685",
+    ),
+    (
+        "tests/tests/tools/test_process_manager_tool.py",
+        (
+            "legacy_quarantine/tests/tools/windows/"
+            "test_process_manager_tool.py.legacy"
+        ),
+        "77d9caf19db420ed994f1e4f9e076c8b5959a2ac436e49afbc41c86a498b9828",
+    ),
+    (
+        "tests/tests/tools/test_services_tool.py",
+        "legacy_quarantine/tests/tools/windows/test_services_tool.py.legacy",
+        "1fad7e0fb3b6c54248062d2c6774638b7648b0fe639439cc2205661d6f1fc5f2",
+    ),
+    (
+        "tests/tests/tools/test_build_tool.py",
+        "legacy_quarantine/tests/tools/development/test_build_tool.py.legacy",
+        "1c0ae4f4cfd506f48d24a33401713a06c83c32a30b4d3a5edddc9aebf6bfbf5f",
+    ),
+    (
+        "tests/tests/tools/test_debug_tool.py",
+        "legacy_quarantine/tests/tools/development/test_debug_tool.py.legacy",
+        "43a44695d3b135702c751fa53f88c015f6de8c888d1b65a35f0932ef3af06318",
+    ),
+    (
+        "tests/tests/tools/test_git_tool.py",
+        "legacy_quarantine/tests/tools/development/test_git_tool.py.legacy",
+        "76b5c4344074b62cc9a827514ae82c08af2740fc8c4a02405c30619a0627e74f",
+    ),
+    (
+        "tests/tests/tools/test_project_tool.py",
+        "legacy_quarantine/tests/tools/development/test_project_tool.py.legacy",
+        "300396f4067fde5b6ad0c321ab9da75a69af1e36c784a11513c0bdeba616690f",
+    ),
+    (
+        "tests/tests/tools/test_run_tool.py",
+        "legacy_quarantine/tests/tools/development/test_run_tool.py.legacy",
+        "168998f989ae5b9ebf36fb2fc5421bbef5752c01e3f4123348189fbff0fdc97a",
+    ),
+)
+
+_F06D2E_PRODUCTION_PROTOTYPE_PATHS = (
+    "executive_brain/tools/browser/browser_automation_tool.py",
+    "executive_brain/tools/browser/cookies_tool.py",
+    "executive_brain/tools/browser/downloads_tool.py",
+    "executive_brain/tools/browser/tabs_tool.py",
+    "executive_brain/tools/browser/web_search_tool.py",
+    "executive_brain/tools/windows/clipboard_tool.py",
+    "executive_brain/tools/windows/close_application_tool.py",
+    "executive_brain/tools/windows/launch_application_tool.py",
+    "executive_brain/tools/windows/notification_tool.py",
+    "executive_brain/tools/windows/process_manager_tool.py",
+    "executive_brain/tools/windows/services_tool.py",
+    "executive_brain/tools/development/vscode/build_tool.py",
+    "executive_brain/tools/development/vscode/debug_tool.py",
+    "executive_brain/tools/development/vscode/git_tool.py",
+    "executive_brain/tools/development/vscode/project_tool.py",
+    "executive_brain/tools/development/vscode/run_tool.py",
+)
+
+_F06D2E_LEGACY_FACING_IMPORT_ROOTS = frozenset(
+    {
+        "communication",
+        "core",
+        "dashboard",
+        "development",
+        "engineering",
+        "executive_brain",
+        "infrastructure",
+        "kernel",
+        "knowledge",
+        "pc_control",
+        "security",
+        "system_services",
+        "workflow",
+    }
+)
+
+_F06D2E_REMAINING_LEGACY_FACING_PATHS = frozenset(
+    {
+        "tests/tests/ai/test_ollama_provider.py",
+        "tests/tests/ai/test_openai_provider.py",
+        "tests/tests/integration/test_communication_runtime_integration.py",
+        "tests/tests/integration/test_dashboard_runtime_integration.py",
+        "tests/tests/integration/test_development_runtime_integration.py",
+        "tests/tests/integration/test_engineering_runtime_integration.py",
+        "tests/tests/integration/test_infrastructure_runtime_integration.py",
+        "tests/tests/integration/test_knowledge_runtime_integration.py",
+        "tests/tests/integration/test_memory_runtime_integration.py",
+        "tests/tests/integration/test_pc_control_runtime_integration.py",
+        "tests/tests/integration/test_security_runtime_integration.py",
+        "tests/tests/integration/test_system_services_runtime_integration.py",
+        "tests/tests/integration/test_workflow_runtime_integration.py",
+        "tests/tests/memory/test_memory_manager.py",
+        "tests/tests/memory/test_memory_registry.py",
+        "tests/tests/memory/test_working_memory.py",
+        "tests/tests/platform/test_config_containment.py",
+        "tests/tests/platform/test_core_runtime_integration.py",
+        "tests/tests/platform/test_kernel_runtime_integration.py",
+    }
+)
+
+
+def test_f06d2e_prototype_tool_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """D2E preserves 16 exact payloads outside Python and pytest collection."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+
+    assert len(_F06D2E_ARCHIVE_RECORDS) == 16
+    assert sum("/browser/" in record[1] for record in _F06D2E_ARCHIVE_RECORDS) == 5
+    assert sum("/windows/" in record[1] for record in _F06D2E_ARCHIVE_RECORDS) == 6
+    assert sum(
+        "/development/" in record[1] for record in _F06D2E_ARCHIVE_RECORDS
+    ) == 5
+
+    for former_relpath, archive_relpath, expected_sha256 in _F06D2E_ARCHIVE_RECORDS:
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+        assert hashlib.sha256(archive_path.read_bytes()).hexdigest() == expected_sha256
+        assert "executive_brain.tools.core" in archive_path.read_text(
+            encoding="utf-8"
+        )
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+
+    legacy_quarantine_root = _REPOSITORY_ROOT / "legacy_quarantine"
+    assert not tuple(legacy_quarantine_root.rglob("__init__.py"))
+
+
+def test_f06d2e_retires_exact_prototype_inventory_and_preserves_residue() -> None:
+    """D2E leaves exactly four Memory and two provider importers."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+    configured_paths = tuple(
+        path
+        for path in configured_root.rglob("*.py")
+        if "__pycache__" not in path.parts
+    )
+    retired_paths = {
+        former_relpath for former_relpath, _archive, _sha in _F06D2E_ARCHIVE_RECORDS
+    }
+    executive_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if "executive_brain" in _imported_top_level_roots(path)
+    }
+    legacy_core_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if _imports_legacy_tool_platform(path)
+    }
+    legacy_facing_paths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    }
+
+    assert not retired_paths & {
+        path.relative_to(_REPOSITORY_ROOT).as_posix() for path in configured_paths
+    }
+    assert legacy_core_importers == set()
+    assert executive_importers == (
+        _F06D2D_DEFERRED_MEMORY_IMPORTERS
+        | _F06D2D_DEFERRED_PROVIDER_IMPORTERS
+    )
+    assert len(executive_importers) == 6
+    assert legacy_facing_paths == _F06D2E_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 19
+
+    assert len(_F06D2E_PRODUCTION_PROTOTYPE_PATHS) == 16
+    for prototype_relpath in _F06D2E_PRODUCTION_PROTOTYPE_PATHS:
+        assert (_REPOSITORY_ROOT / prototype_relpath).is_file()
