@@ -928,7 +928,7 @@ _F06D_MEMORY_RETIRED_IMPORTERS = frozenset(
     }
 )
 
-_F06D2D_DEFERRED_PROVIDER_IMPORTERS = frozenset(
+_F06D_PROVIDER_RETIRED_IMPORTERS = frozenset(
     {
         "tests/tests/ai/test_ollama_provider.py",
         "tests/tests/ai/test_openai_provider.py",
@@ -969,8 +969,8 @@ def test_f06d2d_manager_registry_archives_preserve_exact_payloads(
     assert not tuple(legacy_quarantine_root.rglob("__init__.py"))
 
 
-def test_f06d2d_provider_inventory_remains_after_memory_retirement() -> None:
-    """The provider residue deferred by D2D remains after Memory retirement."""
+def test_f06d2d_deferred_provider_inventory_is_now_retired() -> None:
+    """ADR-0014 retires the provider residue that D2D originally deferred."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
     configured_paths = {
@@ -991,11 +991,11 @@ def test_f06d2d_provider_inventory_remains_after_memory_retirement() -> None:
 
     assert not retired_tool_importers & executive_importers
     assert not _F06D_MEMORY_RETIRED_IMPORTERS & configured_paths
-    assert executive_importers == _F06D2D_DEFERRED_PROVIDER_IMPORTERS
-    assert len(executive_importers) == 2
+    assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_paths
+    assert executive_importers == set()
     assert len(retired_tool_importers) == 16
     assert len(_F06D_MEMORY_RETIRED_IMPORTERS) == 4
-    assert len(_F06D2D_DEFERRED_PROVIDER_IMPORTERS) == 2
+    assert len(_F06D_PROVIDER_RETIRED_IMPORTERS) == 2
 
 
 _F06D2E_ARCHIVE_RECORDS = (
@@ -1130,10 +1130,8 @@ _F06D2E_LEGACY_FACING_IMPORT_ROOTS = frozenset(
     }
 )
 
-_F06D_MEMORY_REMAINING_LEGACY_FACING_PATHS = frozenset(
+_F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS = frozenset(
     {
-        "tests/tests/ai/test_ollama_provider.py",
-        "tests/tests/ai/test_openai_provider.py",
         "tests/tests/integration/test_communication_runtime_integration.py",
         "tests/tests/integration/test_dashboard_runtime_integration.py",
         "tests/tests/integration/test_development_runtime_integration.py",
@@ -1195,7 +1193,7 @@ def test_f06d2e_prototype_tool_archives_preserve_exact_payloads(
 
 
 def test_f06d2e_retires_exact_prototype_inventory_and_preserves_residue() -> None:
-    """D2E archives stay contained after Memory leaves two provider importers."""
+    """D2E archives stay contained after later provider retirement."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
     configured_paths = tuple(
@@ -1226,10 +1224,9 @@ def test_f06d2e_retires_exact_prototype_inventory_and_preserves_residue() -> Non
         path.relative_to(_REPOSITORY_ROOT).as_posix() for path in configured_paths
     }
     assert legacy_core_importers == set()
-    assert executive_importers == _F06D2D_DEFERRED_PROVIDER_IMPORTERS
-    assert len(executive_importers) == 2
-    assert legacy_facing_paths == _F06D_MEMORY_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 15
+    assert executive_importers == set()
+    assert legacy_facing_paths == _F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 13
 
     assert len(_F06D2E_PRODUCTION_PROTOTYPE_PATHS) == 16
     for prototype_relpath in _F06D2E_PRODUCTION_PROTOTYPE_PATHS:
@@ -1347,8 +1344,8 @@ def test_f06d_memory_archives_preserve_exact_payloads(
     )
 
 
-def test_f06d_memory_retirement_preserves_only_provider_importers() -> None:
-    """Memory quarantine leaves the exact provider and legacy-facing residue."""
+def test_f06d_memory_retirement_remains_contained_after_provider_retirement() -> None:
+    """Memory quarantine stays contained after the provider residue retires."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
     configured_paths = tuple(
@@ -1378,14 +1375,132 @@ def test_f06d_memory_retirement_preserves_only_provider_importers() -> None:
 
     assert not _F06D_MEMORY_RETIRED_IMPORTERS & configured_relpaths
     assert memory_importers == set()
-    assert executive_importers == _F06D2D_DEFERRED_PROVIDER_IMPORTERS
-    assert len(executive_importers) == 2
-    assert legacy_facing_paths == _F06D_MEMORY_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 15
+    assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_relpaths
+    assert executive_importers == set()
+    assert legacy_facing_paths == _F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 13
 
-    for provider_relpath in _F06D2D_DEFERRED_PROVIDER_IMPORTERS:
-        assert (_REPOSITORY_ROOT / provider_relpath).is_file()
     for production_relpath in _F06D_MEMORY_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
     for raa009_relpath in _F06D_MEMORY_RAA009_PATHS:
         assert (_REPOSITORY_ROOT / raa009_relpath).is_file()
+
+
+_F06D_PROVIDER_ARCHIVE_RECORDS = (
+    (
+        "tests/tests/ai/test_ollama_provider.py",
+        "legacy_quarantine/tests/ai/test_ollama_provider.py.legacy",
+        "4b25c507f2bb886479514e324bfd4df0d366f98db2898e87ff7070dbd1153c30",
+        9,
+    ),
+    (
+        "tests/tests/ai/test_openai_provider.py",
+        "legacy_quarantine/tests/ai/test_openai_provider.py.legacy",
+        "cfc6d61aa8886c6b8a07d28c8108ca2998103bcf7129212a05771c9ee04192e6",
+        11,
+    ),
+)
+
+_F06D_PROVIDER_CANONICAL_TEST_PATH = (
+    _REPOSITORY_ROOT
+    / "tests"
+    / "tests"
+    / "ai"
+    / "test_canonical_provider_contract.py"
+)
+
+_F06D_PROVIDER_PRODUCTION_PATHS = (
+    "executive_brain/ai/providers/ollama_provider.py",
+    "executive_brain/ai/providers/openai_provider.py",
+)
+
+
+def test_f06d_provider_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """ADR-0014 preserves both exact provider payloads outside collection."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+    source_test_total = 0
+
+    assert len(_F06D_PROVIDER_ARCHIVE_RECORDS) == 2
+
+    for former_relpath, archive_relpath, expected_sha256, test_count in (
+        _F06D_PROVIDER_ARCHIVE_RECORDS
+    ):
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+
+        payload = archive_path.read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == expected_sha256
+        assert "executive_brain.ai.providers" in payload.decode("utf-8")
+
+        source_tree = ast.parse(payload.decode("utf-8"))
+        archived_tests = tuple(
+            node
+            for node in ast.walk(source_tree)
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name.startswith("test_")
+        )
+        assert len(archived_tests) == test_count
+        source_test_total += len(archived_tests)
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+
+    assert source_test_total == 20
+    assert not tuple(
+        (_REPOSITORY_ROOT / "legacy_quarantine").rglob("__init__.py")
+    )
+
+
+def test_f06d_provider_retirement_preserves_canonical_and_legacy_boundaries() -> None:
+    """Provider retirement leaves canonical tests and the exact F06 residue."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+    configured_paths = tuple(
+        path
+        for path in configured_root.rglob("*.py")
+        if "__pycache__" not in path.parts
+    )
+    configured_relpaths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+    }
+    executive_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if "executive_brain" in _imported_top_level_roots(path)
+    }
+    legacy_facing_paths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    }
+
+    assert _F06D_PROVIDER_CANONICAL_TEST_PATH.is_file()
+    assert _imported_top_level_roots(_F06D_PROVIDER_CANONICAL_TEST_PATH) == {
+        "jaos",
+        "pytest",
+    }
+    assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_relpaths
+    assert executive_importers == set()
+    assert legacy_facing_paths == _F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 13
+
+    for production_relpath in _F06D_PROVIDER_PRODUCTION_PATHS:
+        assert (_REPOSITORY_ROOT / production_relpath).is_file()
