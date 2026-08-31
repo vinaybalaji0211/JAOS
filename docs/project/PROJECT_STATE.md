@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 5.3
+Version: 5.4
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -47,7 +47,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D PROVIDER RETIREMENT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D CORE/KERNEL SHADOW-RUNTIME TEST RETIREMENT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -67,12 +67,14 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-06D Memory retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `f7f23c7` |
 | ADR-0014 | ACCEPTED — COMMITTED AND PUSHED AT `29d1d10` |
 | FORTRESS-06D provider retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `68a3ab9` |
-| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 |
+| FORTRESS-06D satellite/runtime shadow-test retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `8b0619a` |
+| FORTRESS-06D core/kernel shadow-runtime test retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `064883f` |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1 |
 | Configured `executive_brain` importer progression | 31 -> 22 -> 6 -> 2 -> 0 |
-| Current configured legacy-facing files | 13 |
+| Current configured legacy-facing files | 1 |
 | Current `executive_brain` importers | 0 |
 | Remaining `executive_brain` importer partition | ZERO configured importers |
-| Remaining configured legacy-facing partition | 10 satellite/runtime integrations; 3 platform/core/kernel/config |
+| Sole configured legacy-facing file | `tests/tests/platform/test_config_containment.py` — KEEP TEMPORARILY / INTENTIONALLY CONFIGURED |
 | F06D2D retirement | 9 configured manager/registry files — 94 source tests |
 | F06D2D canonical coverage | Aggregate `ExecutiveController` execution metrics coverage added before retirement |
 | F06D2D preservation | 9 byte/blob-identical `*.py.legacy` archives; no production change; no runtime-data migration |
@@ -89,7 +91,15 @@ The Git repository remains the permanent source of truth for JAOS.
 | Provider preservation | 2 byte/blob-identical `*.py.legacy` archives; no provider-specific behavior or production change |
 | Provider collection reconciliation | 1,808 - 20 + 3 canonical cases + 2 containment cases = 1,793 collected |
 | Provider regression | Full configured suite: 1,792 passed, 1 skipped; root collection: 1,793 |
-| Excluded flat provider tests | 2 unchanged stale public-facade `MockProvider` importers; outside configured certification and non-blocking legacy/facade debt |
+| Excluded flat provider tests | `tests/test_provider_router.py`; `tests/test_mock_provider.py` — unchanged stale public-facade `MockProvider` imports; outside configured certification; non-blocking F06G facade debt with F06H closure evidence |
+| Satellite/runtime retirement | 10 configured files — 30 source and collected tests — checkpoint `8b0619a` |
+| Satellite/runtime preservation | 10 byte/blob-identical `*.py.legacy` archives; no capability behavior or production change |
+| Satellite/runtime collection reconciliation | 1,793 - 30 + 2 containment cases = 1,765 collected |
+| Satellite/runtime regression | Full configured suite: 1,764 passed, 1 skipped; root collection: 1,765 |
+| Core/kernel retirement | 2 configured files — 6 source and collected tests — checkpoint `064883f` |
+| Core/kernel preservation | 2 byte/blob-identical `*.py.legacy` archives; no `JarvisEngine`/`JAOSKernel` behavior or production change |
+| Core/kernel collection reconciliation | 1,765 - 6 + 2 containment cases = 1,761 collected |
+| Latest configured regression | 1,760 passed, 1 skipped; root collection: 1,761 |
 | FORTRESS-07 | NOT STARTED |
 | FORTRESS-08 | NOT STARTED |
 | FORTRESS-09 | NOT STARTED |
@@ -104,7 +114,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
 | Phase 8 major expansion | PAUSED |
-| Documentation state | PROVIDER RETIREMENT CHECKPOINT `68a3ab9` RECORDED; PROJECT-STATE SYNC IN PROGRESS |
+| Documentation state | SATELLITE `8b0619a` AND CORE/KERNEL `064883f` RETIREMENT CHECKPOINTS RECORDED; PROJECT-STATE SYNC IN PROGRESS |
 
 ---
 
@@ -154,7 +164,8 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
-FORTRESS-06 is IN PROGRESS through the completed F06D provider retirement. F06A's
+FORTRESS-06 is IN PROGRESS through the completed F06D core/kernel shadow-runtime
+test retirement. F06A's
 authoritative 33-entry
 manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
@@ -286,47 +297,66 @@ passed 1,792 with one skip, and root collection found 1,793. The two excluded
 flat historical provider tests retain stale public-facade `MockProvider` imports;
 they are outside configured `tests/tests` certification, were unchanged, do not
 block this checkpoint, and remain legacy/facade debt for later Fortress
-disposition.
+disposition, primarily F06G compatibility/facade cleanup with F06H closure
+evidence.
 
 Provider retirement achieved configured legacy-facing 15 -> 13 and configured
 `executive_brain` importers 2 -> 0. Zero configured tests under `tests/tests` now
-import `executive_brain`. The complete configured legacy-facing progression is
-67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13, and the configured
-`executive_brain` importer progression is 31 -> 22 -> 6 -> 2 -> 0.
+import `executive_brain`.
 
-The 13 remaining configured legacy-facing files are ten satellite/runtime
-integrations at
-`tests/tests/integration/test_communication_runtime_integration.py`,
-`tests/tests/integration/test_dashboard_runtime_integration.py`,
-`tests/tests/integration/test_development_runtime_integration.py`,
-`tests/tests/integration/test_engineering_runtime_integration.py`,
-`tests/tests/integration/test_infrastructure_runtime_integration.py`,
-`tests/tests/integration/test_knowledge_runtime_integration.py`,
-`tests/tests/integration/test_pc_control_runtime_integration.py`,
-`tests/tests/integration/test_security_runtime_integration.py`,
-`tests/tests/integration/test_system_services_runtime_integration.py`, and
-`tests/tests/integration/test_workflow_runtime_integration.py`; and three
-platform/core/kernel/config files at
-`tests/tests/platform/test_config_containment.py`,
-`tests/tests/platform/test_core_runtime_integration.py`, and
-`tests/tests/platform/test_kernel_runtime_integration.py`. These 13 files have
-not been adjudicated as a group.
+FORTRESS-06D satellite/runtime shadow-test retirement is COMPLETE — IMPLEMENTED
+AND VERIFIED — COMMITTED AND PUSHED at `8b0619a`. It retired ten configured
+legacy-facing files carrying 30 source and collected tests into ten
+byte/blob-identical `*.py.legacy` archives. No capability behavior or production
+code changed. Two containment cases reconciled collection as
+1,793 - 30 + 2 = 1,765; the configured suite passed 1,764 with one skip and root
+collection found 1,765. Configured legacy-facing files moved 13 -> 3 while
+configured `executive_brain` importers remained 0 -> 0. The associated
+production satellite roots remain importable for later F06E adjudication.
 
-Configured `executive_brain` importers reaching zero materially advances
-RAA-003, but RAA-003 remains OPEN because the 13 configured legacy-facing tests,
-importable legacy production roots, `executive_brain` production code,
-core/kernel/satellite shadow roots, `main.py`, compatibility surfaces, and
-F06E/F06F/F06G/F06H remain.
+FORTRESS-06D core/kernel shadow-runtime test retirement is COMPLETE —
+IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `064883f`. It retired
+`tests/tests/platform/test_core_runtime_integration.py` and
+`tests/tests/platform/test_kernel_runtime_integration.py`, carrying six source
+and collected tests, into byte/blob-identical archives at
+`legacy_quarantine/tests/platform/test_core_runtime_integration.py.legacy` and
+`legacy_quarantine/tests/platform/test_kernel_runtime_integration.py.legacy`.
+No `JarvisEngine` or `JAOSKernel` behavior was ported and no production code
+changed. Two containment cases reconciled collection as
+1,765 - 6 + 2 = 1,761; the latest configured suite passed 1,760 with one skip
+and root collection found 1,761. Configured legacy-facing files moved 3 -> 1
+while configured `executive_brain` importers remained 0 -> 0.
 
-F06D is not complete and FORTRESS-06 is not complete. The exact next action is
-FORTRESS-06D remaining legacy-facing adjudication — a NOT STARTED read-only
-review of the 13 configured satellite/runtime/core/kernel/config tests. It must
-separate the ten satellite/runtime integration tests from the three
-platform/core/kernel/config tests and determine from repository evidence whether
-one coordinated adjudication with separate implementation slices or separate
-governed slices is appropriate. No disposition is pre-decided. F07, F08, F09,
-and F10 remain NOT STARTED; Step 8 and Fortress certification have not begun;
-and major Phase 8 expansion remains paused.
+The complete configured legacy-facing progression is
+67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1, and the configured
+`executive_brain` importer progression is 31 -> 22 -> 6 -> 2 -> 0. The sole
+remaining configured legacy-facing file is
+`tests/tests/platform/test_config_containment.py`. It is KEEP TEMPORARILY /
+INTENTIONALLY CONFIGURED because it is the only configured behavioral evidence
+protecting the still-importable `main.py` -> `core.engine` ->
+`core.config_manager` / `ConfigManager` configuration and writer boundary. It
+proves read-only tracked defaults, no repository-state creation on load,
+explicit absolute save targets, fail-closed save without a target, relative
+target rejection, mutable-key restrictions, `ConfigManager` runtime-root
+separation, and no `JAOS_RUNTIME_DIR` redirection. This does not make the legacy
+API canonical, and its retirement is not authorized before F06E/F06F evidence.
+
+Configured `executive_brain` imports reaching zero and configured legacy-facing
+tests reaching one materially advance RAA-003. RAA-003 remains OPEN because the
+retained ConfigManager containment test, importable legacy production roots,
+`executive_brain` production code, satellite roots, `core/`, `kernel/`,
+`main.py`, the legacy writer graph, compatibility/public facades, excluded flat
+test debt, and F06E/F06F/F06G/F06H remain.
+
+F06D and FORTRESS-06 remain IN PROGRESS. The exact next action is
+FORTRESS-06E legacy production-source quarantine planning and adjudication —
+READ-ONLY AUDIT / NOT STARTED. It must map production-root reachability, callers,
+writers, compatibility obligations, and safe disposition before any source
+movement. F06E owns legacy production-source disposition; F06F owns writer
+neutralization, persistence safety, and artifact preservation; F06G owns
+compatibility/public-facade/lazy-import obligations; and F06H owns closure and
+evidence. F07, F08, F09, and F10 remain NOT STARTED; Step 8 and Fortress
+certification have not begun; and major Phase 8 expansion remains paused.
 
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
 lifecycle-owned but not production request-routed.
@@ -776,17 +806,20 @@ gate passes.
 
 ## 15. Immediate Next Actions
 
-Preserve all verified and pushed Fortress checkpoints through ADR-0014 at
-`29d1d10` and the FORTRESS-06D provider retirement checkpoint `68a3ab9`.
+Preserve all verified and pushed Fortress checkpoints through satellite/runtime
+retirement at `8b0619a` and core/kernel retirement at `064883f`.
 
-The exact next action is FORTRESS-06D remaining legacy-facing adjudication —
-read-only review of the 13 configured satellite/runtime/core/kernel/config
-tests. This adjudication is NOT STARTED. Separate the ten satellite/runtime
-integration tests from the three platform/core/kernel/config tests and determine
-from actual architecture and repository evidence whether they require one
-coordinated adjudication with separate implementation slices or separate
-governed slices. Do not pre-decide disposition, implement or quarantine any
-file, begin F06E/F06F/F06G/F06H, or start F09. RAA-009 remains OPEN — DEFERRED.
+The exact next action is FORTRESS-06E legacy production-source quarantine
+planning and adjudication — READ-ONLY AUDIT / NOT STARTED. Map and adjudicate
+the supported production roots, including `communication/`, `dashboard/`,
+`development/`, `engineering/`, `infrastructure/`, `knowledge/`, `pc_control/`,
+`security/`, `system_services/`, `workflow/`, `core/`, `kernel/`,
+`executive_brain/`, `main.py`, obsolete `BasePlatformService` consumers, and
+compatibility/public facades. Establish exact reachability, caller graphs,
+writer behavior, compatibility obligations, and safe
+F06E/F06F/F06G disposition before authorizing any source movement. Do not begin
+implementation, retire `test_config_containment.py`, or pre-authorize removal
+of every root. RAA-009 remains OPEN — DEFERRED.
 
 Continue only separately authorized Step 7 remediation. Execute the skipped
 directory-symlink escape check on a capable
