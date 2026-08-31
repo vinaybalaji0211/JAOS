@@ -1,6 +1,6 @@
 # JAOS Next Actions
 
-Version: 5.2
+Version: 5.3
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -11,8 +11,8 @@ Current Phase: Phase 8 — AI Intelligence Platform
 Current Milestone: MS-0025E — Reasoning and Planning Intelligence
 Execution State: Major Phase 8 expansion paused for stabilization and Fortress certification
 Current Stabilization Activity: Step 7 — Bug Fixing and Regression
-Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06D Memory retirement; Memory retirement COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `f7f23c7`
-Exact Next Action: FORTRESS-06D provider adjudication — read-only review of the final two configured `executive_brain` provider importers
+Current Fortress State: FORTRESS-01 governance baseline recorded; FORTRESS-02 through FORTRESS-05 COMPLETE AND VERIFIED at workstream level; FORTRESS-06 IN PROGRESS through F06D provider retirement; provider retirement COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `68a3ab9`
+Exact Next Action: FORTRESS-06D remaining legacy-facing adjudication — read-only review of the 13 configured satellite/runtime/core/kernel/config tests
 
 ---
 
@@ -63,7 +63,7 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D MEMORY RETIREMENT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06D PROVIDER RETIREMENT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -81,11 +81,14 @@ It must not direct engineers to repeat completed planning or implementation.
 | FORTRESS-06D2E | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `10996c6` |
 | ADR-0013 | ACCEPTED — COMMITTED AND PUSHED AT `b6e110d` |
 | FORTRESS-06D Memory retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `f7f23c7` |
-| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 |
-| Current configured legacy-facing files | 15 |
-| Current `executive_brain` importers | 2 |
-| Remaining `executive_brain` importer partition | 2 provider importers — read-only adjudication NOT STARTED |
-| Remaining configured legacy-facing partition | 2 provider importers; 10 satellite/runtime integrations; 3 platform/core/kernel/config |
+| ADR-0014 | ACCEPTED — COMMITTED AND PUSHED AT `29d1d10` |
+| FORTRESS-06D provider retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `68a3ab9` |
+| Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 |
+| Configured `executive_brain` importer progression | 31 -> 22 -> 6 -> 2 -> 0 |
+| Current configured legacy-facing files | 13 |
+| Current `executive_brain` importers | 0 |
+| Remaining `executive_brain` importer partition | ZERO configured importers |
+| Remaining configured legacy-facing partition | 10 satellite/runtime integrations; 3 platform/core/kernel/config |
 | F06D2D retirement | 9 configured manager/registry files — 94 source tests |
 | F06D2D canonical coverage | Aggregate `ExecutiveController` execution metrics coverage added before retirement |
 | F06D2D preservation | 9 byte/blob-identical `*.py.legacy` archives; no production change; no runtime-data migration |
@@ -97,6 +100,12 @@ It must not direct engineers to repeat completed planning or implementation.
 | Memory preservation | 4 byte/blob-identical `*.py.legacy` archives; no replacement legacy Memory authority; no production or runtime-data change |
 | Memory collection reconciliation | 1,836 - 30 + 2 containment tests = 1,808 collected |
 | Memory regression | Full configured suite: 1,807 passed, 1 skipped; root collection: 1,808 |
+| Provider retirement | 2 configured legacy provider files — 20 source tests, all pytest-collectable |
+| Provider canonical coverage | 3 provider-neutral tests added first in `tests/tests/ai/test_canonical_provider_contract.py` |
+| Provider preservation | 2 byte/blob-identical `*.py.legacy` archives; no provider-specific behavior or production change |
+| Provider collection reconciliation | 1,808 - 20 + 3 canonical cases + 2 containment cases = 1,793 collected |
+| Provider regression | Full configured suite: 1,792 passed, 1 skipped; root collection: 1,793 |
+| Excluded flat provider tests | 2 unchanged stale public-facade `MockProvider` importers; outside configured certification and non-blocking legacy/facade debt |
 | FORTRESS-07 | NOT STARTED |
 | FORTRESS-08 | NOT STARTED |
 | FORTRESS-09 | NOT STARTED |
@@ -145,7 +154,8 @@ F06A/F06B/F06C/F06D1/F06D2A/F06D2B checkpoints, the D2B project-state sync at
 the pre-implementation project-state sync at `7d72e70`, the F06D2D
 implementation checkpoint at `30cf2aa`, the F06D2D completion-state sync at
 `cd65af5`, the F06D2E implementation checkpoint at `10996c6`, ADR-0013 at
-`b6e110d`, and the Memory retirement checkpoint at `f7f23c7`.
+`b6e110d`, the Memory retirement checkpoint at `f7f23c7`, ADR-0014 at
+`29d1d10`, and the provider retirement checkpoint at `68a3ab9`.
 
 F06D2C is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
 `1862f78`. It retired four configured ExecutiveBrain/executive-pipeline files
@@ -204,16 +214,50 @@ retirement achieved 19 -> 15 configured legacy-facing files and 6 -> 2
 configured `executive_brain` importers. The complete progression is
 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15.
 
-The final two configured `executive_brain` importer paths are
-`tests/tests/ai/test_ollama_provider.py` and
-`tests/tests/ai/test_openai_provider.py`. The remaining 15 legacy-facing files
-partition as those two provider importers, ten satellite/runtime integrations,
-and three platform/core/kernel/config files; none has been adjudicated as a
-group.
+ADR-0014 is ACCEPTED — COMMITTED AND PUSHED at `29d1d10` — and remains
+authoritative. FORTRESS-06D provider retirement is COMPLETE — IMPLEMENTED AND
+VERIFIED — COMMITTED AND PUSHED at
+`68a3ab9`. It retired `tests/tests/ai/test_ollama_provider.py` and
+`tests/tests/ai/test_openai_provider.py`, carrying 20 source tests, all 20
+pytest-collectable. Their byte- and Git-blob-identical archives are
+`legacy_quarantine/tests/ai/test_ollama_provider.py.legacy` and
+`legacy_quarantine/tests/ai/test_openai_provider.py.legacy`.
 
-The exact next action is FORTRESS-06D provider adjudication — read-only review
-of those final two provider importers. It is NOT STARTED. F06D and FORTRESS-06
-remain IN PROGRESS and are not complete.
+Before retirement, exactly three provider-neutral tests were added in
+`tests/tests/ai/test_canonical_provider_contract.py`: blank/whitespace
+`AIRequest` rejection; invalid/non-`AIRequest` rejection before provider
+execution; and `ProviderManagerError` normalization with truthful canonical
+failure metrics/state. No provider-specific behavior or production code
+changed. OpenAI remains only an initial F09 reference-provider candidate, not
+architectural authority, a permanent dependency, or required for local/offline
+JAOS. Ollama remains optional and nonmandatory. F09 remains NOT STARTED.
+
+Three canonical and two containment cases reconcile collection as
+1,808 - 20 + 3 + 2 = 1,793. Full configured regression passed 1,792 with one
+skip and root collection found 1,793. Two excluded flat historical tests retain
+stale public-facade `MockProvider` imports; they are outside configured
+`tests/tests` certification, unchanged, non-blocking, and remain legacy/facade
+debt for later Fortress disposition.
+
+Provider retirement achieved 15 -> 13 configured legacy-facing files and
+2 -> 0 configured `executive_brain` importers. Zero configured tests under
+`tests/tests` now import `executive_brain`. The complete progressions are
+67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 and
+31 -> 22 -> 6 -> 2 -> 0.
+
+Configured `executive_brain` importers reaching zero materially advances
+RAA-003, but RAA-003 remains OPEN because the 13 configured legacy-facing tests,
+importable legacy production roots, `executive_brain` production code,
+core/kernel/satellite shadow roots, `main.py`, compatibility surfaces, and
+F06E/F06F/F06G/F06H remain.
+
+The exact next action is FORTRESS-06D remaining legacy-facing adjudication —
+read-only review of the 13 configured satellite/runtime/core/kernel/config
+tests. It is NOT STARTED. Separate the ten satellite/runtime integration tests
+from the three platform/core/kernel/config tests and determine from architecture
+and repository evidence whether one coordinated adjudication with separate
+implementation slices or separate governed slices is appropriate. Do not
+pre-decide disposition. F06D and FORTRESS-06 remain IN PROGRESS and incomplete.
 
 Founder/reviewer Vinay B approved entry into Step 7 on 2026-08-12.
 
@@ -624,9 +668,12 @@ The following actions are authorized:
   16-file / 101-test evidence.
 - Preserve ADR-0013 at `b6e110d` and the completed Memory retirement checkpoint
   `f7f23c7` with its 4-file / 30-test evidence.
-- Proceed next only with the read-only FORTRESS-06D provider adjudication of the
-  final two configured `executive_brain` provider importers, under separate
-  explicit authorization.
+- Preserve ADR-0014 at `29d1d10` and the completed provider retirement
+  checkpoint `68a3ab9` with its 2-file / 20-test, 3 canonical-case, and
+  2 containment-case evidence.
+- Proceed next only with the read-only FORTRESS-06D remaining legacy-facing
+  adjudication of the 13 configured satellite/runtime/core/kernel/config tests,
+  under separate explicit authorization.
 
 FORTRESS-01 authorized only the governance and documentation baseline it
 recorded. It did not authorize later implementation. FORTRESS-02 slices 02A
@@ -634,12 +681,13 @@ through 02K, FORTRESS-03 slices 03A through 03J, FORTRESS-04, and FORTRESS-05
 slices 05A through 05E were each implemented under separate authorization.
 FORTRESS-02 through FORTRESS-04 are verified by sections 7.7 through 7.9;
 FORTRESS-05 is verified under ADR-0011 by the closure evidence in section 7.10.
-FORTRESS-06 has proceeded through the separately authorized F06D Memory
+FORTRESS-06 has proceeded through the separately authorized F06D provider
 retirement. F06D remains IN PROGRESS and is not complete. ADR-0012, the D2D
 governance checkpoint, the
 pre-implementation project-state sync, and the D2D/D2E implementation
-checkpoints are recorded; ADR-0013 and Memory retirement are also recorded. The
-read-only provider adjudication is the next action but remains NOT STARTED;
+checkpoints are recorded; ADR-0013 and Memory retirement are also recorded;
+ADR-0014 and provider retirement are recorded. The read-only 13-file
+legacy-facing adjudication is the next action but remains NOT STARTED;
 later work, Step 8, and major Phase 8 expansion are not authorized.
 
 Each change must remain reviewable and recoverable.
@@ -650,9 +698,9 @@ Each change must remain reviewable and recoverable.
 
 Do not:
 
-- Begin provider adjudication during this documentation sync, pre-decide either
-  provider test's disposition, modify provider production code, start F09, or
-  begin another F06 slice without separate explicit authorization.
+- Begin the 13-file satellite/runtime/core/kernel/config adjudication during
+  this documentation sync, pre-decide disposition, implement or quarantine any
+  file, start F09, or begin another F06 slice without separate authorization.
 - Migrate Memory production code; change canonical `MemoryStore`, `SQLiteStore`,
   `MemoryContextSource`, or persistence ownership; resolve RAA-009; implement
   Experience Memory or advanced Memory expansion; or begin F08 persistence,
@@ -944,27 +992,16 @@ than rapidly changing implementation.
 ## 22. Exact Next Actions
 
 Preserve all verified and pushed Fortress checkpoints through F06D2E at
-`10996c6`, ADR-0013 at `b6e110d`, and Memory retirement at `f7f23c7`, including
-all D2D governance, implementation, and completion-state checkpoints.
+`10996c6`, ADR-0013 at `b6e110d`, Memory retirement at `f7f23c7`, ADR-0014 at
+`29d1d10`, and provider retirement at `68a3ab9`, including all D2D governance,
+implementation, and completion-state checkpoints.
 
-The exact next action is FORTRESS-06D provider adjudication — read-only review
-of the final two configured `executive_brain` provider importers:
+The exact next action is FORTRESS-06D remaining legacy-facing adjudication —
+read-only review of the 13 configured satellite/runtime/core/kernel/config
+tests. This action is NOT STARTED.
 
-- `tests/tests/ai/test_ollama_provider.py`; and
-- `tests/tests/ai/test_openai_provider.py`.
+The current 13 configured legacy-facing files are:
 
-Provider adjudication is NOT STARTED. Determine whether these tests preserve
-valuable OpenAI/Ollama behavior, provider-independent AI contracts,
-timeout/error handling, availability checks, model request/response mapping,
-real-provider integration, or F09 resilience evidence. Do not pre-decide that
-either test will be quarantined and do not modify provider production code.
-F09 remains NOT STARTED.
-
-The current 15 configured legacy-facing files are:
-
-- provider importers:
-  `tests/tests/ai/test_ollama_provider.py` and
-  `tests/tests/ai/test_openai_provider.py`;
 - satellite/runtime integrations:
   `tests/tests/integration/test_communication_runtime_integration.py`,
   `tests/tests/integration/test_dashboard_runtime_integration.py`,
@@ -981,8 +1018,13 @@ The current 15 configured legacy-facing files are:
   `tests/tests/platform/test_core_runtime_integration.py`, and
   `tests/tests/platform/test_kernel_runtime_integration.py`.
 
-These 15 files have not been adjudicated as a group. Preserve canonical Memory
-ownership and ADR-0013 deferrals; RAA-009 remains OPEN — DEFERRED. Preserve F07
+These 13 files have not been adjudicated as a group. The read-only review must
+separate the ten satellite/runtime integrations from the three
+platform/core/kernel/config tests and determine from repository evidence whether
+one coordinated adjudication with separate implementation slices or separate
+governed slices is appropriate. Do not pre-decide disposition or implement or
+quarantine any file. Preserve canonical Memory ownership and ADR-0013
+deferrals; RAA-009 remains OPEN — DEFERRED. Preserve F07
 permission/approval/audit/risk, F08 durable persistence/recovery/replay, F10
 health/degradation, and F11 security/chaos/CI boundaries. Keep Step 8 NOT
 STARTED — BLOCKED BY STEP 7, Fortress certification NOT STARTED, and major
@@ -1001,7 +1043,7 @@ Fortress gate passes.
 
 FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at workstream level,
 with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
-sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through the F06D Memory
+sections 7.7 through 7.10. FORTRESS-06 is IN PROGRESS through the F06D provider
 retirement. F06A is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
 `92aa9d7`; F06B is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`; and F06C is
@@ -1049,10 +1091,24 @@ changes or runtime-data migration. Canonical persistent Memory remains
 `MemoryStore`/`SQLiteStore`; ADR-0013's deferred ownership boundaries remain
 unchanged.
 
-The next action is the NOT STARTED read-only FORTRESS-06D provider adjudication
-of the two exact provider importers listed in section 22. Do not begin it during
-this synchronization, pre-decide disposition, modify provider production code,
-or start F09.
+ADR-0014 is ACCEPTED — COMMITTED AND PUSHED at `29d1d10`. Provider retirement
+is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `68a3ab9`. It
+retired two configured legacy provider files / 20 source and collected cases
+into two byte/blob-identical archives after three provider-neutral canonical
+tests were added. Two containment cases reconcile collection as
+1,808 - 20 + 3 + 2 = 1,793; full configured regression passed 1,792 with one
+skip. It achieved 15 -> 13 legacy-facing files and 2 -> 0 configured
+`executive_brain` importers. Zero configured tests under `tests/tests` now import
+`executive_brain`; the importer progression is 31 -> 22 -> 6 -> 2 -> 0. No
+provider-specific behavior or production code changed. OpenAI remains an F09
+reference-provider candidate only, Ollama remains optional/nonmandatory, and
+F09 remains NOT STARTED. The two excluded flat provider tests remain unchanged,
+non-blocking legacy/facade debt outside configured certification.
+
+The next action is the NOT STARTED read-only FORTRESS-06D remaining
+legacy-facing adjudication of the 13 exact files listed in section 22. Do not
+begin it during this synchronization, pre-decide disposition, implement or
+quarantine any file, begin F06E/F06F/F06G/F06H, or start F09.
 
 The following remain explicitly open and unchanged: the directory-symlink
 escape behavior remains unverified on this host because the preserved test is
@@ -1063,9 +1119,10 @@ request-routed; RAA-009 and the
 retirement and legacy quarantine belong to FORTRESS-06;
 the lazy Intelligence facade is interim FORTRESS-06 debt;
 permission/approval/audit policy hardening belongs to FORTRESS-07;
-durable persistence/recovery/replay belongs to FORTRESS-08; provider tests and
-`config/providers.json` ownership remain deferred to later provider evidence /
-FORTRESS-09; the operational policy for `PlatformRuntime.mark_degraded()` and
+durable persistence/recovery/replay belongs to FORTRESS-08; concrete provider
+integration and `config/providers.json` ownership remain deferred to later
+provider evidence / FORTRESS-09; the operational policy for
+`PlatformRuntime.mark_degraded()` and
 health/degradation semantics remain FORTRESS-10; security/chaos/CI remains
 FORTRESS-11; advanced reasoning, planning, agents, execution proposals, and
 autonomy remain paused; Fortress certification has not started; Step 7 remains
