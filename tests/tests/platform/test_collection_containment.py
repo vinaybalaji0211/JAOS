@@ -1130,18 +1130,8 @@ _F06D2E_LEGACY_FACING_IMPORT_ROOTS = frozenset(
     }
 )
 
-_F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS = frozenset(
+_F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS = frozenset(
     {
-        "tests/tests/integration/test_communication_runtime_integration.py",
-        "tests/tests/integration/test_dashboard_runtime_integration.py",
-        "tests/tests/integration/test_development_runtime_integration.py",
-        "tests/tests/integration/test_engineering_runtime_integration.py",
-        "tests/tests/integration/test_infrastructure_runtime_integration.py",
-        "tests/tests/integration/test_knowledge_runtime_integration.py",
-        "tests/tests/integration/test_pc_control_runtime_integration.py",
-        "tests/tests/integration/test_security_runtime_integration.py",
-        "tests/tests/integration/test_system_services_runtime_integration.py",
-        "tests/tests/integration/test_workflow_runtime_integration.py",
         "tests/tests/platform/test_config_containment.py",
         "tests/tests/platform/test_core_runtime_integration.py",
         "tests/tests/platform/test_kernel_runtime_integration.py",
@@ -1225,8 +1215,8 @@ def test_f06d2e_retires_exact_prototype_inventory_and_preserves_residue() -> Non
     }
     assert legacy_core_importers == set()
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 13
+    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 3
 
     assert len(_F06D2E_PRODUCTION_PROTOTYPE_PATHS) == 16
     for prototype_relpath in _F06D2E_PRODUCTION_PROTOTYPE_PATHS:
@@ -1377,8 +1367,8 @@ def test_f06d_memory_retirement_remains_contained_after_provider_retirement() ->
     assert memory_importers == set()
     assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_relpaths
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 13
+    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 3
 
     for production_relpath in _F06D_MEMORY_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
@@ -1499,8 +1489,214 @@ def test_f06d_provider_retirement_preserves_canonical_and_legacy_boundaries() ->
     }
     assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_relpaths
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_PROVIDER_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 13
+    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 3
 
     for production_relpath in _F06D_PROVIDER_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
+
+
+_F06D_SATELLITE_ARCHIVE_RECORDS = (
+    (
+        "tests/tests/integration/test_communication_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_communication_runtime_integration.py.legacy"
+        ),
+        "64a85ec44c7469fd9b1e5b8334668d67e6e736a4ed8b9c077073b676c033c8e3",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_dashboard_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_dashboard_runtime_integration.py.legacy"
+        ),
+        "7d098bc62d40594125a3ba631187438685e25a9b7842d30986ed21ae98b12428",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_development_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_development_runtime_integration.py.legacy"
+        ),
+        "3e269159210a0a0c17592bb59ffff53cfcec53cb5fd4a2c60fd2f42ec9116888",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_engineering_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_engineering_runtime_integration.py.legacy"
+        ),
+        "4fcef4fcca5c604f613f229b81916aea7fa8a5d8e96dc362ee83475c76eb62fd",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_infrastructure_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_infrastructure_runtime_integration.py.legacy"
+        ),
+        "773d975c2155aa093a3f16cf8f6748b3870016e3ac401704f6ffd40f6361b04a",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_knowledge_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_knowledge_runtime_integration.py.legacy"
+        ),
+        "b4551ead376823afdfee721322f5015326adab87be229d7971621a8d49f4c2ef",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_pc_control_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_pc_control_runtime_integration.py.legacy"
+        ),
+        "d97e91ef336b7fc6086ce97d03bc5e102b3d01b6cee2acadd37d57bbd79a881c",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_security_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_security_runtime_integration.py.legacy"
+        ),
+        "32e56102ec63eced4534ab17f914c6d71a1ed9132e5430c37d5057b1a25e64d7",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_system_services_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_system_services_runtime_integration.py.legacy"
+        ),
+        "1db3d498db9633d21d809ae5bfa7d9f58f1c14866fcd1f98f660eb53efdcf097",
+        3,
+    ),
+    (
+        "tests/tests/integration/test_workflow_runtime_integration.py",
+        (
+            "legacy_quarantine/tests/integration/"
+            "test_workflow_runtime_integration.py.legacy"
+        ),
+        "6bbfc848eeb30af9788bc2f3ad0897810dec8f4c6ced072227f3ac8e808bf83b",
+        3,
+    ),
+)
+
+_F06D_SATELLITE_PRODUCTION_PATHS = (
+    "communication/communication_hub.py",
+    "dashboard/mission_control.py",
+    "development/development_workspace_manager.py",
+    "engineering/platform_health_dashboard.py",
+    "infrastructure/ai_provider_manager.py",
+    "knowledge/knowledge_base.py",
+    "pc_control/application_manager.py",
+    "security/security_monitor.py",
+    "system_services/startup_manager.py",
+    "workflow/workflow_engine.py",
+)
+
+_F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS = (
+    "core/config_manager.py",
+    "core/engine.py",
+    "kernel/jaos_kernel.py",
+    "main.py",
+)
+
+
+def test_f06d_satellite_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """Ten exact satellite payloads remain outside Python and pytest collection."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+    source_test_total = 0
+
+    assert len(_F06D_SATELLITE_ARCHIVE_RECORDS) == 10
+
+    for former_relpath, archive_relpath, expected_sha256, test_count in (
+        _F06D_SATELLITE_ARCHIVE_RECORDS
+    ):
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+
+        payload = archive_path.read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == expected_sha256
+        source_tree = ast.parse(payload.decode("utf-8"))
+        archived_tests = tuple(
+            node
+            for node in ast.walk(source_tree)
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name.startswith("test_")
+        )
+        assert len(archived_tests) == test_count
+        source_test_total += len(archived_tests)
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+
+    assert source_test_total == 30
+    assert not tuple(
+        (_REPOSITORY_ROOT / "legacy_quarantine").rglob("__init__.py")
+    )
+
+
+def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None:
+    """Satellite retirement leaves the three governed configured boundaries."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+    configured_paths = tuple(
+        path
+        for path in configured_root.rglob("*.py")
+        if "__pycache__" not in path.parts
+    )
+    configured_relpaths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+    }
+    executive_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if "executive_brain" in _imported_top_level_roots(path)
+    }
+    legacy_facing_paths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    }
+    retired_paths = {
+        former_relpath
+        for former_relpath, _archive, _sha256, _count in (
+            _F06D_SATELLITE_ARCHIVE_RECORDS
+        )
+    }
+
+    assert not retired_paths & configured_relpaths
+    assert executive_importers == set()
+    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 3
+
+    for production_relpath in _F06D_SATELLITE_PRODUCTION_PATHS:
+        assert (_REPOSITORY_ROOT / production_relpath).is_file()
+    for retained_relpath in _F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS:
+        assert (_REPOSITORY_ROOT / retained_relpath).is_file()

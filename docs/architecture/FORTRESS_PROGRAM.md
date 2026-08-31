@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.23
+Document Version: 1.24
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH PROVIDER RETIREMENT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH SATELLITE/RUNTIME SHADOW-TEST RETIREMENT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -113,6 +113,7 @@ requires all of the following:
 | FORTRESS-06D2E | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06D Memory retirement | IMPLEMENTED AND VERIFIED — ADR-0013 |
 | FORTRESS-06D provider retirement | IMPLEMENTED AND VERIFIED — ADR-0014 |
+| FORTRESS-06D satellite/runtime shadow-test retirement | IMPLEMENTED AND VERIFIED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -2144,7 +2145,8 @@ canonical file imports only `jaos` and `pytest`, and zero configured tests impor
 - configured legacy-facing files: 15 -> 13; and
 - configured `executive_brain` importers: 2 -> 0.
 
-The exact 13 remaining configured legacy-facing files are:
+The exact 13 configured legacy-facing files remaining at that provider
+checkpoint were:
 
 - ten satellite/runtime integrations:
   `tests/tests/integration/test_communication_runtime_integration.py`,
@@ -2207,6 +2209,100 @@ remains NOT STARTED, and major Phase 8 expansion remains PAUSED.
 
 ---
 
+### 7.24 FORTRESS-06D Satellite/Runtime Shadow-Test Retirement
+
+Date: 2026-08-31. The completed read-only adjudication classified the ten
+remaining configured satellite/runtime integration files as tests of
+unreachable shadow, prototype, or future-platform authorities. Generic
+registration, identity, lifecycle, readiness, composition, and provider-status
+requirements already have configured canonical evidence. No replacement
+capability behavior was required or added.
+
+The mechanically verified baseline was ten configured files carrying three
+source tests and three collected cases each, for 30 source tests and 30
+collected cases total. Each payload is preserved byte- and Git-blob-identically
+outside Python and pytest collection:
+
+| Retired configured path | Preserved archive | SHA-256 | Git blob |
+|---|---|---|---|
+| `tests/tests/integration/test_communication_runtime_integration.py` | `legacy_quarantine/tests/integration/test_communication_runtime_integration.py.legacy` | `64a85ec44c7469fd9b1e5b8334668d67e6e736a4ed8b9c077073b676c033c8e3` | `bd1a3f3c733db842c2891bbb29318c521daa6b33` |
+| `tests/tests/integration/test_dashboard_runtime_integration.py` | `legacy_quarantine/tests/integration/test_dashboard_runtime_integration.py.legacy` | `7d098bc62d40594125a3ba631187438685e25a9b7842d30986ed21ae98b12428` | `90305b7807659ca75ec33210d38ce1f824f3ddab` |
+| `tests/tests/integration/test_development_runtime_integration.py` | `legacy_quarantine/tests/integration/test_development_runtime_integration.py.legacy` | `3e269159210a0a0c17592bb59ffff53cfcec53cb5fd4a2c60fd2f42ec9116888` | `cb94116c640290a0bdf4b6d4c0a9c5ddb23b167a` |
+| `tests/tests/integration/test_engineering_runtime_integration.py` | `legacy_quarantine/tests/integration/test_engineering_runtime_integration.py.legacy` | `4fcef4fcca5c604f613f229b81916aea7fa8a5d8e96dc362ee83475c76eb62fd` | `0535adff6467fa511f13b380f5a2f848dfad1c46` |
+| `tests/tests/integration/test_infrastructure_runtime_integration.py` | `legacy_quarantine/tests/integration/test_infrastructure_runtime_integration.py.legacy` | `773d975c2155aa093a3f16cf8f6748b3870016e3ac401704f6ffd40f6361b04a` | `3a84c609b3245e9ce94b5c8ef16ed0059240d05a` |
+| `tests/tests/integration/test_knowledge_runtime_integration.py` | `legacy_quarantine/tests/integration/test_knowledge_runtime_integration.py.legacy` | `b4551ead376823afdfee721322f5015326adab87be229d7971621a8d49f4c2ef` | `9c6451c32de8dd5b6e86b095c799344632a5035e` |
+| `tests/tests/integration/test_pc_control_runtime_integration.py` | `legacy_quarantine/tests/integration/test_pc_control_runtime_integration.py.legacy` | `d97e91ef336b7fc6086ce97d03bc5e102b3d01b6cee2acadd37d57bbd79a881c` | `fac8e45d19b3745200a4a9668164d80ba3954d73` |
+| `tests/tests/integration/test_security_runtime_integration.py` | `legacy_quarantine/tests/integration/test_security_runtime_integration.py.legacy` | `32e56102ec63eced4534ab17f914c6d71a1ed9132e5430c37d5057b1a25e64d7` | `f013bc3b6db79ba4edb3e1e1fe01ef96905e5c74` |
+| `tests/tests/integration/test_system_services_runtime_integration.py` | `legacy_quarantine/tests/integration/test_system_services_runtime_integration.py.legacy` | `1db3d498db9633d21d809ae5bfa7d9f58f1c14866fcd1f98f660eb53efdcf097` | `f9438f1c8aa963ae8bc98a4ec0bd2a2b735a0a53` |
+| `tests/tests/integration/test_workflow_runtime_integration.py` | `legacy_quarantine/tests/integration/test_workflow_runtime_integration.py.legacy` | `6bbfc848eeb30af9788bc2f3ad0897810dec8f4c6ced072227f3ac8e808bf83b` | `7ff01598377ef5c1b671a8e79b358f90fb93114c` |
+
+The existing containment authority gained exactly two cases. One proves the
+ten executable paths are absent, all archives retain their exact 30-test
+payloads, the `.py.legacy` files are non-importable and non-collectable, and no
+`__init__.py` exists under `legacy_quarantine/`. The second mechanically proves
+the current configured legacy-facing inventory and production-preservation
+boundary. The achieved counts are:
+
+- configured legacy-facing files: 13 -> 3; and
+- configured `executive_brain` importers: 0 -> 0.
+
+The exact three remaining configured legacy-facing files are:
+
+- `tests/tests/platform/test_config_containment.py`;
+- `tests/tests/platform/test_core_runtime_integration.py`; and
+- `tests/tests/platform/test_kernel_runtime_integration.py`.
+
+`test_config_containment.py` remains configured and unchanged with all 11
+collected cases intact. It remains temporary certification evidence until the
+legacy writer and alternate-launcher boundary is resolved through later
+authorized F06E/F06F work. The core and kernel runtime-integration tests also
+remain configured and unchanged for their separately authorized retirement
+slice; that slice has not started.
+
+The associated production modules under `communication/`, `dashboard/`,
+`development/`, `engineering/`, `infrastructure/`, `knowledge/`, `pc_control/`,
+`security/`, `system_services/`, and `workflow/` remain present and unchanged
+for later F06E production-source disposition. `core/`, `kernel/`, `main.py`, and
+`executive_brain/` are likewise unchanged. No Communication, Dashboard,
+Developer, Knowledge, PC-control, Security-monitor, Workflow, observability,
+startup-manager, or provider-manager capability was introduced.
+
+The retired tests exercised only in-memory prototype state. They performed no
+network access, subprocess or thread/process launch, desktop control, Windows
+service mutation, repository runtime-data write, provider-memory write, or
+runtime-data migration. No production code changed.
+
+Verified repository-Python gates used `PYTHONDONTWRITEBYTECODE=1`, `-B`,
+`-p no:cacheprovider`, unique external `--basetemp` paths, and the established
+temporary Windows ACL runner shim:
+
+| Gate | Result |
+|---|---|
+| Ten retired files before quarantine | 30 collected |
+| Focused containment/import/runtime/composition/service/boot/status/launcher | 166 passed |
+| Integration suite | 17 passed |
+| Platform suite | 383 passed, 1 skipped |
+| Composition suite | 49 passed |
+| Full configured `tests/tests` | 1,764 passed, 1 skipped |
+| Repository-root collection | 1,765 collected |
+| Ruff on the changed Python containment authority | All checks passed |
+
+Collection reconciles exactly as `1,793 - 30 + 2 = 1,765`: all 30 retired
+satellite cases were previously collected and exactly two containment cases
+were added. Preliminary direct pytest attempts encountered the already
+documented Python 3.14 Windows `0o700` temporary-directory ACL failure; the
+successful gates used the in-memory runner shim, which changed only temporary
+directory inheritance and left no repository helper or diff.
+
+FORTRESS-06D satellite/runtime shadow-test retirement — IMPLEMENTED AND
+VERIFIED. This state completes neither F06D nor FORTRESS-06. RAA-003 remains
+OPEN; RAA-007 remains RESOLVED WITH EVIDENCE; RAA-009 remains OPEN — DEFERRED;
+F07/F08/F09/F10 remain NOT STARTED; Step 8 remains NOT STARTED — BLOCKED BY
+STEP 7; Fortress certification remains NOT STARTED; and major Phase 8 expansion
+remains PAUSED.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -2261,6 +2357,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-31 | 1.24 | Recorded FORTRESS-06D satellite/runtime shadow-test retirement as IMPLEMENTED AND VERIFIED: retired 10 configured files / 30 collected source tests into byte/blob-identical `.py.legacy` archives without capability ports or production changes; added exactly 2 containment cases; achieved 13 -> 3 legacy-facing files while configured `executive_brain` importers remained 0; preserved the config containment and core/kernel tests for later separate work; reconciled root collection as 1,793 - 30 + 2 = 1,765; and verified 1,764 passed with 1 skip. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.23 | Recorded ADR-0014 provider retirement as IMPLEMENTED AND VERIFIED: added 3 canonical provider-neutral tests before retiring 2 configured shadow-provider files / 20 collected cases into byte/blob-identical `.py.legacy` archives; added 2 containment cases; achieved 15 -> 13 legacy-facing files and 2 -> 0 configured `executive_brain` importers; reconciled root collection as 1,808 - 20 + 3 + 2 = 1,793; and verified 1,792 passed with 1 skip. The two unchanged excluded flat provider tests remain non-blocking legacy/facade debt outside configured `tests/tests` certification. No production code, provider-specific capability, credential, network service, writer, runtime data, or F09 work changed. RAA-003 remains OPEN. |
 | 2026-08-31 | 1.22 | Added Founder-approved ADR-0014 and recorded the completed provider adjudication: 2 configured files / 20 collected source tests against unreachable offline/mock-based shadow adapters; PORT + QUARANTINE governance approved after exactly three provider-neutral canonical invariants receive configured coverage; current counts remain 15 legacy-facing files and 2 `executive_brain` importers, with 15 -> 13 and 2 -> 0 explicitly projected only after controlled implementation. Preserved provider independence, OpenAI's candidate-only F09 status, optional Ollama status, F09 NOT STARTED, RAA-003 OPEN, and the Phase 8 pause. |
 | 2026-08-31 | 1.21 | Recorded the ADR-0013-controlled Memory retirement as IMPLEMENTED AND VERIFIED: quarantined 4 configured files / 30 collected source tests into byte-identical `.py.legacy` archives, added 2 containment tests, verified 19 -> 15 legacy-facing files and 6 -> 2 `executive_brain` importers, and reconciled root collection as 1,836 - 30 + 2 = 1,808. Full configured regression passed 1,807 with 1 skip; no production code, canonical Memory contract, runtime data, or deferred F08/F10/RAA-009/Context/Experience work changed. |
