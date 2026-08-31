@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.24
+Document Version: 1.25
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH SATELLITE/RUNTIME SHADOW-TEST RETIREMENT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH CORE/KERNEL SHADOW-RUNTIME TEST RETIREMENT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -114,6 +114,7 @@ requires all of the following:
 | FORTRESS-06D Memory retirement | IMPLEMENTED AND VERIFIED — ADR-0013 |
 | FORTRESS-06D provider retirement | IMPLEMENTED AND VERIFIED — ADR-0014 |
 | FORTRESS-06D satellite/runtime shadow-test retirement | IMPLEMENTED AND VERIFIED |
+| FORTRESS-06D core/kernel shadow-runtime test retirement | IMPLEMENTED AND VERIFIED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -2303,6 +2304,95 @@ remains PAUSED.
 
 ---
 
+### 7.25 FORTRESS-06D Core/Kernel Shadow-Runtime Test Retirement
+
+Date: 2026-08-31. The completed adjudication established that
+`core.engine.JarvisEngine` is an alternate shadow composition root reachable
+through legacy `main.py`, while `kernel.jaos_kernel.JAOSKernel` is a parallel
+runtime wrapper with its own registry and literal lifecycle state. Neither is
+canonical runtime authority. Their durable identity, registration, lifecycle,
+readiness, ownership, and shutdown requirements are already covered through
+`JAOSApplication`, `PlatformRuntime`, `BootManager`, `PlatformComposition`, and
+configured canonical tests. No replacement behavior test was required or
+added.
+
+The mechanically verified baseline was two configured files carrying three
+source tests and three collected cases each, for six source tests and six
+collected cases total. Both payloads are preserved byte- and
+Git-blob-identically outside Python and pytest collection:
+
+| Retired configured path | Preserved archive | SHA-256 | Git blob |
+|---|---|---|---|
+| `tests/tests/platform/test_core_runtime_integration.py` | `legacy_quarantine/tests/platform/test_core_runtime_integration.py.legacy` | `7cea6699d3842677ba3b78796f385e8f57670ae22208418955d01666bed8bd39` | `152c1cd59fadcd84f48ff6ac0c03cd07002784a7` |
+| `tests/tests/platform/test_kernel_runtime_integration.py` | `legacy_quarantine/tests/platform/test_kernel_runtime_integration.py.legacy` | `d629bbb6ee27bff0bcb170c04b7e13ec6946a67f05e9ef041a93994f57cea85d` | `29f30e0ce9ec5e28060d3a3660d092134a1495e6` |
+| Total | Two files / six source and collected tests | Two non-Python `*.py.legacy` archives | SHA/blob verified |
+
+The existing containment authority gained exactly two cases. One proves both
+original executable paths are absent, both archives retain their exact
+six-test payloads, the archives are non-importable and non-collectable, and no
+`__init__.py` exists under `legacy_quarantine/`. The second mechanically proves
+the final configured legacy-facing inventory, zero configured
+`executive_brain` importers, the unchanged config-containment payload and its
+11-case structure, and production-source preservation.
+
+Mechanical analysis verified:
+
+- configured legacy-facing files: 3 -> 1;
+- configured `executive_brain` importers: 0 -> 0; and
+- configured legacy-facing progression:
+  `67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1`.
+
+The sole remaining configured legacy-facing file is
+`tests/tests/platform/test_config_containment.py`. It remains configured and
+unchanged at SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+with nine source definitions collected as 11 cases. It continues to certify
+the tracked-default, overlay, explicit-save-target, relative-path rejection,
+responsibility-separation, and no-`JAOS_RUNTIME_DIR` redirection boundaries.
+Its retirement remains blocked on later authorized F06E/F06F disposition of
+the legacy config writer and alternate launcher.
+
+`core/engine.py`, `kernel/jaos_kernel.py`, `main.py`, `executive_brain/`, and
+all canonical runtime/composition production sources remain present and
+unchanged for later F06E/F06F/F06G disposition. `JarvisEngine` constructor-time
+`INITIALIZED`, its legacy service-registry shape, `JAOSKernel` private registry,
+literal `ACTIVE`/`ONLINE` state, and alternate runtime ownership were
+intentionally not ported.
+
+The retired tests do not call `JarvisEngine.start()`, latent action-history or
+snapshot/recovery writers, plugin execution, an interactive loop, network,
+subprocess, desktop control, or persistent runtime-state writers. Kernel test
+state is isolated and in-memory. No production code or runtime data changed,
+and the production writer graph remains present and untouched.
+
+Verified repository-Python gates used `PYTHONDONTWRITEBYTECODE=1`, `-B`,
+`-p no:cacheprovider`, unique external `--basetemp` paths, and the established
+temporary Windows ACL runner shim:
+
+| Gate | Result |
+|---|---|
+| Two retired files before quarantine | 6 collected |
+| Focused containment/config/import/runtime/boot/composition/launcher | 166 passed |
+| Platform suite | 379 passed, 1 skipped |
+| Composition suite | 49 passed |
+| Integration suite | 17 passed |
+| Full configured `tests/tests` | 1,760 passed, 1 skipped |
+| Repository-root collection | 1,761 collected |
+| Ruff on the changed Python containment authority | All checks passed |
+
+Collection reconciles exactly as `1,765 - 6 + 2 = 1,761`: all six retired
+core/kernel cases were previously collected and exactly two containment cases
+were added.
+
+FORTRESS-06D core/kernel shadow-runtime test retirement — IMPLEMENTED AND
+VERIFIED. This state completes neither F06D nor FORTRESS-06. RAA-003 remains
+OPEN; RAA-007 remains RESOLVED WITH EVIDENCE; RAA-009 remains OPEN — DEFERRED;
+F07/F08/F09/F10 remain NOT STARTED; Step 8 remains NOT STARTED — BLOCKED BY
+STEP 7; Fortress certification remains NOT STARTED; and major Phase 8 expansion
+remains PAUSED. No later slice has started.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -2357,6 +2447,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-31 | 1.25 | Recorded FORTRESS-06D core/kernel shadow-runtime test retirement as IMPLEMENTED AND VERIFIED: retired 2 configured files / 6 collected source tests into byte/blob-identical `.py.legacy` archives without behavior ports or production changes; added exactly 2 containment cases; achieved 3 -> 1 legacy-facing files while configured `executive_brain` importers remained 0; preserved the 11-case config containment authority unchanged; reconciled root collection as 1,765 - 6 + 2 = 1,761; and verified 1,760 passed with 1 skip. The configured legacy-facing progression is now 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.24 | Recorded FORTRESS-06D satellite/runtime shadow-test retirement as IMPLEMENTED AND VERIFIED: retired 10 configured files / 30 collected source tests into byte/blob-identical `.py.legacy` archives without capability ports or production changes; added exactly 2 containment cases; achieved 13 -> 3 legacy-facing files while configured `executive_brain` importers remained 0; preserved the config containment and core/kernel tests for later separate work; reconciled root collection as 1,793 - 30 + 2 = 1,765; and verified 1,764 passed with 1 skip. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.23 | Recorded ADR-0014 provider retirement as IMPLEMENTED AND VERIFIED: added 3 canonical provider-neutral tests before retiring 2 configured shadow-provider files / 20 collected cases into byte/blob-identical `.py.legacy` archives; added 2 containment cases; achieved 15 -> 13 legacy-facing files and 2 -> 0 configured `executive_brain` importers; reconciled root collection as 1,808 - 20 + 3 + 2 = 1,793; and verified 1,792 passed with 1 skip. The two unchanged excluded flat provider tests remain non-blocking legacy/facade debt outside configured `tests/tests` certification. No production code, provider-specific capability, credential, network service, writer, runtime data, or F09 work changed. RAA-003 remains OPEN. |
 | 2026-08-31 | 1.22 | Added Founder-approved ADR-0014 and recorded the completed provider adjudication: 2 configured files / 20 collected source tests against unreachable offline/mock-based shadow adapters; PORT + QUARANTINE governance approved after exactly three provider-neutral canonical invariants receive configured coverage; current counts remain 15 legacy-facing files and 2 `executive_brain` importers, with 15 -> 13 and 2 -> 0 explicitly projected only after controlled implementation. Preserved provider independence, OpenAI's candidate-only F09 status, optional Ollama status, F09 NOT STARTED, RAA-003 OPEN, and the Phase 8 pause. |

@@ -2,7 +2,7 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.15
+Document Version: 1.16
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -12,7 +12,8 @@ Status: In Progress — F06D1, F06D2A, F06D2B, and F06D2C committed and pushed;
 F06D2D IMPLEMENTED AND VERIFIED; F06D2E IMPLEMENTED AND VERIFIED;
 FORTRESS-06D Memory retirement — IMPLEMENTED AND VERIFIED under ADR-0013;
 provider retirement — IMPLEMENTED AND VERIFIED under ADR-0014;
-satellite/runtime shadow-test retirement — IMPLEMENTED AND VERIFIED
+satellite/runtime shadow-test retirement — IMPLEMENTED AND VERIFIED;
+core/kernel shadow-runtime test retirement — IMPLEMENTED AND VERIFIED
 
 Owner and Approval Authority: Founder Vinay B
 
@@ -107,10 +108,20 @@ importers. Provider retirement is IMPLEMENTED AND VERIFIED.
 The ten configured satellite/runtime integration tests carrying 30 source and
 collected cases are now preserved as exact non-Python archives under
 `legacy_quarantine/tests/integration/`. No capability behavior was ported and
-no production source changed. Current counts are three configured
-legacy-facing files and zero configured `executive_brain` importers.
+no production source changed. At that satellite-retirement checkpoint, counts
+were three configured legacy-facing files and zero configured
+`executive_brain` importers.
 FORTRESS-06D satellite/runtime shadow-test retirement is IMPLEMENTED AND
 VERIFIED.
+
+The two configured core/kernel runtime integration tests carrying six source
+and collected cases are now preserved as exact non-Python archives under
+`legacy_quarantine/tests/platform/`. No canonical behavior was ported and no
+production source changed. Current counts are one configured legacy-facing
+file and zero configured `executive_brain` importers. The intentionally
+retained file is `tests/tests/platform/test_config_containment.py` with nine
+source definitions and eleven collected cases. FORTRESS-06D core/kernel
+shadow-runtime test retirement is IMPLEMENTED AND VERIFIED.
 
 The authoritative runtime-state artifact and writer metadata remains in
 `jaos_platform/runtime_state_inventory.py`. This manifest records which source
@@ -158,13 +169,13 @@ slice that updates this manifest and its evidence together.
 | `jaos.intelligence lazy facades` | B — COMPATIBILITY DEBT | Lazily preserve public exports and submodule compatibility without loading deferred capabilities. | Import-reachable in canonical Conversation composition. | F05 import-boundary and public-contract tests. | None. | F06G. | PROHIBITED until an approved public-API decision and F06G evidence. |
 | `brain/` | D — QUARANTINE | Large legacy reasoning, provider, permission, approval, audit, and state-writer stack. | Unreachable from `run_jaos.py`. | Zero configured direct importers; 270 excluded flat-test importers. | Owns `BehaviorTracker`, `DecisionRecord`, `GoalTracker`, `ProviderMemory`, `ReasoningTraceLogger`, `CrashRecoverySystem`, `UserProfile`, and `ProviderRouter` legacy writers. | F06D, F06E, and F06F. | PROHIBITED until test adjudication, writer isolation, relocation plan, and rollback evidence pass. |
 | `communication/` | D — QUARANTINE | Top-level satellite service stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
-| `core/` | D — QUARANTINE | Legacy engine, kernel, composition, permission, recovery, and repository-state path. | Unreachable from `run_jaos.py`; reachable from legacy `main.py`. | Two configured direct importers (F06D1 quarantined `tests/tests/core/test_kernel.py`). | Owns `ActionHistory`, `SnapshotManager`, `BackupManager`, and `ConfigManager` writers. | F06D, F06E, and F06F. | PROHIBITED until test adjudication, writer isolation, launcher decision, and rollback evidence pass. |
+| `core/` | D — QUARANTINE | Legacy engine, kernel, composition, permission, recovery, and repository-state path. | Unreachable from `run_jaos.py`; reachable from legacy `main.py`. | One configured direct importer remains: `tests/tests/platform/test_config_containment.py`; F06D1 quarantined `tests/tests/core/test_kernel.py`, and the core runtime integration test is now quarantined. | Owns `ActionHistory`, `SnapshotManager`, `BackupManager`, and `ConfigManager` writers. | F06D, F06E, and F06F. | PROHIBITED until writer isolation, launcher decision, and rollback evidence pass. |
 | `dashboard/` | D — QUARANTINE | Top-level satellite interface stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `development/` | D — QUARANTINE | Top-level development-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `engineering/` | D — QUARANTINE | Top-level engineering-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `executive_brain/` | D — QUARANTINE | Parallel Executive, planning, registry, Memory, AI-provider, and Tool authority. ADR-0012 confirms that its exact manager and registry implementations are quarantine candidates; ADR-0013 confirms the exact legacy Executive `WorkingMemory`, `MemoryManager`, and `MemoryRegistry` implementations are not canonical runtime authorities; ADR-0014 confirms the exact legacy OpenAI/Ollama adapters and contracts are not canonical provider authority. | Unreachable from `run_jaos.py`. | Zero configured direct importers after ADR-0014 provider retirement. F06D1 quarantined six AI duplicate tests, F06D2A archived seven filesystem-tool tests, F06D2B archived four Tool Platform core tests, F06D2C archived four monolithic Executive/pipeline tests, F06D2D archived nine manager/registry tests, F06D2E archived sixteen prototype-tool tests, ADR-0013 governed the four-file Memory test retirement, and ADR-0014 governed the two-file provider retirement after three canonical port-first tests. | The retired provider tests are offline/mock-based and execute no real provider integration or persistent repository writer; the retired legacy Memory tests and implementations mutate in-memory state and execute no persistent repository writer; F06D2C, F06D2D, and F06D2E likewise execute no persistent repository writer. | F06D and F06E; F09 owns later concrete-provider resilience. | PROHIBITED until production caller inventory, relocation plan, rollback evidence, and later F06 source disposition pass. |
 | `infrastructure/` | D — QUARANTINE | Top-level provider and infrastructure-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
-| `kernel/` | D — QUARANTINE | Parallel boot, kernel, lifecycle, registry, permission, and runtime-context authorities. | Unreachable from `run_jaos.py`. | One configured direct importer. | None in FORTRESS-02 inventory. | F06D and F06E. | PROHIBITED until configured-test adjudication, caller inventory, and rollback evidence pass. |
+| `kernel/` | D — QUARANTINE | Parallel boot, kernel, lifecycle, registry, permission, and runtime-context authorities. | Unreachable from `run_jaos.py`. | Zero configured direct importers after core/kernel shadow-runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until caller inventory and rollback evidence pass. |
 | `knowledge/` | D — QUARANTINE | Top-level knowledge-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `memory/` | D — QUARANTINE | Root legacy Memory implementation distinct from canonical `jaos.memory`. | Unreachable from `run_jaos.py`. | Zero configured direct importers; nine excluded flat-test importers. | Owns `LongTermMemory`, `MemoryCleanup`, and `MemoryExport` writers. | F06D, F06E, and F06F. | PROHIBITED until writer isolation, data-preservation proof, relocation plan, and rollback evidence pass. |
 | `pc_control/` | D — QUARANTINE | Top-level application, browser, filesystem, terminal, and device-control prototypes. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
@@ -1222,7 +1233,8 @@ plus production-source preservation. Mechanical import analysis verified:
 - configured legacy-facing files: 13 -> 3; and
 - configured `executive_brain` importers: 0 -> 0.
 
-The exact remaining configured legacy-facing inventory is:
+The exact remaining configured legacy-facing inventory at the satellite
+checkpoint was:
 
 | Disposition | Configured path | Collected cases |
 |---|---|---:|
@@ -1230,9 +1242,11 @@ The exact remaining configured legacy-facing inventory is:
 | Separate later retirement slice | `tests/tests/platform/test_core_runtime_integration.py` | 3 |
 | Separate later retirement slice | `tests/tests/platform/test_kernel_runtime_integration.py` | 3 |
 
-All three files remain configured and unchanged. The config containment file
-continues to certify the legacy writer and alternate-launcher boundary until
-later authorized F06E/F06F disposition. Core/kernel retirement has not started.
+At that checkpoint all three files remained configured and unchanged, and
+core/kernel retirement had not started. The later core/kernel retirement is
+recorded in Section 19. The config containment file continues to certify the
+legacy writer and alternate-launcher boundary until later authorized F06E/F06F
+disposition.
 
 The production satellite modules remain present and unchanged under
 `communication/`, `dashboard/`, `development/`, `engineering/`,
@@ -1275,10 +1289,87 @@ remains PAUSED.
 
 ---
 
-## 19. Update History
+## 19. FORTRESS-06D Core/Kernel Shadow-Runtime Test Retirement
+
+The authorized core/kernel slice retired the two remaining shadow-runtime
+integration tests. `core.engine.JarvisEngine` remains an alternate legacy
+composition root reachable through `main.py`, not the canonical `run_jaos.py`
+and `PlatformComposition` path. `kernel.jaos_kernel.JAOSKernel` remains a
+shadow runtime wrapper with separate lifecycle and registry ownership. Their
+durable runtime-identity, registration, lifecycle, readiness, and shutdown
+requirements already have configured canonical evidence, so no behavior was
+ported and no production code changed.
+
+The exact baseline and archive integrity evidence is:
+
+| Retired configured path | Source/collected tests | Archive | SHA-256 | Git blob |
+|---|---:|---|---|---|
+| `tests/tests/platform/test_core_runtime_integration.py` | 3 | `legacy_quarantine/tests/platform/test_core_runtime_integration.py.legacy` | `7cea6699d3842677ba3b78796f385e8f57670ae22208418955d01666bed8bd39` | `152c1cd59fadcd84f48ff6ac0c03cd07002784a7` |
+| `tests/tests/platform/test_kernel_runtime_integration.py` | 3 | `legacy_quarantine/tests/platform/test_kernel_runtime_integration.py.legacy` | `d629bbb6ee27bff0bcb170c04b7e13ec6946a67f05e9ef041a93994f57cea85d` | `29f30e0ce9ec5e28060d3a3660d092134a1495e6` |
+| Total | 6 | Two byte/blob-identical `*.py.legacy` archives | Verified | Verified |
+
+Both archives are non-importable and non-collectable, and no `__init__.py`
+exists under `legacy_quarantine/`. The original configured paths are absent.
+The existing containment authority gained exactly two cases: core/kernel
+archive-payload containment and final configured legacy-facing inventory plus
+production-source preservation. Mechanical import analysis verified:
+
+- configured legacy-facing files: 3 -> 1;
+- configured `executive_brain` importers: 0 -> 0; and
+- configured legacy-facing progression:
+  `67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1`.
+
+The sole remaining configured legacy-facing file is
+`tests/tests/platform/test_config_containment.py`. It remains intentionally
+configured and byte-unchanged at SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+with nine source definitions and eleven collected cases. It continues to
+certify tracked-default immutability, overlay precedence, mutable-key and
+save-target restrictions, path containment, `ConfigManager` responsibility
+separation, and absence of `JAOS_RUNTIME_DIR` redirection until later
+authorized F06E/F06F disposition.
+
+No `JarvisEngine`, `JAOSKernel`, alternate registry, literal lifecycle state,
+or alternate runtime-ownership behavior was ported. `core/`, `kernel/`,
+`main.py`, and `executive_brain/` remain present and unchanged for later
+authorized production-source, writer, and compatibility disposition. The
+retired tests do not invoke `JarvisEngine.start()`, action-history, snapshot,
+recovery, plugin, or interactive-loop behavior; they perform no network,
+subprocess, desktop-control, or persistent runtime-state operation. The
+production writer graph remains present and untouched, and no runtime-data
+migration occurred.
+
+Verification used repository Python 3.14.6, `PYTHONDONTWRITEBYTECODE=1`, `-B`,
+`-p no:cacheprovider`, unique external `--basetemp` roots, and the established
+temporary Windows ACL runner shim:
+
+| Gate | Result |
+|---|---|
+| Two retired files before quarantine | 6 collected |
+| Focused containment/config/runtime/composition/launcher tests | 166 passed |
+| Platform suite | 379 passed, 1 skipped |
+| Composition suite | 49 passed |
+| Integration suite | 17 passed |
+| Full configured `tests/tests` | 1,760 passed, 1 skipped |
+| Root collection | 1,761 collected |
+| Ruff on the changed Python file | All checks passed |
+
+Collection reconciles exactly as `1,765 - 6 + 2 = 1,761`.
+
+FORTRESS-06D core/kernel shadow-runtime test retirement — IMPLEMENTED AND
+VERIFIED. F06D and FORTRESS-06 remain IN PROGRESS. RAA-003 remains OPEN;
+RAA-007 remains RESOLVED WITH EVIDENCE; RAA-009 remains OPEN — DEFERRED;
+F07/F08/F09/F10 remain NOT STARTED; Step 8 remains NOT STARTED — BLOCKED BY
+STEP 7; Fortress certification remains NOT STARTED; and major Phase 8 expansion
+remains PAUSED. No later slice started.
+
+---
+
+## 20. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-31 | 1.16 | Recorded FORTRESS-06D core/kernel shadow-runtime test retirement as IMPLEMENTED AND VERIFIED: retired 2 configured files / 6 collected source tests into byte/blob-identical `.py.legacy` archives without behavior ports or production changes; added exactly 2 containment cases; achieved 3 -> 1 legacy-facing files while configured `executive_brain` importers remained 0; preserved the 11-case config containment authority unchanged; reconciled root collection as 1,765 - 6 + 2 = 1,761; and verified 1,760 passed with 1 skip. The configured legacy-facing progression is now 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.15 | Recorded FORTRESS-06D satellite/runtime shadow-test retirement as IMPLEMENTED AND VERIFIED: retired 10 configured files / 30 collected source tests into byte/blob-identical `.py.legacy` archives without capability ports or production changes; added exactly 2 containment cases; achieved 13 -> 3 legacy-facing files while configured `executive_brain` importers remained 0; preserved config containment plus core/kernel tests for later separate work; reconciled collection as 1,793 - 30 + 2 = 1,765; and verified 1,764 passed with 1 skip. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.14 | Recorded ADR-0014 provider retirement as IMPLEMENTED AND VERIFIED: added 3 configured canonical provider-neutral tests before retiring 2 shadow-provider files / 20 collected cases into byte/blob-identical `.py.legacy` archives; added 2 containment cases; achieved 15 -> 13 legacy-facing files and 2 -> 0 configured `executive_brain` importers; reconciled root collection as 1,808 - 20 + 3 + 2 = 1,793; and verified 1,792 passed with 1 skip. The two unchanged excluded flat provider tests remain non-blocking legacy/facade debt outside configured `tests/tests` certification. Production provider sources, provider independence, credentials, network state, runtime data, F09, and RAA-003 remained unchanged. |
 | 2026-08-31 | 1.13 | Added ADR-0014's Founder-approved provider disposition and F09 clarification: 2 configured files / 20 collected source tests against unreachable offline/mock-based shadow adapters; PORT + QUARANTINE approved after three provider-neutral canonical invariants receive configured coverage; current counts remain 15 legacy-facing files and 2 `executive_brain` importers, with 15 -> 13 and 2 -> 0 projected only after controlled implementation. Preserved provider independence, candidate-only OpenAI status, optional Ollama status, untouched production sources, F09 NOT STARTED, and RAA-003 OPEN. |

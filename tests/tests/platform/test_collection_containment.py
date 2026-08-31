@@ -1130,11 +1130,9 @@ _F06D2E_LEGACY_FACING_IMPORT_ROOTS = frozenset(
     }
 )
 
-_F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS = frozenset(
+_F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS = frozenset(
     {
         "tests/tests/platform/test_config_containment.py",
-        "tests/tests/platform/test_core_runtime_integration.py",
-        "tests/tests/platform/test_kernel_runtime_integration.py",
     }
 )
 
@@ -1215,8 +1213,8 @@ def test_f06d2e_retires_exact_prototype_inventory_and_preserves_residue() -> Non
     }
     assert legacy_core_importers == set()
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 3
+    assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 1
 
     assert len(_F06D2E_PRODUCTION_PROTOTYPE_PATHS) == 16
     for prototype_relpath in _F06D2E_PRODUCTION_PROTOTYPE_PATHS:
@@ -1367,8 +1365,8 @@ def test_f06d_memory_retirement_remains_contained_after_provider_retirement() ->
     assert memory_importers == set()
     assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_relpaths
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 3
+    assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 1
 
     for production_relpath in _F06D_MEMORY_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
@@ -1489,8 +1487,8 @@ def test_f06d_provider_retirement_preserves_canonical_and_legacy_boundaries() ->
     }
     assert not _F06D_PROVIDER_RETIRED_IMPORTERS & configured_relpaths
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 3
+    assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 1
 
     for production_relpath in _F06D_PROVIDER_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
@@ -1662,7 +1660,7 @@ def test_f06d_satellite_archives_preserve_exact_payloads(
 
 
 def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None:
-    """Satellite retirement leaves the three governed configured boundaries."""
+    """Satellite archives stay contained after core/kernel test retirement."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
     configured_paths = tuple(
@@ -1693,10 +1691,152 @@ def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None
 
     assert not retired_paths & configured_relpaths
     assert executive_importers == set()
-    assert legacy_facing_paths == _F06D_SATELLITE_REMAINING_LEGACY_FACING_PATHS
-    assert len(legacy_facing_paths) == 3
+    assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 1
 
     for production_relpath in _F06D_SATELLITE_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
     for retained_relpath in _F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS:
         assert (_REPOSITORY_ROOT / retained_relpath).is_file()
+
+
+_F06D_CORE_KERNEL_ARCHIVE_RECORDS = (
+    (
+        "tests/tests/platform/test_core_runtime_integration.py",
+        "legacy_quarantine/tests/platform/test_core_runtime_integration.py.legacy",
+        "7cea6699d3842677ba3b78796f385e8f57670ae22208418955d01666bed8bd39",
+        3,
+    ),
+    (
+        "tests/tests/platform/test_kernel_runtime_integration.py",
+        "legacy_quarantine/tests/platform/test_kernel_runtime_integration.py.legacy",
+        "d629bbb6ee27bff0bcb170c04b7e13ec6946a67f05e9ef041a93994f57cea85d",
+        3,
+    ),
+)
+
+_F06D_CONFIG_CONTAINMENT_PATH = (
+    _REPOSITORY_ROOT / "tests" / "tests" / "platform" / "test_config_containment.py"
+)
+_F06D_CONFIG_CONTAINMENT_SHA256 = (
+    "d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c"
+)
+_F06D_CORE_KERNEL_PRODUCTION_PATHS = (
+    "core/engine.py",
+    "kernel/jaos_kernel.py",
+    "main.py",
+)
+
+
+def test_f06d_core_kernel_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """Two exact core/kernel payloads remain outside configured collection."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+    source_test_total = 0
+
+    assert len(_F06D_CORE_KERNEL_ARCHIVE_RECORDS) == 2
+
+    for former_relpath, archive_relpath, expected_sha256, test_count in (
+        _F06D_CORE_KERNEL_ARCHIVE_RECORDS
+    ):
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+
+        payload = archive_path.read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == expected_sha256
+        source_tree = ast.parse(payload.decode("utf-8"))
+        archived_tests = tuple(
+            node
+            for node in ast.walk(source_tree)
+            if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+            and node.name.startswith("test_")
+        )
+        assert len(archived_tests) == test_count
+        source_test_total += len(archived_tests)
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+
+    assert source_test_total == 6
+    assert not tuple(
+        (_REPOSITORY_ROOT / "legacy_quarantine").rglob("__init__.py")
+    )
+
+
+def test_f06d_core_kernel_retirement_leaves_only_config_containment() -> None:
+    """Only the governed config/writer boundary remains legacy-facing."""
+
+    configured_root = _REPOSITORY_ROOT / "tests" / "tests"
+    configured_paths = tuple(
+        path
+        for path in configured_root.rglob("*.py")
+        if "__pycache__" not in path.parts
+    )
+    configured_relpaths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+    }
+    executive_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if "executive_brain" in _imported_top_level_roots(path)
+    }
+    legacy_facing_paths = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    }
+    retired_paths = {
+        former_relpath
+        for former_relpath, _archive, _sha256, _count in (
+            _F06D_CORE_KERNEL_ARCHIVE_RECORDS
+        )
+    }
+
+    assert not retired_paths & configured_relpaths
+    assert executive_importers == set()
+    assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
+    assert len(legacy_facing_paths) == 1
+
+    config_payload = _F06D_CONFIG_CONTAINMENT_PATH.read_bytes()
+    assert hashlib.sha256(config_payload).hexdigest() == (
+        _F06D_CONFIG_CONTAINMENT_SHA256
+    )
+    config_tree = ast.parse(config_payload.decode("utf-8"))
+    config_tests = tuple(
+        node
+        for node in ast.walk(config_tree)
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and node.name.startswith("test_")
+    )
+    parametrized_expansion = sum(
+        len(decorator.args[1].elts) - 1
+        for test_node in config_tests
+        for decorator in test_node.decorator_list
+        if isinstance(decorator, ast.Call)
+        and isinstance(decorator.func, ast.Attribute)
+        and decorator.func.attr == "parametrize"
+        and len(decorator.args) >= 2
+        and isinstance(decorator.args[1], (ast.List, ast.Tuple))
+    )
+    assert len(config_tests) == 9
+    assert len(config_tests) + parametrized_expansion == 11
+
+    for production_relpath in _F06D_CORE_KERNEL_PRODUCTION_PATHS:
+        assert (_REPOSITORY_ROOT / production_relpath).is_file()
