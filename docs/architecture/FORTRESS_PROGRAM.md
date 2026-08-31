@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.21
+Document Version: 1.22
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D2E IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH MEMORY RETIREMENT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -112,6 +112,7 @@ requires all of the following:
 | FORTRESS-06D2D | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06D2E | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06D Memory retirement | IMPLEMENTED AND VERIFIED — ADR-0013 |
+| FORTRESS-06D provider adjudication | READ-ONLY AUDIT COMPLETE — ADR-0014 PORT + QUARANTINE GOVERNANCE APPROVED; IMPLEMENTATION NOT STARTED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -158,10 +159,14 @@ The subsequent ADR-0013-controlled Memory retirement archived all four Memory
 files carrying 30 source and collected tests as byte-identical non-Python
 payloads without creating replacement `WorkingMemory`, `MemoryManager`, or
 `MemoryRegistry` authorities. Configured legacy-facing files are now 15 and
-configured `executive_brain` importers are the two deferred provider tests. No
-legacy production source moved or was deleted, no runtime data migrated, F06D
-is not complete, later implementation work has not started, and major Phase 8
-expansion remains paused.
+configured `executive_brain` importers are the two provider tests. Their
+read-only adjudication found 20 collected source tests against unreachable,
+offline/mock-based shadow adapters. ADR-0014 approves PORT + QUARANTINE after
+three provider-neutral canonical invariants are covered; provider retirement
+implementation has NOT STARTED, so counts remain 15 and 2. No legacy production
+source moved or was deleted, no runtime data migrated, F06D is not complete,
+later implementation work has not started, and major Phase 8 expansion remains
+paused.
 
 ---
 
@@ -2045,6 +2050,64 @@ remains NOT STARTED, and major Phase 8 expansion remains PAUSED.
 
 ---
 
+### 7.22 FORTRESS-06D Provider Adjudication Governance — ADR-0014
+
+Date: 2026-08-31. The read-only provider adjudication is COMPLETE. It identified
+the final two configured `executive_brain` importers and 20 source tests, all 20
+of which are pytest-collected:
+
+| Configured file | Source tests | Collected cases | Evidence character |
+|---|---:|---:|---|
+| `tests/tests/ai/test_ollama_provider.py` | 9 | 9 | Offline/mock-based legacy Ollama adapter evidence |
+| `tests/tests/ai/test_openai_provider.py` | 11 | 11 | Offline/mock-based legacy OpenAI adapter evidence |
+| Total | 20 | 20 | Neither file proves real provider integration |
+
+Both files directly exercise unreachable `executive_brain` shadow adapters.
+ADR-0014 records the Founder-approved PORT + QUARANTINE disposition. Before a
+later controlled retirement, exactly three current provider-neutral invariants
+must receive configured canonical evidence:
+
+1. `AIRequest` rejects blank or whitespace-only prompts.
+2. `ProviderManager.generate()` rejects invalid or non-`AIRequest` input before
+   provider execution.
+3. Provider generation failure is normalized as `ProviderManagerError`, with
+   truthful canonical failure metrics and state.
+
+Canonical production already supports these invariants; this governance task
+does not implement their tests or modify production. No OpenAI- or
+Ollama-specific behavior is to be ported in FORTRESS-06.
+
+Provider independence remains mandatory. Current runtime authority is
+`PlatformComposition` -> `ProviderManager`/`AIManager` -> canonical provider
+abstractions -> deterministic `MockProvider`. OpenAI is an initial concrete
+reference-provider candidate for FORTRESS-09 only; it is not architectural
+authority, a permanent dependency, the sole supported provider, or a condition
+for local/offline JAOS operation. Ollama remains optional and is not required
+for FORTRESS-09 certification.
+
+FORTRESS-09 remains NOT STARTED. It retains later ownership of approved
+concrete-provider adapters and resilience concerns, including timeout
+enforcement, retries, circuit breaking, fallback, health/reachability,
+unavailable-provider and malformed-response handling, auth and rate-limit
+failures, secret/config integration, graceful degradation, telemetry, model
+discovery, streaming/capabilities, and opt-in real-provider tests. None begins
+through ADR-0014.
+
+Provider retirement implementation has NOT STARTED. Current counts remain:
+
+- configured legacy-facing files: 15; and
+- configured `executive_brain` importers: 2.
+
+Only after separately authorized and verified controlled implementation are the
+projected changes 15 -> 13 and 2 -> 0. The legacy provider production sources
+remain untouched. Once this governance change is checkpointed, provider
+retirement is READY FOR CONTROLLED IMPLEMENTATION subject to separate
+implementation authorization. RAA-003 remains OPEN; F06D and FORTRESS-06 remain
+IN PROGRESS; Step 8 and Fortress certification remain NOT STARTED; and major
+Phase 8 expansion remains PAUSED.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -2099,6 +2162,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-08-31 | 1.22 | Added Founder-approved ADR-0014 and recorded the completed provider adjudication: 2 configured files / 20 collected source tests against unreachable offline/mock-based shadow adapters; PORT + QUARANTINE governance approved after exactly three provider-neutral canonical invariants receive configured coverage; current counts remain 15 legacy-facing files and 2 `executive_brain` importers, with 15 -> 13 and 2 -> 0 explicitly projected only after controlled implementation. Preserved provider independence, OpenAI's candidate-only F09 status, optional Ollama status, F09 NOT STARTED, RAA-003 OPEN, and the Phase 8 pause. |
 | 2026-08-31 | 1.21 | Recorded the ADR-0013-controlled Memory retirement as IMPLEMENTED AND VERIFIED: quarantined 4 configured files / 30 collected source tests into byte-identical `.py.legacy` archives, added 2 containment tests, verified 19 -> 15 legacy-facing files and 6 -> 2 `executive_brain` importers, and reconciled root collection as 1,836 - 30 + 2 = 1,808. Full configured regression passed 1,807 with 1 skip; no production code, canonical Memory contract, runtime data, or deferred F08/F10/RAA-009/Context/Experience work changed. |
 | 2026-08-31 | 1.20 | Added Founder-approved ADR-0013, reconciled the active Phase 7 Executive WorkingMemory compatibility conflict, and recorded the completed read-only Memory adjudication: 4 configured files / 30 source tests, all four governance-approved quarantine candidates, implementation not started, current counts unchanged at 19 legacy-facing files and 6 `executive_brain` importers, and projected post-implementation counts of 15 and 2. Preserved canonical persistent-Memory ownership, deferred Context/Experience/F08/F10 responsibilities, RAA-003 OPEN, RAA-009 OPEN — DEFERRED, and the Phase 8 pause. |
 | 2026-08-31 | 1.19 | Recorded F06D2E as IMPLEMENTED AND VERIFIED: retired 16 prototype-tool files carrying 101 pytest-collectable source tests into byte/blob-identical `.py.legacy` archives without replacement capability tests; added two containment tests, reconciling root collection as 1,935 - 101 + 2 = 1,836; verified 35 -> 19 legacy-facing and 22 -> 6 `executive_brain` importer reductions; preserved four Memory and two provider importers plus all 16 production prototypes for later work; and recorded no production change, external side effect, runtime writer, or data migration. Full configured suite passed 1,835 with 1 skip and Ruff passed. F06D and FORTRESS-06 remain in progress; RAA-003 remains open. |

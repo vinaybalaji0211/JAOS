@@ -2,7 +2,7 @@
 
 
 
-Version: 1.5
+Version: 1.6
 
 Status: ACTIVE
 
@@ -1219,6 +1219,160 @@ Consequences
 - RAA-003 remains OPEN and RAA-009 remains OPEN — DEFERRED.
 - F06D and FORTRESS-06 remain IN PROGRESS; Step 8 and Fortress certification
   remain NOT STARTED, and major Phase 8 expansion remains PAUSED.
+
+
+
+Approved By
+
+
+
+Founder Vinay B — 2026-08-31
+
+
+
+\---
+
+
+
+\# ADR-0014
+
+
+
+Title
+
+
+
+FORTRESS-06 Provider Shadow-Test Retirement and F09 Reference-Provider Clarification
+
+
+
+Status
+
+
+
+ACCEPTED — Founder-approved 2026-08-31
+
+
+
+Context
+
+
+
+The final two configured `executive_brain` importers directly test the legacy
+`executive_brain.ai.providers.OllamaProvider` and
+`executive_brain.ai.providers.OpenAIProvider` adapters. Read-only adjudication
+confirmed that both adapters are unreachable from the canonical production
+composition graph and that their 20 configured cases are offline, mock-based
+shadow-provider evidence rather than real provider integration evidence.
+
+
+
+Keeping those tests merely to preserve concrete OpenAI or Ollama behavior would
+certify noncanonical adapters and their legacy contracts. Retiring them without
+first porting the useful provider-neutral assertions would, however, discard
+configured evidence for three current canonical behaviors already supported by
+`AIRequest` and `ProviderManager`.
+
+
+
+Decision
+
+
+
+The exact legacy OpenAI and Ollama adapters under `executive_brain` are shadow
+architecture. Their concrete classes, request/response behavior, and legacy
+test contracts are not permanent JAOS provider contracts. The two configured
+tests are approved for PORT + QUARANTINE through a later controlled
+FORTRESS-06 implementation.
+
+
+
+Exactly three provider-neutral configured canonical invariants must be added
+before either shadow test is retired:
+
+1. `AIRequest` rejects blank or whitespace-only prompts.
+2. `ProviderManager.generate()` rejects invalid or non-`AIRequest` input before
+   any provider execution occurs.
+3. Provider generation failure is normalized as `ProviderManagerError`, and
+   canonical failure metrics and state are updated truthfully.
+
+
+
+No OpenAI-specific or Ollama-specific behavior is ported in FORTRESS-06.
+Canonical JAOS continues to depend on provider abstractions rather than a
+concrete provider. Current runtime authority remains
+`PlatformComposition` -> `ProviderManager`/`AIManager` -> canonical provider
+abstractions -> the deterministic `MockProvider` until a later approved
+FORTRESS-09 implementation changes the configured concrete-provider set.
+
+
+
+FORTRESS-06 Provider Disposition
+
+
+
+The read-only adjudication identified these two configured files and 20 source
+tests, all 20 of which are pytest-collected:
+
+- `tests/tests/ai/test_ollama_provider.py`;
+- `tests/tests/ai/test_openai_provider.py`.
+
+
+
+Their disposition is PORT + QUARANTINE — GOVERNANCE APPROVED. Implementation
+has NOT STARTED. Current counts remain 15 configured legacy-facing files and two
+configured `executive_brain` importers. Only after separately authorized,
+successful controlled implementation are the projected counts 15 -> 13 and
+2 -> 0. These projections are not current results.
+
+
+
+FORTRESS-09 Provider-Support Clarification
+
+
+
+OpenAI is approved as an initial concrete reference-provider candidate for
+FORTRESS-09. It is not architectural authority, a permanent JAOS dependency,
+the only supported provider, or a requirement for local or offline JAOS
+operation. FORTRESS-09 may later implement a canonical OpenAI adapter behind
+`AIProvider` to prove real cloud-provider integration and resilience.
+
+
+
+Ollama is optional and is not a mandatory FORTRESS-09 certification provider.
+It may later be supported through an optional canonical local-provider adapter,
+but FORTRESS-09 completion does not depend on preserving
+`executive_brain.ai.providers.OllamaProvider` or its legacy contract.
+
+
+
+FORTRESS-09 remains NOT STARTED. This decision does not authorize a concrete
+provider adapter, real provider call, retry, timeout, circuit breaker, fallback,
+model discovery, streaming, provider-health implementation, secret injection,
+real-network test, or usage/cost accounting.
+
+
+
+Consequences
+
+
+
+- Provider independence remains mandatory, and local/offline JAOS must not
+  depend on OpenAI availability.
+- Provider selection, failover, health, resilience, and configuration remain
+  owned through canonical provider abstractions.
+- FORTRESS-09 retains later concrete-provider integration and resilience work,
+  including optional adapters, timeout enforcement, retries, circuit breaking,
+  fallback, health and reachability, unavailable-provider and malformed-response
+  handling, auth and rate-limit failures, secret/config integration, graceful
+  degradation, telemetry, model discovery, streaming/capabilities, and opt-in
+  real-provider tests.
+- This decision changes no production code or configured test, performs no
+  provider retirement, and starts neither FORTRESS-09 nor another Fortress
+  workstream.
+- RAA-003 remains OPEN. F06D and FORTRESS-06 remain IN PROGRESS, Step 8 and
+  Fortress certification remain NOT STARTED, and major Phase 8 expansion
+  remains PAUSED.
 
 
 

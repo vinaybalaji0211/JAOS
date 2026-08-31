@@ -14,6 +14,24 @@ Architecture Freeze v1.0
 
 
 
+\## Current Governance Clarification — ADR-0014
+
+
+
+This frozen matrix is preserved as historical dependency-design evidence.
+ADR-0014 supersedes entries below that assign provider routing or ownership to
+the legacy Executive Brain. Current canonical authority is
+`PlatformComposition` -> `ProviderManager`/`AIManager` -> provider abstractions
+-> deterministic `MockProvider`; no concrete provider is architectural
+authority. OpenAI is only a FORTRESS-09 reference-provider candidate, Ollama is
+optional, and FORTRESS-09 remains NOT STARTED.
+
+
+
+\---
+
+
+
 \# Purpose
 
 

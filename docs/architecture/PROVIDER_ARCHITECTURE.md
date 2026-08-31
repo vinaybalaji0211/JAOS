@@ -18,6 +18,25 @@ Status: Draft
 
 
 
+\## Current Governance Clarification — ADR-0014
+
+
+
+This frozen draft is preserved as historical provider-design evidence. For
+current runtime authority, ADR-0014 supersedes statements below that assign
+provider ownership, selection, or routing to the legacy Executive Brain or
+that could be read as making a concrete provider mandatory. Canonical authority
+is `PlatformComposition` -> `ProviderManager`/`AIManager` -> canonical provider
+abstractions -> the current deterministic `MockProvider`. OpenAI is only an
+initial FORTRESS-09 reference-provider candidate, Ollama is optional and not
+required for FORTRESS-09 certification, and FORTRESS-09 remains NOT STARTED.
+
+
+
+\---
+
+
+
 \# Purpose
 
 

@@ -18,6 +18,24 @@ Status: Draft
 
 
 
+\## Current Governance Clarification — ADR-0014
+
+
+
+This frozen draft is preserved as historical pipeline-design evidence.
+ADR-0014 supersedes statements below that make the legacy Executive Brain the
+canonical provider selector. Current provider authority flows through
+`PlatformComposition`, `ProviderManager`/`AIManager`, and canonical provider
+abstractions to the deterministic `MockProvider`. OpenAI is only an initial
+FORTRESS-09 reference-provider candidate, Ollama is optional, and FORTRESS-09
+remains NOT STARTED.
+
+
+
+\---
+
+
+
 \# Purpose
 
 

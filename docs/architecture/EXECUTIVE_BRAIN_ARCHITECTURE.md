@@ -18,6 +18,25 @@ Status: Draft
 
 
 
+\## Current Governance Clarification — ADR-0014
+
+
+
+This frozen draft is preserved as historical Executive Brain design evidence.
+ADR-0014 supersedes statements below that assign canonical provider ownership,
+selection, or routing to the legacy Executive Brain or treat its concrete
+OpenAI/Ollama adapters as permanent JAOS contracts. Current provider authority
+uses the canonical `PlatformComposition` -> `ProviderManager`/`AIManager` ->
+provider-abstraction path and deterministic `MockProvider`. OpenAI is only an
+initial FORTRESS-09 reference-provider candidate; Ollama remains optional;
+FORTRESS-09 remains NOT STARTED.
+
+
+
+\---
+
+
+
 \# Purpose
 
 
