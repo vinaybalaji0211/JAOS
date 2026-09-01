@@ -1588,7 +1588,6 @@ _F06D_SATELLITE_ARCHIVE_RECORDS = (
 )
 
 _F06D_SATELLITE_PRODUCTION_PATHS = (
-    "communication/communication_hub.py",
     "dashboard/mission_control.py",
     "development/development_workspace_manager.py",
     "engineering/platform_health_dashboard.py",
@@ -1840,3 +1839,218 @@ def test_f06d_core_kernel_retirement_leaves_only_config_containment() -> None:
 
     for production_relpath in _F06D_CORE_KERNEL_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
+
+
+_F06E_COMMUNICATION_ARCHIVE_RECORDS = (
+    (
+        "communication/calendar_manager.py",
+        (
+            "legacy_quarantine/production/communication/"
+            "calendar_manager.py.legacy"
+        ),
+        "de550bf3ddb8ea4c7c9be56e492f54c54dfa5280a7e8ef853def40eea8894911",
+        "807089aa2bc86cf92f42ae65fa8ececddc13db98",
+    ),
+    (
+        "communication/communication_hub.py",
+        (
+            "legacy_quarantine/production/communication/"
+            "communication_hub.py.legacy"
+        ),
+        "d34c4f6b33410c69498493675fef02d59ae88e7bee366c97d6311c0295eca02b",
+        "65bb8f303128b6847fa2ac9913af5d627ad82ec1",
+    ),
+    (
+        "communication/contacts_manager.py",
+        (
+            "legacy_quarantine/production/communication/"
+            "contacts_manager.py.legacy"
+        ),
+        "2f0c86a51200d40513d3827def63c464c8f3fc10d2cce433a761a999932bb565",
+        "69f189614e5c5fbf707561752b99fec3fd9a154f",
+    ),
+    (
+        "communication/conversation_manager.py",
+        (
+            "legacy_quarantine/production/communication/"
+            "conversation_manager.py.legacy"
+        ),
+        "8bace0ec95836012cf3cf7fceb2fae929068ca975c010502a33e51a05cb0e72b",
+        "3dacf67cda7110b7b92c8b76e9141a63ee5470c4",
+    ),
+    (
+        "communication/email_manager.py",
+        (
+            "legacy_quarantine/production/communication/"
+            "email_manager.py.legacy"
+        ),
+        "997d2c4ea5cfb8fd82194d86158a07b5b8d593dcc22cb5f0fec42f595500d08b",
+        "824e1eccc45973d45aad7988397e86df211b6dd7",
+    ),
+    (
+        "communication/meeting_assistant.py",
+        (
+            "legacy_quarantine/production/communication/"
+            "meeting_assistant.py.legacy"
+        ),
+        "e8ff0e6b877b3c4546c4c6810cb418c41b0210b5896956fa60de8608f35bf542",
+        "c36d257ebcf8a5b91ca4f4c96b43655581a7789a",
+    ),
+)
+_F06E_COMMUNICATION_EXCLUDED_TEST_IMPORTERS = frozenset(
+    {
+        "tests/calendar_manager_test.py",
+        "tests/communication_hub_test.py",
+        "tests/communication_platform_integration_test.py",
+        "tests/contacts_manager_test.py",
+        "tests/conversation_manager_test.py",
+        "tests/email_manager_test.py",
+        "tests/meeting_assistant_test.py",
+    }
+)
+
+
+def _git_blob_id(payload: bytes, *, path: str) -> str:
+    result = subprocess.run(
+        ["git", "hash-object", f"--path={path}", "--stdin"],
+        cwd=_REPOSITORY_ROOT,
+        input=payload,
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr.decode("utf-8", errors="replace")
+    return result.stdout.decode("ascii").strip()
+
+
+def _tracked_live_python_paths() -> tuple[Path, ...]:
+    result = subprocess.run(
+        ["git", "ls-files", "-z", "--", "*.py"],
+        cwd=_REPOSITORY_ROOT,
+        capture_output=True,
+        timeout=30,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr.decode("utf-8", errors="replace")
+    return tuple(
+        path
+        for relpath in result.stdout.decode("utf-8").split("\0")
+        if relpath
+        if (path := _REPOSITORY_ROOT / relpath).is_file()
+    )
+
+
+def _literal_dynamic_import_roots(source_path: Path) -> frozenset[str]:
+    source_tree = ast.parse(source_path.read_text(encoding="utf-8-sig"))
+    roots: set[str] = set()
+
+    for node in ast.walk(source_tree):
+        if not isinstance(node, ast.Call) or not node.args:
+            continue
+        function_name = None
+        if isinstance(node.func, ast.Name):
+            function_name = node.func.id
+        elif isinstance(node.func, ast.Attribute):
+            function_name = node.func.attr
+        if function_name not in {"import_module", "__import__"}:
+            continue
+        module_argument = node.args[0]
+        if isinstance(module_argument, ast.Constant) and isinstance(
+            module_argument.value, str
+        ):
+            roots.add(module_argument.value.partition(".")[0])
+
+    return frozenset(roots)
+
+
+def test_f06e_communication_production_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """Six exact production payloads remain inert and reversible."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+
+    assert len(_F06E_COMMUNICATION_ARCHIVE_RECORDS) == 6
+
+    for former_relpath, archive_relpath, expected_sha256, expected_blob in (
+        _F06E_COMMUNICATION_ARCHIVE_RECORDS
+    ):
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+
+        payload = archive_path.read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == expected_sha256
+        assert _git_blob_id(payload, path=former_relpath) == expected_blob
+        assert _git_blob_id(payload, path=archive_relpath) == expected_blob
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem,
+                [str(archive_path.parent)],
+            )
+            is None
+        )
+
+    assert not tuple(
+        (_REPOSITORY_ROOT / "legacy_quarantine").rglob("__init__.py")
+    )
+
+    for source_path in _tracked_live_python_paths():
+        assert "legacy_quarantine" not in _imported_top_level_roots(source_path)
+        assert "legacy_quarantine" not in _literal_dynamic_import_roots(source_path)
+
+
+def test_f06e_communication_production_caller_containment() -> None:
+    """Communication archives have no live production or configured caller."""
+
+    tracked_python_paths = _tracked_live_python_paths()
+    importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in tracked_python_paths
+        if "communication" in _imported_top_level_roots(path)
+    }
+    dynamic_importers = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix()
+        for path in tracked_python_paths
+        if "communication" in _literal_dynamic_import_roots(path)
+    }
+    configured_importers = {
+        relpath for relpath in importers if relpath.startswith("tests/tests/")
+    }
+    excluded_test_importers = {
+        relpath
+        for relpath in importers
+        if relpath.startswith("tests/")
+        and not relpath.startswith("tests/tests/")
+    }
+    production_importers = {
+        relpath for relpath in importers if not relpath.startswith("tests/")
+    }
+    canonical_importers = {
+        relpath
+        for relpath in production_importers
+        if relpath == "run_jaos.py"
+        or relpath.startswith(("jaos/", "jaos_platform/"))
+    }
+
+    assert not (_REPOSITORY_ROOT / "communication").exists()
+    assert canonical_importers == set()
+    assert production_importers == set()
+    assert configured_importers == set()
+    assert dynamic_importers == set()
+    assert excluded_test_importers == _F06E_COMMUNICATION_EXCLUDED_TEST_IMPORTERS
+    assert all(
+        (_REPOSITORY_ROOT / archive_relpath).is_file()
+        for _former, archive_relpath, _sha256, _blob in (
+            _F06E_COMMUNICATION_ARCHIVE_RECORDS
+        )
+    )

@@ -2,7 +2,7 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.16
+Document Version: 1.17
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -13,13 +13,15 @@ F06D2D IMPLEMENTED AND VERIFIED; F06D2E IMPLEMENTED AND VERIFIED;
 FORTRESS-06D Memory retirement — IMPLEMENTED AND VERIFIED under ADR-0013;
 provider retirement — IMPLEMENTED AND VERIFIED under ADR-0014;
 satellite/runtime shadow-test retirement — IMPLEMENTED AND VERIFIED;
-core/kernel shadow-runtime test retirement — IMPLEMENTED AND VERIFIED
+core/kernel shadow-runtime test retirement — IMPLEMENTED AND VERIFIED;
+FORTRESS-06E communication production-root quarantine pilot — IMPLEMENTED AND
+VERIFIED
 
 Owner and Approval Authority: Founder Vinay B
 
 Maintainer: JAOS Engineering
 
-Last Updated: 2026-08-31
+Last Updated: 2026-09-01
 
 Related Documents:
 
@@ -168,7 +170,7 @@ slice that updates this manifest and its evidence together.
 | `jaos.cli.shell.JAOSShell injected adapter` | A — CANONICAL | Requires an injected dispatcher and owns only the interactive input and EOF loop, not dispatcher composition or platform lifecycle. | Direct canonical closure through `run_jaos.py`. | Canonical shell, launcher, integration, and architecture-boundary tests. | None. | F06C boundary preservation. | PROHIBITED throughout F06. |
 | `jaos.intelligence lazy facades` | B — COMPATIBILITY DEBT | Lazily preserve public exports and submodule compatibility without loading deferred capabilities. | Import-reachable in canonical Conversation composition. | F05 import-boundary and public-contract tests. | None. | F06G. | PROHIBITED until an approved public-API decision and F06G evidence. |
 | `brain/` | D — QUARANTINE | Large legacy reasoning, provider, permission, approval, audit, and state-writer stack. | Unreachable from `run_jaos.py`. | Zero configured direct importers; 270 excluded flat-test importers. | Owns `BehaviorTracker`, `DecisionRecord`, `GoalTracker`, `ProviderMemory`, `ReasoningTraceLogger`, `CrashRecoverySystem`, `UserProfile`, and `ProviderRouter` legacy writers. | F06D, F06E, and F06F. | PROHIBITED until test adjudication, writer isolation, relocation plan, and rollback evidence pass. |
-| `communication/` | D — QUARANTINE | Top-level satellite service stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
+| `legacy_quarantine/production/communication/*.py.legacy` | E — ARCHIVE-ONLY | Six byte/blob-identical non-Python archives of the former top-level communication satellite stack. | Unreachable from `run_jaos.py`; the live `communication/` root is absent. | Zero configured direct importers; seven excluded flat historical tests retain stale imports as F06G/F06H debt. | None. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE in the F06E pilot; deletion or import from quarantine is PROHIBITED. |
 | `core/` | D — QUARANTINE | Legacy engine, kernel, composition, permission, recovery, and repository-state path. | Unreachable from `run_jaos.py`; reachable from legacy `main.py`. | One configured direct importer remains: `tests/tests/platform/test_config_containment.py`; F06D1 quarantined `tests/tests/core/test_kernel.py`, and the core runtime integration test is now quarantined. | Owns `ActionHistory`, `SnapshotManager`, `BackupManager`, and `ConfigManager` writers. | F06D, F06E, and F06F. | PROHIBITED until writer isolation, launcher decision, and rollback evidence pass. |
 | `dashboard/` | D — QUARANTINE | Top-level satellite interface stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `development/` | D — QUARANTINE | Top-level development-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
@@ -198,8 +200,8 @@ Classification counts:
 | A — CANONICAL | 10 |
 | B — COMPATIBILITY DEBT | 1 |
 | C — MIGRATION INPUT | 0 source entries |
-| D — QUARANTINE | 16 |
-| E — ARCHIVE-ONLY | 3 |
+| D — QUARANTINE | 15 |
+| E — ARCHIVE-ONLY | 4 |
 | F — SAFE-TO-DELETE-LATER | 3 |
 | G — UNKNOWN — NEEDS DECISION | 0 source entries |
 | Total classified source entries | 33 |
@@ -213,7 +215,9 @@ The quarantine namespace is the top-level module identity
 moved. F06B creates only `legacy_quarantine/tests/` for two non-Python archive
 payloads; F06D1 adds `tests/ai/` and `tests/core/`, F06D2A adds
 `tests/tools/filesystem/`, and F06D2B adds `tests/tools/core/`, for further
-non-Python archive payloads. No
+non-Python archive payloads. The F06E communication pilot adds
+`legacy_quarantine/production/communication/` for six exact non-Python
+production-source archives. No
 directory under `legacy_quarantine` contains `__init__.py`, and no file under it
 has a recognized Python import suffix. Because the repository root is on
 `sys.path`, the directory can still be represented by Python as a PEP 420
@@ -1365,10 +1369,78 @@ remains PAUSED. No later slice started.
 
 ---
 
-## 20. Update History
+## 20. FORTRESS-06E Communication Production-Root Quarantine Pilot
+
+The first controlled F06E production-source slice removed the live
+`communication/` root after re-verifying its six-source inventory and exact
+caller boundary. Mechanical static analysis found zero canonical production
+callers, zero legacy production callers, zero configured-test callers, and no
+active dynamic loader capable of reaching `communication.*`. Seven excluded
+flat historical tests retain stale imports outside configured `tests/tests`
+certification; they are unchanged and remain later F06G/F06H compatibility
+debt.
+
+The authoritative original-to-archive mapping is:
+
+| Original production path | Archive path | SHA-256 | Git blob | Disposition |
+|---|---|---|---|---|
+| `communication/calendar_manager.py` | `legacy_quarantine/production/communication/calendar_manager.py.legacy` | `de550bf3ddb8ea4c7c9be56e492f54c54dfa5280a7e8ef853def40eea8894911` | `807089aa2bc86cf92f42ae65fa8ececddc13db98` | ARCHIVE-ONLY — exact source preserved |
+| `communication/communication_hub.py` | `legacy_quarantine/production/communication/communication_hub.py.legacy` | `d34c4f6b33410c69498493675fef02d59ae88e7bee366c97d6311c0295eca02b` | `65bb8f303128b6847fa2ac9913af5d627ad82ec1` | ARCHIVE-ONLY — exact source preserved |
+| `communication/contacts_manager.py` | `legacy_quarantine/production/communication/contacts_manager.py.legacy` | `2f0c86a51200d40513d3827def63c464c8f3fc10d2cce433a761a999932bb565` | `69f189614e5c5fbf707561752b99fec3fd9a154f` | ARCHIVE-ONLY — exact source preserved |
+| `communication/conversation_manager.py` | `legacy_quarantine/production/communication/conversation_manager.py.legacy` | `8bace0ec95836012cf3cf7fceb2fae929068ca975c010502a33e51a05cb0e72b` | `3dacf67cda7110b7b92c8b76e9141a63ee5470c4` | ARCHIVE-ONLY — exact source preserved |
+| `communication/email_manager.py` | `legacy_quarantine/production/communication/email_manager.py.legacy` | `997d2c4ea5cfb8fd82194d86158a07b5b8d593dcc22cb5f0fec42f595500d08b` | `824e1eccc45973d45aad7988397e86df211b6dd7` | ARCHIVE-ONLY — exact source preserved |
+| `communication/meeting_assistant.py` | `legacy_quarantine/production/communication/meeting_assistant.py.legacy` | `e8ff0e6b877b3c4546c4c6810cb418c41b0210b5896956fa60de8608f35bf542` | `c36d257ebcf8a5b91ca4f4c96b43655581a7789a` | ARCHIVE-ONLY — exact source preserved |
+
+All six archive payloads are byte- and Git-blob-identical to HEAD at their
+former paths. They use the `.py.legacy` suffix, are non-importable and
+non-collectable, and introduce no `__init__.py`. The live `communication/`
+root is absent. Repository Python source does not import from
+`legacy_quarantine`, and the canonical `run_jaos.py` static closure remains
+disjoint from both the former root and the archive.
+
+Static source inspection found no persistent writer, runtime-data writer,
+network request, subprocess, process/thread creation, desktop/application or
+service control, or other external-effect implementation requiring
+preservation. The pilot introduced no replacement capability, forwarding
+wrapper, compatibility alias, or canonical production change. `jaos/` and
+`jaos_platform/` remain unchanged.
+
+The existing collection-containment authority gained exactly two configured
+cases: production archive fidelity and communication caller containment. The
+retained `tests/tests/platform/test_config_containment.py` remains unchanged
+with nine source definitions and eleven collected cases; the pilot does not
+satisfy its F06E/F06F retirement gate.
+
+Verification used repository Python, `PYTHONDONTWRITEBYTECODE=1`, `-B`,
+`-p no:cacheprovider`, and fresh external Windows-safe `--basetemp` roots:
+
+| Gate | Result |
+|---|---|
+| Two new F06E communication containment cases | 2 passed |
+| Focused containment/import/launcher/runtime/composition/service/config | 179 passed |
+| Platform suite | 381 passed, 1 skipped |
+| Composition suite | 49 passed |
+| Integration suite | 17 passed |
+| Full configured `tests/tests` | 1,762 passed, 1 skipped |
+| Repository-root collection | 1,763 collected |
+| Ruff on the changed Python file | All checks passed |
+
+Collection reconciles exactly as `1,761 + 2 = 1,763`. Quarantining production
+source removed no configured test case.
+
+FORTRESS-06E communication production-root quarantine pilot — IMPLEMENTED AND
+VERIFIED. F06E and FORTRESS-06 remain IN PROGRESS. F06D remains IN PROGRESS
+because the config-containment authority remains intentionally configured.
+RAA-003 remains OPEN. No later F06E cluster or F06F/F06G/F06H implementation
+started.
+
+---
+
+## 21. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-01 | 1.17 | Recorded the FORTRESS-06E communication production-root quarantine pilot as IMPLEMENTED AND VERIFIED: moved six zero-caller, non-writer sources into exact byte/blob-identical non-Python archives; updated the classification from live quarantine candidate to archive-only preservation; added two containment cases; retained seven excluded flat-test references as F06G/F06H debt; preserved canonical production, `jaos/`, `jaos_platform/`, and the 11-case config-containment gate; reconciled root collection as 1,761 + 2 = 1,763; and verified 1,762 passed with 1 skip. F06E remains IN PROGRESS and RAA-003 remains OPEN. |
 | 2026-08-31 | 1.16 | Recorded FORTRESS-06D core/kernel shadow-runtime test retirement as IMPLEMENTED AND VERIFIED: retired 2 configured files / 6 collected source tests into byte/blob-identical `.py.legacy` archives without behavior ports or production changes; added exactly 2 containment cases; achieved 3 -> 1 legacy-facing files while configured `executive_brain` importers remained 0; preserved the 11-case config containment authority unchanged; reconciled root collection as 1,765 - 6 + 2 = 1,761; and verified 1,760 passed with 1 skip. The configured legacy-facing progression is now 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.15 | Recorded FORTRESS-06D satellite/runtime shadow-test retirement as IMPLEMENTED AND VERIFIED: retired 10 configured files / 30 collected source tests into byte/blob-identical `.py.legacy` archives without capability ports or production changes; added exactly 2 containment cases; achieved 13 -> 3 legacy-facing files while configured `executive_brain` importers remained 0; preserved config containment plus core/kernel tests for later separate work; reconciled collection as 1,793 - 30 + 2 = 1,765; and verified 1,764 passed with 1 skip. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.14 | Recorded ADR-0014 provider retirement as IMPLEMENTED AND VERIFIED: added 3 configured canonical provider-neutral tests before retiring 2 shadow-provider files / 20 collected cases into byte/blob-identical `.py.legacy` archives; added 2 containment cases; achieved 15 -> 13 legacy-facing files and 2 -> 0 configured `executive_brain` importers; reconciled root collection as 1,808 - 20 + 3 + 2 = 1,793; and verified 1,792 passed with 1 skip. The two unchanged excluded flat provider tests remain non-blocking legacy/facade debt outside configured `tests/tests` certification. Production provider sources, provider independence, credentials, network state, runtime data, F09, and RAA-003 remained unchanged. |
