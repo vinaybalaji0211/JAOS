@@ -106,8 +106,8 @@ _F06_CLASSIFICATION_END = "<!-- F06A-CLASSIFICATION-ENTRIES:END -->"
 _EXPECTED_F06_CLASSIFICATION_COUNTS = {
     "A": 10,
     "B": 1,
-    "D": 12,
-    "E": 7,
+    "D": 8,
+    "E": 11,
     "F": 3,
 }
 _EXPECTED_F06_CLASSIFIED_PATHS = {
@@ -137,14 +137,10 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
         {
             "brain/",
             "core/",
-            "dashboard/",
             "engineering/",
             "executive_brain/",
             "kernel/",
-            "knowledge/",
             "memory/",
-            "security/",
-            "system_services/",
             "workflow/",
             "main.py",
         }
@@ -152,6 +148,10 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
     "E": frozenset(
         {
             "legacy_quarantine/production/communication/*.py.legacy",
+            "legacy_quarantine/production/dashboard/*.py.legacy",
+            "legacy_quarantine/production/knowledge/*.py.legacy",
+            "legacy_quarantine/production/security/*.py.legacy",
+            "legacy_quarantine/production/system_services/*.py.legacy",
             "legacy_quarantine/production/development/*.py.legacy",
             "legacy_quarantine/production/infrastructure/*.py.legacy",
             "legacy_quarantine/production/pc_control/*.py.legacy",

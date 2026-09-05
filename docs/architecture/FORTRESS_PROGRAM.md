@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.27
+Document Version: 1.28
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -2553,7 +2553,9 @@ archives, two test files, and these two architecture evidence documents.
 Protected-state hashes and all unrelated root hashes remain unchanged.
 Project-state documents are not part of this slice.
 
-The other four satellite roots remain pending separate dynamic-path review.
+At this earlier checkpoint the other four satellite roots remained pending
+separate dynamic-path review; section 7.28 records their subsequent approved
+quarantine.
 `engineering/` remains a separate dynamic-import-sensitive slice;
 `workflow/` remains blocked by
 `executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`.
@@ -2567,6 +2569,149 @@ committed, or pushed.
 
 ---
 
+
+
+### 7.28 FORTRESS-06E Dashboard/Knowledge/Security/System-Services Production Quarantine
+
+Status: **IMPLEMENTED AND VERIFIED**.
+
+The separately approved slice continues from HEAD `9dc564f`, after the
+communication pilot at `2d2138c` and three-root quarantine at `2fdeadc`.
+Exactly 29 tracked sources were retired: dashboard 7, knowledge 7, security 7,
+system_services 8. All matched HEAD Git blobs and filtered checkout bytes.
+The manually removed caches were absent; no unexpected, hidden, non-Python,
+symlink, or reparse-point artifact was present before movement.
+
+All 29 archives preserve raw checkout bytes, SHA-256, size, and Git blob
+identity under `legacy_quarantine/production/<original-relative-path>.legacy`.
+Original-path and archive-path Git filtering reproduce the same blobs.
+These are 29 R100-equivalent moves, reversible through Git history; actual
+rename detection awaits a separately authorized checkpoint. Archive payloads
+were not edited. The four live roots and caches are absent. No wrapper, stub,
+alias, forwarding module, compatibility package, or replacement was added.
+Every payload is non-importable/non-collectable `*.py.legacy`; there is no
+importable quarantine `__init__.py` or repository Python import from quarantine.
+
+| Root | Canonical production callers | Legacy production callers | Configured-test callers | Direct excluded files / statements | Excluded dynamic registrations |
+|---|---:|---:|---:|---:|---:|
+| dashboard | 0 | 0 | 0 | 7 / 12 | 1 |
+| knowledge | 0 | 0 | 0 | 7 / 12 | 1 |
+| security | 0 | 0 | 0 | 7 / 12 | 2 |
+| system_services | 0 | 0 | 0 | 8 / 14 | 1 |
+| Total | 0 | 0 | 0 | 29 / 50 | 5 |
+
+All five registrations are **EXCLUDED-TEST DEBT ONLY**.
+`tests/import_validator_test.py:5-8` registers
+`security.permission_manager`, `dashboard.mission_control`,
+`system_services.backup_manager`, and `knowledge.knowledge_graph`, then
+calls `validate()` at line 10.
+`tests/engineering_platform_integration_test.py:46-48` registers
+`security.permission_manager` and calls `validate()` at line 105.
+Both reach the unchanged
+`engineering.import_validator.ImportValidator.validate()`, whose line 34
+uses `importlib.import_module(module_path)` for explicitly supplied names.
+There is no autodiscovery or production, configured, canonical, or active
+runtime/CLI caller.
+
+The shipped `pytest.ini` selects `tests/tests`; `tests/conftest.py`
+intentionally excludes the flat executable scripts during configured and root
+collection. These paths require explicit legacy invocation. Direct imports
+and dynamic registrations span 31 unique excluded files. The unchanged
+ProjectStructureValidator retains folder-existence debt through
+`tests/project_structure_validator_test.py` and the already-counted engineering
+integration script: 32 distinct files including folder debt. These scripts
+were neither modified nor executed; all debt remains F06G/F06H.
+
+Static review reconfirms **LOW-RISK IN-MEMORY** for all 29 sources: no implemented
+root-owned filesystem/runtime-data/config persistence, network/HTTP/socket
+operation, subprocess/shell/process/thread creation, desktop/clipboard/service/
+registry mutation, arbitrary module execution, or arbitrary path mutation.
+Shared externally configured logging and injected event publication do not
+establish root-owned writer authority. There are no cross-imports among the
+four roots; outbound shared logger/service contracts do not make them canonical.
+
+The existing collection-containment authority now preserves archives for
+`dashboard/mission_control.py`, `knowledge/knowledge_base.py`,
+`security/security_monitor.py`, and `system_services/startup_manager.py`.
+The four prior whole-root inventory hashes remain exact, reconstructed from
+archive bytes under original path identities. Engineering/workflow,
+core/kernel/config, canonical, and existing quarantine guards remain enforced.
+Exactly two grouped configured cases cover archive fidelity/inertness and
+caller/excluded-debt/boundary containment, reusing the existing archive helper.
+
+The manifest and existing canonical guard have exact synchronized membership:
+A=10, B=1, D=8, E=11, F=3, TOTAL=33. The four live-root entries leave D and are
+represented by their production archive patterns in E. No duplicate or missing
+classification exists; all unrelated members and forbidden-import checks are
+unchanged. The manifest/guard pair was updated after quarantine verification,
+with final synchronized-state verification following the update.
+
+`run_jaos.py`, `jaos/`, and `jaos_platform/` are unchanged. Their static
+launcher closure through JAOSApplication, PlatformRuntime/BootManager, and
+PlatformComposition remains disjoint from the four roots. This is static
+evidence, not live-runtime certification.
+
+`tests/tests/platform/test_config_containment.py` remains
+**KEEP TEMPORARILY / INTENTIONALLY CONFIGURED**, SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+9 definitions / 11 collected cases; configured legacy-facing exactly 1;
+configured `executive_brain` importers 0. Its F06E/F06F writer gate and
+unauthorized retirement status are unchanged.
+
+Exact original/archive paths, byte counts, SHA-256 values, and Git blobs are
+recorded in manifest section 22.2.
+
+All gates exited 0 using `.venv/Scripts/python.exe -B`,
+`PYTHONDONTWRITEBYTECODE=1`, `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`,
+`-p anyio.pytest_plugin -p no:cacheprovider`, and unique external
+`%TEMP%/jaos-f06e-satellites-<uuid>/pytest` basetemp directories.
+The established in-memory Windows runner changes restrictive directory creation
+only under that disposable tree to inherit its parent ACL. No repository
+helper or cache was created.
+
+| Gate (pytest includes `-q`) | Result |
+|---|---|
+| Two new `test_f06e_dynamic_satellite_*` cases | 2 passed |
+| Previous F06D satellite, F06E communication, and F06E three-root cases | 6 passed |
+| Full `tests/tests/platform/test_collection_containment.py` | 40 passed |
+| Full `tests/tests/platform/test_canonical_import_boundary.py` | 55 passed |
+| Integration `test_run_jaos_launcher.py` and `test_run_jaos_banner.py` | 8 passed |
+| Platform `test_platform_runtime_lifecycle.py` and `test_platform_runtime.py` | 21 passed |
+| Composition `test_platform_composition.py` | 8 passed |
+| Platform `test_base_platform_service.py` and `test_service_container.py` | 9 passed |
+| Platform `test_config_containment.py` | 11 passed |
+| Complete focused set, counting unique cases | 152 passed |
+| `tests/tests/platform` | 385 passed, 1 skipped |
+| `tests/tests/composition` | 49 passed |
+| `tests/tests/integration` | 17 passed |
+| `tests/tests` | 1,766 passed, 1 skipped |
+| `pytest . --collect-only -q` | 1,767 collected |
+| `ruff check --no-cache` on both changed Python test files | PASS |
+
+Exactly two configured cases were added; none retired:
+`1,765 + 2 = 1,767`. The skip is the existing Windows directory-symlink
+privilege limitation. An initial launcher attempt selected the Windows Python
+alias, which lacked pytest and ran no tests; selecting repository Python
+corrected the runner without changing test or application behavior.
+
+
+The task has exactly 62 logical paths: 29 retired sources, 29 archives, two
+existing test files, and two architecture evidence documents. Protected state,
+canonical roots, engineering, workflow, project-state documents, and every
+path outside that scope retain their pre-task hashes. HEAD remains
+`9dc564f`, aligned with origin; the index is empty. Nothing was staged,
+committed, or pushed.
+
+`engineering/` remains a separate future slice for its arbitrary import
+validator and non-Python artifact. `workflow/` remains blocked by
+`executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`.
+No other F06E root or F06F/F06G/F06H slice began. F06D, F06E, and FORTRESS-06
+remain IN PROGRESS; RAA-003 remains OPEN. The main.py and
+BasePlatformService/PlatformContract Founder dispositions remain unresolved.
+Step 8 remains blocked, Fortress certification has not started, and major
+Phase 8 expansion remains paused.
+
+---
 
 ## 8. Relationship to Stabilization and Certified Phases
 
@@ -2622,6 +2767,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-06 | 1.28 | Recorded the verified 29-source dashboard/knowledge/security/system_services production quarantine, exact archive fidelity, two grouped containment cases, excluded-only dynamic/debt adjudication, and D=8/E=11 with 33 classifications. Focused 152 passed; full configured 1,766 passed, 1 skipped; root collection 1,767. Canonical/config/protected state and later-slice boundaries preserved; RAA-003 OPEN and F06E IN PROGRESS. |
 | 2026-09-05 | 1.27 | Recorded the verified 24-source development/infrastructure/pc_control production quarantine, exact byte/blob fidelity, two containment cases, and the narrow classification-guard reconciliation to D=12/E=7 with 33 total entries. Configured regression: 1,764 passed, 1 skipped; root collection: 1,765. Canonical, config-containment, protected-state, and later-slice boundaries remain intact; RAA-003 is OPEN and F06E is IN PROGRESS. |
 | 2026-09-01 | 1.26 | Recorded the FORTRESS-06E communication production-root quarantine pilot as IMPLEMENTED AND VERIFIED: moved six zero-caller, non-writer legacy sources into exact byte/blob-identical non-Python production archives; added two containment cases; preserved seven excluded flat-test references as F06G/F06H debt; left canonical production, `jaos/`, `jaos_platform/`, and the 11-case config-containment gate unchanged; reconciled root collection as 1,761 + 2 = 1,763; and verified 1,762 passed with 1 skip. F06E and FORTRESS-06 remain IN PROGRESS, RAA-003 remains OPEN, and no later slice started. |
 | 2026-08-31 | 1.25 | Recorded FORTRESS-06D core/kernel shadow-runtime test retirement as IMPLEMENTED AND VERIFIED: retired 2 configured files / 6 collected source tests into byte/blob-identical `.py.legacy` archives without behavior ports or production changes; added exactly 2 containment cases; achieved 3 -> 1 legacy-facing files while configured `executive_brain` importers remained 0; preserved the 11-case config containment authority unchanged; reconciled root collection as 1,765 - 6 + 2 = 1,761; and verified 1,760 passed with 1 skip. The configured legacy-facing progression is now 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1. RAA-003 remains OPEN and no later slice started. |
