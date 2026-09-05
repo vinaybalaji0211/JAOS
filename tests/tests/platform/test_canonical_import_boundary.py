@@ -106,8 +106,8 @@ _F06_CLASSIFICATION_END = "<!-- F06A-CLASSIFICATION-ENTRIES:END -->"
 _EXPECTED_F06_CLASSIFICATION_COUNTS = {
     "A": 10,
     "B": 1,
-    "D": 16,
-    "E": 3,
+    "D": 12,
+    "E": 7,
     "F": 3,
 }
 _EXPECTED_F06_CLASSIFIED_PATHS = {
@@ -136,17 +136,13 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
     "D": frozenset(
         {
             "brain/",
-            "communication/",
             "core/",
             "dashboard/",
-            "development/",
             "engineering/",
             "executive_brain/",
-            "infrastructure/",
             "kernel/",
             "knowledge/",
             "memory/",
-            "pc_control/",
             "security/",
             "system_services/",
             "workflow/",
@@ -155,6 +151,10 @@ _EXPECTED_F06_CLASSIFIED_PATHS = {
     ),
     "E": frozenset(
         {
+            "legacy_quarantine/production/communication/*.py.legacy",
+            "legacy_quarantine/production/development/*.py.legacy",
+            "legacy_quarantine/production/infrastructure/*.py.legacy",
+            "legacy_quarantine/production/pc_control/*.py.legacy",
             "legacy_quarantine/tests/phase14_integration_test.py.legacy",
             "kernel/jaos_kernel_backup.py",
             "legacy_quarantine/tests/test_logger.py.legacy",

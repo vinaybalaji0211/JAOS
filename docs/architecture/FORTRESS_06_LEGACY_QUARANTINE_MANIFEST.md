@@ -2,7 +2,7 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.17
+Document Version: 1.18
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -15,13 +15,14 @@ provider retirement — IMPLEMENTED AND VERIFIED under ADR-0014;
 satellite/runtime shadow-test retirement — IMPLEMENTED AND VERIFIED;
 core/kernel shadow-runtime test retirement — IMPLEMENTED AND VERIFIED;
 FORTRESS-06E communication production-root quarantine pilot — IMPLEMENTED AND
-VERIFIED
+VERIFIED; development/infrastructure/pc_control production quarantine —
+IMPLEMENTED AND VERIFIED
 
 Owner and Approval Authority: Founder Vinay B
 
 Maintainer: JAOS Engineering
 
-Last Updated: 2026-09-01
+Last Updated: 2026-09-05
 
 Related Documents:
 
@@ -173,14 +174,14 @@ slice that updates this manifest and its evidence together.
 | `legacy_quarantine/production/communication/*.py.legacy` | E — ARCHIVE-ONLY | Six byte/blob-identical non-Python archives of the former top-level communication satellite stack. | Unreachable from `run_jaos.py`; the live `communication/` root is absent. | Zero configured direct importers; seven excluded flat historical tests retain stale imports as F06G/F06H debt. | None. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE in the F06E pilot; deletion or import from quarantine is PROHIBITED. |
 | `core/` | D — QUARANTINE | Legacy engine, kernel, composition, permission, recovery, and repository-state path. | Unreachable from `run_jaos.py`; reachable from legacy `main.py`. | One configured direct importer remains: `tests/tests/platform/test_config_containment.py`; F06D1 quarantined `tests/tests/core/test_kernel.py`, and the core runtime integration test is now quarantined. | Owns `ActionHistory`, `SnapshotManager`, `BackupManager`, and `ConfigManager` writers. | F06D, F06E, and F06F. | PROHIBITED until writer isolation, launcher decision, and rollback evidence pass. |
 | `dashboard/` | D — QUARANTINE | Top-level satellite interface stack using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
-| `development/` | D — QUARANTINE | Top-level development-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
+| `legacy_quarantine/production/development/*.py.legacy` | E — ARCHIVE-ONLY | 7 byte/blob-identical non-Python archives of the former development production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 7 / 12 excluded flat files / direct import statements remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `engineering/` | D — QUARANTINE | Top-level engineering-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `executive_brain/` | D — QUARANTINE | Parallel Executive, planning, registry, Memory, AI-provider, and Tool authority. ADR-0012 confirms that its exact manager and registry implementations are quarantine candidates; ADR-0013 confirms the exact legacy Executive `WorkingMemory`, `MemoryManager`, and `MemoryRegistry` implementations are not canonical runtime authorities; ADR-0014 confirms the exact legacy OpenAI/Ollama adapters and contracts are not canonical provider authority. | Unreachable from `run_jaos.py`. | Zero configured direct importers after ADR-0014 provider retirement. F06D1 quarantined six AI duplicate tests, F06D2A archived seven filesystem-tool tests, F06D2B archived four Tool Platform core tests, F06D2C archived four monolithic Executive/pipeline tests, F06D2D archived nine manager/registry tests, F06D2E archived sixteen prototype-tool tests, ADR-0013 governed the four-file Memory test retirement, and ADR-0014 governed the two-file provider retirement after three canonical port-first tests. | The retired provider tests are offline/mock-based and execute no real provider integration or persistent repository writer; the retired legacy Memory tests and implementations mutate in-memory state and execute no persistent repository writer; F06D2C, F06D2D, and F06D2E likewise execute no persistent repository writer. | F06D and F06E; F09 owns later concrete-provider resilience. | PROHIBITED until production caller inventory, relocation plan, rollback evidence, and later F06 source disposition pass. |
-| `infrastructure/` | D — QUARANTINE | Top-level provider and infrastructure-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
+| `legacy_quarantine/production/infrastructure/*.py.legacy` | E — ARCHIVE-ONLY | 9 byte/blob-identical non-Python archives of the former infrastructure production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 9 / 16 excluded flat files / direct import statements remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `kernel/` | D — QUARANTINE | Parallel boot, kernel, lifecycle, registry, permission, and runtime-context authorities. | Unreachable from `run_jaos.py`. | Zero configured direct importers after core/kernel shadow-runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until caller inventory and rollback evidence pass. |
 | `knowledge/` | D — QUARANTINE | Top-level knowledge-service prototypes using the legacy runtime-service bridge. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `memory/` | D — QUARANTINE | Root legacy Memory implementation distinct from canonical `jaos.memory`. | Unreachable from `run_jaos.py`. | Zero configured direct importers; nine excluded flat-test importers. | Owns `LongTermMemory`, `MemoryCleanup`, and `MemoryExport` writers. | F06D, F06E, and F06F. | PROHIBITED until writer isolation, data-preservation proof, relocation plan, and rollback evidence pass. |
-| `pc_control/` | D — QUARANTINE | Top-level application, browser, filesystem, terminal, and device-control prototypes. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
+| `legacy_quarantine/production/pc_control/*.py.legacy` | E — ARCHIVE-ONLY | 8 byte/blob-identical non-Python archives of the former pc_control production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 8 / 14 excluded flat files / direct import statements remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `security/` | D — QUARANTINE | Parallel permission, authorization, identity, and audit prototypes; F07 policy is separate. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval; no F07 policy work in F06. |
 | `system_services/` | D — QUARANTINE | Top-level startup, backup, configuration, cache, and cleanup prototypes. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
 | `workflow/` | D — QUARANTINE | Parallel workflow, task, dependency, retry, and automation authority. | Unreachable from `run_jaos.py`. | Zero configured direct importers after satellite/runtime test retirement. | None in FORTRESS-02 inventory. | F06E. | PROHIBITED until F06E relocation approval. |
@@ -200,8 +201,8 @@ Classification counts:
 | A — CANONICAL | 10 |
 | B — COMPATIBILITY DEBT | 1 |
 | C — MIGRATION INPUT | 0 source entries |
-| D — QUARANTINE | 15 |
-| E — ARCHIVE-ONLY | 4 |
+| D — QUARANTINE | 12 |
+| E — ARCHIVE-ONLY | 7 |
 | F — SAFE-TO-DELETE-LATER | 3 |
 | G — UNKNOWN — NEEDS DECISION | 0 source entries |
 | Total classified source entries | 33 |
@@ -1436,10 +1437,177 @@ started.
 
 ---
 
-## 21. Update History
+## 21. FORTRESS-06E Development/Infrastructure/PC-Control Production Quarantine
+
+Date: 2026-09-05. Status: IMPLEMENTED AND VERIFIED.
+
+The controlled slice retired exactly three zero-inbound production roots:
+`development/` (7 Python sources), `infrastructure/` (9), and `pc_control/`
+(8), totaling 24. The manually resolved cache baseline was mechanically
+reverified before movement: exactly these tracked sources, including three
+empty `__init__.py` files, and no cache, generated, hidden, untracked,
+non-Python, or symlink/reparse artifact in the live roots.
+
+### 21.1 Exact archive and fidelity evidence
+
+| Original source | Production archive | SHA-256 (working bytes) | Git blob |
+|---|---|---|---|
+| `development/__init__.py` | `legacy_quarantine/production/development/__init__.py.legacy` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `development/build_test_manager.py` | `legacy_quarantine/production/development/build_test_manager.py.legacy` | `06fdfbf986d1b19780849e6838f1d172db6b55c75c0bb3ae866deb14dc2130a3` | `7b639749e046f72b7ed136883624f3df801c3e49` |
+| `development/development_workspace_manager.py` | `legacy_quarantine/production/development/development_workspace_manager.py.legacy` | `7d79d7cb5728b37be110d60cb1d8b9466f6227bb2383732ac49a006e9980459f` | `b76b22ddd940ccf2b34b87dcb0a6f2436ed00e2f` |
+| `development/git_manager.py` | `legacy_quarantine/production/development/git_manager.py.legacy` | `a2f04a2e1bdcc5e13d2255fa50838c990fa4d2b5de2d684533bf17992e525257` | `ad3fbda7ff8aa614750ae1e6f046ad183211fbde` |
+| `development/github_manager.py` | `legacy_quarantine/production/development/github_manager.py.legacy` | `127c256a0efba8bdb82aa52af4741b1ea7aa7c876603b091f31390530028446d` | `51f69adf0f0cfdda9df3282a6fb6757fe36d70d5` |
+| `development/repository_manager.py` | `legacy_quarantine/production/development/repository_manager.py.legacy` | `0dc11b690c3f7ffcd2763cf239973d8c0872ee8ff99d3444d469f7fc05e4f5c4` | `bd814f05ab90c0398c66254b46c07b96edb58948` |
+| `development/vscode_manager.py` | `legacy_quarantine/production/development/vscode_manager.py.legacy` | `e3a6ff01bf709b8b15c7850f8bba30162463b088b9070cc3f37fa0d9eb9a0401` | `a4a3b4f8ede5e0044df1579e94486cfc42a99221` |
+| `infrastructure/__init__.py` | `legacy_quarantine/production/infrastructure/__init__.py.legacy` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `infrastructure/ai_provider_manager.py` | `legacy_quarantine/production/infrastructure/ai_provider_manager.py.legacy` | `07efd3d37b5a4837b8fe34bb33d9400416993c352896b0e0d989a1e74a3142f7` | `b14629f344f4e45160da6a8af602b82d7ec79bd2` |
+| `infrastructure/api_intelligence_manager.py` | `legacy_quarantine/production/infrastructure/api_intelligence_manager.py.legacy` | `2ede184c92bdaf1b8a8a66121562fed25462899fa5f9f4d5f5e9fdfbf105fe3a` | `b7a1a49540572714597edfd43b215f34c9f02fb4` |
+| `infrastructure/cost_performance_optimizer.py` | `legacy_quarantine/production/infrastructure/cost_performance_optimizer.py.legacy` | `0a09c48ac06f18651c45325d0bd2119539ccc5a0fed7187322bde812283381df` | `bbd23fd3fa6b115d6f31a655b6d693a57c1de501` |
+| `infrastructure/database_intelligence.py` | `legacy_quarantine/production/infrastructure/database_intelligence.py.legacy` | `d6ae6833ea8d1b5b825e945b54dab329d51888f8aec8e1316cf23bd8b5835c54` | `b5744255dc054f40e6f3eb4be9083ea3cb4279cc` |
+| `infrastructure/infrastructure_intelligence_core.py` | `legacy_quarantine/production/infrastructure/infrastructure_intelligence_core.py.legacy` | `70376a5b24a3bbc98403e2e306f4bc86ffaa0167b55b91a7571bc2899b95ad06` | `3f008fdd954a02520ef45936a543e3637a14a593` |
+| `infrastructure/intelligent_resource_orchestrator.py` | `legacy_quarantine/production/infrastructure/intelligent_resource_orchestrator.py.legacy` | `cd0ac6a3632aa160a07d60f8ca7e3373d3dec97f7340f24a445745294b7a354e` | `465aaae65641df53d02b91a096206dbdb665de77` |
+| `infrastructure/multi_provider_task_composer.py` | `legacy_quarantine/production/infrastructure/multi_provider_task_composer.py.legacy` | `e570622c0537028fc4f3c7d6dc2e2faf1164d44d87a6b81afb41e199b14db209` | `437cebc9889498d1734f2aeba2e329dc99f71227` |
+| `infrastructure/storage_intelligence.py` | `legacy_quarantine/production/infrastructure/storage_intelligence.py.legacy` | `6eb8dcc67cfe0ae4ddc0b6f7015554e1e42834ccd0373a615f44834b93989243` | `0ae20f977b9b0f64cf5d0976ddb17970153bda02` |
+| `pc_control/__init__.py` | `legacy_quarantine/production/pc_control/__init__.py.legacy` | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `pc_control/application_manager.py` | `legacy_quarantine/production/pc_control/application_manager.py.legacy` | `d77a2a04047212056c837a11ea865ca44565ed2aa6ce8b2ac7d3f7d00cc91c0e` | `804215022857d6e98bc34e5ccb901b9403682101` |
+| `pc_control/browser_controller.py` | `legacy_quarantine/production/pc_control/browser_controller.py.legacy` | `cd390fc8b2d5f4ee1f360639bd7a4515799d0bed3e50115f50dcf1ff70cb6e97` | `771bf54ada23504aed7d612cc097451c460b3e2c` |
+| `pc_control/file_system_manager.py` | `legacy_quarantine/production/pc_control/file_system_manager.py.legacy` | `f2cc9bc795d4b233dca7dd6f1c5b499d09f51175c42b421521f7b53ec85a8c3f` | `fe32d3bd19e8f9432173f7b1e1f9913f777fb37c` |
+| `pc_control/notification_manager.py` | `legacy_quarantine/production/pc_control/notification_manager.py.legacy` | `a4db064b6af39bd96ff7d83720e70788fd5a8b65833e2f78567322b08253aa7b` | `07170c20957ba0bbbb7384b52f53d4de2278b7a2` |
+| `pc_control/system_monitor.py` | `legacy_quarantine/production/pc_control/system_monitor.py.legacy` | `dd48ede8aeba5b953c29792c858088e4ed92a0a302dcf7dffb0a56b81178f991` | `cae034fac3af405515c6e587c529b7f484aa0cb2` |
+| `pc_control/terminal_controller.py` | `legacy_quarantine/production/pc_control/terminal_controller.py.legacy` | `29c1d5b7b8b0a1df87311d20459358cd30ee8611af42b20a0326926327874aa4` | `485f09d21af144053da8c7dae9a87abe114a37aa` |
+| `pc_control/window_manager.py` | `legacy_quarantine/production/pc_control/window_manager.py.legacy` | `d5a9c99b822213b998b688f7a998a1efd3c30ebfa00cb3a83c88277f31f85a89` | `0cbec39e03b321703de8ec79173531dc475fdba4` |
+
+Every archive preserves the original working bytes and SHA-256, and produces
+the original HEAD Git blob under both original and archive paths. With
+`core.autocrlf=true`, working bytes match HEAD's checkout-filtered bytes;
+nonempty raw Git objects use LF while their working copies use CRLF. The
+quarantine did not normalize or edit any payload.
+
+All three live roots are absent, including caches. The archives use only
+`.py.legacy`, are not Python-importable or pytest-collectable, contain no
+importable `__init__.py`, and have no repository Python importer. No wrapper,
+stub, forwarding alias, or replacement capability was added. The 24 exact
+Git-blob pairs preserve reversible history and R100-equivalent identity;
+unstaged source deletions and untracked archives need not display as renames
+until a later authorized checkpoint.
+
+### 21.2 Caller, execution, and compatibility boundaries
+
+| Root | Canonical production callers | Legacy production callers | Configured-test callers | Active dynamic load paths | Excluded flat files / direct import statements |
+|---|---:|---:|---:|---:|---:|
+| `development` | 0 | 0 | 0 | 0 | 7 / 12 |
+| `infrastructure` | 0 | 0 | 0 | 0 | 9 / 16 |
+| `pc_control` | 0 | 0 | 0 | 0 | 8 / 14 |
+| Total | 0 | 0 | 0 | 0 | 24 / 42 |
+
+The exact excluded paths and 42 import statements remain pinned in
+`_F06E_SATELLITE_EXCLUDED_IMPORT_STATEMENTS` in
+`tests/tests/platform/test_collection_containment.py` as later F06G/F06H debt.
+No active compatibility obligation was established. The roots had no imports
+of one another. Shared logger and BasePlatformService dependencies did not
+constitute inbound canonical reachability.
+
+Static inspection of all 24 sources confirmed LOW-RISK IN-MEMORY disposition:
+stored commands, paths, URLs, and descriptions were not executed. No
+root-owned persistent/config/runtime-data writer, network/socket/HTTP,
+subprocess/shell, process/thread creation, desktop/clipboard/service/registry
+mutation, application execution, arbitrary module loading, or path mutation
+capability required preservation. Shared logging remained externally
+configured; these roots did not configure a persistent writer.
+
+The static canonical closure from `run_jaos.py` remains disjoint. This is
+static evidence, not live-runtime certification. `jaos/`, `jaos_platform/`,
+`run_jaos.py`, BasePlatformService, and PlatformContract are unchanged.
+
+### 21.3 Containment authority and classification reconciliation
+
+Exactly two grouped cases were added to the existing containment file:
+24-source archive fidelity and caller/boundary containment. The prior
+live-source requirements for
+`development/development_workspace_manager.py`,
+`infrastructure/ai_provider_manager.py`, and
+`pc_control/application_manager.py` now require their exact archives and
+hash/blob evidence. Other live satellite and core/kernel requirements remain.
+
+The canonical import-boundary test had a pre-existing mismatch at `fe2a6c5`:
+it expected the communication root in D (D=16/E=3), although the manifest
+already classified its production archives as E (D=15/E=4). The authorized
+narrow correction updates both exact member sets and counts. Communication,
+development, infrastructure, and pc_control are now represented by their
+exact production archive patterns in E. D=12, E=7, and the total remains 33.
+All unrelated classifications, forbidden-module sets, canonical closure
+checks, exact-set checks, and duplicate-classification protection remain.
+
+`tests/tests/platform/test_config_containment.py` remains intentionally
+configured and unchanged, with SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+9 source definitions and 11 cases. Configured legacy-facing remains exactly
+1; configured `executive_brain` importers remain 0. Its F06E/F06F writer gate
+is unchanged.
+
+### 21.4 Executed verification
+
+
+All pytest gates use repository Python 3.14.6 with
+`PYTHONDONTWRITEBYTECODE=1`, `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`, `-B`,
+`-p anyio.pytest_plugin -p no:cacheprovider`, and a fresh external
+`%TEMP%/jaos-f06e-satellites-<uuid>/pytest` basetemp. The established in-memory
+Windows runner changes only restrictive directory creation under that
+disposable temp tree to inherit its parent ACL. It leaves no repository helper.
+
+| Gate | Executed result |
+|---|---|
+| Previously failing manifest/guard contract case | 1 passed |
+| Two new production-quarantine cases | 2 passed |
+| Full focused set | 150 passed |
+| `tests/tests/platform` | 383 passed, 1 skipped |
+| `tests/tests/composition` | 49 passed |
+| `tests/tests/integration` | 17 passed |
+| `tests/tests` | 1,764 passed, 1 skipped |
+| `pytest . --collect-only -q` | 1,765 collected |
+| Ruff, both changed containment/boundary Python files | PASS |
+
+The focused set comprises the complete collection-containment and canonical
+import-boundary files; launcher and banner tests; PlatformRuntime and its
+lifecycle tests; PlatformComposition; BasePlatformService; ServiceContainer;
+and config containment. No configured test was retired. Exactly two grouped
+cases were added: `1,763 + 2 = 1,765`. The single skip is the existing Windows
+directory-symlink privilege limitation.
+
+The first full-suite invocation with plugin autoload disabled omitted explicit
+AnyIO loading: 17 async tests could not execute (1,747 passed, 1 skipped,
+17 warnings). Explicitly loading the installed `anyio.pytest_plugin` corrected
+the runner; the two affected files passed all 19 cases and the complete suite
+then passed as recorded above. No async test or production behavior changed.
+
+### 21.5 Preserved scope and stop boundary
+
+Only 52 logical task paths are involved: 24 retired sources, 24 archives,
+the collection-containment and canonical import-boundary test files, and the
+two architecture evidence documents. Protected runtime data, SECURITY.md,
+agent/configuration directories, CLAUDE.md, graphify-out, and all unrelated
+roots retain their captured hashes. Project-state documents are unchanged.
+
+`dashboard/`, `knowledge/`, `security/`, and `system_services/` remain
+pending separate dynamic-path review. `engineering/` remains its separate
+dynamic-import-sensitive slice. `workflow/` remains blocked by
+`executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`.
+Neither those roots nor core/kernel/Executive/brain/memory/main.py were changed.
+
+F06D, F06E, and FORTRESS-06 remain IN PROGRESS; RAA-003 remains OPEN.
+F06F/F06G/F06H and every later slice remain NOT STARTED. The Founder decisions
+for main.py and BasePlatformService/PlatformContract remain unresolved.
+Step 8 remains blocked, Fortress certification is not started, and major
+Phase 8 expansion remains paused. Nothing was staged, committed, or pushed.
+
+---
+
+
+## 22. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-05 | 1.18 | Recorded the verified 24-source development/infrastructure/pc_control production quarantine, exact byte/blob fidelity, two containment cases, and the narrowly reconciled classification guard: D=12/E=7, total 33. Configured regression: 1,764 passed, 1 skipped; root collection: 1,765. Canonical and protected state remain unchanged; RAA-003 stays OPEN and F06E stays IN PROGRESS. |
 | 2026-09-01 | 1.17 | Recorded the FORTRESS-06E communication production-root quarantine pilot as IMPLEMENTED AND VERIFIED: moved six zero-caller, non-writer sources into exact byte/blob-identical non-Python archives; updated the classification from live quarantine candidate to archive-only preservation; added two containment cases; retained seven excluded flat-test references as F06G/F06H debt; preserved canonical production, `jaos/`, `jaos_platform/`, and the 11-case config-containment gate; reconciled root collection as 1,761 + 2 = 1,763; and verified 1,762 passed with 1 skip. F06E remains IN PROGRESS and RAA-003 remains OPEN. |
 | 2026-08-31 | 1.16 | Recorded FORTRESS-06D core/kernel shadow-runtime test retirement as IMPLEMENTED AND VERIFIED: retired 2 configured files / 6 collected source tests into byte/blob-identical `.py.legacy` archives without behavior ports or production changes; added exactly 2 containment cases; achieved 3 -> 1 legacy-facing files while configured `executive_brain` importers remained 0; preserved the 11-case config containment authority unchanged; reconciled root collection as 1,765 - 6 + 2 = 1,761; and verified 1,760 passed with 1 skip. The configured legacy-facing progression is now 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1. RAA-003 remains OPEN and no later slice started. |
 | 2026-08-31 | 1.15 | Recorded FORTRESS-06D satellite/runtime shadow-test retirement as IMPLEMENTED AND VERIFIED: retired 10 configured files / 30 collected source tests into byte/blob-identical `.py.legacy` archives without capability ports or production changes; added exactly 2 containment cases; achieved 13 -> 3 legacy-facing files while configured `executive_brain` importers remained 0; preserved config containment plus core/kernel tests for later separate work; reconciled collection as 1,793 - 30 + 2 = 1,765; and verified 1,764 passed with 1 skip. RAA-003 remains OPEN and no later slice started. |

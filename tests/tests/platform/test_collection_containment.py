@@ -1589,11 +1589,8 @@ _F06D_SATELLITE_ARCHIVE_RECORDS = (
 
 _F06D_SATELLITE_PRODUCTION_PATHS = (
     "dashboard/mission_control.py",
-    "development/development_workspace_manager.py",
     "engineering/platform_health_dashboard.py",
-    "infrastructure/ai_provider_manager.py",
     "knowledge/knowledge_base.py",
-    "pc_control/application_manager.py",
     "security/security_monitor.py",
     "system_services/startup_manager.py",
     "workflow/workflow_engine.py",
@@ -1695,6 +1692,20 @@ def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None
 
     for production_relpath in _F06D_SATELLITE_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
+    production_archives = {
+        former: (archive, sha256, blob)
+        for former, archive, sha256, blob in _F06E_SATELLITE_PRODUCTION_ARCHIVE_RECORDS
+    }
+    for former_relpath in (
+        "development/development_workspace_manager.py",
+        "infrastructure/ai_provider_manager.py",
+        "pc_control/application_manager.py",
+    ):
+        archive, sha256, blob = production_archives[former_relpath]
+        assert not (_REPOSITORY_ROOT / former_relpath).exists()
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == sha256
+        assert _git_blob_id(payload, path=archive) == blob
     for retained_relpath in _F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS:
         assert (_REPOSITORY_ROOT / retained_relpath).is_file()
 
@@ -1778,6 +1789,32 @@ def test_f06d_core_kernel_archives_preserve_exact_payloads(
     )
 
 
+def _assert_config_containment_preserved() -> None:
+    config_payload = _F06D_CONFIG_CONTAINMENT_PATH.read_bytes()
+    assert hashlib.sha256(config_payload).hexdigest() == (
+        _F06D_CONFIG_CONTAINMENT_SHA256
+    )
+    config_tree = ast.parse(config_payload.decode("utf-8"))
+    config_tests = tuple(
+        node
+        for node in ast.walk(config_tree)
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and node.name.startswith("test_")
+    )
+    parametrized_expansion = sum(
+        len(decorator.args[1].elts) - 1
+        for test_node in config_tests
+        for decorator in test_node.decorator_list
+        if isinstance(decorator, ast.Call)
+        and isinstance(decorator.func, ast.Attribute)
+        and decorator.func.attr == "parametrize"
+        and len(decorator.args) >= 2
+        and isinstance(decorator.args[1], (ast.List, ast.Tuple))
+    )
+    assert len(config_tests) == 9
+    assert len(config_tests) + parametrized_expansion == 11
+
+
 def test_f06d_core_kernel_retirement_leaves_only_config_containment() -> None:
     """Only the governed config/writer boundary remains legacy-facing."""
 
@@ -1813,29 +1850,7 @@ def test_f06d_core_kernel_retirement_leaves_only_config_containment() -> None:
     assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
     assert len(legacy_facing_paths) == 1
 
-    config_payload = _F06D_CONFIG_CONTAINMENT_PATH.read_bytes()
-    assert hashlib.sha256(config_payload).hexdigest() == (
-        _F06D_CONFIG_CONTAINMENT_SHA256
-    )
-    config_tree = ast.parse(config_payload.decode("utf-8"))
-    config_tests = tuple(
-        node
-        for node in ast.walk(config_tree)
-        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
-        and node.name.startswith("test_")
-    )
-    parametrized_expansion = sum(
-        len(decorator.args[1].elts) - 1
-        for test_node in config_tests
-        for decorator in test_node.decorator_list
-        if isinstance(decorator, ast.Call)
-        and isinstance(decorator.func, ast.Attribute)
-        and decorator.func.attr == "parametrize"
-        and len(decorator.args) >= 2
-        and isinstance(decorator.args[1], (ast.List, ast.Tuple))
-    )
-    assert len(config_tests) == 9
-    assert len(config_tests) + parametrized_expansion == 11
+    _assert_config_containment_preserved()
 
     for production_relpath in _F06D_CORE_KERNEL_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
@@ -1923,9 +1938,12 @@ def _git_blob_id(payload: bytes, *, path: str) -> str:
     return result.stdout.decode("ascii").strip()
 
 
-def _tracked_live_python_paths() -> tuple[Path, ...]:
+def _repository_live_python_paths() -> tuple[Path, ...]:
     result = subprocess.run(
-        ["git", "ls-files", "-z", "--", "*.py"],
+        [
+            "git", "ls-files", "-z", "--cached", "--others",
+            "--exclude-standard", "--", "*.py",
+        ],
         cwd=_REPOSITORY_ROOT,
         capture_output=True,
         timeout=30,
@@ -1952,7 +1970,7 @@ def _literal_dynamic_import_roots(source_path: Path) -> frozenset[str]:
             function_name = node.func.id
         elif isinstance(node.func, ast.Attribute):
             function_name = node.func.attr
-        if function_name not in {"import_module", "__import__"}:
+        if function_name not in {"import_module", "__import__", "add_import"}:
             continue
         module_argument = node.args[0]
         if isinstance(module_argument, ast.Constant) and isinstance(
@@ -2004,7 +2022,7 @@ def test_f06e_communication_production_archives_preserve_exact_payloads(
         (_REPOSITORY_ROOT / "legacy_quarantine").rglob("__init__.py")
     )
 
-    for source_path in _tracked_live_python_paths():
+    for source_path in _repository_live_python_paths():
         assert "legacy_quarantine" not in _imported_top_level_roots(source_path)
         assert "legacy_quarantine" not in _literal_dynamic_import_roots(source_path)
 
@@ -2012,7 +2030,7 @@ def test_f06e_communication_production_archives_preserve_exact_payloads(
 def test_f06e_communication_production_caller_containment() -> None:
     """Communication archives have no live production or configured caller."""
 
-    tracked_python_paths = _tracked_live_python_paths()
+    tracked_python_paths = _repository_live_python_paths()
     importers = {
         path.relative_to(_REPOSITORY_ROOT).as_posix()
         for path in tracked_python_paths
@@ -2054,3 +2072,408 @@ def test_f06e_communication_production_caller_containment() -> None:
             _F06E_COMMUNICATION_ARCHIVE_RECORDS
         )
     )
+
+_F06E_SATELLITE_PRODUCTION_ROOTS = frozenset(
+    {"development", "infrastructure", "pc_control"}
+)
+_F06E_SATELLITE_PRODUCTION_ARCHIVE_RECORDS = (
+    (
+        "development/__init__.py",
+        "legacy_quarantine/production/development/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "development/build_test_manager.py",
+        "legacy_quarantine/production/development/build_test_manager.py.legacy",
+        "06fdfbf986d1b19780849e6838f1d172db6b55c75c0bb3ae866deb14dc2130a3",
+        "7b639749e046f72b7ed136883624f3df801c3e49",
+    ),
+    (
+        "development/development_workspace_manager.py",
+        "legacy_quarantine/production/development/development_workspace_manager.py.legacy",
+        "7d79d7cb5728b37be110d60cb1d8b9466f6227bb2383732ac49a006e9980459f",
+        "b76b22ddd940ccf2b34b87dcb0a6f2436ed00e2f",
+    ),
+    (
+        "development/git_manager.py",
+        "legacy_quarantine/production/development/git_manager.py.legacy",
+        "a2f04a2e1bdcc5e13d2255fa50838c990fa4d2b5de2d684533bf17992e525257",
+        "ad3fbda7ff8aa614750ae1e6f046ad183211fbde",
+    ),
+    (
+        "development/github_manager.py",
+        "legacy_quarantine/production/development/github_manager.py.legacy",
+        "127c256a0efba8bdb82aa52af4741b1ea7aa7c876603b091f31390530028446d",
+        "51f69adf0f0cfdda9df3282a6fb6757fe36d70d5",
+    ),
+    (
+        "development/repository_manager.py",
+        "legacy_quarantine/production/development/repository_manager.py.legacy",
+        "0dc11b690c3f7ffcd2763cf239973d8c0872ee8ff99d3444d469f7fc05e4f5c4",
+        "bd814f05ab90c0398c66254b46c07b96edb58948",
+    ),
+    (
+        "development/vscode_manager.py",
+        "legacy_quarantine/production/development/vscode_manager.py.legacy",
+        "e3a6ff01bf709b8b15c7850f8bba30162463b088b9070cc3f37fa0d9eb9a0401",
+        "a4a3b4f8ede5e0044df1579e94486cfc42a99221",
+    ),
+    (
+        "infrastructure/__init__.py",
+        "legacy_quarantine/production/infrastructure/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "infrastructure/ai_provider_manager.py",
+        "legacy_quarantine/production/infrastructure/ai_provider_manager.py.legacy",
+        "07efd3d37b5a4837b8fe34bb33d9400416993c352896b0e0d989a1e74a3142f7",
+        "b14629f344f4e45160da6a8af602b82d7ec79bd2",
+    ),
+    (
+        "infrastructure/api_intelligence_manager.py",
+        "legacy_quarantine/production/infrastructure/api_intelligence_manager.py.legacy",
+        "2ede184c92bdaf1b8a8a66121562fed25462899fa5f9f4d5f5e9fdfbf105fe3a",
+        "b7a1a49540572714597edfd43b215f34c9f02fb4",
+    ),
+    (
+        "infrastructure/cost_performance_optimizer.py",
+        "legacy_quarantine/production/infrastructure/cost_performance_optimizer.py.legacy",
+        "0a09c48ac06f18651c45325d0bd2119539ccc5a0fed7187322bde812283381df",
+        "bbd23fd3fa6b115d6f31a655b6d693a57c1de501",
+    ),
+    (
+        "infrastructure/database_intelligence.py",
+        "legacy_quarantine/production/infrastructure/database_intelligence.py.legacy",
+        "d6ae6833ea8d1b5b825e945b54dab329d51888f8aec8e1316cf23bd8b5835c54",
+        "b5744255dc054f40e6f3eb4be9083ea3cb4279cc",
+    ),
+    (
+        "infrastructure/infrastructure_intelligence_core.py",
+        "legacy_quarantine/production/infrastructure/infrastructure_intelligence_core.py.legacy",
+        "70376a5b24a3bbc98403e2e306f4bc86ffaa0167b55b91a7571bc2899b95ad06",
+        "3f008fdd954a02520ef45936a543e3637a14a593",
+    ),
+    (
+        "infrastructure/intelligent_resource_orchestrator.py",
+        "legacy_quarantine/production/infrastructure/intelligent_resource_orchestrator.py.legacy",
+        "cd0ac6a3632aa160a07d60f8ca7e3373d3dec97f7340f24a445745294b7a354e",
+        "465aaae65641df53d02b91a096206dbdb665de77",
+    ),
+    (
+        "infrastructure/multi_provider_task_composer.py",
+        "legacy_quarantine/production/infrastructure/multi_provider_task_composer.py.legacy",
+        "e570622c0537028fc4f3c7d6dc2e2faf1164d44d87a6b81afb41e199b14db209",
+        "437cebc9889498d1734f2aeba2e329dc99f71227",
+    ),
+    (
+        "infrastructure/storage_intelligence.py",
+        "legacy_quarantine/production/infrastructure/storage_intelligence.py.legacy",
+        "6eb8dcc67cfe0ae4ddc0b6f7015554e1e42834ccd0373a615f44834b93989243",
+        "0ae20f977b9b0f64cf5d0976ddb17970153bda02",
+    ),
+    (
+        "pc_control/__init__.py",
+        "legacy_quarantine/production/pc_control/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "pc_control/application_manager.py",
+        "legacy_quarantine/production/pc_control/application_manager.py.legacy",
+        "d77a2a04047212056c837a11ea865ca44565ed2aa6ce8b2ac7d3f7d00cc91c0e",
+        "804215022857d6e98bc34e5ccb901b9403682101",
+    ),
+    (
+        "pc_control/browser_controller.py",
+        "legacy_quarantine/production/pc_control/browser_controller.py.legacy",
+        "cd390fc8b2d5f4ee1f360639bd7a4515799d0bed3e50115f50dcf1ff70cb6e97",
+        "771bf54ada23504aed7d612cc097451c460b3e2c",
+    ),
+    (
+        "pc_control/file_system_manager.py",
+        "legacy_quarantine/production/pc_control/file_system_manager.py.legacy",
+        "f2cc9bc795d4b233dca7dd6f1c5b499d09f51175c42b421521f7b53ec85a8c3f",
+        "fe32d3bd19e8f9432173f7b1e1f9913f777fb37c",
+    ),
+    (
+        "pc_control/notification_manager.py",
+        "legacy_quarantine/production/pc_control/notification_manager.py.legacy",
+        "a4db064b6af39bd96ff7d83720e70788fd5a8b65833e2f78567322b08253aa7b",
+        "07170c20957ba0bbbb7384b52f53d4de2278b7a2",
+    ),
+    (
+        "pc_control/system_monitor.py",
+        "legacy_quarantine/production/pc_control/system_monitor.py.legacy",
+        "dd48ede8aeba5b953c29792c858088e4ed92a0a302dcf7dffb0a56b81178f991",
+        "cae034fac3af405515c6e587c529b7f484aa0cb2",
+    ),
+    (
+        "pc_control/terminal_controller.py",
+        "legacy_quarantine/production/pc_control/terminal_controller.py.legacy",
+        "29c1d5b7b8b0a1df87311d20459358cd30ee8611af42b20a0326926327874aa4",
+        "485f09d21af144053da8c7dae9a87abe114a37aa",
+    ),
+    (
+        "pc_control/window_manager.py",
+        "legacy_quarantine/production/pc_control/window_manager.py.legacy",
+        "d5a9c99b822213b998b688f7a998a1efd3c30ebfa00cb3a83c88277f31f85a89",
+        "0cbec39e03b321703de8ec79173531dc475fdba4",
+    ),
+)
+_F06E_SATELLITE_EXCLUDED_IMPORT_STATEMENTS = {
+    "tests/ai_provider_manager_test.py": (
+        ("infrastructure.ai_provider_manager",),
+    ),
+    "tests/api_intelligence_manager_test.py": (
+        ("infrastructure.api_intelligence_manager",),
+    ),
+    "tests/application_manager_test.py": (
+        ("pc_control.application_manager",),
+    ),
+    "tests/browser_controller_test.py": (
+        ("pc_control.browser_controller",),
+    ),
+    "tests/build_test_manager_test.py": (
+        ("development.build_test_manager",),
+    ),
+    "tests/cost_performance_optimizer_test.py": (
+        ("infrastructure.cost_performance_optimizer",),
+    ),
+    "tests/database_intelligence_test.py": (
+        ("infrastructure.database_intelligence",),
+    ),
+    "tests/development_platform_integration_test.py": (
+        ("development.build_test_manager",),
+        ("development.development_workspace_manager",),
+        ("development.git_manager",),
+        ("development.github_manager",),
+        ("development.repository_manager",),
+        ("development.vscode_manager",),
+    ),
+    "tests/development_workspace_manager_test.py": (
+        ("development.development_workspace_manager",),
+    ),
+    "tests/file_system_manager_test.py": (
+        ("pc_control.file_system_manager",),
+    ),
+    "tests/git_manager_test.py": (
+        ("development.git_manager",),
+    ),
+    "tests/github_manager_test.py": (
+        ("development.github_manager",),
+    ),
+    "tests/infrastructure_intelligence_core_test.py": (
+        ("infrastructure.infrastructure_intelligence_core",),
+    ),
+    "tests/infrastructure_platform_integration_test.py": (
+        ("infrastructure.ai_provider_manager",),
+        ("infrastructure.api_intelligence_manager",),
+        ("infrastructure.cost_performance_optimizer",),
+        ("infrastructure.database_intelligence",),
+        ("infrastructure.infrastructure_intelligence_core",),
+        ("infrastructure.intelligent_resource_orchestrator",),
+        ("infrastructure.multi_provider_task_composer",),
+        ("infrastructure.storage_intelligence",),
+    ),
+    "tests/intelligent_resource_orchestrator_test.py": (
+        ("infrastructure.intelligent_resource_orchestrator",),
+    ),
+    "tests/multi_provider_task_composer_test.py": (
+        ("infrastructure.multi_provider_task_composer",),
+    ),
+    "tests/notification_manager_test.py": (
+        ("pc_control.notification_manager",),
+    ),
+    "tests/pc_control_platform_integration_test.py": (
+        ("pc_control.application_manager",),
+        ("pc_control.browser_controller",),
+        ("pc_control.file_system_manager",),
+        ("pc_control.notification_manager",),
+        ("pc_control.system_monitor",),
+        ("pc_control.terminal_controller",),
+        ("pc_control.window_manager",),
+    ),
+    "tests/repository_manager_test.py": (
+        ("development.repository_manager",),
+    ),
+    "tests/storage_intelligence_test.py": (
+        ("infrastructure.storage_intelligence",),
+    ),
+    "tests/system_monitor_test.py": (
+        ("pc_control.system_monitor",),
+    ),
+    "tests/terminal_controller_test.py": (
+        ("pc_control.terminal_controller",),
+    ),
+    "tests/vscode_manager_test.py": (
+        ("development.vscode_manager",),
+    ),
+    "tests/window_manager_test.py": (
+        ("pc_control.window_manager",),
+    ),
+}
+_F06E_SATELLITE_RETAINED_ROOT_HASHES = {
+    "dashboard": (7, "f939e8a406238bdf5060a3b87eff7e7a27f7e906e55adae01c4dbc4cc5fc3bd8"),
+    "knowledge": (7, "3016bc22fe445c563416c13631da25f14b71a63fe6dfcbf443e086490bd82a29"),
+    "security": (7, "37a64451143ed1fbbe3a778c622f3a86f76442691faac55c6f479ba9964a69ec"),
+    "system_services": (8, "6d0ce11f46ba90802c66a463e80613e603b677cccf09b4233581eaae248aa83c"),
+    "engineering": (14, "9c4a77d82edd870acc2c33ae1c5cb39d939063115c63abaf26768fc0b8298c76"),
+    "workflow": (9, "0f65197fe64f5eff0753c4277ea8cbf320c19426aa752215bfe6793eb4577d35"),
+}
+
+
+def test_f06e_satellite_production_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """The 24 production payloads are exact, inert, and reversible archives."""
+
+    import_suffixes = tuple(importlib.machinery.all_suffixes())
+    python_file_patterns = tuple(pytestconfig.getini("python_files"))
+    expected_counts = {"development": 7, "infrastructure": 9, "pc_control": 8}
+    records = _F06E_SATELLITE_PRODUCTION_ARCHIVE_RECORDS
+    assert len(records) == 24
+    assert len({record[0] for record in records}) == 24
+    assert len({record[1] for record in records}) == 24
+
+    for root_name, expected_count in expected_counts.items():
+        assert not (_REPOSITORY_ROOT / root_name).exists()
+        root_records = tuple(r for r in records if r[0].startswith(root_name + "/"))
+        assert len(root_records) == expected_count
+        archive_root = _REPOSITORY_ROOT / "legacy_quarantine/production" / root_name
+        assert {
+            path.relative_to(_REPOSITORY_ROOT).as_posix()
+            for path in archive_root.rglob("*")
+        } == {record[1] for record in root_records}
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                root_name, [str(_REPOSITORY_ROOT)]
+            )
+            is None
+        )
+
+    for former_relpath, archive_relpath, expected_sha256, expected_blob in records:
+        former_path = _REPOSITORY_ROOT / former_relpath
+        archive_path = _REPOSITORY_ROOT / archive_relpath
+        assert archive_relpath == f"legacy_quarantine/production/{former_relpath}.legacy"
+        assert not former_path.exists()
+        assert archive_path.is_file()
+        assert not archive_path.is_symlink()
+        assert archive_path.name.endswith(".py.legacy")
+        assert not archive_path.name.endswith(import_suffixes)
+        assert not any(
+            fnmatch.fnmatchcase(archive_path.name, pattern)
+            for pattern in python_file_patterns
+        )
+        payload = archive_path.read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == expected_sha256
+        assert _git_blob_id(payload, path=former_relpath) == expected_blob
+        assert _git_blob_id(payload, path=archive_relpath) == expected_blob
+        assert (
+            importlib.machinery.PathFinder.find_spec(
+                former_path.stem, [str(archive_path.parent)]
+            )
+            is None
+        )
+
+    assert not tuple(
+        (_REPOSITORY_ROOT / "legacy_quarantine").rglob("__init__.py")
+    )
+    for source_path in _repository_live_python_paths():
+        assert "legacy_quarantine" not in _imported_top_level_roots(source_path)
+        assert "legacy_quarantine" not in _literal_dynamic_import_roots(source_path)
+
+
+def test_f06e_satellite_production_caller_and_boundary_containment() -> None:
+    """Only the exact excluded debt refers to the three retired production roots."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        analyze_import_closure,
+    )
+
+    roots = _F06E_SATELLITE_PRODUCTION_ROOTS
+    paths = _repository_live_python_paths()
+    observed: dict[str, tuple[tuple[str, ...], ...]] = {}
+    for path in paths:
+        statements = []
+        tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+        for node in ast.walk(tree):
+            names: tuple[str, ...] = ()
+            if isinstance(node, ast.Import):
+                names = tuple(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                names = (node.module,)
+            matching = tuple(name for name in names if name.partition(".")[0] in roots)
+            if matching:
+                statements.append(matching)
+        if statements:
+            observed[path.relative_to(_REPOSITORY_ROOT).as_posix()] = tuple(statements)
+        assert not roots & _literal_dynamic_import_roots(path)
+
+    canonical = {
+        path for path in observed
+        if path == "run_jaos.py" or path.startswith(("jaos/", "jaos_platform/"))
+    }
+    production = {path for path in observed if not path.startswith("tests/")}
+    configured = {path for path in observed if path.startswith("tests/tests/")}
+    assert canonical == set()
+    assert production == set()
+    assert configured == set()
+    assert observed == _F06E_SATELLITE_EXCLUDED_IMPORT_STATEMENTS
+    assert len(observed) == 24
+    assert sum(len(statements) for statements in observed.values()) == 42
+    for root_name, expected in {
+        "development": (7, 12),
+        "infrastructure": (9, 16),
+        "pc_control": (8, 14),
+    }.items():
+        per_root = {
+            path: tuple(
+                statement for statement in statements
+                if any(name.partition(".")[0] == root_name for name in statement)
+            )
+            for path, statements in observed.items()
+        }
+        assert (
+            sum(bool(statements) for statements in per_root.values()),
+            sum(len(statements) for statements in per_root.values()),
+        ) == expected
+
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert closure["analyzed_files"]
+    assert not roots & {
+        module.partition(".")[0] for module in closure["reached_modules"]
+    }
+
+    configured_paths = tuple(
+        path for path in paths
+        if path.relative_to(_REPOSITORY_ROOT).as_posix().startswith("tests/tests/")
+    )
+    legacy_facing = {
+        path for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    }
+    assert legacy_facing == {_F06D_CONFIG_CONTAINMENT_PATH}
+    assert _F06D_CONFIG_CONTAINMENT_PATH in configured_paths
+    assert not any(
+        "executive_brain" in _imported_top_level_roots(path)
+        for path in configured_paths
+    )
+    _assert_config_containment_preserved()
+
+    for root_name, (expected_count, expected_digest) in (
+        _F06E_SATELLITE_RETAINED_ROOT_HASHES.items()
+    ):
+        retained_paths = sorted(
+            path for path in (_REPOSITORY_ROOT / root_name).rglob("*")
+            if path.is_file() and "__pycache__" not in path.parts
+        )
+        assert len(retained_paths) == expected_count
+        inventory = "".join(
+            path.relative_to(_REPOSITORY_ROOT).as_posix()
+            + "\0" + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
+            for path in retained_paths
+        )
+        assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
