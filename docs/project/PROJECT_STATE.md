@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 5.5
+Version: 5.6
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -47,7 +47,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E COMMUNICATION PRODUCTION-ROOT QUARANTINE PILOT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E DEVELOPMENT/INFRASTRUCTURE/PC_CONTROL PRODUCTION QUARANTINE IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -75,9 +75,14 @@ The Git repository remains the permanent source of truth for JAOS.
 | Communication production quarantine | 6 R100-equivalent source quarantines under `legacy_quarantine/production/communication/*.py.legacy`; live `communication/` root removed |
 | Communication caller/effect evidence | 0 canonical production callers; 0 legacy production callers; 0 configured-test callers; no active dynamic loader, persistent writer, or network/process/desktop/service implementation |
 | Communication compatibility debt | 7 excluded flat-test imports remain unchanged for later F06G/F06H disposition |
+| FORTRESS-06E development/infrastructure/pc_control production quarantine | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `2fdeadc` |
+| Latest production quarantine | `development/` 7; `infrastructure/` 9; `pc_control/` 8 — 24 R100-equivalent byte/blob-identical source/archive moves; live roots absent |
+| Latest caller/effect evidence | 0 canonical callers; 0 legacy production callers; 0 configured-test callers; 0 active dynamic-import paths; no source-owned writer/external-effect requirement |
+| Latest compatibility debt | 24 excluded flat files / 42 import statements remain F06G/F06H debt; no wrapper/stub/alias/replacement added |
+| Current boundary classification | A=10; B=1; D=12; E=7; F=3; TOTAL=33 — stale boundary guard synchronized; exact architecture guards preserved |
 | Production quarantine model | `legacy_quarantine/production/<original-relative-path>.legacy` validated for byte/blob fidelity, inert archives, no `__init__.py`, no imports from quarantine, reversibility, and containment evidence |
-| Next F06E controlled slice | Seven-root zero-inbound satellite group: `dashboard/`, `development/`, `infrastructure/`, `knowledge/`, `pc_control/`, `security/`, `system_services/` — NOT STARTED |
-| Next-group audit count | 53 Python sources expected from adjudication — MUST BE MECHANICALLY REVERIFIED BEFORE IMPLEMENTATION |
+| Next F06E action | FORTRESS-06E dynamic-path satellite review. — NOT STARTED — READ-ONLY adjudication of `dashboard/`, `knowledge/`, `security/`, `system_services/` |
+| Next-review gate | 0 canonical, legacy production, and configured-test callers per root; excluded executable scripts contain ImportValidator/importlib paths; quarantine NOT AUTHORIZED |
 | `engineering/` disposition | Separate future F06E slice because `engineering.import_validator` can execute arbitrary imports and the root includes a Markdown artifact |
 | `workflow/` disposition | NOT quarantine-now; blocked by `executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine` |
 | Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1 |
@@ -85,7 +90,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Current configured legacy-facing files | 1 |
 | Current `executive_brain` importers | 0 |
 | Remaining `executive_brain` importer partition | ZERO configured importers |
-| Sole configured legacy-facing file | `tests/tests/platform/test_config_containment.py` — KEEP TEMPORARILY / INTENTIONALLY CONFIGURED |
+| Sole configured legacy-facing file | `tests/tests/platform/test_config_containment.py` — KEEP TEMPORARILY / INTENTIONALLY CONFIGURED; unchanged 9 definitions / 11 collected cases; retirement NOT AUTHORIZED |
 | F06D2D retirement | 9 configured manager/registry files — 94 source tests |
 | F06D2D canonical coverage | Aggregate `ExecutiveController` execution metrics coverage added before retirement |
 | F06D2D preservation | 9 byte/blob-identical `*.py.legacy` archives; no production change; no runtime-data migration |
@@ -110,8 +115,9 @@ The Git repository remains the permanent source of truth for JAOS.
 | Core/kernel retirement | 2 configured files — 6 source and collected tests — checkpoint `064883f` |
 | Core/kernel preservation | 2 byte/blob-identical `*.py.legacy` archives; no `JarvisEngine`/`JAOSKernel` behavior or production change |
 | Core/kernel collection reconciliation | 1,765 - 6 + 2 containment cases = 1,761 collected |
-| Latest configured regression | 1,762 passed, 1 skipped; root collection: 1,763; reconciliation `1,761 + 2 = 1,763` |
-| Communication focused/subsystem evidence | Focused 179 passed; platform 381 passed, 1 skipped; composition 49 passed; integration 17 passed; Ruff PASS |
+| Latest configured regression | 1,764 passed, 1 skipped; root collection: 1,765; reconciliation `1,763 + 2 = 1,765` |
+| Historical communication focused/subsystems | Focused 179 passed; platform 381 passed, 1 skipped; composition 49 passed; integration 17 passed; Ruff PASS |
+| Latest focused/subsystem evidence | Focused 150 passed; platform 383 passed, 1 skipped; composition 49 passed; integration 17 passed; Ruff PASS |
 | FORTRESS-06F | NOT STARTED |
 | FORTRESS-06G | NOT STARTED |
 | FORTRESS-06H | NOT STARTED |
@@ -119,6 +125,8 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-08 | NOT STARTED |
 | FORTRESS-09 | NOT STARTED |
 | FORTRESS-10 | NOT STARTED |
+| FORTRESS-11 | NOT STARTED |
+| FORTRESS-12 | NOT STARTED |
 | RAA-003 | OPEN |
 | RAA-007 | RESOLVED WITH EVIDENCE |
 | RAA-009 | OPEN — DEFERRED |
@@ -129,7 +137,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
 | Phase 8 major expansion | PAUSED |
-| Documentation state | F06E COMMUNICATION CHECKPOINT `2d2138c` RECORDED — PROJECT-STATE SYNC IMPLEMENTED AND READY FOR CHECKPOINT |
+| Documentation state | F06E SATELLITE CHECKPOINT `2fdeadc` RECORDED — PROJECT-STATE SYNC IMPLEMENTED AND READY FOR CHECKPOINT |
 
 ---
 
@@ -179,8 +187,8 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors. Evidence is recorded in
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
-FORTRESS-06 is IN PROGRESS through the completed F06E communication
-production-root quarantine pilot. F06A's
+FORTRESS-06 is IN PROGRESS through the completed F06E
+development/infrastructure/pc_control production quarantine at `2fdeadc`. F06A's
 authoritative 33-entry
 manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
@@ -380,15 +388,58 @@ This pilot validates the production archive model
 `legacy_quarantine/production/<original-relative-path>.legacy` for byte and Git
 blob fidelity, non-importability, absence of `__init__.py`, no imports from
 quarantine, reversible Git history, and configured containment evidence. It
-does not establish that every remaining F06E root is safe to move. Verification
-passed focused 179; platform 381 with one skip; composition 49; integration 17;
-and the full configured suite 1,762 with one skip. Root collection found 1,763,
+does not establish that every remaining F06E root is safe to move. Historical
+pilot verification passed focused 179; platform 381 with one skip; composition
+49; integration 17; and the full configured suite 1,762 with one skip. Root
+collection found 1,763,
 reconciling as `1,761 + 2 = 1,763` (two added containment cases); Ruff PASS.
 
 Pilot source-preservation and regression evidence is recorded in
 [FORTRESS_PROGRAM.md, section 7.26](../architecture/FORTRESS_PROGRAM.md#726-fortress-06e-communication-production-root-quarantine-pilot)
 at checkpoint `2d2138c`. These are recorded pilot results; the
 documentation-only sync does not rerun tests or certify live runtime.
+
+The FORTRESS-06E development/infrastructure/pc_control production quarantine is
+COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `2fdeadc`
+(`refactor(fortress): quarantine FORTRESS-06E satellite roots`).
+
+| Retired production root | Python sources |
+|---|---:|
+| `development/` | 7 |
+| `infrastructure/` | 9 |
+| `pc_control/` | 8 |
+| Total | 24 |
+
+All 24 R100-equivalent source/archive moves preserve bytes, SHA-256 values,
+and Git blobs under
+`legacy_quarantine/production/<original-relative-path>.legacy`. The three live
+roots are absent, the generated-artifact blocker was resolved before movement,
+and archive fidelity is verified. No wrapper, stub, alias, or replacement was
+added. Each root has zero canonical production callers, zero legacy production
+callers, zero configured-test callers, and zero active dynamic-import paths.
+Static inspection confirmed LOW-RISK IN-MEMORY disposition with no
+source-owned writer/external-effect requirement. Canonical `jaos/`,
+`jaos_platform/`, `run_jaos.py`, and config containment remained unchanged.
+
+The 24 excluded flat files / 42 direct import statements remain F06G/F06H debt:
+development 7 / 12, infrastructure 9 / 16, and pc_control 8 / 14. The stale
+canonical import-boundary guard was synchronized with the exact manifest
+classification sets during this slice: A=10, B=1, D=12, E=7, F=3, TOTAL=33.
+All unrelated classifications, forbidden-import guards, exact-set checks, and
+architecture coverage were preserved.
+
+Latest verified results at `2fdeadc`: focused 150 passed; platform 383 passed,
+1 skipped; composition 49 passed; integration 17 passed; full configured suite
+1,764 passed, 1 skipped; root collection 1,765; Ruff PASS. No configured test
+was retired. Exactly two containment cases reconcile `1,763 + 2 = 1,765`.
+
+Source/archive and verification evidence is recorded in
+[FORTRESS_PROGRAM.md, section 7.27](../architecture/FORTRESS_PROGRAM.md#727-fortress-06e-developmentinfrastructurepc-control-production-quarantine)
+and the
+[quarantine manifest, section 21](../architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md#21-fortress-06e-developmentinfrastructurepc-control-production-quarantine).
+These are recorded implementation results; this documentation sync does not
+rerun regression or certify live runtime. The canonical launcher closure
+remains statically disjoint from the retired roots.
 
 The complete configured legacy-facing progression is
 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1, and the configured
@@ -412,12 +463,16 @@ retained ConfigManager containment test, importable legacy production roots,
 test debt, and F06E/F06F/F06G/F06H remain.
 
 F06D, F06E, and FORTRESS-06 remain IN PROGRESS. The exact next action is
-defined in section 15 and remains NOT STARTED. Its root set includes only
-`dashboard/`, `development/`, `infrastructure/`,
-`knowledge/`, `pc_control/`, `security/`, and `system_services/`. The
-adjudication found an expected 53 Python sources across those seven roots; that
-count must be mechanically reverified before implementation. `engineering/`
-remains a separate future F06E slice: zero production callers were found, but
+FORTRESS-06E dynamic-path satellite review.
+Status: NOT STARTED. Section 15 limits the next task to READ-ONLY adjudication
+of `dashboard/`, `knowledge/`, `security/`, and `system_services/`. Each has
+zero canonical production callers, zero legacy production callers, and zero
+configured-test callers, but excluded executable scripts contain
+ImportValidator/importlib dynamic paths targeting modules under these roots.
+Quarantine is not authorized; those paths require review first.
+
+`engineering/` remains a separate future F06E slice: zero production callers
+were found, but
 `engineering.import_validator` can execute arbitrary module imports and the
 root contains a Markdown artifact. It requires its own controlled baseline
 and review before movement; it is not quarantined. `workflow/` is NOT yet a
@@ -428,12 +483,12 @@ removed in the appropriate Executive-family F06E slice.
 F06E owns legacy production-source disposition; F06F owns writer
 neutralization, persistence safety, and artifact preservation; F06G owns
 compatibility/public-facade/lazy-import obligations; and F06H owns closure and
-evidence. F06F, F06G, F06H, F07, F08, F09, and F10 remain NOT STARTED.
+evidence. F06F, F06G, F06H, F07, F08, F09, F10, F11, and F12 remain NOT STARTED.
 Exactly two Founder decisions remain unresolved: (1) `main.py` —
 quarantine/archive or a thin compatibility wrapper to canonical
 `JAOSApplication`; (2) `BasePlatformService` / `PlatformContract` — remain
-approved compatibility contracts or be formally deprecated after legacy
-consumers disappear. Neither decision is made by this sync. Step 8 and Fortress
+approved compatibility contracts or be formally deprecated/archived later,
+after legacy consumers disappear. Neither decision is made by this sync. Step 8 and Fortress
 certification have not begun, RAA-003 remains OPEN, and major Phase 8 expansion remains paused.
 
 Memory is lifecycle-owned but not used by live CLI behavior. Conversation is
@@ -885,29 +940,36 @@ gate passes.
 ## 15. Immediate Next Actions
 
 Preserve all verified and pushed Fortress checkpoints through the completed
-F06E read-only adjudication and communication production-root pilot at
-`2d2138c`.
+F06E read-only adjudication, communication pilot at `2d2138c`, project-state
+sync at `fe2a6c5`, and development/infrastructure/pc_control quarantine at
+`2fdeadc`.
 
 The exact next action is:
 
-FORTRESS-06E zero-inbound satellite production-root quarantine — controlled
-implementation of the low-risk satellite group.
+FORTRESS-06E dynamic-path satellite review.
 
-Status: NOT STARTED. This documentation-sync task authorizes no implementation.
+Status: NOT STARTED. The next task is READ-ONLY adjudication only.
+This documentation sync starts no review or implementation and authorizes no
+quarantine.
 
-The group includes only `dashboard/`, `development/`, `infrastructure/`,
-`knowledge/`, `pc_control/`, `security/`, and `system_services/`. Mechanically
-reverify the expected 53 Python sources from adjudication before implementation,
-along with callers, artifacts, dynamic-loading behavior, writers, side effects,
-and archive mapping before moving anything.
+Review only `dashboard/`, `knowledge/`, `security/`, and `system_services/`.
+Each has zero canonical production callers, zero legacy production callers,
+and zero configured-test callers. Excluded executable scripts contain dynamic
+ImportValidator/importlib paths targeting their modules; those paths must be
+adjudicated before any quarantine decision.
 
-Keep `engineering/` separate for its arbitrary-import validator and Markdown
-artifact. Keep `workflow/` blocked until its legacy ExecutivePipeline caller is
-removed. Do not include `communication/`, which is complete, or `core/`,
-`kernel/`, `executive_brain/`, `brain/`, `memory/`, or `main.py`.
+`communication/`, `development/`, `infrastructure/`, and `pc_control/` are
+already quarantined. Keep `engineering/` separate for its arbitrary-import
+validator and Markdown artifact. Keep `workflow/` BLOCKED by
+`executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`
+until that legacy caller is removed in its Executive-family F06E slice.
+`kernel/`, `core/`, `executive_brain/`, `brain/`, `memory/`, and `main.py`
+remain pending later controlled slices and F06F/F06G ownership.
 
 Preserve `tests/tests/platform/test_config_containment.py` as KEEP TEMPORARILY /
-INTENTIONALLY CONFIGURED. Its retirement still requires F06E/F06F evidence for
+INTENTIONALLY CONFIGURED, unchanged at 9 definitions / 11 collected cases.
+Configured legacy-facing remains 1; configured `executive_brain` importers
+remain 0. Its retirement still requires F06E/F06F evidence for
 `main.py` -> `core.engine` -> `core.config_manager` and writer safety. Preserve
 the unresolved Founder decisions for `main.py` and for
 `BasePlatformService` / `PlatformContract`. RAA-003 remains OPEN and RAA-009
