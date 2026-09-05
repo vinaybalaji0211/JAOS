@@ -1,6 +1,6 @@
 # JAOS Current Sprint
 
-Version: 4.4
+Version: 4.5
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -86,8 +86,8 @@ with closure evidence recorded in `docs/architecture/FORTRESS_PROGRAM.md`
 section 7.8. FORTRESS-04 is COMPLETE AND VERIFIED, with closure evidence
 recorded in section 7.9. FORTRESS-05 is COMPLETE AND VERIFIED at workstream
 level under ADR-0011, with closure evidence recorded in section 7.10.
-FORTRESS-06 is IN PROGRESS through the completed F06D core/kernel shadow-runtime
-test retirement. F06A
+FORTRESS-06 is IN PROGRESS through the completed F06E communication
+production-root quarantine pilot. F06A
 is IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B is IMPLEMENTED AND VERIFIED
 — COMMITTED AND PUSHED at checkpoint `eea8190`. F06C is IMPLEMENTED AND
@@ -194,16 +194,58 @@ source and collected tests were preserved byte/blob-identically as
 containment cases reconciled `1,793 - 30 + 2 = 1,765`; the configured suite
 passed 1,764 with one skip. Counts moved 13 -> 3 legacy-facing and remained
 0 -> 0 configured `executive_brain` importers. Associated production satellite
-roots remain importable for later F06E.
+roots remained importable at that F06D checkpoint; the communication root was
+subsequently quarantined by the F06E pilot at `2d2138c`.
 
 The core/kernel shadow-runtime test retirement is COMPLETE — IMPLEMENTED AND
 VERIFIED — COMMITTED AND PUSHED at `064883f`. The core and kernel runtime
 integration tests, carrying six source and collected cases, were preserved as
 byte/blob-identical archives. No `JarvisEngine` or `JAOSKernel` behavior or
 production code changed. Two containment cases reconciled
-`1,765 - 6 + 2 = 1,761`; the latest configured suite passed 1,760 with one
+`1,765 - 6 + 2 = 1,761`; the configured suite at that checkpoint passed 1,760 with one
 skip. Counts moved 3 -> 1 legacy-facing and remained 0 -> 0 configured
 `executive_brain` importers.
+
+The FORTRESS-06E read-only production-root adjudication is COMPLETE. Static
+analysis established that the canonical `run_jaos.py` -> `JAOSApplication` ->
+`PlatformRuntime` / `BootManager` -> `PlatformComposition` -> canonical AI /
+Tool / Executive / Memory / Conversation owners closure does not reach the
+audited legacy production roots. This is static reachability evidence, not a
+live-runtime certification claim.
+Implementation remains sliced around F06F writer blockers, F06G compatibility
+blockers, the unresolved `main.py` Founder decision, the live legacy
+ExecutivePipeline caller into `workflow/`, and RAA-003 remaining OPEN.
+
+The communication production-root quarantine pilot is COMPLETE — IMPLEMENTED
+AND VERIFIED — COMMITTED AND PUSHED at `2d2138c`. The six former live sources
+`communication/calendar_manager.py`, `communication/communication_hub.py`,
+`communication/contacts_manager.py`, `communication/conversation_manager.py`,
+`communication/email_manager.py`, and `communication/meeting_assistant.py` were
+preserved byte- and Git-blob-identically under
+`legacy_quarantine/production/communication/*.py.legacy`. The live
+`communication/` root is removed. These are six R100-equivalent
+production-source quarantines. No wrapper, stub, alias, replacement capability,
+canonical `jaos/` change, or `jaos_platform/` change was introduced.
+`tests/tests/platform/test_config_containment.py` remained unchanged.
+
+Mechanical evidence found zero canonical production callers, zero legacy
+production callers, zero configured-test callers, no active dynamic loader, no
+persistent writer, and no network/process/desktop/service side-effect
+implementation. Seven excluded flat-test imports remain later F06G/F06H debt.
+The production archive model
+`legacy_quarantine/production/<original-relative-path>.legacy` is validated
+for byte fidelity, Git blob fidelity, non-importability, no `__init__.py`, no
+imports from quarantine, reversible Git history, and containment evidence.
+This does not establish that every remaining F06E root is safe to move.
+Focused verification passed 179; platform passed 381 with one skip;
+composition passed 49; integration passed 17; the full configured suite passed
+1,762 with one skip; root collection found 1,763; and Ruff PASS. Collection
+reconciles as `1,761 + 2 = 1,763` (two added containment cases).
+
+Pilot source-preservation and regression evidence is recorded in
+[FORTRESS_PROGRAM.md, section 7.26](../architecture/FORTRESS_PROGRAM.md#726-fortress-06e-communication-production-root-quarantine-pilot)
+at checkpoint `2d2138c`. These are recorded pilot results; the
+documentation-only sync does not rerun tests or certify live runtime.
 
 The complete legacy-facing progression is
 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1, and the configured
@@ -268,7 +310,7 @@ The objectives of this sprint are to:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D CORE/KERNEL SHADOW-RUNTIME TEST RETIREMENT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E COMMUNICATION PRODUCTION-ROOT QUARANTINE PILOT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -290,6 +332,16 @@ The objectives of this sprint are to:
 | FORTRESS-06D provider retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `68a3ab9` |
 | FORTRESS-06D satellite/runtime shadow-test retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `8b0619a` |
 | FORTRESS-06D core/kernel shadow-runtime test retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `064883f` |
+| FORTRESS-06E read-only production-root adjudication | COMPLETE — static reachability evidence only; not live-runtime certification |
+| FORTRESS-06E | IN PROGRESS |
+| FORTRESS-06E communication production-root quarantine pilot | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `2d2138c` |
+| Communication production quarantine | 6 R100-equivalent source quarantines; live `communication/` root removed; exact archives under `legacy_quarantine/production/communication/*.py.legacy` |
+| Communication containment | 0 canonical production callers; 0 legacy production callers; 0 configured-test callers; no active dynamic loader, writer, or external-effect implementation |
+| Production quarantine model | `legacy_quarantine/production/<original-relative-path>.legacy` validated with byte/blob fidelity and containment evidence |
+| Next F06E controlled slice | `dashboard/`, `development/`, `infrastructure/`, `knowledge/`, `pc_control/`, `security/`, `system_services/` — NOT STARTED |
+| Next-group source count | 53 expected — MUST BE MECHANICALLY REVERIFIED BEFORE IMPLEMENTATION |
+| `engineering/` | Separate later F06E slice — arbitrary-import validator plus Markdown artifact |
+| `workflow/` | Blocked by `executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine` |
 | Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1 |
 | Configured `executive_brain` importer progression | 31 -> 22 -> 6 -> 2 -> 0 |
 | Current configured legacy-facing files | 1 |
@@ -316,7 +368,11 @@ The objectives of this sprint are to:
 | Satellite/runtime retirement | 10 configured files / 30 collected source tests — checkpoint `8b0619a` |
 | Satellite/runtime regression | 1,764 passed, 1 skipped; `1,793 - 30 + 2 = 1,765` collected |
 | Core/kernel retirement | 2 configured files / 6 collected source tests — checkpoint `064883f` |
-| Latest configured regression | 1,760 passed, 1 skipped; `1,765 - 6 + 2 = 1,761` collected |
+| Latest configured regression | 1,762 passed, 1 skipped; `1,761 + 2 = 1,763` collected |
+| Communication focused/subsystems | Focused 179 passed; platform 381 passed, 1 skipped; composition 49 passed; integration 17 passed; Ruff PASS |
+| FORTRESS-06F | NOT STARTED |
+| FORTRESS-06G | NOT STARTED |
+| FORTRESS-06H | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | FORTRESS-08 | NOT STARTED |
 | FORTRESS-09 | NOT STARTED |
@@ -433,8 +489,8 @@ Conversation Intelligence. The focused remediation suite passed 85 tests; the
 related ladder passed 1,597 with one skip; and the full configured suite passed
 1,996 with one skip and zero failures/errors.
 
-FORTRESS-06 is IN PROGRESS through the F06D core/kernel shadow-runtime test
-retirement, and F06D is IN PROGRESS. F06D1 is
+FORTRESS-06 is IN PROGRESS through the F06E communication production-root
+quarantine pilot, while F06D remains IN PROGRESS. F06D1 is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `51818d2`; F06D2A is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `95adce4`; F06D2B is
 IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `0ea8e2e`; the D2B
@@ -502,12 +558,28 @@ retained ConfigManager containment test, importable legacy production roots,
 graph, compatibility facades, excluded flat-test debt, and F06E/F06F/F06G/F06H
 remain.
 
-F06D and FORTRESS-06 remain IN PROGRESS. The next action is FORTRESS-06E legacy
-production-source quarantine planning and adjudication — READ-ONLY AUDIT / NOT
-STARTED. It must establish reachability, callers, writers, compatibility
-obligations, and safe disposition before any source movement. F06E owns source
-disposition, F06F writer/persistence safety, F06G compatibility/public facades,
-and F06H closure evidence.
+F06D, F06E, and FORTRESS-06 remain IN PROGRESS. The exact next action is
+defined in section 15 and remains NOT STARTED. Its root set includes only
+`dashboard/`, `development/`, `infrastructure/`,
+`knowledge/`, `pc_control/`, `security/`, and `system_services/`. The expected
+53 Python sources must be mechanically reverified before implementation.
+`engineering/` remains a separate future F06E slice: zero production callers
+were found, but `engineering.import_validator` can execute arbitrary module
+imports and the root contains a Markdown artifact. It requires its own
+controlled baseline and review before movement; it is not quarantined.
+`workflow/` is NOT yet a quarantine-now root. Its blocker is
+`executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`.
+Workflow may retire only after that caller is removed in the appropriate
+Executive-family F06E slice.
+
+F06E owns source disposition, F06F writer/persistence safety, F06G
+compatibility/public facades, and F06H closure evidence. F06F/F06G/F06H remain
+NOT STARTED. Exactly two Founder decisions, for `main.py` and for
+`BasePlatformService` / `PlatformContract`, remain unresolved: `main.py` still
+requires a later choice between archive/quarantine and a thin compatibility
+wrapper to canonical `JAOSApplication`; the platform contracts still require a
+later choice between approved compatibility status and formal deprecation after
+their legacy consumers disappear.
 F07 owns permission, approval, audit, and risk; F08 owns durable persistence,
 recovery, and replay; F09 owns later provider resilience; F10 owns health and
 degradation; F11 owns security, chaos, and CI.
@@ -725,19 +797,27 @@ This sprint is complete only when:
 
 ## 15. Immediate Next Actions
 
-Preserve all verified and pushed Fortress checkpoints through satellite/runtime
-retirement at `8b0619a` and core/kernel retirement at `064883f`.
+Preserve all verified and pushed Fortress checkpoints through the completed
+F06E read-only adjudication and communication checkpoint `2d2138c`.
 
-The exact next action is FORTRESS-06E legacy production-source quarantine
-planning and adjudication — READ-ONLY AUDIT / NOT STARTED. Map
-`communication/`, `dashboard/`, `development/`, `engineering/`,
-`infrastructure/`, `knowledge/`, `pc_control/`, `security/`,
-`system_services/`, `workflow/`, `core/`, `kernel/`, `executive_brain/`,
-`main.py`, obsolete `BasePlatformService` consumer, and
-compatibility/public-facade surfaces for reachability, callers, writers,
-compatibility obligations, and safe
-F06E/F06F/F06G disposition. Do not move production source, retire
-`test_config_containment.py`, begin implementation, or pre-authorize all roots.
+The exact next action is:
+
+FORTRESS-06E zero-inbound satellite production-root quarantine — controlled
+implementation of the low-risk satellite group.
+
+Status: NOT STARTED. This documentation-sync task authorizes no implementation.
+
+The group includes only `dashboard/`, `development/`, `infrastructure/`,
+`knowledge/`, `pc_control/`, `security/`, and `system_services/`. Mechanically
+reverify the expected 53 Python sources from adjudication before implementation,
+along with every caller, artifact, dynamic-loader, writer, side-effect, and
+archive boundary before movement. Do not include completed `communication/`,
+separate `engineering/`, blocked `workflow/`, or `core/`, `kernel/`,
+`executive_brain/`, `brain/`, `memory/`, or `main.py`.
+
+Keep `test_config_containment.py` intentionally configured until F06E/F06F
+evidence closes the `main.py` -> `core.engine` -> `core.config_manager` writer
+boundary. Keep both Founder decisions unresolved. RAA-003 remains OPEN and
 RAA-009 remains OPEN — DEFERRED. Continue only separately authorized Step 7
 remediation. Keep
 Step 8 — Stabilization
@@ -761,7 +841,7 @@ explicit Founder authorization.
 | JAOS Shell Testing | COMPLETE WITH FINDINGS |
 | Step 6 completion synchronization | COMPLETE |
 | Bug Fixing and Regression | IN PROGRESS |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06D CORE/KERNEL SHADOW-RUNTIME TEST RETIREMENT IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E COMMUNICATION PRODUCTION-ROOT QUARANTINE PILOT IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -778,8 +858,14 @@ explicit Founder authorization.
 | FORTRESS-06D provider retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `68a3ab9` |
 | FORTRESS-06D satellite/runtime shadow-test retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `8b0619a` |
 | FORTRESS-06D core/kernel shadow-runtime test retirement | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `064883f` |
-| Sole configured legacy-facing test | `tests/tests/platform/test_config_containment.py` — KEEP TEMPORARILY |
-| FORTRESS-06E production-source planning/adjudication | READ-ONLY AUDIT — NOT STARTED — NEXT ACTION |
+| FORTRESS-06E adjudication | COMPLETE |
+| FORTRESS-06E communication pilot | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `2d2138c` |
+| FORTRESS-06E | IN PROGRESS |
+| Sole configured legacy-facing test | `tests/tests/platform/test_config_containment.py` — KEEP TEMPORARILY / INTENTIONALLY CONFIGURED |
+| Next FORTRESS-06E slice | Seven-root zero-inbound satellite controlled implementation — NOT STARTED; reverify expected 53 sources |
+| FORTRESS-06F | NOT STARTED |
+| FORTRESS-06G | NOT STARTED |
+| FORTRESS-06H | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | FORTRESS-08 | NOT STARTED |
 | FORTRESS-09 | NOT STARTED |
@@ -806,7 +892,9 @@ Newer Fortress checkpoints:
 pre-implementation project-state sync), `30cf2aa` (F06D2D implementation),
 `cd65af5` (F06D2D completion-state sync), `10996c6` (F06D2E implementation),
 `b6e110d` (ADR-0013 governance), `f7f23c7` (Memory retirement), `29d1d10`
-(ADR-0014 governance), and `68a3ab9` (provider retirement)
+(ADR-0014 governance), `68a3ab9` (provider retirement), `8b0619a`
+(satellite/runtime test retirement), `064883f` (core/kernel test retirement),
+and `2d2138c` (F06E communication production-root quarantine pilot)
 
 FORTRESS-05 checkpoint state:
 
@@ -816,7 +904,8 @@ Overall Fortress certification has not started.
 
 Current FORTRESS-06 state:
 
-IN PROGRESS through the F06D core/kernel shadow-runtime test retirement. F06A's
+IN PROGRESS through the F06E communication production-root quarantine pilot.
+F06A's
 guarded top-level identities are IMPLEMENTED AND VERIFIED — COMMITTED AND
 PUSHED at `92aa9d7`.
 F06B is IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at `eea8190`. F06C is
@@ -876,15 +965,27 @@ archived byte/blob-identically, two containment cases reconciled
 Core/kernel retirement is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND
 PUSHED at `064883f`: two configured files / six collected source tests were
 archived byte/blob-identically, two containment cases reconciled
-`1,765 - 6 + 2 = 1,761`, and the latest configured suite passed 1,760 with one
+`1,765 - 6 + 2 = 1,761`, and the configured suite at that checkpoint passed 1,760 with one
 skip. Counts are now one configured legacy-facing file and zero configured
 `executive_brain` importers. The complete legacy-facing progression is
 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1.
 
 `tests/tests/platform/test_config_containment.py` remains intentionally
-configured pending F06E/F06F evidence. The exact next action is the NOT STARTED
-read-only FORTRESS-06E production-source quarantine planning and adjudication;
-no later implementation has begun.
+configured pending F06E/F06F evidence.
+
+The F06E read-only production-root adjudication is COMPLETE. The communication
+pilot is COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED at
+`2d2138c`; six exact production sources are preserved under
+`legacy_quarantine/production/communication/*.py.legacy`, and the live root is
+absent. The latest configured suite passed 1,762 with one skip, root collection
+found 1,763, and collection reconciles as `1,761 + 2 = 1,763`.
+
+The exact next action is the NOT STARTED seven-root F06E zero-inbound satellite
+controlled implementation for `dashboard/`, `development/`, `infrastructure/`,
+`knowledge/`, `pc_control/`, `security/`, and `system_services/`, after
+mechanically reverifying the expected 53 Python sources. `engineering/` stays
+separate, `workflow/` stays caller-blocked, F06F/F06G/F06H remain NOT STARTED,
+the two Founder decisions remain unresolved, and no later slice has begun.
 
 Current activity:
 
