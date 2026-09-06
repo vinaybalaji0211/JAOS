@@ -1588,7 +1588,6 @@ _F06D_SATELLITE_ARCHIVE_RECORDS = (
 )
 
 _F06D_SATELLITE_PRODUCTION_PATHS = (
-    "engineering/platform_health_dashboard.py",
     "workflow/workflow_engine.py",
 )
 
@@ -1693,9 +1692,11 @@ def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None
         for former, archive, sha256, blob in (
             _F06E_SATELLITE_PRODUCTION_ARCHIVE_RECORDS
             + _F06E_DYNAMIC_SATELLITE_ARCHIVE_RECORDS
+            + _F06E_ENGINEERING_ARCHIVE_RECORDS
         )
     }
     for former_relpath in (
+        "engineering/platform_health_dashboard.py",
         "development/development_workspace_manager.py",
         "infrastructure/ai_provider_manager.py",
         "pc_control/application_manager.py",
@@ -2358,10 +2359,16 @@ def _assert_f06e_production_archive_payloads(
         root_records = tuple(r for r in records if r[0].startswith(root_name + "/"))
         assert len(root_records) == expected_count
         archive_root = _REPOSITORY_ROOT / "legacy_quarantine/production" / root_name
+        expected_entries = {record[1] for record in root_records}
+        for _former, archive, _sha256, _blob in root_records:
+            parent = (_REPOSITORY_ROOT / archive).parent
+            while parent != archive_root:
+                expected_entries.add(parent.relative_to(_REPOSITORY_ROOT).as_posix())
+                parent = parent.parent
         assert {
             path.relative_to(_REPOSITORY_ROOT).as_posix()
             for path in archive_root.rglob("*")
-        } == {record[1] for record in root_records}
+        } == expected_entries
         assert (
             importlib.machinery.PathFinder.find_spec(
                 root_name, [str(_REPOSITORY_ROOT)]
@@ -2376,7 +2383,8 @@ def _assert_f06e_production_archive_payloads(
         assert not former_path.exists()
         assert archive_path.is_file()
         assert not archive_path.is_symlink()
-        assert archive_path.name.endswith(".py.legacy")
+        assert former_path.suffix in {".py", ".md"}
+        assert archive_path.name.endswith(former_path.suffix + ".legacy")
         assert not archive_path.name.endswith(import_suffixes)
         assert not any(
             fnmatch.fnmatchcase(archive_path.name, pattern)
@@ -2488,9 +2496,12 @@ def _assert_f06e_satellite_retained_inventory() -> None:
     for root_name, (expected_count, expected_digest) in (
         _F06E_SATELLITE_RETAINED_ROOT_HASHES.items()
     ):
-        if root_name in _F06E_DYNAMIC_SATELLITE_PRODUCTION_ROOTS:
+        if root_name in _F06E_DYNAMIC_SATELLITE_PRODUCTION_ROOTS | {"engineering"}:
             records = tuple(
-                record for record in _F06E_DYNAMIC_SATELLITE_ARCHIVE_RECORDS
+                record for record in (
+                    _F06E_DYNAMIC_SATELLITE_ARCHIVE_RECORDS
+                    + _F06E_ENGINEERING_ARCHIVE_RECORDS
+                )
                 if record[0].startswith(root_name + "/")
             )
             assert len(records) == expected_count
@@ -2838,6 +2849,12 @@ def test_f06e_dynamic_satellite_archives_preserve_exact_payloads(
 def test_f06e_dynamic_satellite_caller_and_boundary_containment() -> None:
     """Only the exact excluded import, registration, and folder debt remains."""
 
+    _assert_f06e_dynamic_satellite_caller_and_boundary_containment()
+
+
+def _assert_f06e_dynamic_satellite_caller_and_boundary_containment() -> None:
+    """Retain dynamic registration and folder-validation debt across retirements."""
+
     from tests.tests.platform.test_canonical_import_boundary import (
         analyze_import_closure,
     )
@@ -2949,13 +2966,318 @@ def test_f06e_dynamic_satellite_caller_and_boundary_containment() -> None:
             (_REPOSITORY_ROOT / relpath).read_bytes()
         ).hexdigest() == expected_sha256
 
-    # Exact engineering/workflow hashes retain the explicit-name loader and
-    # folder validator; no excluded executable script is imported or executed.
+    # Engineering archive/workflow source hashes retain the exact evidence;
+    # no excluded executable script or archived loader is imported or executed.
     _assert_f06e_satellite_retained_inventory()
     closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
     assert closure["violations"] == []
     assert closure["analyzed_files"]
     assert not (roots | {"engineering"}) & {
+        module.partition(".")[0] for module in closure["reached_modules"]
+    }
+    configured_paths = {
+        path for path in paths
+        if path.relative_to(_REPOSITORY_ROOT).as_posix().startswith("tests/tests/")
+    }
+    assert _F06D_CONFIG_CONTAINMENT_PATH in configured_paths
+    assert {
+        path for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    } == {_F06D_CONFIG_CONTAINMENT_PATH}
+    assert not any(
+        "executive_brain" in _imported_top_level_roots(path)
+        for path in configured_paths
+    )
+    _assert_config_containment_preserved()
+
+
+_F06E_ENGINEERING_ARCHIVE_RECORDS = (
+    (
+        "engineering/__init__.py",
+        "legacy_quarantine/production/engineering/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "engineering/capability_truth_engine.py",
+        "legacy_quarantine/production/engineering/capability_truth_engine.py.legacy",
+        "8bf1bf8e0e6d142c6538631cc97a99c887fc45419a6f8a56351253ff6d27afc2",
+        "e909ca3db8fe262d218a3ee8977e905a3dadf8cb",
+    ),
+    (
+        "engineering/configuration_validator.py",
+        "legacy_quarantine/production/engineering/configuration_validator.py.legacy",
+        "33863a72231b920503cde328770e160dac49c347e298a19dfeb03e6cccc7f852",
+        "8be30d920d3309a02cc2f855af4811c6cce5029a",
+    ),
+    (
+        "engineering/dependency_validator.py",
+        "legacy_quarantine/production/engineering/dependency_validator.py.legacy",
+        "4700288929eb6ed2c57229412b3354183b54eca9c24b36e7bb77204f403e277c",
+        "6d5b0d27654a0b637fa72a8095b94caf67eb0d4d",
+    ),
+    (
+        "engineering/engineering_report_generator.py",
+        "legacy_quarantine/production/engineering/engineering_report_generator.py.legacy",
+        "ee0451839f923fb75998d10a11ccdcbac9dd9cee60cd144eb17bbe1d1aca7d4e",
+        "15fb94bf179839fd67fcf07fca925597b7a7f470",
+    ),
+    (
+        "engineering/import_validator.py",
+        "legacy_quarantine/production/engineering/import_validator.py.legacy",
+        "9a79d5c0093bb1eb01cf8f2cce651b4f7aa214b2dd33345bc4d57f5936346a32",
+        "38e9d2584bd1da71ebe2797dca166384e2595d02",
+    ),
+    (
+        "engineering/integration_test_runner.py",
+        "legacy_quarantine/production/engineering/integration_test_runner.py.legacy",
+        "9a54364f00f2316a49a4b1e2becdeeb1127c81b9009082b9ff138c8b0abac9d5",
+        "08c9a2be80d5126fb91d772040852e6c7cf837e7",
+    ),
+    (
+        "engineering/module_registry.py",
+        "legacy_quarantine/production/engineering/module_registry.py.legacy",
+        "71f1409fab6ab7137ed8db681d65c47389a9ef669074954fa71749c39a23cba1",
+        "f22524a1c33eef4b6eacae1603791b59db26ed54",
+    ),
+    (
+        "engineering/package_registry.py",
+        "legacy_quarantine/production/engineering/package_registry.py.legacy",
+        "f9a3308ee1a631d61e63b4d0b77e2d7260c7a4bc98595f14cbfde9ce47ba7d18",
+        "30456374a1a4e748a1eebdde14fde5e027a25a54",
+    ),
+    (
+        "engineering/platform_health_dashboard.py",
+        "legacy_quarantine/production/engineering/platform_health_dashboard.py.legacy",
+        "9be1bfc29ed0be429faccdece9260dd1f86b7ee8e6a422a99a6f9926a855c998",
+        "0d8f599fd47c914602b77ff31b1c8997f62bdd0f",
+    ),
+    (
+        "engineering/platform_registry.py",
+        "legacy_quarantine/production/engineering/platform_registry.py.legacy",
+        "a77251a129bfc7710468ea68ba652c11952db7759840302ab01d50821a5eb377",
+        "af8233ebf94be9d87c87278a84f7d654370f2729",
+    ),
+    (
+        "engineering/project_structure_validator.py",
+        "legacy_quarantine/production/engineering/project_structure_validator.py.legacy",
+        "d58f00665a0d388e7d7545648b2475d6035b3787ba6571e45fb10f46b627f350",
+        "e15bd00354790aa2837b436735b18d5488b5d422",
+    ),
+    (
+        "engineering/releases/RELEASE_NOTES_v0.9.0-alpha.md",
+        "legacy_quarantine/production/engineering/releases/RELEASE_NOTES_v0.9.0-alpha.md.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "engineering/startup_validator.py",
+        "legacy_quarantine/production/engineering/startup_validator.py.legacy",
+        "227e30ab2b285bafeaaf61ae14994305bb4b96481ce90e1d6f5a31abcdb3487e",
+        "25b678c2dd5cecd427453c388a7b26afa8077117",
+    ),
+)
+_F06E_ENGINEERING_SOURCE_SIZES = {
+    "engineering/__init__.py": 0,
+    "engineering/capability_truth_engine.py": 1229,
+    "engineering/configuration_validator.py": 1088,
+    "engineering/dependency_validator.py": 880,
+    "engineering/engineering_report_generator.py": 1107,
+    "engineering/import_validator.py": 1108,
+    "engineering/integration_test_runner.py": 1039,
+    "engineering/module_registry.py": 1084,
+    "engineering/package_registry.py": 820,
+    "engineering/platform_health_dashboard.py": 1879,
+    "engineering/platform_registry.py": 957,
+    "engineering/project_structure_validator.py": 1204,
+    "engineering/releases/RELEASE_NOTES_v0.9.0-alpha.md": 0,
+    "engineering/startup_validator.py": 1693,
+}
+_F06E_ENGINEERING_EXCLUDED_IMPORT_STATEMENTS = {
+    "tests/capability_truth_engine_test.py": (
+        ("engineering.capability_truth_engine",),
+    ),
+    "tests/configuration_validator_test.py": (
+        ("engineering.configuration_validator",),
+    ),
+    "tests/dependency_validator_test.py": (
+        ("engineering.dependency_validator",),
+    ),
+    "tests/engineering_platform_integration_test.py": (
+        ("engineering.capability_truth_engine",),
+        ("engineering.configuration_validator",),
+        ("engineering.dependency_validator",),
+        ("engineering.engineering_report_generator",),
+        ("engineering.import_validator",),
+        ("engineering.integration_test_runner",),
+        ("engineering.module_registry",),
+        ("engineering.package_registry",),
+        ("engineering.platform_health_dashboard",),
+        ("engineering.platform_registry",),
+        ("engineering.project_structure_validator",),
+        ("engineering.startup_validator",),
+    ),
+    "tests/engineering_report_generator_test.py": (
+        ("engineering.engineering_report_generator",),
+    ),
+    "tests/import_validator_test.py": (
+        ("engineering.import_validator",),
+    ),
+    "tests/integration_test_runner_test.py": (
+        ("engineering.integration_test_runner",),
+    ),
+    "tests/module_registry_test.py": (
+        ("engineering.module_registry",),
+    ),
+    "tests/package_registry_test.py": (
+        ("engineering.package_registry",),
+    ),
+    "tests/platform_health_dashboard_test.py": (
+        ("engineering.platform_health_dashboard",),
+    ),
+    "tests/platform_registry_test.py": (
+        ("engineering.platform_registry",),
+    ),
+    "tests/project_structure_validator_test.py": (
+        ("engineering.project_structure_validator",),
+    ),
+    "tests/startup_validator_test.py": (
+        ("engineering.startup_validator",),
+    ),
+}
+_F06E_ENGINEERING_EXCLUDED_SCRIPT_HASHES = {
+    "tests/capability_truth_engine_test.py":
+        "c5a1e3d1b6ae781fd381d187a90e5e5a1b6029d6779cf138f447d7e0078320b5",
+    "tests/configuration_validator_test.py":
+        "b7c3544c17759483a036465a2c4444c59c2d7389a5bcb059fb4cb1bdc7948f81",
+    "tests/dependency_validator_test.py":
+        "1e16092c75de621dc0c850ccbfb35862014f5cc56a22c0fb6f198b8123da3656",
+    "tests/engineering_platform_integration_test.py":
+        "45a57aabeebbd4a9e3ea33fe742f213230757fe2fd90284667c9462a96197c1e",
+    "tests/engineering_report_generator_test.py":
+        "9de6cb00d8061971dad1590a3ca0f472c52dff45e9f0abad6d6642220325aec6",
+    "tests/import_validator_test.py":
+        "a5eb354d111606d6ec4bf8b976294a6b819e0d048640918e4adedba86eb453ac",
+    "tests/integration_test_runner_test.py":
+        "7639aaedd0e1017e5bfadd316ea65846942952c3d420e55c90529d0326968ea6",
+    "tests/module_registry_test.py":
+        "6be0efbc247582a7f4a6d8b6abecd7362fbb80cf7044fd626e531205864168eb",
+    "tests/package_registry_test.py":
+        "a7e4263885e967bc5600b42740505d7c069604b6a645d1a4a3f4e9499ddfb1ff",
+    "tests/platform_health_dashboard_test.py":
+        "f0c8a15ded669a296d32594c3deab1d6432310824527bca54778cd86750810c8",
+    "tests/platform_registry_test.py":
+        "88b786cf03cce775ad902643caf7710036f9ee03bdb901aae517ed3019ade984",
+    "tests/project_structure_validator_test.py":
+        "3dc2a18c223a4257c9728e824feedc2a4fd3d4356c02a62e05ccc8699c3e0f51",
+    "tests/startup_validator_test.py":
+        "c48482ca753fc9f75b2ced5785da9c5b3f78324187542a48fffee5b6bb574f6a",
+}
+
+
+def test_f06e_engineering_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """Preserve 13 Python sources and one historical Markdown artifact exactly."""
+
+    _assert_f06e_production_archive_payloads(
+        _F06E_ENGINEERING_ARCHIVE_RECORDS,
+        {"engineering": 14},
+        pytestconfig,
+    )
+    former_paths = {record[0] for record in _F06E_ENGINEERING_ARCHIVE_RECORDS}
+    assert set(_F06E_ENGINEERING_SOURCE_SIZES) == former_paths
+    assert sum(path.endswith(".py") for path in former_paths) == 13
+    assert {path for path in former_paths if not path.endswith(".py")} == {
+        "engineering/releases/RELEASE_NOTES_v0.9.0-alpha.md",
+    }
+    for former, archive, _sha256, _blob in _F06E_ENGINEERING_ARCHIVE_RECORDS:
+        assert (_REPOSITORY_ROOT / archive).stat().st_size == (
+            _F06E_ENGINEERING_SOURCE_SIZES[former]
+        )
+    _assert_f06e_satellite_retained_inventory()
+
+
+def test_f06e_engineering_caller_and_boundary_containment() -> None:
+    """Only the exact excluded engineering debt survives production retirement."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        analyze_import_closure,
+    )
+
+    paths = _repository_live_python_paths()
+    observed: dict[str, tuple[tuple[str, ...], ...]] = {}
+    legacy_service_consumers: set[str] = set()
+    excluded_modules = {
+        path.removesuffix(".py").replace("/", ".")
+        for path in _F06E_ENGINEERING_EXCLUDED_IMPORT_STATEMENTS
+    }
+    for path in paths:
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        statements = []
+        tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+        for node in ast.walk(tree):
+            names: tuple[str, ...] = ()
+            if isinstance(node, ast.Import):
+                names = tuple(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                names = (node.module,)
+            matching = tuple(
+                name for name in names if name.partition(".")[0] == "engineering"
+            )
+            if matching:
+                statements.append(matching)
+            imported_names = names
+            if isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                imported_names += tuple(
+                    node.module + "." + alias.name for alias in node.names
+                )
+            assert not any(
+                name == module or name.startswith(module + ".")
+                for name in imported_names for module in excluded_modules
+            ), relpath
+            if any(
+                name == "jaos_platform.base_platform_service"
+                or name.startswith("jaos_platform.base_platform_service.")
+                for name in imported_names
+            ) and not relpath.startswith(("jaos/", "jaos_platform/", "tests/")):
+                legacy_service_consumers.add(relpath)
+            if relpath.startswith(("jaos/", "jaos_platform/")) and (
+                isinstance(node, ast.Constant) and isinstance(node.value, str)
+            ):
+                assert node.value != "engineering"
+                assert not node.value.startswith("engineering.")
+        if statements:
+            observed[relpath] = tuple(statements)
+        assert "engineering" not in _literal_dynamic_import_roots(path)
+
+    assert observed == _F06E_ENGINEERING_EXCLUDED_IMPORT_STATEMENTS
+    assert len(observed) == 13
+    assert sum(map(len, observed.values())) == 24
+    assert not {path for path in observed if not path.startswith("tests/")}
+    assert not {path for path in observed if path.startswith("tests/tests/")}
+    assert not {
+        path for path in observed
+        if path == "run_jaos.py" or path.startswith(("jaos/", "jaos_platform/"))
+    }
+    assert legacy_service_consumers == {
+        "workflow/workflow_engine.py",
+        "executive_brain/memory/memory_manager.py",
+    }
+    tests_conftest = _load_tests_conftest()
+    assert set(_F06E_ENGINEERING_EXCLUDED_SCRIPT_HASHES) == set(observed)
+    for relpath, expected_sha256 in _F06E_ENGINEERING_EXCLUDED_SCRIPT_HASHES.items():
+        path = _REPOSITORY_ROOT / relpath
+        assert tests_conftest.is_excluded_legacy_module(path)
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == expected_sha256
+
+    # Reuse the exact five registrations, both validator caller sets, excluded
+    # script hashes, archive/workflow inventory, and configured config boundary.
+    _assert_f06e_dynamic_satellite_caller_and_boundary_containment()
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert closure["analyzed_files"]
+    assert "engineering" not in {
         module.partition(".")[0] for module in closure["reached_modules"]
     }
     configured_paths = {
