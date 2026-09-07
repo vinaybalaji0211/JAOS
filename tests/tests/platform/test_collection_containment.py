@@ -1594,7 +1594,7 @@ _F06D_SATELLITE_PRODUCTION_PATHS = (
 _F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS = (
     "core/config_manager.py",
     "core/engine.py",
-    "kernel/jaos_kernel.py",
+    "core/kernel.py",
     "main.py",
 )
 
@@ -1650,7 +1650,9 @@ def test_f06d_satellite_archives_preserve_exact_payloads(
     )
 
 
-def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None:
+def test_f06d_satellite_retirement_preserves_exact_residual_boundaries(
+    pytestconfig: pytest.Config,
+) -> None:
     """Satellite archives stay contained after core/kernel test retirement."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
@@ -1712,6 +1714,9 @@ def test_f06d_satellite_retirement_preserves_exact_residual_boundaries() -> None
         assert _git_blob_id(payload, path=archive) == blob
     for retained_relpath in _F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS:
         assert (_REPOSITORY_ROOT / retained_relpath).is_file()
+    _assert_f06e_production_archive_payloads(
+        _F06E_KERNEL_ARCHIVE_RECORDS, {"kernel": 12}, pytestconfig,
+    )
 
 
 _F06D_CORE_KERNEL_ARCHIVE_RECORDS = (
@@ -1737,7 +1742,7 @@ _F06D_CONFIG_CONTAINMENT_SHA256 = (
 )
 _F06D_CORE_KERNEL_PRODUCTION_PATHS = (
     "core/engine.py",
-    "kernel/jaos_kernel.py",
+    "core/kernel.py",
     "main.py",
 )
 
@@ -1819,7 +1824,9 @@ def _assert_config_containment_preserved() -> None:
     assert len(config_tests) + parametrized_expansion == 11
 
 
-def test_f06d_core_kernel_retirement_leaves_only_config_containment() -> None:
+def test_f06d_core_kernel_retirement_leaves_only_config_containment(
+    pytestconfig: pytest.Config,
+) -> None:
     """Only the governed config/writer boundary remains legacy-facing."""
 
     configured_root = _REPOSITORY_ROOT / "tests" / "tests"
@@ -1858,6 +1865,9 @@ def test_f06d_core_kernel_retirement_leaves_only_config_containment() -> None:
 
     for production_relpath in _F06D_CORE_KERNEL_PRODUCTION_PATHS:
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
+    _assert_f06e_production_archive_payloads(
+        _F06E_KERNEL_ARCHIVE_RECORDS, {"kernel": 12}, pytestconfig,
+    )
 
 
 _F06E_COMMUNICATION_ARCHIVE_RECORDS = (
@@ -3278,6 +3288,280 @@ def test_f06e_engineering_caller_and_boundary_containment() -> None:
     assert closure["violations"] == []
     assert closure["analyzed_files"]
     assert "engineering" not in {
+        module.partition(".")[0] for module in closure["reached_modules"]
+    }
+    configured_paths = {
+        path for path in paths
+        if path.relative_to(_REPOSITORY_ROOT).as_posix().startswith("tests/tests/")
+    }
+    assert _F06D_CONFIG_CONTAINMENT_PATH in configured_paths
+    assert {
+        path for path in configured_paths
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    } == {_F06D_CONFIG_CONTAINMENT_PATH}
+    assert not any(
+        "executive_brain" in _imported_top_level_roots(path)
+        for path in configured_paths
+    )
+    _assert_config_containment_preserved()
+
+_F06E_KERNEL_ARCHIVE_RECORDS = (
+    (
+        "kernel/__init__.py",
+        "legacy_quarantine/production/kernel/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "kernel/boot_manager.py",
+        "legacy_quarantine/production/kernel/boot_manager.py.legacy",
+        "89f5b35b87f5a5e5dddf1e71417d621da244327f62913e3a535c19ae4fe23b21",
+        "46399e1672240c9e6b4252112ddcf92271abb128",
+    ),
+    (
+        "kernel/boot_phase_manager.py",
+        "legacy_quarantine/production/kernel/boot_phase_manager.py.legacy",
+        "4118d489075afa66085af5166d00b98e5701f66b17b0fa17d1e0f2ab359783b1",
+        "d472f5138f243df0fa992834eb2281f92a890ba4",
+    ),
+    (
+        "kernel/jaos_kernel.py",
+        "legacy_quarantine/production/kernel/jaos_kernel.py.legacy",
+        "9c14d736618909758464687aa8504dfb915f8b246c9c916cb9992ccd2ab54f49",
+        "d3aa4c707b77b48bdf8d2d53a4a1eabd88166bea",
+    ),
+    (
+        "kernel/jaos_kernel_backup.py",
+        "legacy_quarantine/production/kernel/jaos_kernel_backup.py.legacy",
+        "04c634467a013a1a7aba8dd1b66797004077beafb38d2b625f5b0660ca625f26",
+        "26cb19d979951c8c13589ac740e7e17142b07dcc",
+    ),
+    (
+        "kernel/kernel_event_bus.py",
+        "legacy_quarantine/production/kernel/kernel_event_bus.py.legacy",
+        "637eedc0c42c16592588f9e8111b5a78ee35969083fbae6ad0f21c1e0f71ce1c",
+        "091db8640403011a38bcb0033da4796504196180",
+    ),
+    (
+        "kernel/kernel_health_monitor.py",
+        "legacy_quarantine/production/kernel/kernel_health_monitor.py.legacy",
+        "7a0440edfeaac853872a151c8f15ebf9d54de46d49ea5f5f6cbaddc82c44e2b1",
+        "b5def8556b47130f1a1c4efdf509ce10c9b8f2ee",
+    ),
+    (
+        "kernel/kernel_lifecycle_manager.py",
+        "legacy_quarantine/production/kernel/kernel_lifecycle_manager.py.legacy",
+        "8e80ac58805523df6ae4ea16979cb32505394bede15ac3cca82f8f22253cc9e2",
+        "cb9af0d1f15140b42bb1badcbb9a78083b07f6ac",
+    ),
+    (
+        "kernel/kernel_permission_gateway.py",
+        "legacy_quarantine/production/kernel/kernel_permission_gateway.py.legacy",
+        "0cf8d18024bda6e385c91c215f5f772fa2fa6b133e8fba660536ce9e13c6d7c3",
+        "8cb8845237e9fa4abe620746f31dc863e85bcd1c",
+    ),
+    (
+        "kernel/kernel_router.py",
+        "legacy_quarantine/production/kernel/kernel_router.py.legacy",
+        "3dcd6c1deedebe73900b271f53978a634a41ef9ffd7a321bdc57a488b8c4f4c7",
+        "893d63d939770b630f2e94f43d930400f2f6d5e1",
+    ),
+    (
+        "kernel/kernel_service_registry.py",
+        "legacy_quarantine/production/kernel/kernel_service_registry.py.legacy",
+        "a09ef7f7ebb6650255e1e3f0f0e66220adf6dad1f69a60f48206efa20300705a",
+        "665e42e331b642ca9ff7f3be4300873af3dda33e",
+    ),
+    (
+        "kernel/runtime_context.py",
+        "legacy_quarantine/production/kernel/runtime_context.py.legacy",
+        "d3df9aea50620c7f956666be55cf7261edd84d3a727fb917329d3f9b7727d110",
+        "f855d6c38c95c3c502bb840bab71902a455f68b8",
+    ),
+)
+_F06E_KERNEL_SOURCE_SIZES = {
+    "kernel/__init__.py": 0,
+    "kernel/boot_manager.py": 480,
+    "kernel/boot_phase_manager.py": 1199,
+    "kernel/jaos_kernel.py": 1573,
+    "kernel/jaos_kernel_backup.py": 1191,
+    "kernel/kernel_event_bus.py": 815,
+    "kernel/kernel_health_monitor.py": 1061,
+    "kernel/kernel_lifecycle_manager.py": 1235,
+    "kernel/kernel_permission_gateway.py": 1040,
+    "kernel/kernel_router.py": 882,
+    "kernel/kernel_service_registry.py": 628,
+    "kernel/runtime_context.py": 945,
+}
+_F06E_KERNEL_EXCLUDED_IMPORT_STATEMENTS = {
+    "tests/boot_manager_test.py": (
+        ("kernel.boot_manager",),
+    ),
+    "tests/boot_phase_manager_test.py": (
+        ("kernel.boot_phase_manager",),
+    ),
+    "tests/jaos_kernel_test.py": (
+        ("kernel.jaos_kernel",),
+    ),
+    "tests/kernel_event_bus_test.py": (
+        ("kernel.kernel_event_bus",),
+    ),
+    "tests/kernel_health_monitor_test.py": (
+        ("kernel.kernel_health_monitor",),
+    ),
+    "tests/kernel_integration_test.py": (
+        ("kernel.jaos_kernel",),
+        ("kernel.kernel_event_bus",),
+        ("kernel.kernel_health_monitor",),
+        ("kernel.kernel_lifecycle_manager",),
+        ("kernel.kernel_permission_gateway",),
+        ("kernel.kernel_router",),
+        ("kernel.kernel_service_registry",),
+        ("kernel.runtime_context",),
+    ),
+    "tests/kernel_lifecycle_manager_test.py": (
+        ("kernel.kernel_lifecycle_manager",),
+    ),
+    "tests/kernel_permission_gateway_test.py": (
+        ("kernel.kernel_permission_gateway",),
+    ),
+    "tests/kernel_router_test.py": (
+        ("kernel.kernel_router",),
+    ),
+    "tests/kernel_service_registry_test.py": (
+        ("kernel.kernel_service_registry",),
+    ),
+    "tests/runtime_context_test.py": (
+        ("kernel.runtime_context",),
+    ),
+}
+_F06E_KERNEL_EXCLUDED_SCRIPT_HASHES = {
+    "tests/boot_manager_test.py":
+        "4f9320c4ce4d3d326dd51b141365b7d2ddf00ba00fe8fe4c279c95be7534df9f",
+    "tests/boot_phase_manager_test.py":
+        "fc207bd6e220a4aad66eb3b1107a10936ccbbbf41d69526d5a14a3d1eaa05573",
+    "tests/jaos_kernel_test.py":
+        "79e110d8ccce9ca363f211efe3dd060835f265b556b662bd6641560c544ef733",
+    "tests/kernel_event_bus_test.py":
+        "d1d0ab052ed5d6bdb3d07ddff43bfe84264cd78128dffe308d187855eb7989df",
+    "tests/kernel_health_monitor_test.py":
+        "00cf0483f80fb4779894e331e427fd5fc3a933f6c52d0737e01d98cbe40dbe87",
+    "tests/kernel_integration_test.py":
+        "624578db7d3a9473da6debe28685b359371cd84bf8c9714d3d9611cef4b8cf28",
+    "tests/kernel_lifecycle_manager_test.py":
+        "7e166d7e96a1dd2dacd74e953329d7abe86d8d8d4f6195d16799aec47dc755de",
+    "tests/kernel_permission_gateway_test.py":
+        "2e51191b74f88f949cb1d2e7a44f4971af673111e0d662aff9a1c7a6ba9bbd5d",
+    "tests/kernel_router_test.py":
+        "0a573d1f3ff27ca8cae1bb36d100d8e5d3985c1a23b45d9590f6e0a01b99bc76",
+    "tests/kernel_service_registry_test.py":
+        "5671feffcd9a6ae359cbeb00debaa4e0bb94bc2d9389bdf7bf7d4e2f0349d227",
+    "tests/runtime_context_test.py":
+        "9de31f72299145893503eb04153b6ae8fa033bfeb1de189dc3238821826c0e07",
+}
+_F06E_KERNEL_RETAINED_SOURCE_INVENTORIES = {
+    "core/kernel.py": (
+        1, "2fc94892bf0cff0a3c39e2bce40297c2cee8033150c5dff0aeb39a9256e90f05",
+    ),
+    "executive_brain": (
+        91, "7c75f359f9e8b89a54f4bcc5da6c49a04a6a90845a131da63c15b47a65556cf8",
+    ),
+    "workflow": (
+        9, "0f65197fe64f5eff0753c4277ea8cbf320c19426aa752215bfe6793eb4577d35",
+    ),
+}
+
+
+def test_f06e_kernel_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """Preserve all 12 shadow kernel sources outside Python and collection."""
+
+    _assert_f06e_production_archive_payloads(
+        _F06E_KERNEL_ARCHIVE_RECORDS, {"kernel": 12}, pytestconfig,
+    )
+    assert set(_F06E_KERNEL_SOURCE_SIZES) == {
+        record[0] for record in _F06E_KERNEL_ARCHIVE_RECORDS
+    }
+    for former, archive, _sha256, _blob in _F06E_KERNEL_ARCHIVE_RECORDS:
+        assert (_REPOSITORY_ROOT / archive).stat().st_size == (
+            _F06E_KERNEL_SOURCE_SIZES[former]
+        )
+
+
+def test_f06e_kernel_caller_and_boundary_containment() -> None:
+    """Keep exactly the excluded kernel debt and preserve remaining owners."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        analyze_import_closure,
+    )
+
+    paths = _repository_live_python_paths()
+    observed: dict[str, tuple[tuple[str, ...], ...]] = {}
+    excluded_modules = {
+        path.removesuffix(".py").replace("/", ".")
+        for path in _F06E_KERNEL_EXCLUDED_IMPORT_STATEMENTS
+    }
+    for path in paths:
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        statements = []
+        tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+        for node in ast.walk(tree):
+            names: tuple[str, ...] = ()
+            if isinstance(node, ast.Import):
+                names = tuple(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                names = (node.module,)
+            matching = tuple(name for name in names if name.partition(".")[0] == "kernel")
+            if matching:
+                statements.append(matching)
+            if isinstance(node, ast.ImportFrom) and node.module and node.level == 0:
+                names += tuple(node.module + "." + alias.name for alias in node.names)
+            assert not any(
+                name == module or name.startswith(module + ".")
+                for name in names for module in excluded_modules
+            ), relpath
+            if relpath.startswith(("jaos/", "jaos_platform/")) and (
+                isinstance(node, ast.Constant) and isinstance(node.value, str)
+            ):
+                assert node.value != "kernel"
+                assert not node.value.startswith("kernel.")
+        if statements:
+            observed[relpath] = tuple(statements)
+        assert "kernel" not in _literal_dynamic_import_roots(path)
+
+    assert observed == _F06E_KERNEL_EXCLUDED_IMPORT_STATEMENTS
+    assert len(observed) == 11
+    assert sum(map(len, observed.values())) == 18
+    assert all(
+        path.startswith("tests/") and not path.startswith("tests/tests/")
+        for path in observed
+    )
+    tests_conftest = _load_tests_conftest()
+    assert set(_F06E_KERNEL_EXCLUDED_SCRIPT_HASHES) == set(observed)
+    for relpath, expected_sha256 in _F06E_KERNEL_EXCLUDED_SCRIPT_HASHES.items():
+        path = _REPOSITORY_ROOT / relpath
+        assert tests_conftest.is_excluded_legacy_module(path)
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == expected_sha256
+
+    for relpath, (expected_count, expected_digest) in (
+        _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES.items()
+    ):
+        retained = _REPOSITORY_ROOT / relpath
+        retained_paths = [retained] if retained.is_file() else sorted(retained.rglob("*.py"))
+        assert len(retained_paths) == expected_count
+        inventory = "".join(
+            path.relative_to(_REPOSITORY_ROOT).as_posix()
+            + "\0" + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
+            for path in retained_paths
+        )
+        assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
+    _assert_f06e_satellite_retained_inventory()
+
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert closure["analyzed_files"]
+    assert "kernel" not in {
         module.partition(".")[0] for module in closure["reached_modules"]
     }
     configured_paths = {
