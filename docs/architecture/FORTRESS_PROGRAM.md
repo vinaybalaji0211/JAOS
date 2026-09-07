@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.30
+Document Version: 1.31
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E KERNEL PRODUCTION-ROOT QUARANTINE IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E CORE/KERNEL.PY PRODUCTION-LEAF QUARANTINE IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -116,6 +116,7 @@ requires all of the following:
 | FORTRESS-06D satellite/runtime shadow-test retirement | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06D core/kernel shadow-runtime test retirement | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06E kernel production-root quarantine | IMPLEMENTED AND VERIFIED |
+| FORTRESS-06E core/kernel.py production-leaf quarantine | IMPLEMENTED AND VERIFIED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -144,7 +145,7 @@ authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
 Program is not certified. FORTRESS-06 is in progress through the separately
-authorized F06E kernel production-root quarantine (section 7.30). F06B moved
+authorized F06E core/kernel.py production-leaf quarantine (section 7.31). F06B moved
 only two unsupported root test-shaped scripts as byte-identical non-Python
 archives, F06C made the canonical CLI surfaces injected adapters, F06D1
 quarantined eight duplicate AI and Core configured tests, F06D2A replaced
@@ -2997,6 +2998,121 @@ recorded in manifest section 24. All archive payloads remain unchanged.
 
 ---
 
+### 7.31 FORTRESS-06E core/kernel.py Production-Leaf Quarantine
+
+Status: IMPLEMENTED AND VERIFIED
+
+Baseline: `3247c0d` on `phase8-ai-intelligence`, aligned with origin.
+This implementation checkpoint is unstaged and uncommitted. It retires only
+`core/kernel.py`; it does not retire the `core/` root.
+
+The original was tracked and matched HEAD: 1,888 checkout bytes, 79 CRLF line
+endings and no bare LF, SHA-256
+`12614a613c9156be0dee4aaab6630e161efd04f49b169ce97d27e321086fa86f`,
+Git-normalized blob `7c56418aa60b29dbecaa00f35abeadf70ee65fa9`.
+Its exact destination is
+`legacy_quarantine/production/core/kernel.py.legacy`. Checkout bytes, SHA-256,
+size, line-ending representation, and normalized blob identity are preserved.
+This is one R100-equivalent move, reversible through Git history; no archive
+payload was edited.
+
+The live leaf and associated `core/__pycache__/kernel.cpython-314.pyc` are
+absent. Other core cache artifacts were not removed. The other 34 core Python
+sources and `main.py` are unchanged. No wrapper, stub, alias, forwarding
+module, or replacement capability was added. The archive is non-importable
+and non-collectable; no quarantine `__init__.py` or repository Python import
+from `legacy_quarantine` was introduced.
+
+Canonical production, remaining legacy production, configured-test, excluded
+direct, and separate script/tool callers of `core.kernel` are all zero.
+Static canonical launcher closure (207 files) and the legacy `main.py`
+closure (31 files, including `core.engine`) do not reach this leaf. These are
+static findings, not live-runtime certification. The source owns no persistent
+runtime-data, config, checkpoint, JSON, network, subprocess, or filesystem
+writer requiring F06F treatment; this finding applies only to the retired leaf.
+
+Before retirement, the leaf imported
+`executive_brain.managers.registry_manager.RegistryManager` at module import
+time, but constructed it only inside `JAOSKernel.boot()`. Removing this
+uncalled leaf removed RegistryManager's sole external-root production importer:
+**1 -> 0**. Its six Executive internal importers remain unchanged; RegistryManager
+itself is not declared independently removable.
+
+The existing source-classification model continues to classify `core/` as D.
+Its row now records PARTIAL ROOT DISPOSITION and links this archived leaf to
+the slice evidence. No independent category-E member was added for the leaf.
+Exact membership remains A=10 / B=1 / D=6 / E=13 / F=3, total 33, with no
+duplicate, missing, or changed classification member. The six D entries remain
+`brain/`, `core/`, `executive_brain/`, `main.py`, `memory/`, and `workflow/`.
+`test_canonical_import_boundary.py` required no modification.
+
+The existing collection-containment authority now handles explicitly archived
+leaves within live roots while preserving root-absence checks for earlier
+whole-root slices. Two former live-leaf obligations and the retained
+`core/kernel.py` inventory/hash guard now require archive fidelity. Exactly
+two grouped cases were added: archive fidelity and caller/dependency
+containment. All other core, canonical, Executive, workflow, config, and
+previous-quarantine guards remain.
+
+`test_config_containment.py` remains KEEP TEMPORARILY / INTENTIONALLY
+CONFIGURED, unchanged at SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+9 source definitions and 11 collected/passing cases. Configured legacy-facing
+files remain 1 and configured `executive_brain` importers remain 0. Retirement
+of that test and the `main.py -> core.engine -> core.config_manager` writer
+boundary remains unauthorized.
+
+Verification used repository `.venv/Scripts/python.exe -B -` with the
+established in-memory pytest runner, `PYTHONDONTWRITEBYTECODE=1`,
+`PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`, `-p no:cacheprovider`,
+`-p anyio.pytest_plugin`, and a fresh external
+`%TEMP%/jaos-f06e-core-leaf-<uuid>/pytest` basetemp with inherited Windows ACLs.
+
+| Executed verification | Result |
+|---|---|
+| Two new leaf cases | 2 passed |
+| Relevant existing containment: `-k "f06d_satellite_retirement or f06d_core_kernel or f06e_kernel"` | 5 passed, 41 deselected |
+| Full `test_collection_containment.py` | 46 passed |
+| Full `test_canonical_import_boundary.py` | 55 passed |
+| Launcher/banner | 8 passed |
+| PlatformRuntime/lifecycle | 21 passed |
+| PlatformComposition | 8 passed |
+| BasePlatformService/ServiceContainer | 9 passed |
+| Config containment | 11 passed |
+| Unique focused coverage across separate runs | 158 passed |
+| `tests/tests/platform` | 391 passed, 1 skipped |
+| `tests/tests/composition` | 49 passed |
+| `tests/tests/integration` | 17 passed |
+| Full configured `tests/tests` | 1,772 passed, 1 skipped |
+| `pytest . --collect-only -q` | 1,773 collected |
+| Final Ruff on the changed Python test file | PASS |
+
+All pytest gates exited 0. No configured case retired; actual collection is
+`1,771 + 2 = 1,773`. Ruff initially reported SIM102 in a new nested condition;
+combining the same predicates resolved it. Final Ruff exited 0, and both new
+cases then passed again (2 passed, exit 0). No production behavior changed
+during that lint correction.
+
+Canonical `run_jaos.py`, `jaos/`, and `jaos_platform/` are unchanged, as are
+all 91 Executive sources and all nine workflow sources. Workflow is still
+blocked by `executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`;
+this leaf retirement does not unblock it. The planned Executive order remains
+AI/provider 13 sources, tools 42, remaining family 36. None of those slices has
+started. Writer-sensitive remaining `core/`, `brain/`, `memory/`, and
+`main.py` retain their F06F gates; Founder compatibility decisions remain open.
+
+F06D, F06E, and FORTRESS-06 remain IN PROGRESS; RAA-003 remains OPEN.
+F06F/F06G/F06H and later work have not started. Step 8 remains blocked, Fortress
+certification has not started, and major Phase 8 expansion remains paused.
+Protected hashes and out-of-scope state match the baseline. The task covers
+five logical paths: one original, one archive, one containment file, and these
+two architecture documents. Project-state documents remain untouched.
+
+Exact source/archive and preserved RegistryManager caller evidence is recorded
+in the quarantine manifest, section 25.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -3051,6 +3167,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-07 | 1.31 | Recorded the verified one-source core/kernel.py quarantine, exact SHA/blob/size fidelity, RegistryManager external-root importers 1 -> 0, six preserved Executive importers, two containment cases, and unchanged D=6/E=13/total=33 with core retained live. Full configured 1,772 passed, 1 skipped; root collection 1,773. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-07 | 1.30 | Recorded the verified 12-source kernel quarantine with checkout SHA/size and Git blob fidelity, 11 excluded files / 18 imports, two containment cases, D=6/E=13/total=33, preserved backup classification, and corrected stale summary counters. Full configured suite: 1,770 passed, 1 skipped; root collection: 1,771. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-06 | 1.29 | Recorded the verified engineering quarantine: 13 Python sources plus one historical Markdown artifact, 14 byte/SHA/size and Git-normalized-blob-identical archives, two grouped containment cases, exact 13-file/24-import and five-registration excluded debt, BasePlatformService legacy consumers 3 -> 2, and D=7/E=12 with 33 classifications. Focused 154 passed; full configured 1,768 passed, 1 skipped; root collection 1,769. Canonical/config/protected boundaries preserved; RAA-003 OPEN and F06E IN PROGRESS. |
 | 2026-09-06 | 1.28 | Recorded the verified 29-source dashboard/knowledge/security/system_services production quarantine, exact archive fidelity, two grouped containment cases, excluded-only dynamic/debt adjudication, and D=8/E=11 with 33 classifications. Focused 152 passed; full configured 1,766 passed, 1 skipped; root collection 1,767. Canonical/config/protected state and later-slice boundaries preserved; RAA-003 OPEN and F06E IN PROGRESS. |

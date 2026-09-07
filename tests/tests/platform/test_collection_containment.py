@@ -1594,7 +1594,6 @@ _F06D_SATELLITE_PRODUCTION_PATHS = (
 _F06D_RETAINED_CORE_KERNEL_CONFIG_PATHS = (
     "core/config_manager.py",
     "core/engine.py",
-    "core/kernel.py",
     "main.py",
 )
 
@@ -1717,6 +1716,10 @@ def test_f06d_satellite_retirement_preserves_exact_residual_boundaries(
     _assert_f06e_production_archive_payloads(
         _F06E_KERNEL_ARCHIVE_RECORDS, {"kernel": 12}, pytestconfig,
     )
+    _assert_f06e_production_archive_payloads(
+        _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS, {"core": 1}, pytestconfig,
+        partial_roots=frozenset({"core"}),
+    )
 
 
 _F06D_CORE_KERNEL_ARCHIVE_RECORDS = (
@@ -1742,7 +1745,6 @@ _F06D_CONFIG_CONTAINMENT_SHA256 = (
 )
 _F06D_CORE_KERNEL_PRODUCTION_PATHS = (
     "core/engine.py",
-    "core/kernel.py",
     "main.py",
 )
 
@@ -1867,6 +1869,10 @@ def test_f06d_core_kernel_retirement_leaves_only_config_containment(
         assert (_REPOSITORY_ROOT / production_relpath).is_file()
     _assert_f06e_production_archive_payloads(
         _F06E_KERNEL_ARCHIVE_RECORDS, {"kernel": 12}, pytestconfig,
+    )
+    _assert_f06e_production_archive_payloads(
+        _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS, {"core": 1}, pytestconfig,
+        partial_roots=frozenset({"core"}),
     )
 
 
@@ -2354,8 +2360,12 @@ def _assert_f06e_production_archive_payloads(
     records: tuple[tuple[str, str, str, str], ...],
     expected_counts: dict[str, int],
     pytestconfig: pytest.Config,
+    *,
+    partial_roots: frozenset[str] = frozenset(),
 ) -> None:
-    """Apply the established production archive guard to an exact slice."""
+    """Guard an exact archive slice, including explicit leaves of live roots."""
+
+    assert partial_roots <= expected_counts.keys()
 
     import_suffixes = tuple(importlib.machinery.all_suffixes())
     python_file_patterns = tuple(pytestconfig.getini("python_files"))
@@ -2365,7 +2375,11 @@ def _assert_f06e_production_archive_payloads(
     assert len({record[1] for record in records}) == expected_total
 
     for root_name, expected_count in expected_counts.items():
-        assert not (_REPOSITORY_ROOT / root_name).exists()
+        live_root = _REPOSITORY_ROOT / root_name
+        if root_name in partial_roots:
+            assert live_root.is_dir()
+        else:
+            assert not live_root.exists()
         root_records = tuple(r for r in records if r[0].startswith(root_name + "/"))
         assert len(root_records) == expected_count
         archive_root = _REPOSITORY_ROOT / "legacy_quarantine/production" / root_name
@@ -2379,12 +2393,13 @@ def _assert_f06e_production_archive_payloads(
             path.relative_to(_REPOSITORY_ROOT).as_posix()
             for path in archive_root.rglob("*")
         } == expected_entries
-        assert (
-            importlib.machinery.PathFinder.find_spec(
-                root_name, [str(_REPOSITORY_ROOT)]
-            )
-            is None
+        root_spec = importlib.machinery.PathFinder.find_spec(
+            root_name, [str(_REPOSITORY_ROOT)]
         )
+        if root_name in partial_roots:
+            assert root_spec is not None
+        else:
+            assert root_spec is None
 
     for former_relpath, archive_relpath, expected_sha256, expected_blob in records:
         former_path = _REPOSITORY_ROOT / former_relpath
@@ -3547,6 +3562,18 @@ def test_f06e_kernel_caller_and_boundary_containment() -> None:
     for relpath, (expected_count, expected_digest) in (
         _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES.items()
     ):
+        if relpath == "core/kernel.py":
+            former, archive, sha256, blob = _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS[0]
+            assert former == relpath
+            assert not (_REPOSITORY_ROOT / former).exists()
+            payload = (_REPOSITORY_ROOT / archive).read_bytes()
+            assert hashlib.sha256(payload).hexdigest() == sha256
+            assert _git_blob_id(payload, path=former) == blob
+            assert _git_blob_id(payload, path=archive) == blob
+            assert expected_count == 1
+            inventory = former + "\0" + sha256 + "\n"
+            assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
+            continue
         retained = _REPOSITORY_ROOT / relpath
         retained_paths = [retained] if retained.is_file() else sorted(retained.rglob("*.py"))
         assert len(retained_paths) == expected_count
@@ -3578,3 +3605,165 @@ def test_f06e_kernel_caller_and_boundary_containment() -> None:
         for path in configured_paths
     )
     _assert_config_containment_preserved()
+
+
+_F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS = (
+    (
+        "core/kernel.py",
+        "legacy_quarantine/production/core/kernel.py.legacy",
+        "12614a613c9156be0dee4aaab6630e161efd04f49b169ce97d27e321086fa86f",
+        "7c56418aa60b29dbecaa00f35abeadf70ee65fa9",
+    ),
+)
+_F06E_CORE_KERNEL_REGISTRY_INTERNAL_IMPORTERS = frozenset(
+    {
+        "executive_brain/brain/executive_brain.py",
+        "executive_brain/managers/decision_manager.py",
+        "executive_brain/managers/execution_manager.py",
+        "executive_brain/managers/mission_manager.py",
+        "executive_brain/managers/planning_manager.py",
+        "executive_brain/managers/result_manager.py",
+    }
+)
+_F06E_CORE_KERNEL_RETAINED_CORE_DIGEST = (
+    "f1b1c574626a8e8c0188f1d8c340cecdf5087eb8e423ad77971a2656a523294c"
+)
+_F06E_CORE_KERNEL_MAIN_SHA256 = (
+    "4194f217f3a896519fed43979407df403a08fdfb3a12fe9d094aef98dba07596"
+)
+
+
+def test_f06e_core_kernel_leaf_archive_preserves_exact_payload(
+    pytestconfig: pytest.Config,
+) -> None:
+    """The one archived leaf is inert while its owning legacy root stays live."""
+
+    _assert_f06e_production_archive_payloads(
+        _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS, {"core": 1}, pytestconfig,
+        partial_roots=frozenset({"core"}),
+    )
+    former, archive, _sha256, _blob = _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS[0]
+    payload = (_REPOSITORY_ROOT / archive).read_bytes()
+    assert len(payload) == 1888
+    assert payload.count(b"\r\n") == 79
+    assert payload.count(b"\n") == 79
+    assert not tuple((_REPOSITORY_ROOT / "core").rglob("kernel.*.pyc"))
+    assert not (_REPOSITORY_ROOT / "core/__pycache__/kernel.cpython-314.pyc").exists()
+    assert importlib.machinery.PathFinder.find_spec(
+        Path(former).stem, [str(_REPOSITORY_ROOT / "core")]
+    ) is None
+
+
+def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
+    """No caller needs the leaf; six Executive registry consumers stay intact."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        _manifest_classified_paths,
+        analyze_import_closure,
+    )
+
+    leaf = "core.kernel"
+    registry = "executive_brain.managers.registry_manager"
+    leaf_importers: set[str] = set()
+    registry_importers: set[str] = set()
+    registry_statement_count = 0
+    paths = _repository_live_python_paths()
+    for path in paths:
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        package = relpath.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        tree = ast.parse(path.read_text(encoding="utf-8-sig"))
+        for node in ast.walk(tree):
+            names: tuple[str, ...] = ()
+            if isinstance(node, ast.Import):
+                names = tuple(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                if node.level:
+                    prefix = package[:len(package) - node.level + 1]
+                    module = ".".join(prefix + ([node.module] if node.module else []))
+                else:
+                    module = node.module or ""
+                names = (module,) + tuple(
+                    ".".join(part for part in (module, alias.name) if part)
+                    for alias in node.names
+                )
+            if any(name == leaf or name.startswith(leaf + ".") for name in names):
+                leaf_importers.add(relpath)
+            if any(name == registry or name.startswith(registry + ".") for name in names):
+                registry_importers.add(relpath)
+                registry_statement_count += 1
+            if isinstance(node, ast.Call) and node.args:
+                name = (
+                    node.func.id if isinstance(node.func, ast.Name)
+                    else node.func.attr if isinstance(node.func, ast.Attribute) else None
+                )
+                if name in {"import_module", "__import__", "add_import"}:
+                    arg = node.args[0]
+                    if isinstance(arg, ast.Constant) and isinstance(arg.value, str):
+                        assert arg.value != leaf and not arg.value.startswith(leaf + ".")
+            if (
+                (relpath == "run_jaos.py" or relpath.startswith(("jaos/", "jaos_platform/")))
+                and isinstance(node, ast.Constant)
+                and isinstance(node.value, str)
+            ):
+                assert node.value != leaf and not node.value.startswith(leaf + ".")
+
+    # The empty repository-wide set includes production, configured, flat, and tool callers.
+    assert leaf_importers == set()
+    assert registry_importers == _F06E_CORE_KERNEL_REGISTRY_INTERNAL_IMPORTERS
+    assert registry_statement_count == 6
+    assert all(path.startswith("executive_brain/") for path in registry_importers)
+
+    core = _REPOSITORY_ROOT / "core"
+    assert core.is_dir()
+    core_sources = sorted(core.rglob("*.py"))
+    assert len(core_sources) == 34
+    inventory = "".join(
+        path.relative_to(_REPOSITORY_ROOT).as_posix() + "\0"
+        + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
+        for path in core_sources
+    )
+    assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == (
+        _F06E_CORE_KERNEL_RETAINED_CORE_DIGEST
+    )
+    assert hashlib.sha256((_REPOSITORY_ROOT / "main.py").read_bytes()).hexdigest() == (
+        _F06E_CORE_KERNEL_MAIN_SHA256
+    )
+    for relpath in ("executive_brain", "workflow"):
+        expected_count, expected_digest = _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES[relpath]
+        sources = sorted((_REPOSITORY_ROOT / relpath).rglob("*.py"))
+        assert len(sources) == expected_count
+        inventory = "".join(
+            path.relative_to(_REPOSITORY_ROOT).as_posix() + "\0"
+            + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
+            for path in sources
+        )
+        assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
+
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert closure["analyzed_files"]
+    assert leaf not in closure["reached_modules"]
+    configured = {
+        path for path in paths
+        if path.relative_to(_REPOSITORY_ROOT).as_posix().startswith("tests/tests/")
+    }
+    assert _F06D_CONFIG_CONTAINMENT_PATH in configured
+    assert {
+        path for path in configured
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    } == {_F06D_CONFIG_CONTAINMENT_PATH}
+    assert not any(
+        "executive_brain" in _imported_top_level_roots(path) for path in configured
+    )
+    _assert_config_containment_preserved()
+
+    manifest = (
+        _REPOSITORY_ROOT / "docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md"
+    ).read_text(encoding="utf-8")
+    classified = _manifest_classified_paths(manifest)
+    assert "core/" in classified["D"]
+    assert "legacy_quarantine/production/core/kernel.py.legacy" not in classified["E"]
+    assert {code: len(entries) for code, entries in classified.items()} == {
+        "A": 10, "B": 1, "D": 6, "E": 13, "F": 3,
+    }
+    assert sum(map(len, classified.values())) == 33
