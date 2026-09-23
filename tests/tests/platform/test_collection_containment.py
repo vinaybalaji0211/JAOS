@@ -1490,8 +1490,18 @@ def test_f06d_provider_retirement_preserves_canonical_and_legacy_boundaries() ->
     assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
     assert len(legacy_facing_paths) == 1
 
+    # F06E retired these production adapters; retain their exact original evidence.
     for production_relpath in _F06D_PROVIDER_PRODUCTION_PATHS:
-        assert (_REPOSITORY_ROOT / production_relpath).is_file()
+        record = next(
+            row for row in _F06E_EXECUTIVE_AI_ARCHIVE_RECORDS
+            if row[0] == production_relpath
+        )
+        former, archive, sha256, blob = record
+        assert not (_REPOSITORY_ROOT / former).exists()
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == sha256
+        assert _git_blob_id(payload, path=former) == blob
+        assert _git_blob_id(payload, path=archive) == blob
 
 
 _F06D_SATELLITE_ARCHIVE_RECORDS = (
@@ -3574,6 +3584,9 @@ def test_f06e_kernel_caller_and_boundary_containment() -> None:
             inventory = former + "\0" + sha256 + "\n"
             assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
             continue
+        if relpath == "executive_brain":
+            _assert_f06e_executive_historical_inventory()
+            continue
         retained = _REPOSITORY_ROOT / relpath
         retained_paths = [retained] if retained.is_file() else sorted(retained.rglob("*.py"))
         assert len(retained_paths) == expected_count
@@ -3729,6 +3742,9 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
         _F06E_CORE_KERNEL_MAIN_SHA256
     )
     for relpath in ("executive_brain", "workflow"):
+        if relpath == "executive_brain":
+            _assert_f06e_executive_historical_inventory()
+            continue
         expected_count, expected_digest = _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES[relpath]
         sources = sorted((_REPOSITORY_ROOT / relpath).rglob("*.py"))
         assert len(sources) == expected_count
@@ -3763,6 +3779,294 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
     classified = _manifest_classified_paths(manifest)
     assert "core/" in classified["D"]
     assert "legacy_quarantine/production/core/kernel.py.legacy" not in classified["E"]
+    assert {code: len(entries) for code, entries in classified.items()} == {
+        "A": 10, "B": 1, "D": 6, "E": 13, "F": 3,
+    }
+    assert sum(map(len, classified.values())) == 33
+
+_F06E_EXECUTIVE_AI_ARCHIVE_RECORDS = (
+    (
+        "executive_brain/ai/__init__.py",
+        "legacy_quarantine/production/executive_brain/ai/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "executive_brain/ai/prompt/__init__.py",
+        "legacy_quarantine/production/executive_brain/ai/prompt/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "executive_brain/ai/prompt/prompt_engine.py",
+        "legacy_quarantine/production/executive_brain/ai/prompt/prompt_engine.py.legacy",
+        "1424acfe1dd56b959cb848ed9e986235c02e8b353a906e2a931b9d0e303bac51",
+        "c8d2e25717e88b244ce4d77421ad4f559313663f",
+    ),
+    (
+        "executive_brain/ai/prompt/prompt_models.py",
+        "legacy_quarantine/production/executive_brain/ai/prompt/prompt_models.py.legacy",
+        "11f8f8293b3af59c7175570ce507b1ace1aa2616506f870f4979c2c2ddc5381a",
+        "3c83332640dd4caff851095d60a5d4e415518782",
+    ),
+    (
+        "executive_brain/ai/providers/__init__.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "executive_brain/ai/providers/ai_provider_exceptions.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/ai_provider_exceptions.py.legacy",
+        "09ed65a45fbbe6ee965b09ae1f9c167af5acb88bfbd7f52083d062cd1d2a1e72",
+        "b048a757e8ad282194096ba6aa609415524c392a",
+    ),
+    (
+        "executive_brain/ai/providers/ai_provider_interface.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/ai_provider_interface.py.legacy",
+        "fa6d2d0b6bb453c0189b840573d4957e5e284e2f6f3d6c5c431a37c30128a5d3",
+        "c6ba37a7809bd51fc549f4aa87ac465c75fb23cb",
+    ),
+    (
+        "executive_brain/ai/providers/ai_provider_manager.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/ai_provider_manager.py.legacy",
+        "7f1125e41a5379e42daffc7d9bd360ad2e0f0db09a4a390c17781b257c7a0618",
+        "c1b2ca6103c352aaab8f6748cac1dc9116e8e13a",
+    ),
+    (
+        "executive_brain/ai/providers/ai_provider_models.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/ai_provider_models.py.legacy",
+        "5b3e4011f8350c8a7dcee9069c9681bab3f694af5c3464c09bb2a85fba1fee54",
+        "6810938055892b0e72f09473f481b520c73ad1eb",
+    ),
+    (
+        "executive_brain/ai/providers/ollama_provider.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/ollama_provider.py.legacy",
+        "51a18d7db6c99646f5905a617b6b8f11543d2f2037de8ea504d0c24aaf46cbb0",
+        "95144406d1b48487f7af6ebf82c6f5ca80653261",
+    ),
+    (
+        "executive_brain/ai/providers/openai_provider.py",
+        "legacy_quarantine/production/executive_brain/ai/providers/openai_provider.py.legacy",
+        "c1a42f8585db3edc84b26735eb4b41e7680ff8a58531596bb608dcf67a10596d",
+        "bfb0ee10589c054903e214d69285afb8dc8a242f",
+    ),
+    (
+        "executive_brain/ai/routing/__init__.py",
+        "legacy_quarantine/production/executive_brain/ai/routing/__init__.py.legacy",
+        "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+    ),
+    (
+        "executive_brain/ai/routing/llm_router.py",
+        "legacy_quarantine/production/executive_brain/ai/routing/llm_router.py.legacy",
+        "e166501f63aad131377883964664efdf8a2ba30a23d9bcb445f053be1e7305e4",
+        "cd46a08e075da86f10a9002337b4cc8f474a2349",
+    ),
+)
+_F06E_EXECUTIVE_AI_SOURCE_SIZES_AND_CRLF = {
+    "executive_brain/ai/__init__.py": (0, 0),
+    "executive_brain/ai/prompt/__init__.py": (0, 0),
+    "executive_brain/ai/prompt/prompt_engine.py": (2276, 73),
+    "executive_brain/ai/prompt/prompt_models.py": (883, 50),
+    "executive_brain/ai/providers/__init__.py": (0, 0),
+    "executive_brain/ai/providers/ai_provider_exceptions.py": (495, 24),
+    "executive_brain/ai/providers/ai_provider_interface.py": (1046, 48),
+    "executive_brain/ai/providers/ai_provider_manager.py": (2920, 87),
+    "executive_brain/ai/providers/ai_provider_models.py": (1028, 47),
+    "executive_brain/ai/providers/ollama_provider.py": (3763, 131),
+    "executive_brain/ai/providers/openai_provider.py": (4236, 146),
+    "executive_brain/ai/routing/__init__.py": (0, 0),
+    "executive_brain/ai/routing/llm_router.py": (1337, 46),
+}
+_F06E_EXECUTIVE_AI_RETAINED_INVENTORIES = {
+    "executive_brain": (
+        78, "84cf9864b24778fbb43d8bd7382fe8ed62eaabe79083bebd83a661f3de274533",
+    ),
+    "executive_brain/tools": (
+        42, "67f6d96cedf6a61124cddbd1e14f4fe0eb08a7392adc3621e2e76982bbede625",
+    ),
+    "workflow": (
+        9, "0f65197fe64f5eff0753c4277ea8cbf320c19426aa752215bfe6793eb4577d35",
+    ),
+}
+
+
+def _assert_f06e_executive_historical_inventory() -> None:
+    """Reconstruct the original 91-file evidence from live and archived bytes."""
+
+    payloads = {
+        path.relative_to(_REPOSITORY_ROOT).as_posix(): path.read_bytes()
+        for path in (_REPOSITORY_ROOT / "executive_brain").rglob("*.py")
+    }
+    assert len(payloads) == 78
+    for former, archive, sha256, blob in _F06E_EXECUTIVE_AI_ARCHIVE_RECORDS:
+        assert former not in payloads
+        assert not (_REPOSITORY_ROOT / former).exists()
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == sha256
+        assert _git_blob_id(payload, path=former) == blob
+        payloads[former] = payload
+    expected_count, expected_digest = _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES[
+        "executive_brain"
+    ]
+    assert len(payloads) == expected_count == 91
+    inventory = "".join(
+        relpath + "\0" + hashlib.sha256(payload).hexdigest() + "\n"
+        for relpath, payload in sorted(payloads.items())
+    )
+    assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
+
+
+def test_f06e_executive_ai_archives_preserve_exact_payloads(
+    pytestconfig: pytest.Config,
+) -> None:
+    """The exact 13-source partial-root slice is inert and byte-identical."""
+
+    _assert_f06e_production_archive_payloads(
+        _F06E_EXECUTIVE_AI_ARCHIVE_RECORDS, {"executive_brain": 13}, pytestconfig,
+        partial_roots=frozenset({"executive_brain"}),
+    )
+    family = _REPOSITORY_ROOT / "executive_brain/ai"
+    assert not family.exists()
+    for relative in ("__pycache__", "prompt/__pycache__", "providers/__pycache__",
+                     "routing/__pycache__"):
+        assert not (family / relative).exists()
+    assert importlib.machinery.PathFinder.find_spec(
+        "ai", [str(family.parent)]
+    ) is None
+    assert set(_F06E_EXECUTIVE_AI_SOURCE_SIZES_AND_CRLF) == {
+        record[0] for record in _F06E_EXECUTIVE_AI_ARCHIVE_RECORDS
+    }
+    for former, archive, _sha256, _blob in _F06E_EXECUTIVE_AI_ARCHIVE_RECORDS:
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        size, crlf = _F06E_EXECUTIVE_AI_SOURCE_SIZES_AND_CRLF[former]
+        assert len(payload) == size
+        assert payload.count(b"\r\n") == payload.count(b"\n") == crlf
+        assert payload.count(b"\r") == crlf
+
+
+def test_f06e_executive_ai_caller_provider_and_dependency_containment() -> None:
+    """Retire only the shadow AI family while preserving every remaining owner."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        _manifest_classified_paths,
+        analyze_import_closure,
+    )
+
+    family = "executive_brain.ai"
+    registry = "executive_brain.managers.registry_manager"
+    callers: set[str] = set()
+    registry_importers: set[str] = set()
+    registry_statements = 0
+    workflow_edges: set[str] = set()
+    paths = _repository_live_python_paths()
+    for path in paths:
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        package = relpath.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig"))):
+            names: tuple[str, ...] = ()
+            if isinstance(node, ast.Import):
+                names = tuple(alias.name for alias in node.names)
+            elif isinstance(node, ast.ImportFrom):
+                prefix = package[:len(package) - node.level + 1] if node.level else []
+                module = ".".join(prefix + ([node.module] if node.module else []))
+                names = (module,) + tuple(
+                    ".".join(part for part in (module, alias.name) if part)
+                    for alias in node.names
+                )
+            elif isinstance(node, ast.Call) and node.args:
+                function = (
+                    node.func.id if isinstance(node.func, ast.Name)
+                    else node.func.attr if isinstance(node.func, ast.Attribute) else None
+                )
+                argument = node.args[0]
+                if (
+                    function in {"import_module", "__import__", "add_import"}
+                    and isinstance(argument, ast.Constant)
+                    and isinstance(argument.value, str)
+                ):
+                    names = (argument.value,)
+            if any(name == family or name.startswith(family + ".") for name in names):
+                callers.add(relpath)
+            assert not any(
+                name == "legacy_quarantine" or name.startswith("legacy_quarantine.")
+                for name in names
+            )
+            if any(name == registry or name.startswith(registry + ".") for name in names):
+                registry_importers.add(relpath)
+                registry_statements += 1
+            if "workflow.workflow_engine" in names:
+                workflow_edges.add(relpath)
+            if (
+                (relpath == "run_jaos.py" or relpath.startswith(("jaos/", "jaos_platform/")))
+                and isinstance(node, ast.Constant) and isinstance(node.value, str)
+            ):
+                assert node.value != family and not node.value.startswith(family + ".")
+
+    # This repository-wide empty set includes configured, excluded, and tool callers.
+    assert callers == set()
+    assert registry_importers == _F06E_CORE_KERNEL_REGISTRY_INTERNAL_IMPORTERS
+    assert registry_statements == 6
+    assert "executive_brain/pipeline/executive_pipeline.py" in workflow_edges
+    assert all(path.startswith("executive_brain/") for path in registry_importers)
+    _assert_f06e_executive_historical_inventory()
+    for root, (count, digest) in _F06E_EXECUTIVE_AI_RETAINED_INVENTORIES.items():
+        sources = sorted((_REPOSITORY_ROOT / root).rglob("*.py"))
+        assert len(sources) == count
+        inventory = "".join(
+            path.relative_to(_REPOSITORY_ROOT).as_posix() + "\0"
+            + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
+            for path in sources
+        )
+        assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == digest
+    executive = _REPOSITORY_ROOT / "executive_brain"
+    assert executive.is_dir()
+    assert len(tuple(executive.rglob("*.py"))) == 78
+    assert len(tuple((executive / "tools").rglob("*.py"))) == 42
+    assert len(tuple(executive.rglob("*.py"))) - 42 == 36
+
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert closure["analyzed_files"]
+    assert not any(
+        module == family or module.startswith(family + ".")
+        for module in closure["reached_modules"]
+    )
+    configured = {
+        path for path in paths
+        if path.relative_to(_REPOSITORY_ROOT).as_posix().startswith("tests/tests/")
+    }
+    assert {
+        path for path in configured
+        if _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+    } == {_F06D_CONFIG_CONTAINMENT_PATH}
+    assert not any("executive_brain" in _imported_top_level_roots(p) for p in configured)
+    _assert_config_containment_preserved()
+
+    adr = (_REPOSITORY_ROOT / "docs/architecture/ARCHITECTURE_DECISIONS.md").read_text(
+        encoding="utf-8"
+    ).split("\\# ADR-0014", 1)[1].split("\\# Review Policy", 1)[0]
+    for evidence in (
+        "ACCEPTED", "Founder-approved 2026-08-31",
+        "exact legacy OpenAI and Ollama adapters", "shadow\narchitecture",
+        "not permanent JAOS provider contracts", "No OpenAI-specific or Ollama-specific",
+        "`ProviderManager`/`AIManager`", "`MockProvider`",
+        "FORTRESS-09 remains NOT STARTED", "FORTRESS-09 retains later",
+    ):
+        assert evidence in adr
+    provider_architecture = (
+        _REPOSITORY_ROOT / "docs/architecture/PROVIDER_ARCHITECTURE.md"
+    ).read_text(encoding="utf-8")
+    assert "ADR-0014 supersedes" in provider_architecture
+    assert _F06D_PROVIDER_CANONICAL_TEST_PATH.is_file()
+    assert _imported_top_level_roots(_F06D_PROVIDER_CANONICAL_TEST_PATH) == {"jaos", "pytest"}
+    manifest = (
+        _REPOSITORY_ROOT / "docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md"
+    ).read_text(encoding="utf-8")
+    classified = _manifest_classified_paths(manifest)
+    assert "executive_brain/" in classified["D"]
+    assert not any("executive_brain/ai" in entry for entry in classified["E"])
     assert {code: len(entries) for code, entries in classified.items()} == {
         "A": 10, "B": 1, "D": 6, "E": 13, "F": 3,
     }

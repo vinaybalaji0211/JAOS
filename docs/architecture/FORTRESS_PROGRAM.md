@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.31
+Document Version: 1.32
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -18,7 +18,7 @@ Maintainer: JAOS Engineering
 
 Founder Direction Recorded: 2026-08-21
 
-Last Updated: 2026-09-07
+Last Updated: 2026-09-23
 
 Related Documents:
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E CORE/KERNEL.PY PRODUCTION-LEAF QUARANTINE IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E EXECUTIVE AI/PROVIDER PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -117,6 +117,7 @@ requires all of the following:
 | FORTRESS-06D core/kernel shadow-runtime test retirement | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06E kernel production-root quarantine | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06E core/kernel.py production-leaf quarantine | IMPLEMENTED AND VERIFIED |
+| FORTRESS-06E executive_brain AI/provider production-family quarantine | IMPLEMENTED AND VERIFIED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -145,7 +146,8 @@ authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
 Program is not certified. FORTRESS-06 is in progress through the separately
-authorized F06E core/kernel.py production-leaf quarantine (section 7.31). F06B moved
+authorized F06E executive_brain AI/provider production-family quarantine
+(section 7.32). F06B moved
 only two unsupported root test-shaped scripts as byte-identical non-Python
 archives, F06C made the canonical CLI surfaces injected adapters, F06D1
 quarantined eight duplicate AI and Core configured tests, F06D2A replaced
@@ -3000,6 +3002,9 @@ recorded in manifest section 24. All archive payloads remain unchanged.
 
 ### 7.31 FORTRESS-06E core/kernel.py Production-Leaf Quarantine
 
+Historical checkpoint: the 91-source Executive inventory below predates the
+AI/provider family retirement recorded in section 7.32.
+
 Status: IMPLEMENTED AND VERIFIED
 
 Baseline: `3247c0d` on `phase8-ai-intelligence`, aligned with origin.
@@ -3113,6 +3118,147 @@ in the quarantine manifest, section 25.
 
 ---
 
+### 7.32 FORTRESS-06E Executive AI/Provider Production-Family Quarantine
+
+Date: 2026-09-23. Status: **IMPLEMENTED AND VERIFIED** in the uncommitted
+working tree based on `0627453` on `phase8-ai-intelligence`; HEAD and origin
+remain aligned. This is the separately authorized FORTRESS-06E executive_brain
+AI/provider production-family quarantine, not completion of F06E or live-runtime
+certification.
+
+The pre-move inventory contained exactly 13 tracked Python sources, all present
+in HEAD and matching their Git-normalized blobs. Checkout SHA-256, byte size,
+and CRLF representation were captured before mutation. The four family caches
+(`ai/__pycache__`, `ai/prompt/__pycache__`, `ai/providers/__pycache__`, and
+`ai/routing/__pycache__`, all under `executive_brain/`) were absent before and
+after the move. No tracked non-Python source, hidden entry, symlink/reparse
+point, unexpected untracked artifact, cache, or pyc was present in the family.
+
+All 13 sources moved to `legacy_quarantine/production/executive_brain/ai/`
+with `.py.legacy` suffixes. Exact checkout bytes, SHA-256, sizes, line endings,
+and Git-normalized blob IDs are preserved. Archive payloads were not edited.
+The live `executive_brain/ai/` family is absent, with no wrapper, stub, alias,
+or replacement. Archives are non-importable and non-collectable; no quarantine
+`__init__.py` or repository Python import from quarantine exists. Git history
+preserves reversibility. A read-only `git diff --no-index --name-status
+--find-renames=100% --rename-empty` comparison of external before/after trees
+reported all 13 mappings as R100 without staging.
+
+AST analysis of repository Python, resolving relative imports and checking
+literal dynamic imports, found zero canonical production callers, zero
+external remaining legacy production callers, zero configured-test callers,
+zero excluded direct callers, and zero separate script/tool callers. No
+remaining Executive source or workflow/core/brain/memory/main.py source imports
+the family. Before retirement, 11 family-directed import statements in six
+family consumers were internal to the 13-source slice and retired together.
+The adapters' outbound `config.ai_config` type dependencies did not constitute
+outside callers; configuration remains untouched.
+
+Static side-effect review confirmed real Ollama HTTP health/generation, OpenAI
+HTTP generation and environment-variable reads, ProviderManager dispatch, and
+LLMRouter routing. Their active outside-family production owner/caller count
+was zero. No family-owned persistent runtime-data/config/checkpoint/JSON-state
+writer, subprocess/shell execution, filesystem mutation requiring F06F, or
+environment mutation was found. Environment reads are not mutations. No
+OpenAI/Ollama network or provider behavior was executed.
+
+ADR-0014 supersession remains authoritative: the exact legacy OpenAI/Ollama
+adapters and APIs are not canonical provider authority, and the legacy manager
+does not own canonical `ProviderManager`/`AIManager`. Canonical
+`PlatformComposition` -> `ProviderManager`/`AIManager` -> provider abstractions
+-> deterministic `MockProvider` is preserved. All three configured canonical
+contract cases passed: blank/whitespace request rejection, invalid manager
+input rejected before provider execution, and generation failure mapped to
+`ProviderManagerError` with truthful failure metrics/state. No provider-specific
+compatibility behavior was retained or redesigned. F09 owns future concrete
+provider resilience and remains NOT STARTED.
+
+`executive_brain/` remains a live category D root: 91 - 13 = **78** sources,
+comprising **42 tools + 36 remaining non-tools** sources. Their checkout-byte
+inventory is preserved. The reviewed order remains AI/provider (this slice),
+tools (not started), then remaining Executive (not started). RegistryManager
+has zero external-root callers and the same six internal Executive callers.
+All nine workflow sources are unchanged; the blocker
+`executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`
+remains and workflow is not unblocked.
+
+Exactly two grouped configured cases were added to
+`tests/tests/platform/test_collection_containment.py`: archive fidelity and
+caller/provider/dependency containment. Earlier provider-presence checks now
+verify the exact archived payloads. Earlier 91-source Executive inventory checks
+reconstruct the original digest using 78 live sources plus 13 archived payloads,
+preserving historical evidence rather than replacing it with a weaker count.
+The canonical-boundary file required no change. Classification remains
+**A=10, B=1, D=6, E=13, F=3, TOTAL=33**; this partial-root disposition adds no
+top-level E entry.
+
+Static launcher closure analyzed 207 files / 206 reached modules with no
+violations and no `executive_brain.ai` reachability. Canonical lazy-map string
+targets contain no retired-family target. Canonical `run_jaos.py`, `jaos/`, and
+`jaos_platform/` are unchanged. This static evidence does not certify a live
+runtime. Config containment is unchanged: SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+nine definitions / eleven collected cases, one configured legacy-facing file,
+and zero configured Executive importers. Config retirement remains unauthorized.
+
+Verification used repository `.venv/Scripts/python.exe -B` with
+`PYTHONDONTWRITEBYTECODE=1`, `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`,
+`-p no:cacheprovider`, `-p anyio.pytest_plugin`, and unique external
+`%TEMP%/jaos-f06e-executive-ai-<uuid>/pytest` basetemp roots. The established
+Windows runner shim changed `os.mkdir` mode only inside each disposable
+external tree to inherit its parent ACL. It changed no repository helper,
+fixture, production behavior, or test assertion.
+
+The exact command prefix was
+`.venv/Scripts/python.exe -B %TEMP%/jaos_f06e_executive_ai_20260923/runner.py`;
+the external runner passed the above flags and each row's arguments to
+`pytest.main`. All pytest gates exited 0, with no failures or reported warnings.
+
+| Arguments / verification, in executed order | Result |
+|---|---|
+| `tests/tests/platform/test_collection_containment.py -k f06e_executive_ai -q` | 2 passed, 46 deselected |
+| `tests/tests/platform/test_collection_containment.py -k "f06d1 or f06d2d_deferred_provider or f06d_provider or f06d_memory_retirement" -q` | 5 passed, 43 deselected |
+| `tests/tests/ai/test_canonical_provider_contract.py -q` | 3 passed |
+| `tests/tests/platform/test_collection_containment.py -q` | 48 passed |
+| `tests/tests/platform/test_canonical_import_boundary.py -q` | 55 passed |
+| `tests/tests/integration/test_run_jaos_launcher.py tests/tests/integration/test_run_jaos_banner.py -q` | 8 passed |
+| `tests/tests/platform/test_platform_runtime.py tests/tests/platform/test_platform_runtime_lifecycle.py -q` | 21 passed |
+| `tests/tests/composition/test_platform_composition.py -q` | 8 passed |
+| `tests/tests/platform/test_base_platform_service.py tests/tests/platform/test_service_container.py -q` | 9 passed |
+| `tests/tests/platform/test_config_containment.py -q` | 11 passed |
+| `tests/tests/platform -q` | 393 passed, 1 skipped |
+| `tests/tests/composition -q` | 49 passed |
+| `tests/tests/integration -q` | 17 passed |
+| `tests/tests -q` | 1,774 passed, 1 skipped |
+| `. --collect-only -q` | 1,775 collected |
+| `.venv/Scripts/python.exe -B -m ruff check tests/tests/platform/test_collection_containment.py` | PASS, exit 0 |
+
+Unique focused coverage is 163 passing cases; narrower containment runs are
+subsets and are not counted twice. No configured case was retired. The actual
+collection reconciliation is **1,773 + 2 = 1,775**, with 1,774 passing and the
+one existing skip in the full configured suite.
+
+Protected baseline hashes and all outside-scope files remain unchanged,
+including SECURITY.md, the seven named data files, `.agents/`, `.claude/`,
+`.codex/`, `.context-bridge/`, CLAUDE.md, graphify-out/, and project-state docs.
+No Graphify operation ran. Task scope is exactly **29 logical paths**: 13
+originals, 13 archives, one containment test, and these two architecture docs.
+The rename-aware task view is **13 R100 + 3 M**. Ordinary unstaged Git output
+shows source deletions and untracked archives because the index remains empty.
+`git diff --check` passed. HEAD remains `0627453`, aligned with origin; nothing
+was staged, committed, or pushed.
+
+RAA-003 remains OPEN; F06E and FORTRESS-06 remain IN PROGRESS. F06F/F06G/F06H,
+F09, the tools slice, and the remaining Executive slice have not started.
+Step 8 remains blocked, Fortress certification has not started, and major
+Phase 8 expansion remains paused. This slice is ready for an atomic checkpoint;
+checkpoint execution was not authorized in this task.
+
+Exact source/archive hashes, sizes, and line endings are recorded in the
+quarantine manifest, section 26.1.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -3167,6 +3313,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-23 | 1.32 | Recorded the verified 13-source Executive AI/provider family quarantine with exact checkout SHA/size/CRLF and Git blob fidelity, two grouped containment cases, ADR-0014 canonical contract preservation, 78 remaining Executive sources (42 tools + 36 remaining), and unchanged D=6/E=13/total=33. Full configured 1,774 passed, 1 skipped; root collection 1,775. Canonical/config/protected state preserved; workflow blocked; RAA-003 OPEN; F06E IN PROGRESS; F09 NOT STARTED. |
 | 2026-09-07 | 1.31 | Recorded the verified one-source core/kernel.py quarantine, exact SHA/blob/size fidelity, RegistryManager external-root importers 1 -> 0, six preserved Executive importers, two containment cases, and unchanged D=6/E=13/total=33 with core retained live. Full configured 1,772 passed, 1 skipped; root collection 1,773. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-07 | 1.30 | Recorded the verified 12-source kernel quarantine with checkout SHA/size and Git blob fidelity, 11 excluded files / 18 imports, two containment cases, D=6/E=13/total=33, preserved backup classification, and corrected stale summary counters. Full configured suite: 1,770 passed, 1 skipped; root collection: 1,771. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-06 | 1.29 | Recorded the verified engineering quarantine: 13 Python sources plus one historical Markdown artifact, 14 byte/SHA/size and Git-normalized-blob-identical archives, two grouped containment cases, exact 13-file/24-import and five-registration excluded debt, BasePlatformService legacy consumers 3 -> 2, and D=7/E=12 with 33 classifications. Focused 154 passed; full configured 1,768 passed, 1 skipped; root collection 1,769. Canonical/config/protected boundaries preserved; RAA-003 OPEN and F06E IN PROGRESS. |
