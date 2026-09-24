@@ -1,6 +1,6 @@
 # JAOS Project State
 
-Version: 5.11
+Version: 5.12
 Status: ACTIVE
 Owner: Vinay B
 Maintainer: JAOS Engineering
@@ -47,7 +47,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E EXECUTIVE AI/PROVIDER PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E EXECUTIVE TOOLS PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -81,20 +81,21 @@ The Git repository remains the permanent source of truth for JAOS.
 | FORTRESS-06E kernel production-root quarantine | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `59f4cf8` |
 | FORTRESS-06E core/kernel.py production-leaf quarantine | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `90fba60` |
 | FORTRESS-06E executive_brain AI/provider production-family quarantine | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `9622619` |
+| FORTRESS-06E executive_brain tools production-family quarantine | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `ae9d00a` |
 | Engineering validator disposition | ImportValidator: EXCLUDED-TEST DEBT ONLY; ProjectStructureValidator: LEGACY VALIDATION DEBT; neither is active canonical authority |
 | BasePlatformService legacy direct consumers | 3 -> 2; remaining `workflow/workflow_engine.py` and `executive_brain/memory/memory_manager.py`; Founder compatibility decision unresolved |
-| Latest production quarantine | 13 tracked AI/provider Python sources; 13 R100-equivalent moves under `legacy_quarantine/production/executive_brain/ai/`; checkout-byte/SHA and Git-normalized blob fidelity preserved; live AI family and all AI-family caches absent; no wrapper/stub/alias/replacement |
-| Executive source inventory | Original 91 -> 78 live sources: `executive_brain/tools/` 42 + remaining non-tools Executive family 36; AI/provider 13 COMPLETE / PUSHED — `9622619` |
-| Latest caller/effect evidence | 0 canonical production callers; 0 external legacy production callers; 0 configured-test callers; 0 excluded direct callers; internal AI-family dependencies retired together; real provider/HTTP capability had no active outside owner/caller; no OpenAI/Ollama behavior executed |
+| Latest production quarantine | 42 tracked tools Python sources; 42 R100-equivalent moves under `legacy_quarantine/production/executive_brain/tools/`; checkout-byte/SHA and Git-normalized blob fidelity preserved; live tools family and all seven tools-family caches absent; no wrapper/stub/alias/replacement |
+| Executive source inventory | 91 = 13 + 42 + 36; AI/provider 13 COMPLETE / PUSHED — `9622619`; tools 42 COMPLETE / PUSHED — `ae9d00a`; current remaining live Executive family 36 |
+| Latest caller/effect evidence | 0 canonical production callers; 0 external legacy production callers; 0 configured-test callers; 0 excluded direct callers; 0 separate script/tool callers; 57 internal import statements across 30 consumers retired together; real browser/filesystem/process/desktop capabilities existed; no active JAOS caller; no legacy capability executed |
 | Provider authority | ADR-0014 preserved; legacy exact provider APIs superseded; OpenAI/Ollama not active canonical providers; canonical provider-neutral contract coverage preserved; F09 NOT STARTED |
-| RegistryManager dependency effect | External-root production importers 1 -> 0; all six Executive internal callers remain intact |
+| RegistryManager dependency effect | `executive_brain.managers.registry_manager` remains live; external-root production callers 0; internal Executive importers 6 |
 | Preserved kernel-root excluded debt | 11 excluded flat files / 18 direct kernel imports — unchanged F06G/F06H debt; archived core/kernel.py leaf has 0 excluded direct callers |
-| Current boundary classification | A=10; B=1; D=6; E=13; F=3; TOTAL=33 — core/ and executive_brain/ remain D with partial dispositions; no new top-level E entry for the AI sub-family; exact member sets and separate backup classification preserved |
+| Current boundary classification | A=10; B=1; D=6; E=13; F=3; TOTAL=33 — core/ and executive_brain/ remain D with partial dispositions; no new top-level E entry for the AI or tools sub-families; exact member sets and separate backup classification preserved |
 | Current D entries — no whole-root retirement | `brain/`; `core/`; `executive_brain/`; `main.py`; `memory/`; `workflow/` |
 | Dynamic-path adjudication | EXCLUDED-TEST DEBT ONLY — no active canonical/runtime/CLI/production compatibility or autodiscovery requirement |
 | Production quarantine model | `legacy_quarantine/production/<original-relative-path>.legacy` validated for byte/blob fidelity, inert archives, no `__init__.py`, no imports from quarantine, reversibility, and containment evidence |
-| Next F06E action | FORTRESS-06E executive_brain tools production-family quarantine — NOT STARTED — CONTROLLED IMPLEMENTATION AFTER FRESH BASELINE/CACHE GATE — target `executive_brain/tools/`, expected 42 tracked Python sources to reverify before implementation; no implementation in this sync |
-| Next implementation gate | Fresh 42-source tools baseline/cache gate; reverify mechanically; do not execute filesystem/process/browser/desktop capabilities; canonical Tool Platform owns F07/F11 hardening; ADR-0014 preserved; F09 NOT STARTED; RegistryManager external-root callers 0; workflow remains ExecutivePipeline-blocked |
+| Next F06E action | FORTRESS-06E remaining executive_brain production-family quarantine — NOT STARTED — CONTROLLED IMPLEMENTATION AFTER FRESH BASELINE / CACHE / DEPENDENCY GATE — expected 36 tracked Python sources; mechanically reverify before implementation; no implementation in this sync |
+| Next implementation gate | Mechanically reverify 36-source inventory, baseline/caches, caller graph, internal SCC/dependency closure, no outside canonical or configured-test callers, writer-sensitive behavior, BasePlatformService / PlatformContract relationships, workflow edge, RegistryManager internal callers, hidden canonical dependencies, and lifecycle/authority roles; no source pre-approved |
 | `engineering/` disposition | COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `26f8021`; live root absent |
 | `workflow/` disposition | NOT READY FOR QUARANTINE; blocked by `executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine` |
 | Configured legacy-facing progression | 67 -> 59 -> 52 -> 48 -> 44 -> 35 -> 19 -> 15 -> 13 -> 3 -> 1 |
@@ -127,9 +128,9 @@ The Git repository remains the permanent source of truth for JAOS.
 | Core/kernel retirement | 2 configured files — 6 source and collected tests — checkpoint `064883f` |
 | Core/kernel preservation | 2 byte/blob-identical `*.py.legacy` archives; no `JarvisEngine`/`JAOSKernel` behavior or production change |
 | Core/kernel collection reconciliation | 1,765 - 6 + 2 containment cases = 1,761 collected |
-| Latest configured regression | Prior verified implementation at `9622619`: 1,774 passed, 1 skipped; root collection: 1,775; reconciliation `1,773 + 2 = 1,775`; not rerun during this sync |
+| Latest configured regression | Prior verified implementation at `ae9d00a`: 1,776 passed, 1 skipped; root collection: 1,777; reconciliation `1,775 + 2 = 1,777`; not rerun during this sync |
 | Historical communication focused/subsystems | Focused 179 passed; platform 381 passed, 1 skipped; composition 49 passed; integration 17 passed; Ruff PASS |
-| Latest focused/subsystem evidence | Prior verified implementation at `9622619`: new Executive AI containment 2 passed; canonical provider 3 passed; full collection containment 48 passed; canonical import boundary 55 passed; platform 393 passed, 1 skipped; composition 49 passed; integration 17 passed; Ruff PASS; not rerun during this sync |
+| Latest focused/subsystem evidence | Prior verified implementation at `ae9d00a`: new Executive tools containment 2; earlier tool containment 7; canonical Tool subset 47; full collection containment 50; canonical import boundary 55; launcher/banner 8; runtime/lifecycle 21; PlatformComposition 8; canonical Tool Platform 119; BasePlatformService/ServiceContainer 9; config containment 11; platform 395 passed, 1 skipped; composition 49; integration 17; all other counts passed; Ruff PASS; not rerun during this sync |
 | FORTRESS-06F | NOT STARTED |
 | FORTRESS-06G | NOT STARTED |
 | FORTRESS-06H | NOT STARTED |
@@ -149,7 +150,7 @@ The Git repository remains the permanent source of truth for JAOS.
 | Architecture health | FORTRESS HARDENING REQUIRED |
 | Fortress certification | NOT STARTED |
 | Phase 8 major expansion | PAUSED |
-| Documentation state | F06E EXECUTIVE AI/PROVIDER CHECKPOINT `9622619` RECORDED — PROJECT-STATE SYNC IMPLEMENTED AND READY FOR CHECKPOINT |
+| Documentation state | F06E EXECUTIVE TOOLS CHECKPOINT `ae9d00a` RECORDED — PROJECT-STATE SYNC IMPLEMENTED AND READY FOR CHECKPOINT |
 
 ---
 
@@ -200,7 +201,7 @@ related ladder passed 1,597 with one skip; and the full configured suite passed
 `docs/architecture/FORTRESS_PROGRAM.md` section 7.10.
 
 FORTRESS-06 is IN PROGRESS through the completed F06E
-executive_brain AI/provider production-family quarantine at `9622619`. F06A's
+executive_brain tools production-family quarantine at `ae9d00a`. F06A's
 authoritative 33-entry
 manifest and 22-identity canonical import guard are IMPLEMENTED AND VERIFIED —
 COMMITTED AND PUSHED at checkpoint `92aa9d7`. F06B archives exactly two
@@ -666,7 +667,7 @@ sync. Evidence is recorded in
 and the
 [quarantine manifest, section 25](../architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md#25-fortress-06e-corekernelpy-production-leaf-quarantine).
 
-The current pushed implementation checkpoint is `9622619`
+The historical AI/provider implementation checkpoint is `9622619`
 (`refactor(fortress): quarantine FORTRESS-06E executive AI family`).
 FORTRESS-06E executive_brain AI/provider production-family quarantine is
 COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED.
@@ -685,9 +686,10 @@ behavior was executed.
 ADR-0014 governs this retirement: exact legacy provider APIs are superseded,
 OpenAI/Ollama are not active canonical providers, and canonical provider-neutral
 contract coverage is preserved. F09 remains NOT STARTED; this retirement does
-not complete F09. `executive_brain/` remains live category D: **91 -> 78**
-tracked Python sources, comprising **42 tools + 36 remaining non-tools**
-sources. RegistryManager external-root production callers remain 0; internal
+not complete F09. At that historical checkpoint, `executive_brain/` remained
+live category D: **91 -> 78** tracked Python sources, comprising **42 tools +
+36 remaining non-tools** sources. The current count is 36 after tools retirement.
+RegistryManager external-root production callers remain 0; internal
 Executive callers remain and RegistryManager itself has not retired.
 Workflow remains blocked by
 `executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`;
@@ -697,7 +699,7 @@ Classification remains **A=10, B=1, D=6, E=13, F=3, TOTAL=33**. The six current
 D roots are `brain/`, `core/`, `executive_brain/`, `main.py`, `memory/`,
 and `workflow/`. This partial Executive disposition adds no top-level E entry.
 
-| Prior verified implementation gate at `9622619` | Result |
+| Historical verified implementation gate at `9622619` | Result |
 |---|---|
 | New Executive AI containment | 2 passed |
 | Canonical provider tests | 3 passed |
@@ -723,6 +725,76 @@ and the
 [quarantine manifest, section 26](../architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md#26-fortress-06e-executive-aiprovider-production-family-quarantine).
 Those implementation-time records describe the pre-commit working tree;
 Git checkpoint `9622619` records the subsequently committed and pushed result.
+
+The current pushed implementation checkpoint is `ae9d00a`
+(`refactor(fortress): quarantine FORTRESS-06E executive tools family`).
+Branch `phase8-ai-intelligence` has HEAD and origin aligned.
+FORTRESS-06E executive_brain tools production-family quarantine is
+COMPLETE — IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED.
+
+Exactly **42 tracked Python sources** were retired under
+`legacy_quarantine/production/executive_brain/tools/`. All **42 R100-equivalent**
+source/archive moves preserved checkout-byte/SHA fidelity and Git-normalized
+blob fidelity. The live `executive_brain/tools/` family and all seven
+tools-family caches are absent. No wrapper, stub, alias, or replacement exists.
+
+Prior verified retirement evidence records **0 canonical production callers,
+0 external legacy production callers, 0 configured-test callers, 0 excluded
+direct callers, and 0 separate script/tool callers**. All **57 internal import
+statements across 30 consumers** retired together. Real browser/filesystem/
+process/desktop capabilities existed, but no active JAOS caller existed and
+no legacy capability was executed during retirement.
+
+Canonical ownership remains `PlatformComposition` -> `jaos.tools.ToolManager`
+-> registry and `ToolExecutionEngine` through existing permission, approval,
+and audit boundaries. Exact legacy tools APIs are retired. **F07 NOT STARTED**
+and **F11 NOT STARTED** remain separate canonical-path workstreams; this
+retirement does not partially complete either.
+
+Executive source history is **91 = 13 + 42 + 36**: AI/provider 13 COMPLETE /
+PUSHED at `9622619`, tools 42 COMPLETE / PUSHED at `ae9d00a`, and **36 live
+Executive sources remaining**. RegistryManager remains live with **0 external-root
+production callers / 6 internal Executive importers**. ExecutivePipeline
+remains live and `workflow/` remains blocked by
+`executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`.
+Tools retirement did not unblock workflow.
+
+Classification remains **A=10, B=1, D=6, E=13, F=3, TOTAL=33**. The six current
+D roots remain `brain/`, `core/`, `executive_brain/`, `main.py`, `memory/`,
+and `workflow/`. Executive remains D; tools adds no top-level E classification.
+
+| Prior verified implementation gate at `ae9d00a` | Result |
+|---|---|
+| New Executive tools containment | 2 passed |
+| Earlier tool containment | 7 passed |
+| Canonical Tool contract subset | 47 passed |
+| Full collection containment | 50 passed |
+| Canonical import boundary | 55 passed |
+| Launcher/banner | 8 passed |
+| Runtime/lifecycle | 21 passed |
+| PlatformComposition | 8 passed |
+| Canonical Tool Platform | 119 passed |
+| BasePlatformService/ServiceContainer | 9 passed |
+| Config containment | 11 passed |
+| Platform | 395 passed, 1 skipped |
+| Composition | 49 passed |
+| Integration | 17 passed |
+| Full configured suite | 1,776 passed, 1 skipped |
+| Root collection | 1,777 |
+| Ruff | PASS |
+
+Collection reconciles as `1,775 + 2 = 1,777`. These are prior verified
+implementation results, **not rerun during this documentation sync**.
+Evidence is recorded in
+[FORTRESS_PROGRAM.md, section 7.33](../architecture/FORTRESS_PROGRAM.md#733-fortress-06e-executive-tools-production-family-quarantine)
+and the
+[quarantine manifest, section 27](../architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md#27-fortress-06e-executive-tools-production-family-quarantine).
+Those implementation-time records describe the pre-commit working tree;
+`ae9d00a` is the subsequent committed and pushed checkpoint.
+
+Independent Claude Opus review: **NOT YET** — only after the entire F06
+workstream is complete. F06, F06D, and F06E remain IN PROGRESS. This sync
+does not certify Step 8 or Fortress or resume major Phase 8 expansion.
 
 `tests/tests/platform/test_config_containment.py` remains KEEP TEMPORARILY /
 INTENTIONALLY CONFIGURED: 9 definitions, 11 collected cases, SHA-256
@@ -752,26 +824,46 @@ retained ConfigManager containment test, importable legacy production roots,
 test debt, and F06E/F06F/F06G/F06H remain.
 
 F06D, F06E, and FORTRESS-06 remain IN PROGRESS. The exact next action is
-FORTRESS-06E executive_brain tools production-family quarantine
+FORTRESS-06E remaining executive_brain production-family quarantine
 
 Status: NOT STARTED.
-Mode: CONTROLLED IMPLEMENTATION AFTER FRESH BASELINE/CACHE GATE.
-Target: `executive_brain/tools/`; expected 42 tracked Python sources, to be
-mechanically reverified before implementation with a fresh baseline/cache gate.
-Known adjudication: no outside production callers, no canonical production
-callers, no configured-test callers; dependencies stay within the 42-file tools
-family. Canonical Tool Platform ownership supersedes this old tool stack.
-Real filesystem/process/browser/desktop capabilities have no active JAOS
-owner/caller and must NOT be executed during retirement. No legacy tool file
-survives solely for F07/F11; that hardening belongs to canonical Tool Platform.
-ADR-0014 and canonical provider-neutral contract coverage remain preserved;
-F09 remains NOT STARTED. RegistryManager external-root production callers
-remain 0; internal Executive callers remain. Reviewed order: AI/provider 13
-COMPLETE / PUSHED — `9622619`; tools 42 NEXT / NOT STARTED; remaining
-Executive 36 NOT STARTED; workflow becomes production-caller-unblocked only
-after ExecutivePipeline retirement within the remaining Executive family.
-AI-family retirement did not unblock workflow. This sync starts no
-implementation or F06F/F06G/F06H work.
+Mode: CONTROLLED IMPLEMENTATION AFTER FRESH BASELINE / CACHE / DEPENDENCY GATE.
+Expected source count: 36 tracked Python sources, mechanically reverified before
+implementation. This is the final live Executive production family, including
+`executive_brain/__init__.py`, `brain/`, `common/`, `intent/`, `managers/`,
+`memory/`, `models/`, `pipeline/`, `planner/`, `registries/`, and `timeline/`
+beneath `executive_brain/`.
+
+Before retirement, the separately authorized implementation task must
+mechanically verify the exact 36-source inventory, fresh baseline and caches,
+caller graph, internal SCC/dependency closure, no outside canonical callers,
+no configured-test callers, writer-sensitive behavior, BasePlatformService /
+PlatformContract relationships, the workflow edge, RegistryManager internal
+callers, no hidden canonical dependency, and no lifecycle/authority role that
+must be preserved. This sync does not perform that gate or pre-approve any
+individual source retirement.
+
+Preserve the reviewed retirement order:
+
+1. Executive AI/provider — 13 sources — COMPLETE / PUSHED — `9622619`.
+2. Executive tools — 42 sources — COMPLETE / PUSHED — `ae9d00a`.
+3. Remaining Executive family — 36 sources — NEXT / NOT STARTED.
+4. `workflow/` remains blocked until ExecutivePipeline retirement inside the
+   final Executive family; that retirement is not authorized by this sync.
+
+Executive history reconciles as **91 = 13 + 42 + 36**. RegistryManager
+(`executive_brain.managers.registry_manager`) remains live with **0 external-root
+production callers / 6 internal Executive importers**. ExecutivePipeline remains
+live; the blocker remains
+`executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`.
+Tools-family retirement did not unblock workflow.
+
+Canonical Tool Platform remains authoritative under the current canonical JAOS
+tool/composition path. Exact legacy Executive tools APIs are retired. F07 and
+F11 remain NOT STARTED; this retirement does not partially complete either.
+ADR-0014 and canonical provider-neutral coverage remain preserved; F09 remains
+NOT STARTED. No implementation, workflow retirement, F06F/F06G/F06H, or F07/F11
+work begins during this documentation sync.
 
 `workflow/` remains NOT READY FOR QUARANTINE. Its blocker is
 `executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`.
@@ -1242,53 +1334,51 @@ pushed quarantine checkpoints: communication at `2d2138c`,
 development/infrastructure/pc_control at `2fdeadc`,
 dashboard/knowledge/security/system_services at `31c52cb`, engineering at
 `26f8021`, kernel at `59f4cf8`, the core/kernel.py leaf at `90fba60`,
-and the executive_brain AI/provider family at `9622619`.
+the executive_brain AI/provider family at `9622619`, and tools at `ae9d00a`.
 The communication project-state sync at `fe2a6c5` remains historical evidence.
 
 The exact next action is:
 
-FORTRESS-06E executive_brain tools production-family quarantine
+FORTRESS-06E remaining executive_brain production-family quarantine
 
 Status: NOT STARTED.
-Mode: CONTROLLED IMPLEMENTATION AFTER FRESH BASELINE/CACHE GATE.
-Target family: `executive_brain/tools/`.
-Expected family count: 42 tracked Python sources. Mechanically reverify the
-exact inventory and fresh baseline/cache gate before implementation.
+Mode: CONTROLLED IMPLEMENTATION AFTER FRESH BASELINE / CACHE / DEPENDENCY GATE.
+Expected source count: 36 tracked Python sources, mechanically reverified before
+implementation. This is the final live Executive production family, including
+`executive_brain/__init__.py`, `brain/`, `common/`, `intent/`, `managers/`,
+`memory/`, `models/`, `pipeline/`, `planner/`, `registries/`, and `timeline/`
+beneath `executive_brain/`.
 
-Known adjudication records no outside production callers, no canonical
-production callers, and no configured-test callers. Dependencies remain within
-the 42-file tools family. The old tool stack is superseded by canonical Tool
-Platform ownership. Real filesystem/process/browser/desktop capabilities exist
-but have no active JAOS owner/caller; retirement must NOT execute them.
+Before retirement, the separately authorized implementation task must
+mechanically verify the exact 36-source inventory, fresh baseline and caches,
+caller graph, internal SCC/dependency closure, no outside canonical callers,
+no configured-test callers, writer-sensitive behavior, BasePlatformService /
+PlatformContract relationships, the workflow edge, RegistryManager internal
+callers, no hidden canonical dependency, and no lifecycle/authority role that
+must be preserved. This sync does not perform that gate or pre-approve any
+individual source retirement.
 
-Effect-sensitive examples include browser automation, downloads, tab/search
-operations, VS Code build/debug/git/project/run, file copy/delete/move/rename/write,
-process termination, application launch, notifications, and process/service
-listing. No legacy tool file survives solely for F07/F11; F07/F11 hardening
-belongs to canonical Tool Platform, not this shadow stack.
+Preserve the reviewed retirement order:
 
-The AI/provider family is COMPLETE / PUSHED — `9622619`: 13 sources retired
-with checkout-byte/SHA and Git-normalized blob fidelity. Original Executive
-inventory **91 -> 78** comprises **42 tools + 36 remaining non-tools** sources.
-ADR-0014 supersession, canonical provider-neutral contract coverage, and
-F09 NOT STARTED remain preserved. No OpenAI/Ollama behavior was executed.
-This documentation sync records the next slice only; it does not perform its
-fresh baseline/cache gate, execute capabilities, or implement any quarantine.
+1. Executive AI/provider — 13 sources — COMPLETE / PUSHED — `9622619`.
+2. Executive tools — 42 sources — COMPLETE / PUSHED — `ae9d00a`.
+3. Remaining Executive family — 36 sources — NEXT / NOT STARTED.
+4. `workflow/` remains blocked until ExecutivePipeline retirement inside the
+   final Executive family; that retirement is not authorized by this sync.
 
-Preserve the reviewed Executive retirement order:
-
-1. `executive_brain` AI/provider family — 13 sources — COMPLETE / PUSHED — `9622619`.
-2. `executive_brain` tools family — 42 sources — NEXT / NOT STARTED.
-3. Remaining `executive_brain` family — 36 sources — NOT STARTED.
-4. `workflow/` becomes production-caller-unblocked after ExecutivePipeline
-   retirement within the remaining Executive family.
-
-Tools and remaining Executive work have not started. Workflow remains blocked by
+Executive history reconciles as **91 = 13 + 42 + 36**. RegistryManager
+(`executive_brain.managers.registry_manager`) remains live with **0 external-root
+production callers / 6 internal Executive importers**. ExecutivePipeline remains
+live; the blocker remains
 `executive_brain.pipeline.executive_pipeline` -> `workflow.workflow_engine`.
-AI-family retirement did not unblock workflow. RegistryManager external-root
-production callers remain 0; internal Executive callers remain and the manager
-itself has not retired. Neither leaf nor family retirement decisions authorize
-whole-root `core/` retirement.
+Tools-family retirement did not unblock workflow.
+
+Canonical Tool Platform remains authoritative under the current canonical JAOS
+tool/composition path. Exact legacy Executive tools APIs are retired. F07 and
+F11 remain NOT STARTED; this retirement does not partially complete either.
+ADR-0014 and canonical provider-neutral coverage remain preserved; F09 remains
+NOT STARTED. No implementation, workflow retirement, F06F/F06G/F06H, or F07/F11
+work begins during this documentation sync.
 
 `communication/`, `development/`, `infrastructure/`, `pc_control/`,
 `dashboard/`, `knowledge/`, `security/`, `system_services/`, `engineering/`,
