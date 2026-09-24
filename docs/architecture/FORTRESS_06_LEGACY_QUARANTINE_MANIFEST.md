@@ -2,7 +2,7 @@
 
 Document ID: ARCH-FORTRESS-06
 
-Document Version: 1.23
+Document Version: 1.24
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -21,6 +21,7 @@ production quarantine — IMPLEMENTED AND VERIFIED; engineering production-root
 quarantine — IMPLEMENTED AND VERIFIED; kernel production-root quarantine —
 IMPLEMENTED AND VERIFIED; core/kernel.py production-leaf quarantine —
 IMPLEMENTED AND VERIFIED; executive_brain AI/provider production-family
+quarantine — IMPLEMENTED AND VERIFIED; executive_brain tools production-family
 quarantine — IMPLEMENTED AND VERIFIED
 
 Owner and Approval Authority: Founder Vinay B
@@ -181,7 +182,7 @@ slice that updates this manifest and its evidence together.
 | `legacy_quarantine/production/dashboard/*.py.legacy` | E — ARCHIVE-ONLY | 7 byte/SHA/blob-identical non-Python archives of the former dashboard production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 7 / 12 excluded files / direct statements and 1 excluded-only dynamic registration remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded debt. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `legacy_quarantine/production/development/*.py.legacy` | E — ARCHIVE-ONLY | 7 byte/blob-identical non-Python archives of the former development production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 7 / 12 excluded flat files / direct import statements remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `legacy_quarantine/production/engineering/` | E — ARCHIVE-ONLY | 13 Python-source archives and one historical Markdown archive preserve exact checkout bytes/SHA/size and Git-normalized blobs. | Unreachable from `run_jaos.py`; live engineering root absent; no active production or CLI caller. | Zero configured importers; 13 excluded files / 24 direct imports, five registrations, and stale directory validation remain F06G/F06H debt. | No active F06F writer authority; explicit import execution adjudicated excluded-test-only. | F06E preservation; F06G/F06H excluded debt. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
-| `executive_brain/` | D — QUARANTINE | Parallel Executive, planning, registry, Memory, and Tool authority; the 13-source AI/provider family is archived under section 26 while the remaining 78 sources stay live. ADR-0012 confirms that its exact manager and registry implementations are quarantine candidates; ADR-0013 confirms the exact legacy Executive `WorkingMemory`, `MemoryManager`, and `MemoryRegistry` implementations are not canonical runtime authorities; ADR-0014 confirms the exact legacy OpenAI/Ollama adapters and contracts are not canonical provider authority. | Unreachable from `run_jaos.py`. | Zero configured direct importers after ADR-0014 provider retirement. F06D1 quarantined six AI duplicate tests, F06D2A archived seven filesystem-tool tests, F06D2B archived four Tool Platform core tests, F06D2C archived four monolithic Executive/pipeline tests, F06D2D archived nine manager/registry tests, F06D2E archived sixteen prototype-tool tests, ADR-0013 governed the four-file Memory test retirement, and ADR-0014 governed the two-file provider retirement after three canonical port-first tests. | The retired provider tests are offline/mock-based and execute no real provider integration or persistent repository writer; the retired legacy Memory tests and implementations mutate in-memory state and execute no persistent repository writer; F06D2C, F06D2D, and F06D2E likewise execute no persistent repository writer. | F06D and F06E; F09 owns later concrete-provider resilience. | PROHIBITED until production caller inventory, relocation plan, rollback evidence, and later F06 source disposition pass. |
+| `executive_brain/` | D — QUARANTINE | Parallel Executive, planning, registry, and Memory authority remains live; 13 AI/provider sources are archived under section 26 and 42 tools sources under section 27, leaving exactly 36 live Executive sources. Canonical Tool Platform ownership remains under jaos.tools; no legacy tool survives solely for F07/F11. ADR-0012 confirms that its exact manager and registry implementations are quarantine candidates; ADR-0013 confirms the exact legacy Executive `WorkingMemory`, `MemoryManager`, and `MemoryRegistry` implementations are not canonical runtime authorities; ADR-0014 confirms the exact legacy OpenAI/Ollama adapters and contracts are not canonical provider authority. | Unreachable from `run_jaos.py`. | Zero configured direct importers after ADR-0014 provider retirement. F06D1 quarantined six AI duplicate tests, F06D2A archived seven filesystem-tool tests, F06D2B archived four Tool Platform core tests, F06D2C archived four monolithic Executive/pipeline tests, F06D2D archived nine manager/registry tests, F06D2E archived sixteen prototype-tool tests, ADR-0013 governed the four-file Memory test retirement, and ADR-0014 governed the two-file provider retirement after three canonical port-first tests. | The retired provider tests are offline/mock-based and execute no real provider integration or persistent repository writer; the retired legacy Memory tests and implementations mutate in-memory state and execute no persistent repository writer; F06D2C, F06D2D, and F06D2E likewise execute no persistent repository writer. | F06D and F06E; F09 owns later concrete-provider resilience. | PROHIBITED until production caller inventory, relocation plan, rollback evidence, and later F06 source disposition pass. |
 | `legacy_quarantine/production/infrastructure/*.py.legacy` | E — ARCHIVE-ONLY | 9 byte/blob-identical non-Python archives of the former infrastructure production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 9 / 16 excluded flat files / direct import statements remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded-test disposition. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `legacy_quarantine/production/kernel/` | E — ARCHIVE-ONLY | Twelve exact non-Python archives preserve the former shadow boot, lifecycle, context, permission, and service stack. | Live kernel root absent; zero canonical or remaining legacy production callers. | Zero configured importers; 11 excluded files / 18 direct imports remain F06G/F06H debt. | No kernel-owned persistent runtime/config/data writer. | F06E preservation; F06G/F06H excluded debt. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
 | `legacy_quarantine/production/knowledge/*.py.legacy` | E — ARCHIVE-ONLY | 7 byte/SHA/blob-identical non-Python archives of the former knowledge production root. | Unreachable from `run_jaos.py`; the live root is absent. | Zero configured direct importers; 7 / 12 excluded files / direct statements and 1 excluded-only dynamic registration remain F06G/F06H debt. | None; low-risk in-memory disposition confirmed. | F06E preservation; F06G/F06H excluded debt. | MOVE COMPLETE; deletion or import from quarantine is PROHIBITED. |
@@ -2258,6 +2259,9 @@ edge is removed; these internal dependencies remain.
 
 ## 26. FORTRESS-06E Executive AI/Provider Production-Family Quarantine
 
+Historical implementation-time record: the following 78-source state and
+unstarted tools slice predate section 27. Preserve this checkpoint evidence.
+
 Date: 2026-09-23. Status: **IMPLEMENTED AND VERIFIED** in the uncommitted
 working tree based on `0627453` on `phase8-ai-intelligence`; HEAD and origin
 remain aligned. This is the separately authorized FORTRESS-06E executive_brain
@@ -2415,10 +2419,285 @@ have zero bytes; every nonempty payload uses CRLF only (zero bare LF/CR).
 
 ---
 
-## 27. Update History
+## 27. FORTRESS-06E Executive Tools Production-Family Quarantine
+
+Date: 2026-09-23. Status: **IMPLEMENTED AND VERIFIED** in the uncommitted
+working tree based on `c38564b` (`phase8-ai-intelligence`), aligned with origin.
+The previous AI/provider implementation is committed at `9622619`; its
+project-state synchronization is committed at `c38564b`. This section records
+only the separately authorized tools-family retirement, not completion of F06E
+or live-runtime certification.
+
+The fresh gate verified exactly the requested **42 tracked Python sources**,
+all present in HEAD and matching their Git-normalized blobs. Checkout SHA-256,
+size and line-ending representation were captured for each source before
+movement. All seven caches were absent before and after retirement:
+`__pycache__`, `browser/__pycache__`, `core/__pycache__`,
+`development/__pycache__`, `development/vscode/__pycache__`,
+`file/__pycache__`, and `windows/__pycache__`, each beneath
+`executive_brain/tools/`. There was no tracked non-Python file, hidden entry,
+symlink/reparse point, unexpected untracked artifact, or `*.pyc` in the family.
+
+All 42 sources moved byte-identically to
+`legacy_quarantine/production/executive_brain/tools/<relative-path>.legacy`,
+preserving the complete hierarchy and `.py.legacy` suffixes. Every archive
+matches the captured checkout bytes, SHA-256, size, CRLF representation and
+Git-normalized blob; no archive payload was edited. The live tools family is
+absent, without wrapper, stub, alias, or replacement. Archives are
+non-importable and non-collectable; there is no quarantine `__init__.py` or
+repository Python import from quarantine. Git history preserves reversibility.
+A read-only external before/after comparison using
+`git diff --no-index --name-status --find-renames=100% --rename-empty`
+reported **42 R100** mappings without staging.
+
+Repository-wide AST analysis, including relative imports and literal dynamic
+imports, found **0 canonical production callers, 0 external remaining legacy
+production callers, 0 configured-test callers, 0 excluded direct callers, and
+0 separate script/tool callers**. Every one of the 42 sources was adjudicated.
+No remaining Executive source or `workflow/`, `core/`, `brain/`,
+`memory/`, `main.py`, `run_jaos.py`, `jaos/`, or `jaos_platform/`
+caller reaches the family. Its **57 internal import statements in 30 consumers**
+retired together. The family had no active outside production owner/caller.
+
+Static capability review confirmed real effects:
+
+| Family | Adjudicated capability; never executed during retirement |
+|---|---|
+| Browser | Default-browser URL open, downloads-page open, new tabs, web-search URLs, cookie-database-location inspection. |
+| Development / VS Code | Caller-supplied build/debug/run command execution, Git commands, and VS Code process launch. |
+| File | Copy, delete, move, read, rename, recursive search, write, and parent-directory creation on caller-supplied paths. |
+| Windows | Clipboard read, process termination, shell-capable application launch, notifications/message boxes, process listing, service listing. |
+| Managers / registry | In-memory registration/lookup and dispatch to registered browser, tool, and IDE objects. |
+
+These are real capabilities, not inert implementations or permission to
+execute them. No legacy browser/file/process/desktop/tool capability was
+executed. No family-owned JAOS runtime-data, config, checkpoint/recovery,
+canonical audit, or canonical permission persistence authority was found.
+The mutating file tools are retirement candidates because they have
+caller-supplied paths and no active owner/caller. The existing
+`jaos_platform/runtime_state_inventory.py` exclusion is descriptive evidence,
+not a dynamic import or canonical owner.
+
+Canonical ownership remains `PlatformComposition` -> `jaos.tools.ToolManager`
+-> registry and `ToolExecutionEngine` -> existing permission, approval, and
+audit boundaries. Exact legacy APIs are not required for compatibility; no
+legacy tool survives solely for F07 or F11. F07 permission/approval/audit
+hardening and F11 architecture/runtime/security/chaos testing remain separate
+canonical-path workstreams, both **NOT STARTED**. No tool behavior was ported
+and no new tool or hardening policy was implemented.
+
+`executive_brain/` remains live category D: **78 - 42 = 36** tracked Python
+sources. All 36 source hashes and every internal Executive dependency are
+preserved. RegistryManager external-root production callers remain **0**, with
+the same six internal callers. ExecutivePipeline remains live. All nine
+workflow sources are unchanged and workflow remains blocked by
+`executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`.
+Tools retirement did not unblock workflow or begin the remaining Executive
+retirement.
+
+Exactly two grouped configured cases were added to the existing
+`tests/tests/platform/test_collection_containment.py`: archive fidelity and
+caller/effect/dependency containment. Earlier prototype-presence assertions
+now verify their exact archived payloads. The existing Executive AST guard is
+shared by AI and tools containment. Historical 91-, 78-, and 42-source digests
+remain checked using **13 AI archives + 42 tools archives + 36 live sources**;
+the historical values were not discarded or weakened. The existing partial-root
+archive helper checks each family's exact subtree.
+`test_canonical_import_boundary.py` required **no modification**.
+
+Classification remains **A=10, B=1, D=6, E=13, F=3, TOTAL=33**, with no top-level
+E entry for tools. The exact D roots remain `brain/`, `core/`,
+`executive_brain/`, `main.py`, `memory/`, and `workflow/`.
+Static canonical launcher closure still analyzes **207 files / 206 reached
+modules**, has no violations and does not reach `executive_brain.tools`.
+Canonical lazy-map targets contain no retired-tools target. This does not
+certify a live runtime. Canonical `run_jaos.py`, `jaos/`, and
+`jaos_platform/` are unchanged.
+
+Config containment is unchanged: SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+**9 definitions / 11 collected cases**, one configured legacy-facing file, and
+zero configured Executive importers. Its disposition remains KEEP TEMPORARILY /
+INTENTIONALLY CONFIGURED; retirement remains unauthorized.
+
+
+Verification used repository `.venv/Scripts/python.exe -B` with
+`PYTHONDONTWRITEBYTECODE=1`, `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`,
+`-p no:cacheprovider`, and `-p anyio.pytest_plugin`. Every invocation received
+a unique external Windows basetemp beneath
+`%TEMP%/jaos_f06e_tools_20260923_c38564b/runs/<uuid>/pytest`.
+The established external runner adjusts `os.mkdir` mode only inside that
+disposable run tree to inherit its parent ACL; repository helpers, fixtures,
+production behavior and assertions were not changed for the environment.
+
+Exact pytest command prefix:
+`.venv/Scripts/python.exe -B %TEMP%/jaos_f06e_tools_20260923_c38564b/runner.py`.
+The runner passes the above flags and the following arguments to `pytest.main`.
+All listed gates exited **0**, with no failures, errors or reported warnings.
+
+| Arguments / verification, in executed order | Result |
+|---|---|
+| `tests/tests/platform/test_collection_containment.py -k f06e_executive_tools -q` | 2 passed, 48 deselected |
+| `tests/tests/platform/test_collection_containment.py -k "f06d2a or f06d2b or f06d2e" -q` | 7 passed, 43 deselected |
+| `tests/tests/tools/test_tool_manager.py tests/tests/tools/test_tool_registry.py tests/tests/tools/test_tool_interface.py tests/tests/tools/test_tool_models.py tests/tests/tools/test_delete_file_tool.py tests/tests/tools/test_write_file_tool.py tests/tests/executive/test_canonical_executive_controller.py -q` | 47 passed |
+| `tests/tests/platform/test_collection_containment.py -q` | 50 passed |
+| `tests/tests/platform/test_canonical_import_boundary.py -q` | 55 passed |
+| `tests/tests/integration/test_run_jaos_launcher.py tests/tests/integration/test_run_jaos_banner.py -q` | 8 passed |
+| `tests/tests/platform/test_platform_runtime.py tests/tests/platform/test_platform_runtime_lifecycle.py -q` | 21 passed |
+| `tests/tests/composition/test_platform_composition.py -q` | 8 passed |
+| `tests/tests/tools -q` | 119 passed |
+| `tests/tests/platform/test_base_platform_service.py tests/tests/platform/test_service_container.py -q` | 9 passed |
+| `tests/tests/platform/test_config_containment.py -q` | 11 passed |
+| `tests/tests/platform -q` | 395 passed, 1 skipped |
+| `tests/tests/composition -q` | 49 passed |
+| `tests/tests/integration -q` | 17 passed |
+| `tests/tests -q` | 1776 passed, 1 skipped |
+| `. --collect-only -q` | 1777 tests collected |
+| `.venv/Scripts/python.exe -B -m ruff check --no-cache tests/tests/platform/test_collection_containment.py` | PASS, exit 0 |
+
+The platform skip is the pre-existing directory-symlink escape check requiring
+a symlink-capable Windows host. No new skip or warning was introduced. No
+configured test was retired: actual root collection reconciles
+**1,775 + 2 = 1,777**, with **1,776 passed, 1 skipped** in the full suite.
+The earlier 1,774/1 and 1,775 collection results remain historical baselines.
+
+Initial Ruff found three import-layout findings (I001) and one nested-condition
+finding (SIM102) in the changed test. These were corrected without changing
+assertion behavior; the AI/tools containment rerun passed 4 cases with 46
+deselected, and Ruff then passed. A targeted skip-diagnostic run confirmed
+`test_profile_symlink_escape_is_rejected` skips with Windows `WinError 1314`
+(symlink privilege unavailable), exit 0. No assertion or skip was weakened.
+
+Canonical contract coverage includes manager registration/routing, registry
+lookup/duplicate/missing behavior, request validation, existing permission and
+approval denial/order, truthful failures and audit outcomes, and shared
+composition identity. Canonical filesystem tests operate only on disposable
+test paths; no legacy tool tests were resurrected and no archive was executed.
+
+Protected baseline hashes and all 3,041 outside-scope files remain unchanged,
+including SECURITY.md, the seven named runtime-data files, `.agents/`,
+`.claude/`, `.codex/`, `.context-bridge/`, CLAUDE.md, graphify-out/, all three
+project-state documents, remaining Executive, workflow, and canonical sources.
+No Graphify operation ran. Scope is exactly **87 logical paths**: 42 originals,
+42 archives, one collection-containment test, and these two architecture
+documents. The rename-aware task view is **42 R100 + 3 M**. Ordinary unstaged
+Git output shows 42 deletions and untracked archives because nothing was staged.
+`git diff --check` passed; the index is empty and unchanged. HEAD remains
+`c38564b`, aligned with origin. Nothing was committed or pushed.
+
+RAA-003 remains OPEN; F06D, F06E and FORTRESS-06 remain IN PROGRESS. Remaining
+Executive retirement, workflow retirement, F06F/F06G/F06H, F07/F11 hardening,
+F09 and all later slices have not started. Step 8 remains blocked/not started,
+Fortress certification is NOT STARTED, and major Phase 8 expansion remains
+paused. Writer-sensitive `brain/`, `core/` except its already retired leaf,
+`memory/`, and `main.py` boundaries remain unchanged. The two Founder decisions
+for `main.py` and `BasePlatformService` / `PlatformContract` remain unresolved.
+This tools slice is **READY FOR ATOMIC CHECKPOINT**; staging, commit and push
+are not authorized by this task.
+
+### 27.1 Exact 42-source baseline and archive inventory
+
+Every original below was tracked, present in `c38564b`, and matched its HEAD
+Git blob before retirement. Empty package markers have zero bytes; all nonempty
+payloads use CRLF only, with zero bare LF or CR. Source and archive SHA-256,
+byte count, line endings and normalized Git blobs are identical for every row.
+
+| Original source | Exact archive | Bytes | CRLF | Checkout SHA-256 | Git-normalized blob |
+|---|---|---:|---:|---|---|
+| `executive_brain/tools/__init__.py` | `legacy_quarantine/production/executive_brain/tools/__init__.py.legacy` | 0 | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `executive_brain/tools/browser/__init__.py` | `legacy_quarantine/production/executive_brain/tools/browser/__init__.py.legacy` | 0 | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `executive_brain/tools/browser/browser_automation_tool.py` | `legacy_quarantine/production/executive_brain/tools/browser/browser_automation_tool.py.legacy` | 1370 | 55 | `94625edd3f8c190642bfea5cf0c328fdc0a86411de5b2f2969f4409266a567e7` | `2e3c19713edbf0959b06c53bc28069f526a9f408` |
+| `executive_brain/tools/browser/browser_exceptions.py` | `legacy_quarantine/production/executive_brain/tools/browser/browser_exceptions.py.legacy` | 448 | 24 | `2c52f39e26cc50d97f1321d70da839545dec86e2fa681f55b9cf29bc689f23f4` | `0fd188159229f457af49e095e4437c12df22cd11` |
+| `executive_brain/tools/browser/browser_interface.py` | `legacy_quarantine/production/executive_brain/tools/browser/browser_interface.py.legacy` | 962 | 44 | `3e1aad93e8ff6f4e7f67562bd714e01941f49629fd0a8a9cde32157ee55a4109` | `6d2ec19432df7f648de01dfb633d5c88c199c3fd` |
+| `executive_brain/tools/browser/browser_manager.py` | `legacy_quarantine/production/executive_brain/tools/browser/browser_manager.py.legacy` | 1577 | 55 | `9c4fc7a34891cd58593aeee2701e6eaab19c908389250f2f635d03d1a3059e88` | `88921d49c88e5c4eb8dac4f35158f96619bfc336` |
+| `executive_brain/tools/browser/browser_models.py` | `legacy_quarantine/production/executive_brain/tools/browser/browser_models.py.legacy` | 753 | 41 | `c4a5e762e6b2f306a2abebfe372e905e3325d729dc54867fa660acaee7724c6d` | `a230257f2a4ab6f794172b70a19aceeb69fe2c70` |
+| `executive_brain/tools/browser/cookies_tool.py` | `legacy_quarantine/production/executive_brain/tools/browser/cookies_tool.py.legacy` | 1562 | 56 | `c5b1dc692ac7afc563c32734c4fdcf2cc4981e29ca6dc4978d08df49ec87f10e` | `cf67977d8be064a8aec3ca42a80c722464731e68` |
+| `executive_brain/tools/browser/downloads_tool.py` | `legacy_quarantine/production/executive_brain/tools/browser/downloads_tool.py.legacy` | 2025 | 74 | `0ba872af8c97367b7dc43f8a237f9a765c0105a41009fa1a3858aa139708f0c9` | `8a9db1f72a826ea9109c70c0b3b22ffb14e0f1f5` |
+| `executive_brain/tools/browser/tabs_tool.py` | `legacy_quarantine/production/executive_brain/tools/browser/tabs_tool.py.legacy` | 1261 | 51 | `094694c808538bc4304ca70e33ce7d1ca1aaf71fa481b235cb344f309fbdc066` | `3bfcb920891f08490605e31c2f090f24367b583e` |
+| `executive_brain/tools/browser/web_search_tool.py` | `legacy_quarantine/production/executive_brain/tools/browser/web_search_tool.py.legacy` | 2543 | 85 | `2194b4a2381297a1d1e2b61189757c489d01075fd801e3b916926fd1c62f1904` | `de1ed10efeecc1e315c0dd17b3683de180ca10b4` |
+| `executive_brain/tools/core/__init__.py` | `legacy_quarantine/production/executive_brain/tools/core/__init__.py.legacy` | 0 | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `executive_brain/tools/core/tool_exceptions.py` | `legacy_quarantine/production/executive_brain/tools/core/tool_exceptions.py.legacy` | 433 | 24 | `b987ce63de86442b9eeef4440e51edff7d9c4b4e485cc58ff66f4cdc41262441` | `f4f41abd6a00e40b8f19840299d7963246df7e3b` |
+| `executive_brain/tools/core/tool_interface.py` | `legacy_quarantine/production/executive_brain/tools/core/tool_interface.py.legacy` | 740 | 36 | `55984992fea16fb9ca09d7838225dc271c20fb309d51319833a7e487a31d1ce6` | `e2958718da6db818dec67b39cee4b374722c89e4` |
+| `executive_brain/tools/core/tool_manager.py` | `legacy_quarantine/production/executive_brain/tools/core/tool_manager.py.legacy` | 1813 | 69 | `39d431f7bdad18539d28ee5f55e28fcad3a7e291865c40992d0418d9334107a7` | `158af932d819d82574e484c975692b1b2247afbe` |
+| `executive_brain/tools/core/tool_models.py` | `legacy_quarantine/production/executive_brain/tools/core/tool_models.py.legacy` | 689 | 41 | `5cbbd91e926b62e272a5512604b681569cfaa9750f7c26242c821ebb274b3e7a` | `0b7eb1bc0a7cb3faff4dfdfd2a9fd66c61d3f74c` |
+| `executive_brain/tools/core/tool_registry.py` | `legacy_quarantine/production/executive_brain/tools/core/tool_registry.py.legacy` | 1937 | 79 | `2f36bcc4da3264667ad4c3d98660a911d115eb9c1859c8bd8a81e74070ffa000` | `f975f4d13ce59d91536b5971b0282757bd8d2f46` |
+| `executive_brain/tools/development/__init__.py` | `legacy_quarantine/production/executive_brain/tools/development/__init__.py.legacy` | 0 | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `executive_brain/tools/development/ide_exceptions.py` | `legacy_quarantine/production/executive_brain/tools/development/ide_exceptions.py.legacy` | 419 | 24 | `66864cd78449d61948e2335f164b384054356204afb9bcb83f43bd64653b1582` | `4d6fe467f159abc75fed471bf5d7103d4cf23c64` |
+| `executive_brain/tools/development/ide_interface.py` | `legacy_quarantine/production/executive_brain/tools/development/ide_interface.py.legacy` | 918 | 44 | `af0f2c4defa9e39c606426cde68901dcbe10f9746de64dc40912f795453f9059` | `b329312b490422437de071c11f6ee54943a13a9a` |
+| `executive_brain/tools/development/ide_manager.py` | `legacy_quarantine/production/executive_brain/tools/development/ide_manager.py.legacy` | 1498 | 55 | `9e5c5d05c34f83e2a787af8f5c7f7775e29cee09d4d54bedf4f2db6a69e194cb` | `7334058d11ef3906fd8b1450b270bf70785bc3b2` |
+| `executive_brain/tools/development/ide_models.py` | `legacy_quarantine/production/executive_brain/tools/development/ide_models.py.legacy` | 728 | 41 | `9f0ef34d04fe91845d1fab1c2d7f75ef2d0d4e1a064d984800a53fa949c4f8c4` | `2c1abc6775a46a9969f748cb9c94ce48fcc10acc` |
+| `executive_brain/tools/development/vscode/build_tool.py` | `legacy_quarantine/production/executive_brain/tools/development/vscode/build_tool.py.legacy` | 2491 | 85 | `f4ab7ab8484d44c57aba2b863167714f37dd2a2fb996aa5332e217083bf344fd` | `522502abb21161765b65599a5a5ec28d028c75de` |
+| `executive_brain/tools/development/vscode/debug_tool.py` | `legacy_quarantine/production/executive_brain/tools/development/vscode/debug_tool.py.legacy` | 2491 | 85 | `6c81cdb86c9b08a8ccf5c933d1a5f4c8fcaf49c314542decfa9885f234a2a05d` | `7d6e1a2acf0e467484fbca433c322c81a13d86e7` |
+| `executive_brain/tools/development/vscode/git_tool.py` | `legacy_quarantine/production/executive_brain/tools/development/vscode/git_tool.py.legacy` | 2531 | 85 | `2becf449a18dfc9d697e1d2c6f101389b7f1c97b866ebd2049b1e1d0e24d5553` | `0d071742e785daa15ad147127f7cb739406535ef` |
+| `executive_brain/tools/development/vscode/project_tool.py` | `legacy_quarantine/production/executive_brain/tools/development/vscode/project_tool.py.legacy` | 1829 | 69 | `382a761e3082bef712a6bca97479bb25b2a65a766995ba4599ca5d8d95719aaa` | `9239cbafc2400ab29df1a73bf7f57f3399106da2` |
+| `executive_brain/tools/development/vscode/run_tool.py` | `legacy_quarantine/production/executive_brain/tools/development/vscode/run_tool.py.legacy` | 2475 | 85 | `ecac46d4c53114edffa3c13d04036ff30831c3a49f8aff821706045c1afde368` | `b754cc86e22c68a43f0c33aa390ab733e211a731` |
+| `executive_brain/tools/file/__init__.py` | `legacy_quarantine/production/executive_brain/tools/file/__init__.py.legacy` | 0 | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `executive_brain/tools/file/copy_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/copy_file_tool.py.legacy` | 1807 | 64 | `3e644c8d0f8fc69bce098f5b05307541d7591a2614b12bf43087b9d9b04b8ed8` | `0ec0339b0d02541c4b984a1fd058794e6e9fffc8` |
+| `executive_brain/tools/file/delete_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/delete_file_tool.py.legacy` | 1560 | 60 | `8ffcd9bb4d1fdb8ff3da76d7232090796b860b7b7be627d93b07f94dbdd0c386` | `0e41a1bebc50dbcc0cb5e2e41d00d7cbdb2bce7f` |
+| `executive_brain/tools/file/move_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/move_file_tool.py.legacy` | 1813 | 64 | `3d82c2503a95a13bdc10a279124938ab7ab2b627d1d4679ceb9b73ebfe36943b` | `13f078ecfd4d87764f89e26e77789ce531d1e24a` |
+| `executive_brain/tools/file/read_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/read_file_tool.py.legacy` | 1670 | 63 | `39fc62167618107278d7aa09edf0518b88a10891d2a6da174b6eb874611967c9` | `cf97c669c661a62223534d479a5e616f96723b9b` |
+| `executive_brain/tools/file/rename_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/rename_file_tool.py.legacy` | 1763 | 62 | `bd5a07b2ded36955d922e2a612d823d4a8199ad8c7756dc89c3d3d5b35682734` | `d2cab21e55b8c1f3ff69c4d9381f4b38f0ed6e65` |
+| `executive_brain/tools/file/search_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/search_file_tool.py.legacy` | 2002 | 72 | `77aa69e3e998dc225babfb3cad4279299e10dfa264c5a20614ea8ce544a5d551` | `826cc9a938d01a9146b562ec30c2e681e578f525` |
+| `executive_brain/tools/file/write_file_tool.py` | `legacy_quarantine/production/executive_brain/tools/file/write_file_tool.py.legacy` | 1449 | 54 | `915de2957409dbd5968fbdbf175653711fb7ef238f580a10ebc681bae05be61c` | `39e9c76a4b66687cdff61c175f7d2590a792e030` |
+| `executive_brain/tools/windows/__init__.py` | `legacy_quarantine/production/executive_brain/tools/windows/__init__.py.legacy` | 0 | 0 | `e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` | `e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` |
+| `executive_brain/tools/windows/clipboard_tool.py` | `legacy_quarantine/production/executive_brain/tools/windows/clipboard_tool.py.legacy` | 1134 | 50 | `ed5e7daa97eb65d7b6c22c253215748157dda40d64e0043723197126b48eb652` | `1c5369dd46a49a732fc0183117f62e0a7b869d03` |
+| `executive_brain/tools/windows/close_application_tool.py` | `legacy_quarantine/production/executive_brain/tools/windows/close_application_tool.py.legacy` | 1421 | 56 | `71c21a6f2a5e7fe62d97d76d11b58626a89c5f96965a36c062494d9f7388070f` | `e1823dd8db67c3dd42f5e7aed8b1a47cfd541425` |
+| `executive_brain/tools/windows/launch_application_tool.py` | `legacy_quarantine/production/executive_brain/tools/windows/launch_application_tool.py.legacy` | 2306 | 76 | `3f7cccfc69d21588f35829e457e26108b9037cc006c5282feee3cce49a1421d6` | `72c915b16bb153321ef972c4b8ad4b7d6aa5fbbf` |
+| `executive_brain/tools/windows/notification_tool.py` | `legacy_quarantine/production/executive_brain/tools/windows/notification_tool.py.legacy` | 1725 | 65 | `6c0d45dd795c73ac24de914592e4504d2c2a31e883e2563a4e2eac534ac301ca` | `c2d27f11f73555d4f29eeede9c21c7365a6d45c9` |
+| `executive_brain/tools/windows/process_manager_tool.py` | `legacy_quarantine/production/executive_brain/tools/windows/process_manager_tool.py.legacy` | 2540 | 95 | `a9a83584fa37ffff623fd6b68b2bd7211488647f0839563fa1ac24f39749266a` | `321048b0fed43b7c9aca6884f4bd69162b4ecef0` |
+| `executive_brain/tools/windows/services_tool.py` | `legacy_quarantine/production/executive_brain/tools/windows/services_tool.py.legacy` | 2843 | 98 | `ae661a81f5068938d082d1a08699f3f6d20acfedc7fef7336efc01b77c970287` | `a93dae3232c0c6f3d18124d5906daa23e444acf4` |
+
+### 27.2 Exact remaining 36-source Executive inventory
+
+These 36 live sources match their pre-slice checkout hashes. Their internal
+dependencies remain intact; none imports the retired tools family.
+
+```text
+executive_brain/__init__.py
+executive_brain/brain/__init__.py
+executive_brain/brain/executive_brain.py
+executive_brain/common/__init__.py
+executive_brain/common/enums.py
+executive_brain/intent.py
+executive_brain/managers/__init__.py
+executive_brain/managers/decision_manager.py
+executive_brain/managers/execution_manager.py
+executive_brain/managers/mission_manager.py
+executive_brain/managers/planning_manager.py
+executive_brain/managers/registry_manager.py
+executive_brain/managers/result_manager.py
+executive_brain/memory/__init__.py
+executive_brain/memory/memory_manager.py
+executive_brain/memory/memory_registry.py
+executive_brain/memory/working_memory.py
+executive_brain/models/__init__.py
+executive_brain/models/context_snapshot_model.py
+executive_brain/models/decision_model.py
+executive_brain/models/execution_plan_model.py
+executive_brain/models/goal_model.py
+executive_brain/models/intent_model.py
+executive_brain/models/mission_model.py
+executive_brain/models/result_model.py
+executive_brain/pipeline/executive_pipeline.py
+executive_brain/planner/__init__.py
+executive_brain/registries/__init__.py
+executive_brain/registries/base_registry.py
+executive_brain/registries/decision_registry.py
+executive_brain/registries/execution_plan_registry.py
+executive_brain/registries/goal_registry.py
+executive_brain/registries/intent_registry.py
+executive_brain/registries/mission_registry.py
+executive_brain/registries/result_registry.py
+executive_brain/timeline/__init__.py
+```
+
+---
+
+## 28. Update History
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-23 | 1.24 | Recorded the verified 42-source Executive tools family quarantine, exact byte/SHA/blob/size/CRLF fidelity, 42 R100 mappings, two grouped containment cases, zero outside callers, canonical Tool ownership, 36 preserved Executive sources, unchanged workflow/config/protected state, and D=6/E=13/total=33. Full configured 1,776 passed, 1 skipped; root collection 1,777. No legacy capability executed; F07/F11 NOT STARTED; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-23 | 1.23 | Recorded the verified 13-source Executive AI/provider family quarantine with exact checkout SHA/size/CRLF and Git blob fidelity, two grouped containment cases, ADR-0014 canonical contract preservation, 78 remaining Executive sources (42 tools + 36 remaining), and unchanged D=6/E=13/total=33. Full configured 1,774 passed, 1 skipped; root collection 1,775. Canonical/config/protected state preserved; workflow blocked; RAA-003 OPEN; F06E IN PROGRESS; F09 NOT STARTED. |
 | 2026-09-07 | 1.22 | Recorded the verified single-leaf core/kernel.py quarantine: exact checkout SHA/size and Git blob fidelity, RegistryManager external-root importers 1 -> 0 with six internal importers preserved, two containment cases, core remaining D, unchanged D=6/E=13/total=33, and no boundary-test edit. Full configured 1,772 passed, 1 skipped; root collection 1,773. Canonical/config/protected state preserved; workflow still blocked; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-07 | 1.21 | Recorded the verified 12-source kernel quarantine with checkout SHA/size and Git blob fidelity, 11 excluded files / 18 imports, two containment cases, D=6/E=13/total=33, preserved backup classification, and corrected stale summary counters. Full configured suite: 1,770 passed, 1 skipped; root collection: 1,771. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |

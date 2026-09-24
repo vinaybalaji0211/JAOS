@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.32
+Document Version: 1.33
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E EXECUTIVE AI/PROVIDER PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E EXECUTIVE TOOLS PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -118,6 +118,7 @@ requires all of the following:
 | FORTRESS-06E kernel production-root quarantine | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06E core/kernel.py production-leaf quarantine | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06E executive_brain AI/provider production-family quarantine | IMPLEMENTED AND VERIFIED |
+| FORTRESS-06E executive_brain tools production-family quarantine | IMPLEMENTED AND VERIFIED — UNCOMMITTED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -146,8 +147,8 @@ authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
 Program is not certified. FORTRESS-06 is in progress through the separately
-authorized F06E executive_brain AI/provider production-family quarantine
-(section 7.32). F06B moved
+authorized F06E executive_brain tools production-family quarantine
+(section 7.33). F06B moved
 only two unsupported root test-shaped scripts as byte-identical non-Python
 archives, F06C made the canonical CLI surfaces injected adapters, F06D1
 quarantined eight duplicate AI and Core configured tests, F06D2A replaced
@@ -3120,6 +3121,9 @@ in the quarantine manifest, section 25.
 
 ### 7.32 FORTRESS-06E Executive AI/Provider Production-Family Quarantine
 
+Historical implementation-time record: the following 78-source state and
+unstarted tools slice predate section 7.33. Preserve this checkpoint evidence.
+
 Date: 2026-09-23. Status: **IMPLEMENTED AND VERIFIED** in the uncommitted
 working tree based on `0627453` on `phase8-ai-intelligence`; HEAD and origin
 remain aligned. This is the separately authorized FORTRESS-06E executive_brain
@@ -3259,6 +3263,188 @@ quarantine manifest, section 26.1.
 
 ---
 
+### 7.33 FORTRESS-06E Executive Tools Production-Family Quarantine
+
+Date: 2026-09-23. Status: **IMPLEMENTED AND VERIFIED** in the uncommitted
+working tree based on `c38564b` (`phase8-ai-intelligence`), aligned with origin.
+The previous AI/provider implementation is committed at `9622619`; its
+project-state synchronization is committed at `c38564b`. This section records
+only the separately authorized tools-family retirement, not completion of F06E
+or live-runtime certification.
+
+The fresh gate verified exactly the requested **42 tracked Python sources**,
+all present in HEAD and matching their Git-normalized blobs. Checkout SHA-256,
+size and line-ending representation were captured for each source before
+movement. All seven caches were absent before and after retirement:
+`__pycache__`, `browser/__pycache__`, `core/__pycache__`,
+`development/__pycache__`, `development/vscode/__pycache__`,
+`file/__pycache__`, and `windows/__pycache__`, each beneath
+`executive_brain/tools/`. There was no tracked non-Python file, hidden entry,
+symlink/reparse point, unexpected untracked artifact, or `*.pyc` in the family.
+
+All 42 sources moved byte-identically to
+`legacy_quarantine/production/executive_brain/tools/<relative-path>.legacy`,
+preserving the complete hierarchy and `.py.legacy` suffixes. Every archive
+matches the captured checkout bytes, SHA-256, size, CRLF representation and
+Git-normalized blob; no archive payload was edited. The live tools family is
+absent, without wrapper, stub, alias, or replacement. Archives are
+non-importable and non-collectable; there is no quarantine `__init__.py` or
+repository Python import from quarantine. Git history preserves reversibility.
+A read-only external before/after comparison using
+`git diff --no-index --name-status --find-renames=100% --rename-empty`
+reported **42 R100** mappings without staging.
+
+Repository-wide AST analysis, including relative imports and literal dynamic
+imports, found **0 canonical production callers, 0 external remaining legacy
+production callers, 0 configured-test callers, 0 excluded direct callers, and
+0 separate script/tool callers**. Every one of the 42 sources was adjudicated.
+No remaining Executive source or `workflow/`, `core/`, `brain/`,
+`memory/`, `main.py`, `run_jaos.py`, `jaos/`, or `jaos_platform/`
+caller reaches the family. Its **57 internal import statements in 30 consumers**
+retired together. The family had no active outside production owner/caller.
+
+Static capability review confirmed real effects:
+
+| Family | Adjudicated capability; never executed during retirement |
+|---|---|
+| Browser | Default-browser URL open, downloads-page open, new tabs, web-search URLs, cookie-database-location inspection. |
+| Development / VS Code | Caller-supplied build/debug/run command execution, Git commands, and VS Code process launch. |
+| File | Copy, delete, move, read, rename, recursive search, write, and parent-directory creation on caller-supplied paths. |
+| Windows | Clipboard read, process termination, shell-capable application launch, notifications/message boxes, process listing, service listing. |
+| Managers / registry | In-memory registration/lookup and dispatch to registered browser, tool, and IDE objects. |
+
+These are real capabilities, not inert implementations or permission to
+execute them. No legacy browser/file/process/desktop/tool capability was
+executed. No family-owned JAOS runtime-data, config, checkpoint/recovery,
+canonical audit, or canonical permission persistence authority was found.
+The mutating file tools are retirement candidates because they have
+caller-supplied paths and no active owner/caller. The existing
+`jaos_platform/runtime_state_inventory.py` exclusion is descriptive evidence,
+not a dynamic import or canonical owner.
+
+Canonical ownership remains `PlatformComposition` -> `jaos.tools.ToolManager`
+-> registry and `ToolExecutionEngine` -> existing permission, approval, and
+audit boundaries. Exact legacy APIs are not required for compatibility; no
+legacy tool survives solely for F07 or F11. F07 permission/approval/audit
+hardening and F11 architecture/runtime/security/chaos testing remain separate
+canonical-path workstreams, both **NOT STARTED**. No tool behavior was ported
+and no new tool or hardening policy was implemented.
+
+`executive_brain/` remains live category D: **78 - 42 = 36** tracked Python
+sources. All 36 source hashes and every internal Executive dependency are
+preserved. RegistryManager external-root production callers remain **0**, with
+the same six internal callers. ExecutivePipeline remains live. All nine
+workflow sources are unchanged and workflow remains blocked by
+`executive_brain.pipeline.executive_pipeline -> workflow.workflow_engine`.
+Tools retirement did not unblock workflow or begin the remaining Executive
+retirement.
+
+Exactly two grouped configured cases were added to the existing
+`tests/tests/platform/test_collection_containment.py`: archive fidelity and
+caller/effect/dependency containment. Earlier prototype-presence assertions
+now verify their exact archived payloads. The existing Executive AST guard is
+shared by AI and tools containment. Historical 91-, 78-, and 42-source digests
+remain checked using **13 AI archives + 42 tools archives + 36 live sources**;
+the historical values were not discarded or weakened. The existing partial-root
+archive helper checks each family's exact subtree.
+`test_canonical_import_boundary.py` required **no modification**.
+
+Classification remains **A=10, B=1, D=6, E=13, F=3, TOTAL=33**, with no top-level
+E entry for tools. The exact D roots remain `brain/`, `core/`,
+`executive_brain/`, `main.py`, `memory/`, and `workflow/`.
+Static canonical launcher closure still analyzes **207 files / 206 reached
+modules**, has no violations and does not reach `executive_brain.tools`.
+Canonical lazy-map targets contain no retired-tools target. This does not
+certify a live runtime. Canonical `run_jaos.py`, `jaos/`, and
+`jaos_platform/` are unchanged.
+
+Config containment is unchanged: SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`,
+**9 definitions / 11 collected cases**, one configured legacy-facing file, and
+zero configured Executive importers. Its disposition remains KEEP TEMPORARILY /
+INTENTIONALLY CONFIGURED; retirement remains unauthorized.
+
+
+Verification used repository `.venv/Scripts/python.exe -B` with
+`PYTHONDONTWRITEBYTECODE=1`, `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`,
+`-p no:cacheprovider`, and `-p anyio.pytest_plugin`. Every invocation received
+a unique external Windows basetemp beneath
+`%TEMP%/jaos_f06e_tools_20260923_c38564b/runs/<uuid>/pytest`.
+The established external runner adjusts `os.mkdir` mode only inside that
+disposable run tree to inherit its parent ACL; repository helpers, fixtures,
+production behavior and assertions were not changed for the environment.
+
+Exact pytest command prefix:
+`.venv/Scripts/python.exe -B %TEMP%/jaos_f06e_tools_20260923_c38564b/runner.py`.
+The runner passes the above flags and the following arguments to `pytest.main`.
+All listed gates exited **0**, with no failures, errors or reported warnings.
+
+| Arguments / verification, in executed order | Result |
+|---|---|
+| `tests/tests/platform/test_collection_containment.py -k f06e_executive_tools -q` | 2 passed, 48 deselected |
+| `tests/tests/platform/test_collection_containment.py -k "f06d2a or f06d2b or f06d2e" -q` | 7 passed, 43 deselected |
+| `tests/tests/tools/test_tool_manager.py tests/tests/tools/test_tool_registry.py tests/tests/tools/test_tool_interface.py tests/tests/tools/test_tool_models.py tests/tests/tools/test_delete_file_tool.py tests/tests/tools/test_write_file_tool.py tests/tests/executive/test_canonical_executive_controller.py -q` | 47 passed |
+| `tests/tests/platform/test_collection_containment.py -q` | 50 passed |
+| `tests/tests/platform/test_canonical_import_boundary.py -q` | 55 passed |
+| `tests/tests/integration/test_run_jaos_launcher.py tests/tests/integration/test_run_jaos_banner.py -q` | 8 passed |
+| `tests/tests/platform/test_platform_runtime.py tests/tests/platform/test_platform_runtime_lifecycle.py -q` | 21 passed |
+| `tests/tests/composition/test_platform_composition.py -q` | 8 passed |
+| `tests/tests/tools -q` | 119 passed |
+| `tests/tests/platform/test_base_platform_service.py tests/tests/platform/test_service_container.py -q` | 9 passed |
+| `tests/tests/platform/test_config_containment.py -q` | 11 passed |
+| `tests/tests/platform -q` | 395 passed, 1 skipped |
+| `tests/tests/composition -q` | 49 passed |
+| `tests/tests/integration -q` | 17 passed |
+| `tests/tests -q` | 1776 passed, 1 skipped |
+| `. --collect-only -q` | 1777 tests collected |
+| `.venv/Scripts/python.exe -B -m ruff check --no-cache tests/tests/platform/test_collection_containment.py` | PASS, exit 0 |
+
+The platform skip is the pre-existing directory-symlink escape check requiring
+a symlink-capable Windows host. No new skip or warning was introduced. No
+configured test was retired: actual root collection reconciles
+**1,775 + 2 = 1,777**, with **1,776 passed, 1 skipped** in the full suite.
+The earlier 1,774/1 and 1,775 collection results remain historical baselines.
+
+Initial Ruff found three import-layout findings (I001) and one nested-condition
+finding (SIM102) in the changed test. These were corrected without changing
+assertion behavior; the AI/tools containment rerun passed 4 cases with 46
+deselected, and Ruff then passed. A targeted skip-diagnostic run confirmed
+`test_profile_symlink_escape_is_rejected` skips with Windows `WinError 1314`
+(symlink privilege unavailable), exit 0. No assertion or skip was weakened.
+
+Canonical contract coverage includes manager registration/routing, registry
+lookup/duplicate/missing behavior, request validation, existing permission and
+approval denial/order, truthful failures and audit outcomes, and shared
+composition identity. Canonical filesystem tests operate only on disposable
+test paths; no legacy tool tests were resurrected and no archive was executed.
+
+Protected baseline hashes and all 3,041 outside-scope files remain unchanged,
+including SECURITY.md, the seven named runtime-data files, `.agents/`,
+`.claude/`, `.codex/`, `.context-bridge/`, CLAUDE.md, graphify-out/, all three
+project-state documents, remaining Executive, workflow, and canonical sources.
+No Graphify operation ran. Scope is exactly **87 logical paths**: 42 originals,
+42 archives, one collection-containment test, and these two architecture
+documents. The rename-aware task view is **42 R100 + 3 M**. Ordinary unstaged
+Git output shows 42 deletions and untracked archives because nothing was staged.
+`git diff --check` passed; the index is empty and unchanged. HEAD remains
+`c38564b`, aligned with origin. Nothing was committed or pushed.
+
+RAA-003 remains OPEN; F06D, F06E and FORTRESS-06 remain IN PROGRESS. Remaining
+Executive retirement, workflow retirement, F06F/F06G/F06H, F07/F11 hardening,
+F09 and all later slices have not started. Step 8 remains blocked/not started,
+Fortress certification is NOT STARTED, and major Phase 8 expansion remains
+paused. Writer-sensitive `brain/`, `core/` except its already retired leaf,
+`memory/`, and `main.py` boundaries remain unchanged. The two Founder decisions
+for `main.py` and `BasePlatformService` / `PlatformContract` remain unresolved.
+This tools slice is **READY FOR ATOMIC CHECKPOINT**; staging, commit and push
+are not authorized by this task.
+
+Exact source/archive hashes, sizes and line endings, plus the remaining
+36-source inventory, are recorded in the
+[quarantine manifest, sections 27.1 and 27.2](FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md#271-exact-42-source-baseline-and-archive-inventory).
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -3313,6 +3499,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-23 | 1.33 | Recorded the verified 42-source Executive tools family quarantine, exact byte/SHA/blob/size/CRLF fidelity, 42 R100 mappings, two grouped containment cases, zero outside callers, canonical Tool ownership, 36 preserved Executive sources, unchanged workflow/config/protected state, and D=6/E=13/total=33. Full configured 1,776 passed, 1 skipped; root collection 1,777. No legacy capability executed; F07/F11 NOT STARTED; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-23 | 1.32 | Recorded the verified 13-source Executive AI/provider family quarantine with exact checkout SHA/size/CRLF and Git blob fidelity, two grouped containment cases, ADR-0014 canonical contract preservation, 78 remaining Executive sources (42 tools + 36 remaining), and unchanged D=6/E=13/total=33. Full configured 1,774 passed, 1 skipped; root collection 1,775. Canonical/config/protected state preserved; workflow blocked; RAA-003 OPEN; F06E IN PROGRESS; F09 NOT STARTED. |
 | 2026-09-07 | 1.31 | Recorded the verified one-source core/kernel.py quarantine, exact SHA/blob/size fidelity, RegistryManager external-root importers 1 -> 0, six preserved Executive importers, two containment cases, and unchanged D=6/E=13/total=33 with core retained live. Full configured 1,772 passed, 1 skipped; root collection 1,773. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-07 | 1.30 | Recorded the verified 12-source kernel quarantine with checkout SHA/size and Git blob fidelity, 11 excluded files / 18 imports, two containment cases, D=6/E=13/total=33, preserved backup classification, and corrected stale summary counters. Full configured suite: 1,770 passed, 1 skipped; root collection: 1,771. Canonical/config/protected state preserved; RAA-003 OPEN; F06E IN PROGRESS. |
