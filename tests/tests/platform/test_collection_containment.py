@@ -1376,7 +1376,8 @@ def test_f06d_memory_retirement_remains_contained_after_provider_retirement() ->
     assert len(legacy_facing_paths) == 1
 
     for production_relpath in _F06D_MEMORY_PRODUCTION_PATHS:
-        assert (_REPOSITORY_ROOT / production_relpath).is_file()
+        assert not (_REPOSITORY_ROOT / production_relpath).exists()
+        assert production_relpath in _assert_f06e_executive_historical_inventory()
     for raa009_relpath in _F06D_MEMORY_RAA009_PATHS:
         assert (_REPOSITORY_ROOT / raa009_relpath).is_file()
 
@@ -3309,7 +3310,6 @@ def test_f06e_engineering_caller_and_boundary_containment() -> None:
     }
     assert legacy_service_consumers == {
         "workflow/workflow_engine.py",
-        "executive_brain/memory/memory_manager.py",
     }
     tests_conftest = _load_tests_conftest()
     assert set(_F06E_ENGINEERING_EXCLUDED_SCRIPT_HASHES) == set(observed)
@@ -3680,7 +3680,7 @@ def test_f06e_core_kernel_leaf_archive_preserves_exact_payload(
 
 
 def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
-    """No caller needs the leaf; six Executive registry consumers stay intact."""
+    """The leaf stays inert; its six former registry callers are now archived."""
 
     from tests.tests.platform.test_canonical_import_boundary import (
         _manifest_classified_paths,
@@ -3734,8 +3734,8 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
 
     # The empty repository-wide set includes production, configured, flat, and tool callers.
     assert leaf_importers == set()
-    assert registry_importers == _F06E_CORE_KERNEL_REGISTRY_INTERNAL_IMPORTERS
-    assert registry_statement_count == 6
+    assert registry_importers == set()
+    assert registry_statement_count == 0
     assert all(path.startswith("executive_brain/") for path in registry_importers)
 
     core = _REPOSITORY_ROOT / "core"
@@ -3792,7 +3792,7 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
     assert "core/" in classified["D"]
     assert "legacy_quarantine/production/core/kernel.py.legacy" not in classified["E"]
     assert {code: len(entries) for code, entries in classified.items()} == {
-        "A": 10, "B": 1, "D": 6, "E": 13, "F": 3,
+        "A": 10, "B": 1, "D": 5, "E": 14, "F": 3,
     }
     assert sum(map(len, classified.values())) == 33
 
@@ -3911,11 +3911,11 @@ def _assert_f06e_executive_historical_inventory() -> dict[str, bytes]:
         path.relative_to(_REPOSITORY_ROOT).as_posix(): path.read_bytes()
         for path in (_REPOSITORY_ROOT / "executive_brain").rglob("*.py")
     }
-    assert set(payloads) == set(_F06E_EXECUTIVE_TOOLS_REMAINING_SOURCES)
-    assert len(payloads) == 36
+    assert payloads == {}
     for former, archive, sha256, blob in (
         *_F06E_EXECUTIVE_AI_ARCHIVE_RECORDS,
         *_F06E_EXECUTIVE_TOOLS_ARCHIVE_RECORDS,
+        *_F06E_EXECUTIVE_FINAL_ARCHIVE_RECORDS,
     ):
         assert former not in payloads
         assert not (_REPOSITORY_ROOT / former).exists()
@@ -3941,8 +3941,7 @@ def test_f06e_executive_ai_archives_preserve_exact_payloads(
     """The exact 13-source partial-root slice is inert and byte-identical."""
 
     _assert_f06e_production_archive_payloads(
-        _F06E_EXECUTIVE_AI_ARCHIVE_RECORDS, {"executive_brain": 13}, pytestconfig,
-        partial_roots=frozenset({"executive_brain"}),
+        _F06E_EXECUTIVE_ALL_ARCHIVE_RECORDS, {"executive_brain": 91}, pytestconfig,
     )
     family = _REPOSITORY_ROOT / "executive_brain/ai"
     assert not family.exists()
@@ -4023,9 +4022,9 @@ def _assert_f06e_executive_family_caller_containment(family: str) -> None:
 
     # This repository-wide empty set includes configured, excluded, and tool callers.
     assert callers == set()
-    assert registry_importers == _F06E_CORE_KERNEL_REGISTRY_INTERNAL_IMPORTERS
-    assert registry_statements == 6
-    assert "executive_brain/pipeline/executive_pipeline.py" in workflow_edges
+    assert registry_importers == set()
+    assert registry_statements == 0
+    assert not {p for p in workflow_edges if not p.startswith("tests/")}
     assert all(path.startswith("executive_brain/") for path in registry_importers)
     historical = _assert_f06e_executive_historical_inventory()
     for root, (count, digest) in _F06E_EXECUTIVE_AI_RETAINED_INVENTORIES.items():
@@ -4047,9 +4046,8 @@ def _assert_f06e_executive_family_caller_containment(family: str) -> None:
         )
         assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == digest
     executive = _REPOSITORY_ROOT / "executive_brain"
-    assert executive.is_dir()
-    assert (executive / "__init__.py").is_file()
-    assert len(tuple(executive.rglob("*.py"))) == 36
+    assert not executive.exists()
+    assert not tuple(executive.rglob("*.py"))
     assert not (executive / "tools").exists()
 
     closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
@@ -4100,10 +4098,10 @@ def test_f06e_executive_ai_caller_provider_and_dependency_containment() -> None:
         _REPOSITORY_ROOT / "docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md"
     ).read_text(encoding="utf-8")
     classified = _manifest_classified_paths(manifest)
-    assert "executive_brain/" in classified["D"]
+    assert "legacy_quarantine/production/executive_brain/" in classified["E"]
     assert not any("executive_brain/ai" in entry for entry in classified["E"])
     assert {code: len(entries) for code, entries in classified.items()} == {
-        "A": 10, "B": 1, "D": 6, "E": 13, "F": 3,
+        "A": 10, "B": 1, "D": 5, "E": 14, "F": 3,
     }
     assert sum(map(len, classified.values())) == 33
 
@@ -4452,8 +4450,7 @@ def test_f06e_executive_tools_archives_preserve_exact_payloads(
     """The exact 42-source family is inert, byte-identical and non-collectable."""
 
     _assert_f06e_production_archive_payloads(
-        _F06E_EXECUTIVE_TOOLS_ARCHIVE_RECORDS, {"executive_brain": 42}, pytestconfig,
-        partial_roots=frozenset({"executive_brain"}),
+        _F06E_EXECUTIVE_ALL_ARCHIVE_RECORDS, {"executive_brain": 91}, pytestconfig,
     )
     family = _REPOSITORY_ROOT / "executive_brain/tools"
     assert not family.exists()
@@ -4551,10 +4548,684 @@ def test_f06e_executive_tools_caller_effect_and_dependency_containment() -> None
     ).read_text(encoding="utf-8")
     classified = _manifest_classified_paths(manifest)
     assert classified["D"] == {
-        "brain/", "core/", "executive_brain/", "main.py", "memory/", "workflow/",
+        "brain/", "core/", "main.py", "memory/", "workflow/",
     }
     assert not any("executive_brain/tools" in entry for entry in classified["E"])
     assert {code: len(entries) for code, entries in classified.items()} == {
-        "A": 10, "B": 1, "D": 6, "E": 13, "F": 3,
+        "A": 10, "B": 1, "D": 5, "E": 14, "F": 3,
     }
     assert sum(map(len, classified.values())) == 33
+
+
+# Final root-family evidence captured at b0c2e1e before the atomic move.
+_F06E_EXECUTIVE_FINAL_ARCHIVE_RECORDS = (
+    (
+        'executive_brain/__init__.py',
+        'legacy_quarantine/production/executive_brain/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/brain/__init__.py',
+        'legacy_quarantine/production/executive_brain/brain/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/brain/executive_brain.py',
+        'legacy_quarantine/production/executive_brain/brain/executive_brain.py.legacy',
+        'b3b6764a87d49a17d1a3a56f2fdf4d8252956f5d7e42bac21fd429622b083666',
+        '79022071de3e7867b62d6bcc5c406873869b39c5',
+    ),
+    (
+        'executive_brain/common/__init__.py',
+        'legacy_quarantine/production/executive_brain/common/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/common/enums.py',
+        'legacy_quarantine/production/executive_brain/common/enums.py.legacy',
+        'a52965315e654ca657df47258e443e8b6aadbb1f38a83505c7a65c187ed7de0c',
+        '7a7e8e4a862aff1218f0628b4e239ed818207f43',
+    ),
+    (
+        'executive_brain/intent.py',
+        'legacy_quarantine/production/executive_brain/intent.py.legacy',
+        '5ec559d7657572d122b4e8314ce5cb4fa4af2aff14d2018e2f691294366844e6',
+        '5f43d48d4d7ff5cadaef8454c86a2befbd1d73ff',
+    ),
+    (
+        'executive_brain/managers/__init__.py',
+        'legacy_quarantine/production/executive_brain/managers/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/managers/decision_manager.py',
+        'legacy_quarantine/production/executive_brain/managers/decision_manager.py.legacy',
+        'ca6b95e1a54aaf97283e5b8dcce90077e7551a51399d73679d3e4565781289b6',
+        'e0f71b0f78afd0a443db5acdf265c2252bf9d163',
+    ),
+    (
+        'executive_brain/managers/execution_manager.py',
+        'legacy_quarantine/production/executive_brain/managers/execution_manager.py.legacy',
+        '3afb70ab262a1c719da50bfe283b525812247f90a2d8f3265c59946be45229a7',
+        '9aa525907ccefc7dd628df7f01cb148c101e7939',
+    ),
+    (
+        'executive_brain/managers/mission_manager.py',
+        'legacy_quarantine/production/executive_brain/managers/mission_manager.py.legacy',
+        '163bdb92ca057333f21e024adc9bfb34adb521a9d45585805a56d520f88a2192',
+        '764c12b60b26df084437f86a99905a8a907286ff',
+    ),
+    (
+        'executive_brain/managers/planning_manager.py',
+        'legacy_quarantine/production/executive_brain/managers/planning_manager.py.legacy',
+        '2fdab0f81378825fc9b31a739cbb44bcca807456815b0af07a28b689c6a17ea5',
+        '69e22b7d60db7cf91a4ff71ba59f1831e1613c68',
+    ),
+    (
+        'executive_brain/managers/registry_manager.py',
+        'legacy_quarantine/production/executive_brain/managers/registry_manager.py.legacy',
+        'e9d3d8eee3dbf133fa346541d3690d316bd586ea6ca925e325fd0b960979c2d7',
+        'c11d40f0621b43ace4579363fa7f6f7cde371198',
+    ),
+    (
+        'executive_brain/managers/result_manager.py',
+        'legacy_quarantine/production/executive_brain/managers/result_manager.py.legacy',
+        'c6ff7e64b1d5e07d3d8a90504299066d9da3a0ac8a35c6029b9ca14f32ceab45',
+        '505b66e1e948b176637601474877813e85f76a16',
+    ),
+    (
+        'executive_brain/memory/__init__.py',
+        'legacy_quarantine/production/executive_brain/memory/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/memory/memory_manager.py',
+        'legacy_quarantine/production/executive_brain/memory/memory_manager.py.legacy',
+        'e6c728007ae18e56ae8f7e9dd305e033d20326d80bd28c272d66131887ed4405',
+        'e85118e26714e25db8028983ce5e5c682abffa47',
+    ),
+    (
+        'executive_brain/memory/memory_registry.py',
+        'legacy_quarantine/production/executive_brain/memory/memory_registry.py.legacy',
+        'b3e12a5a0ec2e3a9a2b5f6c0fdd1d0aa0edfd9915c3f17cfed96c1cbdffe2d97',
+        '34b671274a46da86657b0d5d6fe3a882e4a2f6d0',
+    ),
+    (
+        'executive_brain/memory/working_memory.py',
+        'legacy_quarantine/production/executive_brain/memory/working_memory.py.legacy',
+        'ff7f567a9765202bda71fc92c6772a5c043f25394637e485dac9181a6bce1c11',
+        'b38ba268dca51d4850951c28423added2c4b5bdf',
+    ),
+    (
+        'executive_brain/models/__init__.py',
+        'legacy_quarantine/production/executive_brain/models/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/models/context_snapshot_model.py',
+        'legacy_quarantine/production/executive_brain/models/context_snapshot_model.py.legacy',
+        '9e2278aa649f19abf985ba05850a6a1c131a4a5d30d3151d39bfecb50b077814',
+        '24f744ee8c906213d92bfadafb3953a251855cc5',
+    ),
+    (
+        'executive_brain/models/decision_model.py',
+        'legacy_quarantine/production/executive_brain/models/decision_model.py.legacy',
+        'deceeee997d672e73cf04e2930ee3a7839529bb5f05ece578f0f8b2238ec0f26',
+        'c6b036f8505289eb50ca2b251a70067f4ea2cc52',
+    ),
+    (
+        'executive_brain/models/execution_plan_model.py',
+        'legacy_quarantine/production/executive_brain/models/execution_plan_model.py.legacy',
+        'a080419965ecb23e8459fd1c8a117fca92d39d964d14726ffebd6d2eedec5cd6',
+        '8599b02b89af0e9e7d237a4ad323690b6c497677',
+    ),
+    (
+        'executive_brain/models/goal_model.py',
+        'legacy_quarantine/production/executive_brain/models/goal_model.py.legacy',
+        '8868b1096b83dfc5a0e4670a695134b9d0b440f235df70cf7857b105c1ba0684',
+        'd6f87ace400f8ddfc17b73aec421d331d8bb1c3b',
+    ),
+    (
+        'executive_brain/models/intent_model.py',
+        'legacy_quarantine/production/executive_brain/models/intent_model.py.legacy',
+        'e894f1cb3b1741e8edab581d159db384140bda66233ca33ac8fadf951b9204c4',
+        '327bfd5fe9e82b00f142a12982ddf330cd2bb3b0',
+    ),
+    (
+        'executive_brain/models/mission_model.py',
+        'legacy_quarantine/production/executive_brain/models/mission_model.py.legacy',
+        '552b761214a9b4cc875a2ea730ce17852bf0f191586e5e014b7790b81b07b45e',
+        '3b722a1d6627bb576c40b59fbfea9a7d7b8666ef',
+    ),
+    (
+        'executive_brain/models/result_model.py',
+        'legacy_quarantine/production/executive_brain/models/result_model.py.legacy',
+        '138a175e6d503b7c2e07c372cd407b03713386130af8fadbfa2fe1d1784de0c5',
+        'ed99ab110ca751e279948b1a57cd88b52e5189c5',
+    ),
+    (
+        'executive_brain/pipeline/executive_pipeline.py',
+        'legacy_quarantine/production/executive_brain/pipeline/executive_pipeline.py.legacy',
+        'bf8b105c0de804d67ecf95b53861d00295c9f257038ac6ad68667f7a1239da0b',
+        'e80c3db6376df497c9f302938524e10c9647743c',
+    ),
+    (
+        'executive_brain/planner/__init__.py',
+        'legacy_quarantine/production/executive_brain/planner/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/registries/__init__.py',
+        'legacy_quarantine/production/executive_brain/registries/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+    (
+        'executive_brain/registries/base_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/base_registry.py.legacy',
+        '0b5192ab84dae8b473949c09af498230193701fdd854d6a55509216258f11a08',
+        '9f223a34c6585fa58e85311ba810933ee95e40d3',
+    ),
+    (
+        'executive_brain/registries/decision_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/decision_registry.py.legacy',
+        'e085fdb64cad672eca2559fd26a8596590b69fae60300e48cfbe718a6e2f5031',
+        '83c16f1079a4f9d383267c82302f125eb8e09a6e',
+    ),
+    (
+        'executive_brain/registries/execution_plan_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/execution_plan_registry.py.legacy',
+        '00c4e82bf2bc4d0b4fb8b6d5def67c0d7b6d68634aa10dae35939dc010fb3c24',
+        '32eaa1e981314a87fc96cea6d499445fd2510a38',
+    ),
+    (
+        'executive_brain/registries/goal_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/goal_registry.py.legacy',
+        'b874a1299dd0ccf08cf7cbf046b5dd798f8572e972bfc8e930dc515f943d3490',
+        '1d4f2220c2c7434b8f6db4ddbc0183b55e04ca49',
+    ),
+    (
+        'executive_brain/registries/intent_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/intent_registry.py.legacy',
+        '08c9e3090fe437f7543594b00b2562ed34e9dcf0496848a4bb8b740b7908e481',
+        'c3f44a29c016b364a361f6f1b786cc1cbe8b9c88',
+    ),
+    (
+        'executive_brain/registries/mission_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/mission_registry.py.legacy',
+        'b39d3383026de0010ed273441b8b91466304c9136872aa19ccacc410664157ef',
+        'de0d1660573e0af1f2f0181bb8c801f0d34d69d9',
+    ),
+    (
+        'executive_brain/registries/result_registry.py',
+        'legacy_quarantine/production/executive_brain/registries/result_registry.py.legacy',
+        '5dce7b02020cfbe7b4d474033d311b0f27260c8a32104125d7953006030891b0',
+        '73af691da99a45bb49c4608e4dc20944989fc35b',
+    ),
+    (
+        'executive_brain/timeline/__init__.py',
+        'legacy_quarantine/production/executive_brain/timeline/__init__.py.legacy',
+        'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+        'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391',
+    ),
+)
+_F06E_EXECUTIVE_FINAL_SIZES_AND_CRLF = {
+    'executive_brain/__init__.py': (0, 0),
+    'executive_brain/brain/__init__.py': (0, 0),
+    'executive_brain/brain/executive_brain.py': (6317, 168),
+    'executive_brain/common/__init__.py': (0, 0),
+    'executive_brain/common/enums.py': (322, 16),
+    'executive_brain/intent.py': (1264, 65),
+    'executive_brain/managers/__init__.py': (0, 0),
+    'executive_brain/managers/decision_manager.py': (2762, 90),
+    'executive_brain/managers/execution_manager.py': (2896, 93),
+    'executive_brain/managers/mission_manager.py': (3248, 112),
+    'executive_brain/managers/planning_manager.py': (2497, 85),
+    'executive_brain/managers/registry_manager.py': (2311, 64),
+    'executive_brain/managers/result_manager.py': (2476, 84),
+    'executive_brain/memory/__init__.py': (0, 0),
+    'executive_brain/memory/memory_manager.py': (2340, 84),
+    'executive_brain/memory/memory_registry.py': (916, 27),
+    'executive_brain/memory/working_memory.py': (2167, 58),
+    'executive_brain/models/__init__.py': (0, 0),
+    'executive_brain/models/context_snapshot_model.py': (1586, 61),
+    'executive_brain/models/decision_model.py': (1680, 55),
+    'executive_brain/models/execution_plan_model.py': (1432, 48),
+    'executive_brain/models/goal_model.py': (1309, 38),
+    'executive_brain/models/intent_model.py': (1386, 40),
+    'executive_brain/models/mission_model.py': (2068, 59),
+    'executive_brain/models/result_model.py': (1251, 45),
+    'executive_brain/pipeline/executive_pipeline.py': (851, 26),
+    'executive_brain/planner/__init__.py': (0, 0),
+    'executive_brain/registries/__init__.py': (0, 0),
+    'executive_brain/registries/base_registry.py': (1216, 46),
+    'executive_brain/registries/decision_registry.py': (1039, 34),
+    'executive_brain/registries/execution_plan_registry.py': (3145, 102),
+    'executive_brain/registries/goal_registry.py': (1688, 56),
+    'executive_brain/registries/intent_registry.py': (702, 24),
+    'executive_brain/registries/mission_registry.py': (2733, 99),
+    'executive_brain/registries/result_registry.py': (2355, 83),
+    'executive_brain/timeline/__init__.py': (0, 0),
+}
+_F06E_EXECUTIVE_ALL_ARCHIVE_RECORDS = (
+    *_F06E_EXECUTIVE_AI_ARCHIVE_RECORDS,
+    *_F06E_EXECUTIVE_TOOLS_ARCHIVE_RECORDS,
+    *_F06E_EXECUTIVE_FINAL_ARCHIVE_RECORDS,
+)
+_F06E_EXECUTIVE_FINAL_EXCLUDED_IMPORTS = {
+    'tests/base_registry_test.py': (
+        ('executive_brain.registries.base_registry', 'executive_brain.registries.base_registry.BaseRegistry'),
+    ),
+    'tests/context_snapshot_model_test.py': (
+        ('executive_brain.models.context_snapshot_model', 'executive_brain.models.context_snapshot_model.ContextSnapshotModel'),
+    ),
+    'tests/decision_model_test.py': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.models.decision_model', 'executive_brain.models.decision_model.DecisionModel'),
+    ),
+    'tests/decision_registry_test.py': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.models.decision_model', 'executive_brain.models.decision_model.DecisionModel'),
+        ('executive_brain.registries.decision_registry', 'executive_brain.registries.decision_registry.DecisionRegistry'),
+    ),
+    'tests/execution_plan_model_test.py': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.models.execution_plan_model', 'executive_brain.models.execution_plan_model.ExecutionPlanModel'),
+    ),
+    'tests/goal_model_test.py': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.Priority'),
+        ('executive_brain.models.goal_model', 'executive_brain.models.goal_model.GoalModel'),
+    ),
+    'tests/goal_registry_test.py': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus', 'executive_brain.common.enums.Priority'),
+        ('executive_brain.models.goal_model', 'executive_brain.models.goal_model.GoalModel'),
+        ('executive_brain.registries.goal_registry', 'executive_brain.registries.goal_registry.GoalRegistry'),
+    ),
+    'tests/intent_model_test.py': (
+        ('executive_brain.models.intent_model', 'executive_brain.models.intent_model.IntentModel'),
+    ),
+    'tests/intent_registry_test.py': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus', 'executive_brain.common.enums.Priority'),
+        ('executive_brain.models.intent_model', 'executive_brain.models.intent_model.IntentModel'),
+        ('executive_brain.registries.intent_registry', 'executive_brain.registries.intent_registry.IntentRegistry'),
+    ),
+    'tests/intent_test.py': (
+        ('executive_brain.intent', 'executive_brain.intent.Intent'),
+    ),
+    'tests/mission_model_test.py': (
+        ('executive_brain.models.mission_model', 'executive_brain.models.mission_model.MissionModel'),
+    ),
+    'tests/result_model_test.py': (
+        ('executive_brain.models.result_model', 'executive_brain.models.result_model.ResultModel'),
+    ),
+}
+_F06E_EXECUTIVE_FINAL_ARCHIVED_TEST_IMPORTS = {
+    'legacy_quarantine/tests/executive/brain/test_executive_brain.py.legacy': (
+        ('executive_brain.brain.executive_brain', 'executive_brain.brain.executive_brain.ExecutiveBrain'),
+        ('executive_brain.models.result_model', 'executive_brain.models.result_model.ResultModel'),
+    ),
+    'legacy_quarantine/tests/executive/managers/test_decision_manager.py.legacy': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.managers.decision_manager', 'executive_brain.managers.decision_manager.DecisionManager'),
+        ('executive_brain.managers.registry_manager', 'executive_brain.managers.registry_manager.RegistryManager'),
+        ('executive_brain.models.decision_model', 'executive_brain.models.decision_model.DecisionModel'),
+    ),
+    'legacy_quarantine/tests/executive/managers/test_execution_manager.py.legacy': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.managers.execution_manager', 'executive_brain.managers.execution_manager.ExecutionManager'),
+        ('executive_brain.managers.planning_manager', 'executive_brain.managers.planning_manager.PlanningManager'),
+        ('executive_brain.managers.registry_manager', 'executive_brain.managers.registry_manager.RegistryManager'),
+        ('executive_brain.models.result_model', 'executive_brain.models.result_model.ResultModel'),
+    ),
+    'legacy_quarantine/tests/executive/managers/test_mission_manager.py.legacy': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.managers.mission_manager', 'executive_brain.managers.mission_manager.MissionManager'),
+        ('executive_brain.managers.registry_manager', 'executive_brain.managers.registry_manager.RegistryManager'),
+        ('executive_brain.models.mission_model', 'executive_brain.models.mission_model.MissionModel'),
+    ),
+    'legacy_quarantine/tests/executive/managers/test_planning_manager.py.legacy': (
+        ('executive_brain.managers.planning_manager', 'executive_brain.managers.planning_manager.PlanningManager'),
+        ('executive_brain.managers.registry_manager', 'executive_brain.managers.registry_manager.RegistryManager'),
+        ('executive_brain.models.execution_plan_model', 'executive_brain.models.execution_plan_model.ExecutionPlanModel'),
+    ),
+    'legacy_quarantine/tests/executive/managers/test_registry_manager.py.legacy': (
+        ('executive_brain.managers.registry_manager', 'executive_brain.managers.registry_manager.RegistryManager'),
+        ('executive_brain.models.result_model', 'executive_brain.models.result_model.ResultModel'),
+        ('executive_brain.registries.decision_registry', 'executive_brain.registries.decision_registry.DecisionRegistry'),
+        ('executive_brain.registries.execution_plan_registry', 'executive_brain.registries.execution_plan_registry.ExecutionPlanRegistry'),
+        ('executive_brain.registries.goal_registry', 'executive_brain.registries.goal_registry.GoalRegistry'),
+        ('executive_brain.registries.intent_registry', 'executive_brain.registries.intent_registry.IntentRegistry'),
+        ('executive_brain.registries.mission_registry', 'executive_brain.registries.mission_registry.MissionRegistry'),
+        ('executive_brain.registries.result_registry', 'executive_brain.registries.result_registry.ResultRegistry'),
+    ),
+    'legacy_quarantine/tests/executive/managers/test_result_manager.py.legacy': (
+        ('executive_brain.managers.registry_manager', 'executive_brain.managers.registry_manager.RegistryManager'),
+        ('executive_brain.managers.result_manager', 'executive_brain.managers.result_manager.ResultManager'),
+        ('executive_brain.models.result_model', 'executive_brain.models.result_model.ResultModel'),
+    ),
+    'legacy_quarantine/tests/executive/pipeline/test_executive_pipeline.py.legacy': (
+        ('executive_brain.brain.executive_brain', 'executive_brain.brain.executive_brain.ExecutiveBrain'),
+    ),
+    'legacy_quarantine/tests/executive/pipeline/test_executive_pipeline_v2.py.legacy': (
+        ('executive_brain.pipeline.executive_pipeline', 'executive_brain.pipeline.executive_pipeline.ExecutivePipeline'),
+    ),
+    'legacy_quarantine/tests/executive/registries/test_execution_plan_registry.py.legacy': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.models.execution_plan_model', 'executive_brain.models.execution_plan_model.ExecutionPlanModel'),
+        ('executive_brain.registries.execution_plan_registry', 'executive_brain.registries.execution_plan_registry.ExecutionPlanRegistry'),
+    ),
+    'legacy_quarantine/tests/executive/registries/test_mission_registry.py.legacy': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.models.mission_model', 'executive_brain.models.mission_model.MissionModel'),
+        ('executive_brain.registries.mission_registry', 'executive_brain.registries.mission_registry.MissionRegistry'),
+    ),
+    'legacy_quarantine/tests/executive/registries/test_result_registry.py.legacy': (
+        ('executive_brain.common.enums', 'executive_brain.common.enums.LifecycleStatus'),
+        ('executive_brain.models.result_model', 'executive_brain.models.result_model.ResultModel'),
+        ('executive_brain.registries.result_registry', 'executive_brain.registries.result_registry.ResultRegistry'),
+    ),
+    'legacy_quarantine/tests/executive/runtime/test_executive_runtime.py.legacy': (
+        ('executive_brain.brain.executive_brain', 'executive_brain.brain.executive_brain.ExecutiveBrain'),
+    ),
+    'legacy_quarantine/tests/integration/test_memory_runtime_integration.py.legacy': (
+        ('executive_brain.brain.executive_brain', 'executive_brain.brain.executive_brain.ExecutiveBrain'),
+        ('executive_brain.memory.memory_manager', 'executive_brain.memory.memory_manager.MemoryManager'),
+    ),
+    'legacy_quarantine/tests/memory/test_memory_manager.py.legacy': (
+        ('executive_brain.memory.memory_manager', 'executive_brain.memory.memory_manager.MemoryManager'),
+    ),
+    'legacy_quarantine/tests/memory/test_memory_registry.py.legacy': (
+        ('executive_brain.memory.memory_registry', 'executive_brain.memory.memory_registry.MemoryRegistry'),
+        ('executive_brain.memory.working_memory', 'executive_brain.memory.working_memory.WorkingMemory'),
+    ),
+    'legacy_quarantine/tests/memory/test_working_memory.py.legacy': (
+        ('executive_brain.memory.working_memory', 'executive_brain.memory.working_memory.WorkingMemory'),
+    ),
+}
+_F06E_EXECUTIVE_FINAL_DEBT_SHA256 = {
+    'legacy_quarantine/production/core/kernel.py.legacy':
+        '12614a613c9156be0dee4aaab6630e161efd04f49b169ce97d27e321086fa86f',
+    'legacy_quarantine/tests/executive/brain/test_executive_brain.py.legacy':
+        'd422566f036ba637241e03f66f75aa80238aead422a30b54fd18d900126060cb',
+    'legacy_quarantine/tests/executive/managers/test_decision_manager.py.legacy':
+        'ba1b17667115e75129ed8b5c27a24a433b96d71991ddcd7ea6c763588cef4e5a',
+    'legacy_quarantine/tests/executive/managers/test_execution_manager.py.legacy':
+        '229639f71adbcb519c62fc1fee8c7f4b708169d469115f61fdd45971c1d88997',
+    'legacy_quarantine/tests/executive/managers/test_mission_manager.py.legacy':
+        '60b4d90e80ca2750109fcfae23e1c42b960302ee0fb6dd9eeccc9640af193b88',
+    'legacy_quarantine/tests/executive/managers/test_planning_manager.py.legacy':
+        'a56b590b241de2aec25b1bfa3c6c1f513ccd91e3d134cd963a5d0054adbea516',
+    'legacy_quarantine/tests/executive/managers/test_registry_manager.py.legacy':
+        '473bd4914180c0be406bb69a319183c5759149ec75b1cf8614e44390419eadcd',
+    'legacy_quarantine/tests/executive/managers/test_result_manager.py.legacy':
+        '15c84c43aadbecc91a0e8f82cd8e300510c9ad5c7909b5b973f06e16ec52e628',
+    'legacy_quarantine/tests/executive/pipeline/test_executive_pipeline.py.legacy':
+        '8be05bbee311ec57f528cb6fe3da2120a54e66f70a8ba5f7949ec59cc5aebe8c',
+    'legacy_quarantine/tests/executive/pipeline/test_executive_pipeline_v2.py.legacy':
+        '31430e092c95a4b48e0c1a05a03ecce6a30b58ce008a7adb8b04efc442016e23',
+    'legacy_quarantine/tests/executive/registries/test_execution_plan_registry.py.legacy':
+        '6174dd08b9ad419684b4994f0bc2ebe2053892cad804959bd8916efbb647a111',
+    'legacy_quarantine/tests/executive/registries/test_mission_registry.py.legacy':
+        'e91aadb273f1175d424ad4e4a5a70e4c39aebfc1256931bba4677a2803c6b0e6',
+    'legacy_quarantine/tests/executive/registries/test_result_registry.py.legacy':
+        'ae977136dcd578136ba074d9bd741d6c69f1fbd710e103aa382508be0440ea7e',
+    'legacy_quarantine/tests/executive/runtime/test_executive_runtime.py.legacy':
+        '945a3d4104883f62382a79f6a9c311f6102cfad67fa864c315e4e09c509558b7',
+    'legacy_quarantine/tests/integration/test_memory_runtime_integration.py.legacy':
+        '83bdf8e9cfd5b01fc9b487b4a1d9928fd30e14128beded4a226a97b7f30b9024',
+    'legacy_quarantine/tests/memory/test_memory_manager.py.legacy':
+        '1c888f4d7c9950a2f1090fe06d8dff3de77ea9d7bdbc02c49a73fa5b5e90b094',
+    'legacy_quarantine/tests/memory/test_memory_registry.py.legacy':
+        'b2503c77d160f01dd9c6a3b284086862cb27da297f52b78f5a39abdd0013378e',
+    'legacy_quarantine/tests/memory/test_working_memory.py.legacy':
+        'a09fa6bb85e7716d1622a2d75275963ba0081ac8ba36bee05bbcba76e35bb353',
+    'tests/base_registry_test.py':
+        '3a0571552b35bb44229aed523267f0a32adb248e332b2971ef7018f0ac0a1697',
+    'tests/context_snapshot_model_test.py':
+        'a90df95582d39ce86675310555b2a6ab033bc9329deed318d5eab7e652f3ae89',
+    'tests/decision_model_test.py':
+        '68a51a1e7182b20655fae4332067c81a7d55e4ede02848d25a1af27911708e4d',
+    'tests/decision_registry_test.py':
+        'c2a53e4b175ae3fe317bdd13742ebf60b9f817415e21d1cd0df122f24b1842e1',
+    'tests/execution_plan_model_test.py':
+        '49c3e9fded0b45d1573844f7c4f7b43651cc625f0b6db5e7c8c05e4bce779523',
+    'tests/goal_model_test.py':
+        '9969ef85b690a7d0e9424badbae6c16caed2197422b3edecd6232a163a9435bb',
+    'tests/goal_registry_test.py':
+        'a58ba23a5bd67e6d3efedbc3d5d00d890756b8cc905a33e28d962710ad4fd73c',
+    'tests/intent_model_test.py':
+        'd3496f0c09c8e15979ea695c27701dc52c1cd30449953a9fed71ee890a9a6553',
+    'tests/intent_registry_test.py':
+        'ae885a60ce51c8c1b1aa683fd115ed8b63bd2fa509ef6ca5d05ccf2082683948',
+    'tests/intent_test.py':
+        '67cceaac0448ecc31232878c2573687fb4f2d32e07d2bb518914ba7effc01e9a',
+    'tests/mission_model_test.py':
+        '512ef476e15ec5958abafdf483603e31c9aed7141a25da46a8cd3fd2286b412b',
+    'tests/result_model_test.py':
+        '3ffebcc21b341664850c9e61faebfae6d5ac0e0baa45604eaaa4427864b97c2e',
+}
+
+
+def _f06e_final_import_names(node: ast.AST, package: list[str]) -> tuple[str, ...]:
+    """Resolve static and literal loader edges without importing their targets."""
+
+    if isinstance(node, ast.Import):
+        return tuple(alias.name for alias in node.names)
+    if isinstance(node, ast.ImportFrom):
+        prefix = package[:len(package) - node.level + 1] if node.level else []
+        module = ".".join(prefix + ([node.module] if node.module else []))
+        return (module,) + tuple(
+            ".".join(part for part in (module, alias.name) if part)
+            for alias in node.names
+        )
+    if isinstance(node, ast.Call) and node.args:
+        function = (
+            node.func.id if isinstance(node.func, ast.Name)
+            else node.func.attr if isinstance(node.func, ast.Attribute) else None
+        )
+        argument = node.args[0]
+        if (
+            function in {"import_module", "__import__", "add_import"}
+            and isinstance(argument, ast.Constant) and isinstance(argument.value, str)
+        ):
+            return (argument.value,)
+    return ()
+
+
+def test_f06e_executive_final_root_archive_fidelity(pytestconfig: pytest.Config) -> None:
+    """All 91 historical sources survive as exact inert archives; none stays live."""
+
+    records = _F06E_EXECUTIVE_FINAL_ARCHIVE_RECORDS
+    assert len(records) == 36
+    assert {r[0] for r in records} == set(_F06E_EXECUTIVE_TOOLS_REMAINING_SOURCES)
+    assert set(_F06E_EXECUTIVE_FINAL_SIZES_AND_CRLF) == {r[0] for r in records}
+    _assert_f06e_production_archive_payloads(
+        _F06E_EXECUTIVE_ALL_ARCHIVE_RECORDS, {"executive_brain": 91}, pytestconfig,
+    )
+    sizes = []
+    for former, archive, _sha256, _blob in records:
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        size, crlf = _F06E_EXECUTIVE_FINAL_SIZES_AND_CRLF[former]
+        assert len(payload) == size
+        assert payload.count(b"\r\n") == payload.count(b"\n") == crlf
+        assert payload.count(b"\r") == crlf
+        sizes.append(size)
+    assert sum(sizes) == 53957
+    assert sizes.count(0) == 9
+    live = _REPOSITORY_ROOT / "executive_brain"
+    assert not live.exists()
+    assert not tuple(live.rglob("*.py"))
+    assert not tuple(live.rglob("*.pyc"))
+    assert not tuple(live.rglob("__pycache__"))
+    assert importlib.machinery.PathFinder.find_spec(
+        "executive_brain", [str(_REPOSITORY_ROOT)]
+    ) is None
+    assert len(_F06E_EXECUTIVE_AI_ARCHIVE_RECORDS) == 13
+    assert len(_F06E_EXECUTIVE_TOOLS_ARCHIVE_RECORDS) == 42
+    historical = _assert_f06e_executive_historical_inventory()
+    # Last pre-AI-retirement checkpoint retains the complete original Git tree.
+    result = subprocess.run(
+        ["git", "ls-tree", "-r", "0627453", "--", "executive_brain"],
+        cwd=_REPOSITORY_ROOT, capture_output=True, text=True, check=True, timeout=30,
+    )
+    original = {}
+    for line in result.stdout.splitlines():
+        mode, kind, blob, former = line.split()
+        assert (mode, kind) == ("100644", "blob")
+        original[former] = blob
+    assert len(original) == len(historical) == 91
+    assert {former: _git_blob_id(payload, path=former)
+            for former, payload in historical.items()} == original
+
+
+def test_f06e_executive_final_caller_authority_containment() -> None:
+    """Retirement removes shadow authority and leaves only exact inert caller debt."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        analyze_import_closure,
+    )
+
+    module_paths = {
+        former.removesuffix(".py").replace("/", ".").removesuffix(".__init__"): former
+        for former, _archive, _sha, _blob in _F06E_EXECUTIVE_FINAL_ARCHIVE_RECORDS
+    }
+    graph: dict[str, set[str]] = {path: set() for path in module_paths.values()}
+    internal_edges = []
+    registry_importers = set()
+    workflow_edges = set()
+    for former, archive, _sha, _blob in _F06E_EXECUTIVE_FINAL_ARCHIVE_RECORDS:
+        tree = ast.parse((_REPOSITORY_ROOT / archive).read_text(encoding="utf-8-sig"))
+        package = former.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        for node in ast.walk(tree):
+            names = _f06e_final_import_names(node, package)
+            resolved = [name for name in names if name in module_paths]
+            if resolved:
+                target = module_paths[max(resolved, key=len)]
+                internal_edges.append((former, target))
+                graph[former].add(target)
+            if "executive_brain.managers.registry_manager" in names:
+                registry_importers.add(former)
+            if "workflow.workflow_engine" in names:
+                workflow_edges.add(former)
+            # Exact immutable payloads plus bounded external imports preserve the
+            # static no-writer/no-provider/no-execution adjudication.
+            assert all(name.partition(".")[0] in {
+                "executive_brain", "jaos_platform", "workflow", "dataclasses",
+                "datetime", "enum", "typing", "uuid",
+            } for name in names)
+            if isinstance(node, ast.Call):
+                assert ast.unparse(node.func) not in {
+                    "open", "eval", "exec", "__import__", "importlib.import_module",
+                }
+    assert len(graph) == 36
+    assert len(internal_edges) == 55
+    assert registry_importers == _F06E_CORE_KERNEL_REGISTRY_INTERNAL_IMPORTERS
+    assert workflow_edges == {"executive_brain/pipeline/executive_pipeline.py"}
+    # A DAG of 36 nodes has exactly 36 singleton SCCs and no self-cycle.
+    def visit(node: str, active: set[str], completed: set[str]) -> None:
+        assert node not in active, ("cycle", node)
+        if node in completed:
+            return
+        active.add(node)
+        for target in graph[node]:
+            visit(target, active, completed)
+        active.remove(node)
+        completed.add(node)
+
+    completed: set[str] = set()
+    for node in graph:
+        visit(node, set(), completed)
+    assert len(completed) == 36
+
+    observed = {}
+    base_consumers = set()
+    contract_consumers = set()
+    production_workflow_callers = set()
+    for path in _repository_live_python_paths():
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        package = relpath.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        statements = []
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig"))):
+            names = _f06e_final_import_names(node, package)
+            assert not any(n == "legacy_quarantine" or n.startswith("legacy_quarantine.")
+                           for n in names)
+            if any(n == "executive_brain" or n.startswith("executive_brain.") for n in names):
+                statements.append(names)
+            if not relpath.startswith("tests/"):
+                if any(n.endswith(".BasePlatformService") for n in names):
+                    base_consumers.add(relpath)
+                if any(n.endswith(".PlatformContract") for n in names):
+                    contract_consumers.add(relpath)
+                if any(n == "workflow" or n.startswith("workflow.") for n in names):
+                    production_workflow_callers.add(relpath)
+            if (
+                (relpath == "run_jaos.py" or relpath.startswith(("jaos/", "jaos_platform/")))
+                and isinstance(node, ast.Constant) and isinstance(node.value, str)
+            ):
+                value = node.value
+                if all(part.isidentifier() for part in value.split(".")):
+                    assert value != "executive_brain"
+                    assert not value.startswith("executive_brain.")
+        if statements:
+            observed[relpath] = tuple(statements)
+    assert observed == _F06E_EXECUTIVE_FINAL_EXCLUDED_IMPORTS
+    assert len(observed) == 12
+    assert sum(map(len, observed.values())) == 21
+    conftest = _load_tests_conftest()
+    assert all(conftest.is_excluded_legacy_module(_REPOSITORY_ROOT / p) for p in observed)
+    assert not any(p.startswith("tests/tests/") for p in observed)
+    assert all(p.startswith("tests/") for p in observed)
+    assert base_consumers == {"workflow/workflow_engine.py"}
+    assert contract_consumers == set()
+    assert production_workflow_callers == set()
+    assert not (_REPOSITORY_ROOT / "executive_brain/managers/registry_manager.py").exists()
+    assert not (_REPOSITORY_ROOT / "executive_brain/pipeline/executive_pipeline.py").exists()
+
+    archived = {}
+    for path in (_REPOSITORY_ROOT / "legacy_quarantine").rglob("*.py.legacy"):
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        if relpath.startswith("legacy_quarantine/production/executive_brain/"):
+            continue
+        statements = tuple(
+            names for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig")))
+            if (names := _f06e_final_import_names(node, []))
+            if any(name in module_paths for name in names)
+        )
+        if statements:
+            archived[relpath] = statements
+    core = "legacy_quarantine/production/core/kernel.py.legacy"
+    assert archived.pop(core) == ((
+        "executive_brain.managers.registry_manager",
+        "executive_brain.managers.registry_manager.RegistryManager",
+    ),)
+    assert archived == _F06E_EXECUTIVE_FINAL_ARCHIVED_TEST_IMPORTS
+    assert len(archived) == 17
+    assert sum(map(len, archived.values())) == 47
+    for relpath, sha in _F06E_EXECUTIVE_FINAL_DEBT_SHA256.items():
+        assert hashlib.sha256((_REPOSITORY_ROOT / relpath).read_bytes()).hexdigest() == sha
+
+    _assert_f06e_executive_family_caller_containment("executive_brain.ai")
+    composition = _REPOSITORY_ROOT / "jaos/composition/platform_composition.py"
+    imports = {
+        name for node in ast.walk(ast.parse(composition.read_text(encoding="utf-8")))
+        for name in _f06e_final_import_names(node, [])
+    }
+    assert {
+        "jaos.executive.controller.ExecutiveController",
+        "jaos.memory.storage.memory_store.MemoryStore",
+        "jaos.intelligence.conversation.ConversationOrchestrator",
+    } <= imports
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert len(closure["analyzed_files"]) == 207
+    assert len(closure["reached_modules"]) == 206
+    assert not any(n == "executive_brain" or n.startswith("executive_brain.")
+                   for n in closure["reached_modules"])
+    _assert_config_containment_preserved()
