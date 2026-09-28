@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.34
+Document Version: 1.35
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -18,7 +18,7 @@ Maintainer: JAOS Engineering
 
 Founder Direction Recorded: 2026-08-21
 
-Last Updated: 2026-09-24
+Last Updated: 2026-09-28
 
 Related Documents:
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E FINAL REMAINING EXECUTIVE PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E WORKFLOW PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -148,8 +148,8 @@ authorization. FORTRESS-02 through FORTRESS-05 are COMPLETE AND VERIFIED at
 workstream level. FORTRESS-05 satisfies the narrow ADR-0011 carve-out; its
 Conversation authority remains intentionally unrouted. The overall Fortress
 Program is not certified. FORTRESS-06 is in progress through the separately
-authorized F06E final remaining executive_brain production-family quarantine
-(section 7.34). F06B moved
+authorized F06E workflow production-family quarantine
+(section 7.35). F06B moved
 only two unsupported root test-shaped scripts as byte-identical non-Python
 archives, F06C made the canonical CLI surfaces injected adapters, F06D1
 quarantined eight duplicate AI and Core configured tests, F06D2A replaced
@@ -3623,6 +3623,160 @@ The exact 36-row original/archive SHA/blob/size/EOL mapping is recorded in
 
 ---
 
+### 7.35 FORTRESS-06E Workflow Production-Family Quarantine
+
+**Status: IMPLEMENTED AND VERIFIED** for this exact nine-source quarantine.
+This is not F06E closure or runtime certification. The Founder approved this
+slice and clarified the ordering: only declarative workflow archive/classification
+state changed before regression; verification evidence was written after the
+first complete ladder passed. The final working tree is the target of the
+subsequent final-state verification; evidence files are external to the repository.
+
+Baseline: `phase8-ai-intelligence`, HEAD and origin tracking ref both
+`0a04ae26f3b8dff8407b9364247e8d4dfd5ff17e`, empty index. The fresh gate confirmed
+exactly nine tracked Python sources, all Git mode `100644`, **7,969 checkout
+bytes**, eight nonempty CRLF files and one empty initializer. No cache, bytecode,
+artifact, unexpected source, or archive collision was present. Existing protected
+changes were fingerprinted before movement and preserved.
+
+All nine sources now reside at
+`legacy_quarantine/production/workflow/<original-name>.py.legacy` with identical
+checkout bytes, SHA-256, size, EOL counts, normalized Git blob and mode. The exact
+mapping is recorded in manifest section 29.1. The original hierarchy is
+preserved and the move is reversible. There is no live `workflow/` directory,
+Python source, bytecode, cache, generated artifact, or importable workflow
+namespace. Archives are non-importable and non-collectable, with no executable
+archive initializer. No wrapper, stub, alias, payload edit, quarantine import,
+or replacement shadow behavior was introduced.
+
+Static import evidence: canonical production **0 files / 0 edges**, other live
+production **0 / 0**, configured tests **0 / 0**, and scripts/tooling/dev **0 / 0**.
+Historical reconstruction remains nine nodes, zero explicit internal edges,
+**nine singleton SCCs**, zero multi-node SCCs and zero self-cycles.
+Eight excluded flat scripts retain exactly 15 workflow import statements:
+`automation_rules_engine_test.py`, `dependency_manager_test.py`,
+`retry_recovery_engine_test.py`, `task_manager_test.py`, `task_queue_test.py`,
+`workflow_engine_test.py`, `workflow_monitor_test.py`, and
+`workflow_platform_integration_test.py`, all under `tests/`.
+The inert `legacy_quarantine/tests/integration/test_workflow_runtime_integration.py.legacy`
+retains one workflow import. Archived ExecutivePipeline retains its one
+`workflow.workflow_engine` reference as historical evidence only. Their hashes
+and collection exclusions remain unchanged; none was executed or resurrected.
+
+Workflow owns no protected JSON, runtime-data, config, checkpoint, recovery,
+or persistent-memory writer, subprocess/tool/provider/network invocation, or
+canonical permission/approval/audit mutation. Its historical collections remain
+transient dictionaries/lists; logger calls and runtime event publication do not
+create canonical execution authority. All declared F06F writers and the runtime
+writer inventory remain unchanged outside workflow. **No F06F split is required.**
+
+The canonical authority remains
+`ExecutiveController -> ExecutivePlanner -> ExecutionCoordinator -> ToolManager
+-> ToolExecutionEngine -> ToolPermissionManager -> ToolApprovalManager
+-> tool.execute -> ToolAuditLogger`. Production sources are unchanged; configured
+Executive/Tool tests verify the existing authority and denial/approval behavior.
+No permission/approval bypass was introduced. Automatic READY, printed demos,
+independent workflow dictionaries, fake scheduling/retry/recovery semantics and
+legacy exact APIs were not ported. Future Workflow & Automation Platform remains
+deferred. BasePlatformService live production consumers fall **1 -> 0**;
+PlatformContract remains **0**. Both abstractions are preserved unchanged;
+Founder-level compatibility disposition remains F06G.
+
+Static canonical launcher closure remains **207 analyzed files / 206 reached
+repository modules excluding the launcher**, with workflow reach, workflow lazy
+targets and canonical workflow registrations all **0**. `run_jaos.py`, `jaos/`
+and `jaos_platform/` are unchanged. This is static closure evidence, not live
+runtime certification.
+
+Exactly two grouped configured cases were added to
+`tests/tests/platform/test_collection_containment.py`: workflow archive fidelity
+and workflow caller/authority containment. Earlier live-workflow expectations
+now reconstruct the original inventories from archives; prior Executive and
+archive evidence remains. The boundary guard moves the single workflow root
+**D -> E** without a duplicate entry, preserving the prohibition on canonical
+workflow reach. Classification is **A=10 / B=1 / D=4 / E=15 / F=3 / TOTAL=33**.
+The four D roots are exactly **brain/, core/, main.py, memory/**.
+
+Config containment remains byte-identical at SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`:
+**9 definitions / 11 cases / 1 configured legacy-facing file / 0 workflow imports**.
+
+Validation used `.venv/Scripts/python.exe -B`, `PYTHONDONTWRITEBYTECODE=1`,
+`PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`, `-p no:cacheprovider -p anyio.pytest_plugin`,
+`-ra`, and a fresh external test-owned `--basetemp` per invocation under
+`%TEMP%/jaos_f06e_workflow_20260928/runs/<uuid>/pytest`. The established external
+Windows runner inherits ACLs only within each disposable test tree; no repository
+helper or assertion was bypassed. Common pytest command prefix:
+`.venv/Scripts/python.exe -B %TEMP%/jaos_f06e_workflow_20260928/runner.py`.
+Gate 10 includes both PlatformComposition and canonical composition invariants;
+the effective target arguments are printed in its log. Every gate below exited 0.
+
+| Gate / exact target arguments | Executed result |
+|---|---|
+| `tests/tests/platform/test_collection_containment.py -k f06e_workflow -q` | 2 passed, 52 deselected in 17.56s; exit 0 |
+| `tests/tests/platform/test_collection_containment.py -q` | 54 passed in 328.78s (0:05:28); exit 0 |
+| `tests/tests/platform/test_canonical_import_boundary.py -q` | 55 passed in 7.46s; exit 0 |
+| `tests/tests/platform/test_config_containment.py -q` | 11 passed in 4.65s; exit 0 |
+| `tests/tests/platform/test_base_platform_service.py tests/tests/platform/test_service_container.py -q` | 9 passed in 0.92s; exit 0 |
+| `tests/tests/executive -q` | 7 passed in 1.00s; exit 0 |
+| `tests/tests/tools -q` | 119 passed in 5.20s; exit 0 |
+| `tests/tests/integration/test_run_jaos_launcher.py tests/tests/integration/test_run_jaos_banner.py tests/tests/integration/test_shell_shutdown_lifecycle.py -q` | 17 passed in 1.82s; exit 0 |
+| `tests/tests/platform/test_platform_runtime.py tests/tests/platform/test_platform_runtime_lifecycle.py tests/tests/platform/test_boot_manager.py tests/tests/platform/test_fortress_03_lifecycle_closure.py -q` | 47 passed in 1.78s; exit 0 |
+| `tests/tests/composition/test_platform_composition.py tests/tests/composition/test_canonical_composition_invariants.py -q` | 24 passed in 4.81s; exit 0 |
+| `tests/tests/platform -q` | 399 passed, 1 skipped in 339.59s (0:05:39); exit 0 |
+| `tests/tests/composition -q` | 49 passed in 8.61s; exit 0 |
+| `tests/tests/integration -q` | 17 passed in 1.68s; exit 0 |
+| `tests/tests -q` | 1780 passed, 1 skipped in 333.43s (0:05:33); exit 0 |
+| `. --collect-only -q` | 1781 tests collected in 5.08s; exit 0 |
+| `.venv/Scripts/python.exe -B -m ruff check --no-cache tests/tests/platform/test_collection_containment.py tests/tests/platform/test_canonical_import_boundary.py` | All checks passed; exit 0 |
+
+
+The initial full configured run exited 0 with **1,779 passed / 2 skipped**.
+Besides the existing symlink skip, the unchanged junction test skipped because
+Windows denied creation of the `cmd` subprocess (`WinError 5`, before a
+`mklink /J` result). That same case passed in the platform aggregate and then
+passed in isolation with a fresh external basetemp (**1 passed**, exit 0).
+The precise cause of the intermittent Windows process denial was not established;
+no production or junction-test change was made. The initial Ruff gate exited 1
+with eleven ISC004 implicit-string-concatenation findings in the new constants.
+Only two constant layouts were rewritten; whole-module AST equality was checked.
+Ruff and the two workflow cases passed after correction, then the configured
+suite, root collection and Ruff were rerun. The table records successful/latest
+ladder results; earlier logs, including both skip reasons and the Ruff failure,
+are preserved under `initial_*` in the external evidence directory. Earlier
+subsystem results precede that AST-identical formatting correction. The subsequent
+final-tree configured run covers every configured case after documentation edits.
+
+
+Collection reconciles as **1,779 + 2 = 1,781**, with exactly the two new workflow
+node IDs and **zero removed IDs**. The 1,779-ID baseline is the historical
+Executive-checkpoint collection log, not a rerun. The executed configured suite
+is **1,780 passed / 1 skipped**. The unchanged skip is
+`test_profile_symlink_escape_is_rejected`: Windows directory symlink privilege
+unavailable (`WinError 1314`). No test warning summary was reported.
+
+Scope is **22 logical task paths**: nine originals, nine archive destinations,
+two Python tests and these two architecture documents. An external normalized
+`git diff --no-index --find-renames=100% --rename-empty` review reports **nine
+R100** moves, equivalent to **13 task Git records** including four modifications.
+Ordinary unstaged Git represents the moves as deleted sources and untracked
+archives; the real index remains empty. No staging, commit or push occurred.
+Protected state, project-state documents, brain/core/memory/main.py, canonical
+production, compatibility abstractions, excluded debt, skills and Graphify
+artifacts remain unchanged. The task does not perform reset, restore, clean,
+Graphify, WorkflowEngine execution, excluded flat-script execution or quarantined
+test execution.
+
+**RAA-003 remains OPEN. RAA-009 remains OPEN — DEFERRED. F06E remains IN PROGRESS.**
+F06F, F06G, F06H and F07-F12 remain NOT STARTED. Project-state synchronization is
+reserved for a separately approved checkpoint. Earlier sections retain historical
+counts and boundaries; this section records the workflow slice only.
+
+Exact nine-row archive fidelity mapping is recorded in the FORTRESS-06
+Legacy Quarantine Manifest section 29.1.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -3677,6 +3831,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-28 | 1.35 | Verified exact nine-source workflow quarantine, byte/SHA/blob/size/EOL/mode fidelity, zero live namespace/callers, nine singleton SCCs, compatibility consumers 0/0, preserved F06F writers and canonical authority, D=4/E=15/total=33. Full configured 1,780 passed/1 skipped; root 1,781; exactly two new cases; 22 logical paths; no staging. RAA-003 OPEN, RAA-009 OPEN — DEFERRED, F06E IN PROGRESS. |
 | 2026-09-24 | 1.34 | Verified the final 36-source Executive root quarantine, exact byte/SHA/blob/size/EOL mapping, 91-source reconstruction, 55 internal edges/36 singleton SCCs, zero live callers, workflow production-caller-unblocked but untouched, compatibility consumers 1/0, ADR-0012/0013 preserved, and D=5/E=14/total=33. Full configured 1,778 passed/1 skipped; root 1,779; 76 logical paths; no staging. RAA-003 OPEN, RAA-009 OPEN — DEFERRED, F06E IN PROGRESS. |
 | 2026-09-23 | 1.33 | Recorded the verified 42-source Executive tools family quarantine, exact byte/SHA/blob/size/CRLF fidelity, 42 R100 mappings, two grouped containment cases, zero outside callers, canonical Tool ownership, 36 preserved Executive sources, unchanged workflow/config/protected state, and D=6/E=13/total=33. Full configured 1,776 passed, 1 skipped; root collection 1,777. No legacy capability executed; F07/F11 NOT STARTED; RAA-003 OPEN; F06E IN PROGRESS. |
 | 2026-09-23 | 1.32 | Recorded the verified 13-source Executive AI/provider family quarantine with exact checkout SHA/size/CRLF and Git blob fidelity, two grouped containment cases, ADR-0014 canonical contract preservation, 78 remaining Executive sources (42 tools + 36 remaining), and unchanged D=6/E=13/total=33. Full configured 1,774 passed, 1 skipped; root collection 1,775. Canonical/config/protected state preserved; workflow blocked; RAA-003 OPEN; F06E IN PROGRESS; F09 NOT STARTED. |

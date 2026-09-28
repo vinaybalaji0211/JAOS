@@ -1704,8 +1704,8 @@ def test_f06d_satellite_retirement_preserves_exact_residual_boundaries(
     assert legacy_facing_paths == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
     assert len(legacy_facing_paths) == 1
 
-    for production_relpath in _F06D_SATELLITE_PRODUCTION_PATHS:
-        assert (_REPOSITORY_ROOT / production_relpath).is_file()
+    historical_workflow = _assert_f06e_workflow_historical_inventory()
+    assert set(_F06D_SATELLITE_PRODUCTION_PATHS) <= historical_workflow.keys()
     production_archives = {
         former: (archive, sha256, blob)
         for former, archive, sha256, blob in (
@@ -2544,11 +2544,12 @@ def _assert_f06e_satellite_retained_inventory() -> None:
     for root_name, (expected_count, expected_digest) in (
         _F06E_SATELLITE_RETAINED_ROOT_HASHES.items()
     ):
-        if root_name in _F06E_DYNAMIC_SATELLITE_PRODUCTION_ROOTS | {"engineering"}:
+        if root_name in _F06E_DYNAMIC_SATELLITE_PRODUCTION_ROOTS | {"engineering", "workflow"}:
             records = tuple(
                 record for record in (
                     _F06E_DYNAMIC_SATELLITE_ARCHIVE_RECORDS
                     + _F06E_ENGINEERING_ARCHIVE_RECORDS
+                    + _F06E_WORKFLOW_ARCHIVE_RECORDS
                 )
                 if record[0].startswith(root_name + "/")
             )
@@ -3308,9 +3309,8 @@ def test_f06e_engineering_caller_and_boundary_containment() -> None:
         path for path in observed
         if path == "run_jaos.py" or path.startswith(("jaos/", "jaos_platform/"))
     }
-    assert legacy_service_consumers == {
-        "workflow/workflow_engine.py",
-    }
+    assert legacy_service_consumers == set()
+    _assert_f06e_workflow_historical_inventory()
     tests_conftest = _load_tests_conftest()
     assert set(_F06E_ENGINEERING_EXCLUDED_SCRIPT_HASHES) == set(observed)
     for relpath, expected_sha256 in _F06E_ENGINEERING_EXCLUDED_SCRIPT_HASHES.items():
@@ -3599,6 +3599,9 @@ def test_f06e_kernel_caller_and_boundary_containment() -> None:
         if relpath == "executive_brain":
             _assert_f06e_executive_historical_inventory()
             continue
+        if relpath == "workflow":
+            _assert_f06e_workflow_historical_inventory()
+            continue
         retained = _REPOSITORY_ROOT / relpath
         retained_paths = [retained] if retained.is_file() else sorted(retained.rglob("*.py"))
         assert len(retained_paths) == expected_count
@@ -3757,15 +3760,8 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
         if relpath == "executive_brain":
             _assert_f06e_executive_historical_inventory()
             continue
-        expected_count, expected_digest = _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES[relpath]
-        sources = sorted((_REPOSITORY_ROOT / relpath).rglob("*.py"))
-        assert len(sources) == expected_count
-        inventory = "".join(
-            path.relative_to(_REPOSITORY_ROOT).as_posix() + "\0"
-            + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
-            for path in sources
-        )
-        assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == expected_digest
+        assert relpath == "workflow"
+        _assert_f06e_workflow_historical_inventory()
 
     closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
     assert closure["violations"] == []
@@ -3792,7 +3788,7 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
     assert "core/" in classified["D"]
     assert "legacy_quarantine/production/core/kernel.py.legacy" not in classified["E"]
     assert {code: len(entries) for code, entries in classified.items()} == {
-        "A": 10, "B": 1, "D": 5, "E": 14, "F": 3,
+        "A": 10, "B": 1, "D": 4, "E": 15, "F": 3,
     }
     assert sum(map(len, classified.values())) == 33
 
@@ -4035,10 +4031,8 @@ def _assert_f06e_executive_family_caller_containment(family: str) -> None:
                 and not relpath.startswith("executive_brain/ai/")
             }
         else:
-            payloads = {
-                path.relative_to(_REPOSITORY_ROOT).as_posix(): path.read_bytes()
-                for path in (_REPOSITORY_ROOT / root).rglob("*.py")
-            }
+            assert root == "workflow"
+            payloads = _assert_f06e_workflow_historical_inventory()
         assert len(payloads) == count
         inventory = "".join(
             relpath + "\0" + hashlib.sha256(payload).hexdigest() + "\n"
@@ -4101,7 +4095,7 @@ def test_f06e_executive_ai_caller_provider_and_dependency_containment() -> None:
     assert "legacy_quarantine/production/executive_brain/" in classified["E"]
     assert not any("executive_brain/ai" in entry for entry in classified["E"])
     assert {code: len(entries) for code, entries in classified.items()} == {
-        "A": 10, "B": 1, "D": 5, "E": 14, "F": 3,
+        "A": 10, "B": 1, "D": 4, "E": 15, "F": 3,
     }
     assert sum(map(len, classified.values())) == 33
 
@@ -4548,11 +4542,11 @@ def test_f06e_executive_tools_caller_effect_and_dependency_containment() -> None
     ).read_text(encoding="utf-8")
     classified = _manifest_classified_paths(manifest)
     assert classified["D"] == {
-        "brain/", "core/", "main.py", "memory/", "workflow/",
+        "brain/", "core/", "main.py", "memory/",
     }
     assert not any("executive_brain/tools" in entry for entry in classified["E"])
     assert {code: len(entries) for code, entries in classified.items()} == {
-        "A": 10, "B": 1, "D": 5, "E": 14, "F": 3,
+        "A": 10, "B": 1, "D": 4, "E": 15, "F": 3,
     }
     assert sum(map(len, classified.values())) == 33
 
@@ -5182,7 +5176,8 @@ def test_f06e_executive_final_caller_authority_containment() -> None:
     assert all(conftest.is_excluded_legacy_module(_REPOSITORY_ROOT / p) for p in observed)
     assert not any(p.startswith("tests/tests/") for p in observed)
     assert all(p.startswith("tests/") for p in observed)
-    assert base_consumers == {"workflow/workflow_engine.py"}
+    assert base_consumers == set()
+    _assert_f06e_workflow_historical_inventory()
     assert contract_consumers == set()
     assert production_workflow_callers == set()
     assert not (_REPOSITORY_ROOT / "executive_brain/managers/registry_manager.py").exists()
@@ -5228,4 +5223,348 @@ def test_f06e_executive_final_caller_authority_containment() -> None:
     assert len(closure["reached_modules"]) == 206
     assert not any(n == "executive_brain" or n.startswith("executive_brain.")
                    for n in closure["reached_modules"])
+    _assert_config_containment_preserved()
+
+
+# Workflow baseline captured at 0a04ae2; payloads are inspected, never executed.
+_F06E_WORKFLOW_ARCHIVE_RECORDS = (('workflow/__init__.py',
+  'legacy_quarantine/production/workflow/__init__.py.legacy',
+  'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+  'e69de29bb2d1d6434b8b29ae775ad8c2e48c5391'),
+ ('workflow/automation_rules_engine.py',
+  'legacy_quarantine/production/workflow/automation_rules_engine.py.legacy',
+  '50a6b99cf56a92f8aaedeed18413156714358ac06f87abf8e4c0c4261b0c4369',
+  'b03024da5a009254a3fd842912dc9a67eeebfe76'),
+ ('workflow/dependency_manager.py',
+  'legacy_quarantine/production/workflow/dependency_manager.py.legacy',
+  'f65961110fcb376ab20479892b6042a7726f0d0990bc034142b4d9acb43d65b5',
+  '0e257fe976c380b202a465f4afdb0259d238d853'),
+ ('workflow/retry_recovery_engine.py',
+  'legacy_quarantine/production/workflow/retry_recovery_engine.py.legacy',
+  '871c387aefda2b8e016c202eb3390bcd5cee8477f2fc92976ed76e8bd704a2de',
+  'ad5cac211d5e23205b52eb825208779509e9d49a'),
+ ('workflow/scheduler.py',
+  'legacy_quarantine/production/workflow/scheduler.py.legacy',
+  'd465c29cdb6c6dbea6c448a66fff33a0b3d6c9cabaf374819b732557d40d575c',
+  '46c4279e9d1bd1599c6711f79e40cbcc619a5851'),
+ ('workflow/task_manager.py',
+  'legacy_quarantine/production/workflow/task_manager.py.legacy',
+  '8221c2a258bb7114019a6882e0be4a527c2895f269eea1e5243443f563106f08',
+  '4dc03367e039160cd78f9415acd4d88c354a4b61'),
+ ('workflow/task_queue.py',
+  'legacy_quarantine/production/workflow/task_queue.py.legacy',
+  '913b4a80557b1a00a2e7d1746675962990bfd83ab9cee9fee74d835a60f6889d',
+  '74bfa035e2f9d935493d9a85b63fbb9265a374c0'),
+ ('workflow/workflow_engine.py',
+  'legacy_quarantine/production/workflow/workflow_engine.py.legacy',
+  'bc27c5c52027549d24f2c7407f82aeb1a8b87cccad8109314f16a0122d87226f',
+  'cb1d36997a7a980a01841bc08e32ad076c5e64f8'),
+ ('workflow/workflow_monitor.py',
+  'legacy_quarantine/production/workflow/workflow_monitor.py.legacy',
+  '2d54c51fb9376fbc5638f6a11649d7d0b192d9e174fed83e4a96bc8fd4b88ea9',
+  'a6a22ff72607133e586aedbae57b30700d99050d'))
+
+_F06E_WORKFLOW_SIZES_AND_CRLF = {'workflow/__init__.py': (0, 0),
+ 'workflow/automation_rules_engine.py': (875, 49),
+ 'workflow/dependency_manager.py': (1072, 58),
+ 'workflow/retry_recovery_engine.py': (878, 49),
+ 'workflow/scheduler.py': (877, 49),
+ 'workflow/task_manager.py': (1086, 58),
+ 'workflow/task_queue.py': (1129, 61),
+ 'workflow/workflow_engine.py': (1218, 42),
+ 'workflow/workflow_monitor.py': (834, 45)}
+
+_F06E_WORKFLOW_EXCLUDED_IMPORTS = {
+    "tests/automation_rules_engine_test.py": [
+        "from workflow.automation_rules_engine import AutomationRulesEngine"
+    ],
+    "tests/dependency_manager_test.py": [
+        "from workflow.dependency_manager import DependencyManager"
+    ],
+    "tests/retry_recovery_engine_test.py": [
+        "from workflow.retry_recovery_engine import RetryRecoveryEngine"
+    ],
+    "tests/task_manager_test.py": [
+        "from workflow.task_manager import TaskManager"
+    ],
+    "tests/task_queue_test.py": [
+        "from workflow.task_queue import TaskQueue"
+    ],
+    "tests/workflow_engine_test.py": [
+        "from workflow.workflow_engine import WorkflowEngine"
+    ],
+    "tests/workflow_monitor_test.py": [
+        "from workflow.workflow_monitor import WorkflowMonitor"
+    ],
+    "tests/workflow_platform_integration_test.py": [
+        "from workflow.automation_rules_engine import AutomationRulesEngine",
+        "from workflow.dependency_manager import DependencyManager",
+        "from workflow.retry_recovery_engine import RetryRecoveryEngine",
+        "from workflow.scheduler import Scheduler",
+        "from workflow.task_manager import TaskManager",
+        "from workflow.task_queue import TaskQueue",
+        "from workflow.workflow_engine import WorkflowEngine",
+        "from workflow.workflow_monitor import WorkflowMonitor"
+    ]
+}
+
+_F06E_WORKFLOW_ARCHIVED_IMPORTS = {
+    "legacy_quarantine/production/executive_brain/pipeline/executive_pipeline.py.legacy": [
+        "from workflow.workflow_engine import WorkflowEngine"
+    ],
+    "legacy_quarantine/tests/integration/test_workflow_runtime_integration.py.legacy": [
+        "from workflow.workflow_engine import WorkflowEngine"
+    ]
+}
+
+_F06E_WORKFLOW_DEBT_SHA256 = {'legacy_quarantine/production/executive_brain/pipeline/executive_pipeline.py.legacy': 'bf8b105c0de804d67ecf95b53861d00295c9f257038ac6ad68667f7a1239da0b',
+ 'legacy_quarantine/tests/integration/test_workflow_runtime_integration.py.legacy': '6bbfc848eeb30af9788bc2f3ad0897810dec8f4c6ced072227f3ac8e808bf83b',
+ 'tests/automation_rules_engine_test.py': 'b6a0edae463255edac938702007267f758c1d0353d5281f1ade236c9a08a9e74',
+ 'tests/dependency_manager_test.py': '85527b28f6c8856f9f5326ca10ff67859961f381e5a800d60dff33fc6b94cac6',
+ 'tests/retry_recovery_engine_test.py': '0eae5c686358c925b07916d2418f8bf2cf7bd5343ec14914c63a5c25215238c3',
+ 'tests/task_manager_test.py': 'bcb6e56aff115b61d2f677fa20c42665b556e0bebbec41b0834ef832c5271785',
+ 'tests/task_queue_test.py': '96800edabe8980e53e84142fcda5db7f28d61558fc264189c79a4280f4875c1c',
+ 'tests/workflow_engine_test.py': '8c5a2ee665d00959c4785a2bbd39efb0f70828454c62246d852f55cb2182e40e',
+ 'tests/workflow_monitor_test.py': '2e2e378385add86c211368c4cddccdcfc7c0a7551184eb9b9652713f2486daf2',
+ 'tests/workflow_platform_integration_test.py': '8c7140817265d86bfce059352157c60831032b7f82aa70899f9c859aeb4562b3'}
+
+_F06E_WORKFLOW_PRESERVED_OWNER_SHA256 = {'brain/behavior_tracker.py': 'e33c91f4a7ba8b062d435a62dfca777de1190e6b385c5f9d94970f06aea26797',
+ 'brain/crash_recovery_system.py': '623a152bd292295c8507abc1b0340a66dcb3f5bc60b4b8977707ab2e3ebd78f3',
+ 'brain/decision_record.py': 'b49dfac4e09ec5970af466271649f32dff99b5ff32cb0799ce114079cab44d90',
+ 'brain/goal_tracker.py': 'eaa5c371be2c2281ae76444d54ac495f198119dfdd76b313f9dcfc969cbdc6da',
+ 'brain/provider_memory.py': '4131c61131cb157c2e04ac007f983760f24f5ff5e5ed27d52752f390a1b4c60d',
+ 'brain/provider_router.py': '7a033cacb06b6342b5ccbaa6db5bb35a2dabaf3141b7e8c903e863b9d85465e2',
+ 'brain/reasoning_trace_logger.py': 'eda2ef8551b60cb67b167fd7082e12d1b71bbe89102eae0f93a28fc667d6d7aa',
+ 'brain/user_profile.py': '4bfc34fd0418876b7442ade65fcc07cf32c2ad73be6bc5110b9c78c382c116e3',
+ 'core/action_history.py': '34ba99bfdf9520d12650cc56e0d522620abdec4555303d71e9f4b63e80a4bc30',
+ 'core/backup_manager.py': '0bde3faa0294ee6ea1df76332c776f01e6a82601a399925c51c7c320662ca013',
+ 'core/config_manager.py': '1bac73fa937da8534ef6e5a9dcbf26b521512dd835c22359063a1949b4789611',
+ 'core/snapshot_manager.py': '2b4dfc386821a081caf6bdb406315eab65edcd107a843e4b62eb2d19bdc40c09',
+ 'jaos/composition/platform_composition.py': '3a1111dd0ed8ac83a4f29ffb919d62b5c8285751ee8ddd910f3440096dfa0047',
+ 'jaos/executive/controller.py': '118d904bb6fad0de1b8bb4f9fdf5a8bd5e75c79af4d2b4fa5e3a29d4c791d8b1',
+ 'jaos/executive/execution_coordinator.py': '6ecbf45d3b1d696016da1d370c0d6e9aad05f51b397ce8a0bbaee2aa5afd92f0',
+ 'jaos/executive/planner.py': 'ad89f389c7a9a200ab299bb034be5d785a92ae430315fd0ca467caff0f84ecc0',
+ 'jaos/tools/tool_approval.py': '719f6768a0873500a8218dba26ba8a80bfc30a24bb81357fee0cc0ef7a769b70',
+ 'jaos/tools/tool_audit.py': 'e868a8981f53e63aaa55370c3e4104c8c7eb7142bb6c0287afbc1394da91479e',
+ 'jaos/tools/tool_execution.py': 'f64f8271890a083f84688a5a53cfb1862b8768ceaffbedd494548292e815cf87',
+ 'jaos/tools/tool_manager.py': 'b1d4cd9629bf8c148e9e80fcd0a55fd671006a3365f3641f561b27dc80708f1e',
+ 'jaos/tools/tool_permissions.py': 'd77245af4a60c5ca460dae847d89dabfc667bc180a4537a72370a3d53a0415da',
+ 'jaos_platform/base_platform_service.py': '29220485e2eb57e8c60dea4406f292c2786ddb90cc4ca6226a8949a7bc34ae5a',
+ 'jaos_platform/platform_contract.py': '800876c6de79bf4da90c1847b6c01d86816139af93ac8e5b860cedfdeac6e172',
+ 'jaos_platform/runtime_state_inventory.py': 'f5488702d59ac727328cc9d82f0a7a5f011aceb993474a4933686eb72ea1a979',
+ 'memory/long_term_memory.py': '1cfdab9536197f5aa25315b215639fb8ef0012ec1cede7e1884ce6b977c83f01',
+ 'memory/memory_cleanup.py': '6bc2c23798fa6c58a0cd1e27937bc23859444fad17fd6b985a3826280ce992d6',
+ 'memory/memory_export.py': '60563bfa421311225a12c020fbf6795f1741a9c021eed32bff92380875dfb16a',
+ 'run_jaos.py': 'ada071ed9bb530a9b62f10bd51d0703de3c5435aadffd999822eab2da1cc2cc3',
+ 'scripts/generate_dg1_docs.py': 'a990ecf5d2baf352911cff90ba7ef52c21f97b0fa638663e45f47a6338029d54'}
+
+_F06E_WORKFLOW_HISTORICAL_CALLS = {'logger.info',
+ 'logger.warning',
+ 'print',
+ 'priority_order.get',
+ 'self.dependencies.get',
+ 'self.dependencies.items',
+ 'self.dependencies.setdefault',
+ 'self.dependencies.setdefault(task, []).append',
+ 'self.failures.append',
+ 'self.queue.append',
+ 'self.queue.pop',
+ 'self.queue.sort',
+ 'self.rules.append',
+ 'self.runtime.events.publish',
+ 'self.schedules.append',
+ 'self.tasks.items',
+ 'self.workflows.get',
+ 'self.workflows.items',
+ 'super',
+ 'super().__init__'}
+
+def _assert_f06e_workflow_historical_inventory() -> dict[str, bytes]:
+    """Reconstruct every earlier workflow inventory from the exact inert archives."""
+
+    payloads = {}
+    for former, archive, sha256, blob in _F06E_WORKFLOW_ARCHIVE_RECORDS:
+        assert not (_REPOSITORY_ROOT / former).exists()
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == sha256
+        assert _git_blob_id(payload, path=former) == blob
+        payloads[former] = payload
+    inventory = "".join(
+        former + "\0" + hashlib.sha256(payload).hexdigest() + "\n"
+        for former, payload in sorted(payloads.items())
+    )
+    for baselines in (
+        _F06E_SATELLITE_RETAINED_ROOT_HASHES,
+        _F06E_KERNEL_RETAINED_SOURCE_INVENTORIES,
+        _F06E_EXECUTIVE_AI_RETAINED_INVENTORIES,
+    ):
+        count, digest = baselines["workflow"]
+        assert len(payloads) == count == 9
+        assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == digest
+    return payloads
+
+
+def test_f06e_workflow_archive_fidelity(pytestconfig: pytest.Config) -> None:
+    """CASE A: preserve nine exact sources without an executable workflow namespace."""
+
+    records = _F06E_WORKFLOW_ARCHIVE_RECORDS
+    _assert_f06e_production_archive_payloads(records, {"workflow": 9}, pytestconfig)
+    historical = _assert_f06e_workflow_historical_inventory()
+    result = subprocess.run(
+        ["git", "ls-tree", "-r", "0a04ae2", "--", "workflow"],
+        cwd=_REPOSITORY_ROOT, capture_output=True, text=True, check=True, timeout=30,
+    )
+    original = {}
+    for line in result.stdout.splitlines():
+        mode, kind, blob, former = line.split()
+        assert (mode, kind) == ("100644", "blob")
+        original[former] = blob
+    assert original == {former: blob for former, _archive, _sha, blob in records}
+    assert set(original) == set(_F06E_WORKFLOW_SIZES_AND_CRLF)
+    for former, archive, _sha256, _blob in records:
+        payload = historical[former]
+        size, crlf = _F06E_WORKFLOW_SIZES_AND_CRLF[former]
+        assert len(payload) == size
+        assert payload.count(b"\r\n") == payload.count(b"\n") == crlf
+        assert payload.count(b"\r") == crlf
+        # Compare filesystem-derived Git mode without staging or writing an index.
+        mode_probe = subprocess.run(
+            ["git", "diff", "--no-index", "--raw", "--", "/dev/null", archive],
+            cwd=_REPOSITORY_ROOT, capture_output=True, text=True, check=False, timeout=30,
+        )
+        assert mode_probe.returncode == 1, mode_probe.stderr
+        assert mode_probe.stdout.split()[1] == "100644"
+    assert sum(map(len, historical.values())) == 7969
+    assert sum(not payload for payload in historical.values()) == 1
+    live = _REPOSITORY_ROOT / "workflow"
+    assert not live.exists()
+    assert not tuple(live.rglob("*.py"))
+    assert not tuple(live.rglob("*.pyc"))
+    assert not tuple(live.rglob("__pycache__"))
+    assert importlib.machinery.PathFinder.find_spec(
+        "workflow", [str(_REPOSITORY_ROOT)]
+    ) is None
+    conftest = _load_tests_conftest()
+    for relpath, sha256 in _F06E_WORKFLOW_DEBT_SHA256.items():
+        path = _REPOSITORY_ROOT / relpath
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == sha256
+        if relpath.startswith("tests/"):
+            assert conftest.is_excluded_legacy_module(path)
+            assert not relpath.startswith("tests/tests/")
+        else:
+            assert path.name.endswith(".py.legacy")
+            assert not any(fnmatch.fnmatchcase(path.name, p)
+                           for p in pytestconfig.getini("python_files"))
+
+
+def test_f06e_workflow_caller_authority_containment() -> None:
+    """CASE B: static retirement preserves canonical owners and exact inert debt."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        _manifest_classified_paths,
+        analyze_import_closure,
+    )
+
+    observed = {}
+    base_consumers = set()
+    contract_consumers = set()
+    configured_legacy = set()
+    for path in _repository_live_python_paths():
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        package = relpath.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        statements = []
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig"))):
+            names = _f06e_final_import_names(node, package)
+            assert not any(n == "legacy_quarantine" or n.startswith("legacy_quarantine.")
+                           for n in names)
+            if any(n == "workflow" or n.startswith("workflow.") for n in names):
+                statements.append(ast.unparse(node))
+            if not relpath.startswith("tests/"):
+                if any(n.endswith(".BasePlatformService") for n in names):
+                    base_consumers.add(relpath)
+                if any(n.endswith(".PlatformContract") for n in names):
+                    contract_consumers.add(relpath)
+            if (
+                (relpath == "run_jaos.py" or relpath.startswith(("jaos/", "jaos_platform/")))
+                and isinstance(node, ast.Constant) and isinstance(node.value, str)
+            ):
+                assert node.value != "workflow"
+                assert not node.value.startswith("workflow.")
+        if statements:
+            observed[relpath] = statements
+        assert "workflow" not in _literal_dynamic_import_roots(path)
+        if relpath.startswith("tests/tests/") and (
+            _imported_top_level_roots(path) & _F06D2E_LEGACY_FACING_IMPORT_ROOTS
+        ):
+            configured_legacy.add(relpath)
+    assert observed == _F06E_WORKFLOW_EXCLUDED_IMPORTS
+    assert len(observed) == 8
+    assert sum(map(len, observed.values())) == 15
+    conftest = _load_tests_conftest()
+    assert all(conftest.is_excluded_legacy_module(_REPOSITORY_ROOT / p) for p in observed)
+    assert all(p.startswith("tests/") and not p.startswith("tests/tests/") for p in observed)
+    assert base_consumers == contract_consumers == set()
+    assert configured_legacy == _F06D_CORE_KERNEL_REMAINING_LEGACY_FACING_PATHS
+    assert len(configured_legacy) == 1
+
+    archived = {}
+    for path in (_REPOSITORY_ROOT / "legacy_quarantine").rglob("*.py.legacy"):
+        statements = [
+            ast.unparse(node)
+            for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig")))
+            if any(n == "workflow" or n.startswith("workflow.")
+                   for n in _f06e_final_import_names(node, []))
+        ]
+        if statements:
+            archived[path.relative_to(_REPOSITORY_ROOT).as_posix()] = statements
+    assert archived == _F06E_WORKFLOW_ARCHIVED_IMPORTS
+    assert len(archived) == 2
+    assert all(len(statements) == 1 for statements in archived.values())
+    assert not (_REPOSITORY_ROOT / "executive_brain/pipeline/executive_pipeline.py").exists()
+
+    graph = {}
+    historical_calls = set()
+    for former, archive, _sha256, _blob in _F06E_WORKFLOW_ARCHIVE_RECORDS:
+        graph[former] = set()
+        for node in ast.walk(ast.parse((_REPOSITORY_ROOT / archive).read_text("utf-8"))):
+            names = _f06e_final_import_names(node, ["workflow"])
+            assert all(n.partition(".")[0] in {"logs", "jaos_platform"} for n in names)
+            graph[former].update(n for n in names if n == "workflow" or n.startswith("workflow."))
+            if isinstance(node, ast.Call):
+                historical_calls.add(ast.unparse(node.func))
+    assert len(graph) == 9
+    assert sum(map(len, graph.values())) == 0
+    # Nine nodes with zero edges give nine singleton SCCs, no cycles or self-cycles.
+    assert all(not targets for targets in graph.values())
+    assert historical_calls == _F06E_WORKFLOW_HISTORICAL_CALLS
+    # Immutable owners include the canonical permission/approval/audit chain,
+    # compatibility abstractions, writer inventory and every declared F06F writer.
+    for relpath, sha256 in _F06E_WORKFLOW_PRESERVED_OWNER_SHA256.items():
+        assert not relpath.startswith("workflow/")
+        assert hashlib.sha256((_REPOSITORY_ROOT / relpath).read_bytes()).hexdigest() == sha256
+    execution = ast.parse((_REPOSITORY_ROOT / "jaos/tools/tool_execution.py").read_text("utf-8"))
+    execute = next(n for n in ast.walk(execution)
+                   if isinstance(n, ast.FunctionDef) and n.name == "execute")
+    calls = sorted((n.lineno, ast.unparse(n.func)) for n in ast.walk(execute)
+                   if isinstance(n, ast.Call))
+    names = [name for _line, name in calls]
+    assert names.index("self._permissions.authorize") < names.index(
+        "self._approval_manager.require_approval"
+    ) < names.index("tool.execute")
+    assert any(line > next(line for line, name in calls if name == "tool.execute")
+               and name == "self._audit_logger.record" for line, name in calls)
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert len(closure["analyzed_files"]) == 207
+    assert len(closure["reached_modules"]) == 206
+    assert not any(n == "workflow" or n.startswith("workflow.")
+                   for n in closure["reached_modules"])
+    manifest = (_REPOSITORY_ROOT / "docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md").read_text("utf-8")
+    classified = _manifest_classified_paths(manifest)
+    assert classified["D"] == {"brain/", "core/", "main.py", "memory/"}
+    assert "legacy_quarantine/production/workflow/" in classified["E"]
+    assert {code: len(paths) for code, paths in classified.items()} == {
+        "A": 10, "B": 1, "D": 4, "E": 15, "F": 3,
+    }
+    assert sum(map(len, classified.values())) == 33
     _assert_config_containment_preserved()
