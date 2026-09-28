@@ -2407,6 +2407,13 @@ def _assert_f06e_production_archive_payloads(
                 str((_REPOSITORY_ROOT / record[1]).parent) for record in root_records
             ]))
         expected_entries = {record[1] for record in root_records}
+        if root_name == "core" and root_name in partial_roots:
+            # The prior kernel leaf and approved partial-core slice share one
+            # archive directory; keep its complete membership exact.
+            expected_entries.update(record[1] for record in (
+                _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS
+                + _F06E_PARTIAL_CORE_ARCHIVE_RECORDS
+            ))
         for _former, archive, _sha256, _blob in root_records:
             parent = (_REPOSITORY_ROOT / archive).parent
             while parent != archive_root:
@@ -3741,18 +3748,8 @@ def test_f06e_core_kernel_leaf_caller_and_dependency_containment() -> None:
     assert registry_statement_count == 0
     assert all(path.startswith("executive_brain/") for path in registry_importers)
 
-    core = _REPOSITORY_ROOT / "core"
-    assert core.is_dir()
-    core_sources = sorted(core.rglob("*.py"))
-    assert len(core_sources) == 34
-    inventory = "".join(
-        path.relative_to(_REPOSITORY_ROOT).as_posix() + "\0"
-        + hashlib.sha256(path.read_bytes()).hexdigest() + "\n"
-        for path in core_sources
-    )
-    assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == (
-        _F06E_CORE_KERNEL_RETAINED_CORE_DIGEST
-    )
+    # Preserve the original 34-source digest across the partial retirement.
+    _assert_f06e_partial_core_historical_inventory()
     assert hashlib.sha256((_REPOSITORY_ROOT / "main.py").read_bytes()).hexdigest() == (
         _F06E_CORE_KERNEL_MAIN_SHA256
     )
@@ -5563,6 +5560,342 @@ def test_f06e_workflow_caller_authority_containment() -> None:
     classified = _manifest_classified_paths(manifest)
     assert classified["D"] == {"brain/", "core/", "main.py", "memory/"}
     assert "legacy_quarantine/production/workflow/" in classified["E"]
+    assert {code: len(paths) for code, paths in classified.items()} == {
+        "A": 10, "B": 1, "D": 4, "E": 15, "F": 3,
+    }
+    assert sum(map(len, classified.values())) == 33
+    _assert_config_containment_preserved()
+
+
+_F06E_PARTIAL_CORE_ARCHIVE_RECORDS = (('core/action_queue.py',
+  'legacy_quarantine/production/core/action_queue.py.legacy',
+  '7db0adc7a0e50b8092260e9ae55bc0c67a9327c3d8ac08e8ffcc56de2dec17d8',
+  'a3bdcbd2000e6d4e33484305b4fedca3d1cda2b8'),
+ ('core/agent_manager.py',
+  'legacy_quarantine/production/core/agent_manager.py.legacy',
+  '13ecc5c521551b4f52310a22e47c90984b813908637f724b25d5821a916fee93',
+  'ac314843df10dac30edf142b1a32d8b84e06f1c7'),
+ ('core/capability_registry.py',
+  'legacy_quarantine/production/core/capability_registry.py.legacy',
+  '356c33c54830a510d7b4dc6a458ac1e3fba80e74c8551be36da0a9d803ec0069',
+  '000f3f498b7a5c0e6340b370ab75fd52c58d9b5f'),
+ ('core/context_manager.py',
+  'legacy_quarantine/production/core/context_manager.py.legacy',
+  'ade44f59667eca2586261f74526a65b920db5f4c9e90a5e75ef59a3ca19699f7',
+  '2b248dbcffe89d879a154dbeb41c02b91ad9d066'),
+ ('core/explain_action.py',
+  'legacy_quarantine/production/core/explain_action.py.legacy',
+  '9795f10cbae8e7280869e61370d724f801dd23e22eaa07fd76878937620a86ac',
+  'e0ef7a7e19f361184eb35c7e402d445097e954e3'),
+ ('core/memory_window.py',
+  'legacy_quarantine/production/core/memory_window.py.legacy',
+  '56b37751cc8118b4bac5b635aa5527b5beae8d0e209e927eb3e3e7841d5f47a9',
+  'd6ac230fc9b9bb30f3241a43524ca24bd2dfd5f7'),
+ ('core/notification_system.py',
+  'legacy_quarantine/production/core/notification_system.py.legacy',
+  '3bd41fffa7d9a9dca392f10b96071052ef1a1a229c4ce7c82e55f03de617ed51',
+  '9550eeae84328acf8e185829ba301c9e01335aa2'),
+ ('core/offline_mode.py',
+  'legacy_quarantine/production/core/offline_mode.py.legacy',
+  'a1efe85da75fca2f8263d9abbd1dae45226f885412825520efe3e58208802971',
+  'c9aa82ec058f88a6cbd409a78b32eea791b3d658'),
+ ('core/performance_monitor.py',
+  'legacy_quarantine/production/core/performance_monitor.py.legacy',
+  'ce65741ce54da7c1f3b0f5bab33137d3260d9d1174d810bbec79cfaaa27737ae',
+  '21a4a53dfdb3e5ca6518a93f24c11f3e7c8cfc42'),
+ ('core/permission_system.py',
+  'legacy_quarantine/production/core/permission_system.py.legacy',
+  '369307fa88a20ad3b4acea3a65b31af09cabbc3b9c4e633337076efb1d5bb9dc',
+  '84f08e2cc2ccd0c6543387d71dc7841d55e1cf05'),
+ ('core/recovery_tracker.py',
+  'legacy_quarantine/production/core/recovery_tracker.py.legacy',
+  '5e2aafe134566ed2db05d83ad181fd2adca709e3e2b51427be95c8a01569072c',
+  '6baeedb2d66e098897c8e62720abd18490719b6e'),
+ ('core/resource_manager.py',
+  'legacy_quarantine/production/core/resource_manager.py.legacy',
+  '7755a8f5bc3b1ad18d49c2e69cd5345b9a3c62fadcfbb124f0c54fb147dd5a8f',
+  'f8573a1c3af13bbafd55b8c02f2606bf5fef8f25'),
+ ('core/scheduler.py',
+  'legacy_quarantine/production/core/scheduler.py.legacy',
+  '92b164e16980a9b24b37781a0f857f440eb72e2075d5e7cb99cdffcaf1a48339',
+  '2e11a69cb559f6ca56b9a45e48088fe2c0d21560'),
+ ('core/session_manager.py',
+  'legacy_quarantine/production/core/session_manager.py.legacy',
+  'fc762e7b833ec96f99065cd3dde8cacbd8459a55584d68a490d7f83a87ef978e',
+  '5324f2e55277ee9e8d80448694768bb0ef00f498'),
+ ('core/state_manager.py',
+  'legacy_quarantine/production/core/state_manager.py.legacy',
+  '7b58d7e92d1e9228a683c9183da89a45b73284353c7ced77fd9daf72387a956a',
+  '03e9e0be2c8e28213f80b08e8990889ef5e613d1'),
+ ('core/task_manager.py',
+  'legacy_quarantine/production/core/task_manager.py.legacy',
+  '18e856500ce2ea7bdb2d84083bd7089e4675d345db89b75a62b3fc90ddc01415',
+  '0a54aedd97712466ee232ee36838d91b2fe53853'),
+ ('core/thread_manager.py',
+  'legacy_quarantine/production/core/thread_manager.py.legacy',
+  'c20d908ccdb2323a575a639eeb3dc00cae957f5d277af7eb1e070f89a696fee0',
+  'a4b714b8adf15aa3b898c97ae014557ebe48dbc9'),
+ ('core/transparency_layer.py',
+  'legacy_quarantine/production/core/transparency_layer.py.legacy',
+  '6f05f411158e43c295f8f57aec9e465493f1f1605403981e4d0d34e624d7d036',
+  '1d676e85d163e5c34fdcfbff5840f588a7a8f974'))
+
+
+_F06E_PARTIAL_CORE_SIZES_AND_CRLF = {'core/action_queue.py': (1057, 60),
+ 'core/agent_manager.py': (724, 39),
+ 'core/capability_registry.py': (919, 41),
+ 'core/context_manager.py': (811, 45),
+ 'core/explain_action.py': (903, 43),
+ 'core/memory_window.py': (922, 51),
+ 'core/notification_system.py': (848, 43),
+ 'core/offline_mode.py': (737, 40),
+ 'core/performance_monitor.py': (913, 49),
+ 'core/permission_system.py': (762, 35),
+ 'core/recovery_tracker.py': (812, 41),
+ 'core/resource_manager.py': (708, 37),
+ 'core/scheduler.py': (713, 41),
+ 'core/session_manager.py': (1303, 64),
+ 'core/state_manager.py': (502, 29),
+ 'core/task_manager.py': (704, 41),
+ 'core/thread_manager.py': (896, 50),
+ 'core/transparency_layer.py': (664, 34)}
+
+
+_F06E_PARTIAL_CORE_RETAINED_SHA256 = {'core/__init__.py': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+ 'core/action_history.py': '34ba99bfdf9520d12650cc56e0d522620abdec4555303d71e9f4b63e80a4bc30',
+ 'core/backup_manager.py': '0bde3faa0294ee6ea1df76332c776f01e6a82601a399925c51c7c320662ca013',
+ 'core/command_system.py': '047d4cb7f9738446a52e44d3d64b8ee77dbcf6556bfc9bb1e1eb6d36b1cbb1aa',
+ 'core/config_manager.py': '1bac73fa937da8534ef6e5a9dcbf26b521512dd835c22359063a1949b4789611',
+ 'core/diagnostics.py': 'afdb3799b396f62beca3e576b4c3575c3c0d8e9d70510d57db09eccc08617913',
+ 'core/engine.py': 'dbb3fbf0030016da5252aa294a7b36c96db11c0f3f1d15bf847a1b889fe01e51',
+ 'core/error_handler.py': '30e6c7ed7e8266fea61e2a5355d9fd619098bcfbb3c41e7cfad9fe28a644e37e',
+ 'core/event_system.py': 'a9f1266963b4fb482d25f0adae61574549dbf4ec19b45684ea7ce90e79f91685',
+ 'core/health_monitor.py': 'cbca49d51324394cdf74f3be56366f36501e15afc9310baf98995ae594a20bb2',
+ 'core/module_loader.py': 'b649594fbe112c594eda85851de1345d5ade36102b36a48c8918bc0b13da7c96',
+ 'core/plugin_manager.py': '51102f1e2597e8418d8b2e5e14b0300a31468fcb8e389f57ee7ccd247c486b3f',
+ 'core/recovery_manager.py': 'b85df8d1d4bf892715e0b5e1fa28f20d092c70e1165cf50299686b71a64f1719',
+ 'core/snapshot_manager.py': '2b4dfc386821a081caf6bdb406315eab65edcd107a843e4b62eb2d19bdc40c09',
+ 'core/status_manager.py': 'c49586925de5ed8dc6b92745140858a1360e2d73fe5a8556567800ba2c42e0e6',
+ 'core/version_manager.py': '9a1b5aa0f6d5246b28e5d298267f714cb7b359f252794ce1465f2e3232b707f1'}
+
+
+_F06E_PARTIAL_CORE_CACHE_SHA256 = {'core/__pycache__/__init__.cpython-314.pyc': '1a593e52bdcfc1794075e1e5ecb344a6ecde309197f9b7087d4079ef77a50b75',
+ 'core/__pycache__/action_history.cpython-314.pyc': 'ee936c4b3a81482dffaad5dfcefc9b4772bbe2fe5fa7c647ec9292ba6d8545fe',
+ 'core/__pycache__/backup_manager.cpython-314.pyc': '32b5b85a162d3d5d55f64ef4e7c1832c3ac2aee271407ca4125014ae5b1b7f26',
+ 'core/__pycache__/command_system.cpython-314.pyc': '01e839a182ad89bd29b8166b83dbc695fa8b99c781cf6b176d7d63005b8dceaf',
+ 'core/__pycache__/config_manager.cpython-314.pyc': 'c99787feef339b2df412498e082a3ced28eed769402a590b6ebfdfbd9461de7b',
+ 'core/__pycache__/diagnostics.cpython-314.pyc': 'ad7aee16c79bb801d569b541c8f3ceeeb8640e64f55ee49fd056b9727720bb4a',
+ 'core/__pycache__/engine.cpython-314.pyc': '275f332785e1441aed9aac48e3b258bebac5c2c08e8e182a2a25a50c00fd6554',
+ 'core/__pycache__/error_handler.cpython-314.pyc': 'cfe6766336a5ee6950daac708e0f3bd4c94337f75f7e73bdf0c1618a8a1b76ef',
+ 'core/__pycache__/event_system.cpython-314.pyc': '67e410ebc1cebf93108bb0a1d8d6f7fb75112408c7c5481b25db7ccfab721d32',
+ 'core/__pycache__/health_monitor.cpython-314.pyc': '243edfaf0c24c13ab7025d2bfa04c8f9af624ab0e837c09839b61d0a68dd87de',
+ 'core/__pycache__/module_loader.cpython-314.pyc': 'f0eca4105004311379e82a46b5bffed0a47c57c2ff6a3a42746a3712bd4d34b0',
+ 'core/__pycache__/plugin_manager.cpython-314.pyc': '54f359d18e0bc91f3611efccf44cadf5e7ad00e03f2e15de73274138e8d87fb1',
+ 'core/__pycache__/recovery_manager.cpython-314.pyc': 'a55aacf56c2eb6072cf161952cae33be6da6c16977ff6f9a9e4a3b120638e949',
+ 'core/__pycache__/snapshot_manager.cpython-314.pyc': 'eecc81f9cc958bcb0f8a3f168652cce7ac99234a560a7438eb04a44511594cb6',
+ 'core/__pycache__/status_manager.cpython-314.pyc': 'd22cffceda0b51eae6b89da3b426013da5ffb8ba42d8b2239b9ab2607963da5b',
+ 'core/__pycache__/version_manager.cpython-314.pyc': '7d817e75253f64087981e4ccd8686e2e3c2ad6fc2e5c888d566e80420d956506'}
+
+
+_F06E_PARTIAL_CORE_EXCLUDED_IMPORTS = {'tests/action_queue_test.py': ['from core.action_queue import ActionQueue'],
+ 'tests/agent_manager_test.py': ['from core.agent_manager import AgentManager'],
+ 'tests/capability_registry_test.py': ['from core.capability_registry import CapabilityRegistry'],
+ 'tests/explain_action_test.py': ['from core.explain_action import ExplainAction'],
+ 'tests/memory_window_test.py': ['from core.memory_window import MemoryWindow'],
+ 'tests/notification_system_test.py': ['from core.notification_system import NotificationSystem'],
+ 'tests/offline_mode_test.py': ['from core.offline_mode import OfflineMode'],
+ 'tests/performance_monitor_test.py': ['from core.performance_monitor import PerformanceMonitor'],
+ 'tests/permission_system_test.py': ['from core.permission_system import PermissionSystem'],
+ 'tests/recovery_tracker_test.py': ['from core.recovery_tracker import RecoveryTracker'],
+ 'tests/resource_manager_test.py': ['from core.resource_manager import ResourceManager'],
+ 'tests/session_manager_test.py': ['from core.session_manager import SessionManager'],
+ 'tests/state_manager_test.py': ['from core.state_manager import StateManager'],
+ 'tests/task_test.py': ['from core.task_manager import TaskManager'],
+ 'tests/thread_manager_test.py': ['from core.thread_manager import ThreadManager'],
+ 'tests/transparency_layer_test.py': ['from core.transparency_layer import TransparencyLayer']}
+
+
+_F06E_PARTIAL_CORE_DEBT_SHA256 = {'tests/action_queue_test.py': '5080ac814e4b15ed184d6ee39ce6ab5074082f39a0250451c04c981ac1239718',
+ 'tests/agent_manager_test.py': '3c0b14b8f6d9b3e45aa042be23cbcb6ae524c2324c9c08e87398b91ea5d67327',
+ 'tests/capability_registry_test.py': '5f6565ccc6d2a4d19484173fa47e941941cb65e9300161581c38d5926f75e5e9',
+ 'tests/explain_action_test.py': 'ef640319a228d2c476dffa4190c3e2d3a1050178289d6f6bdbc0947d40a9b954',
+ 'tests/memory_window_test.py': '45b113308d477dcd25bada96fd5a3db301911b89d78599a09b65bf85c604636f',
+ 'tests/notification_system_test.py': '94cf05d8ffecfd68d00ce0e3f646987de753078a115df80f99bd27f0e7e60b00',
+ 'tests/offline_mode_test.py': '8ee7ee18f3ca5b310ac46a7af988f1b6d9e4bcbcd5da43bfc79fd9f83a2bd824',
+ 'tests/performance_monitor_test.py': 'bcb25052820c202a43d5f957cc5470327d69f53d556121be62ad847ca90e9b24',
+ 'tests/permission_system_test.py': '19b3e0ec12d25bf11287c5f057187051a6835abb4d77e71516472f6b2c37e8e4',
+ 'tests/recovery_tracker_test.py': 'ec975fee89152c67298967857314b460d074d299164dfb3e89420ff8bfb7581d',
+ 'tests/resource_manager_test.py': 'c69f3dc1529e960e13d46d6e6b030830bd5e00dc935a94ab883d149ad29815d7',
+ 'tests/session_manager_test.py': '12fdec75f1afef955800ad1dce42e0094dba28b9bfa04f894769ce7d40ecbdb5',
+ 'tests/state_manager_test.py': '57daf9106f2af28d5c07217566d1ab330f636632e95b0980ce684257c95d69d2',
+ 'tests/task_test.py': '74ebd18fbacf36cfe823758f45237f04f78dd2479b69ede1693eb07bd08e40c1',
+ 'tests/thread_manager_test.py': '1d9d2b1c7cb0434ba235435d59d9ecf7aa246f9bfdf8bb7d34b59e8fae5d628a',
+ 'tests/transparency_layer_test.py': '866eaae8e0fcfc1c3db2aafdcfbeaff86a78ecbf570b2f8f007bcd4158292c03'}
+
+
+def _assert_f06e_partial_core_historical_inventory() -> dict[str, bytes]:
+    """Reconstruct the unchanged historical 34-source inventory, never execute it."""
+
+    core = _REPOSITORY_ROOT / "core"
+    assert core.is_dir()
+    live = {p.relative_to(_REPOSITORY_ROOT).as_posix(): p.read_bytes()
+            for p in core.rglob("*.py")}
+    assert set(live) == set(_F06E_PARTIAL_CORE_RETAINED_SHA256)
+    assert len(live) == 16
+    for relpath, payload in live.items():
+        assert hashlib.sha256(payload).hexdigest() == _F06E_PARTIAL_CORE_RETAINED_SHA256[relpath]
+    payloads = dict(live)
+    for former, archive, sha256, blob in _F06E_PARTIAL_CORE_ARCHIVE_RECORDS:
+        assert not (_REPOSITORY_ROOT / former).exists()
+        assert former not in payloads
+        payload = (_REPOSITORY_ROOT / archive).read_bytes()
+        assert hashlib.sha256(payload).hexdigest() == sha256
+        assert _git_blob_id(payload, path=former) == blob
+        payloads[former] = payload
+    assert len(payloads) == 34
+    inventory = "".join(
+        former + "\0" + hashlib.sha256(payload).hexdigest() + "\n"
+        for former, payload in sorted(payloads.items())
+    )
+    assert hashlib.sha256(inventory.encode("utf-8")).hexdigest() == (
+        _F06E_CORE_KERNEL_RETAINED_CORE_DIGEST
+    )
+    return payloads
+
+
+def test_f06e_partial_core_archive_fidelity(pytestconfig: pytest.Config) -> None:
+    """CASE A: 18 inert archives + 16 live sources preserve the historical core."""
+
+    records = _F06E_PARTIAL_CORE_ARCHIVE_RECORDS
+    assert len(records) == 18
+    _assert_f06e_production_archive_payloads(
+        records, {"core": 18}, pytestconfig, partial_roots=frozenset({"core"}),
+    )
+    historical = _assert_f06e_partial_core_historical_inventory()
+    baseline = subprocess.run(
+        ["git", "ls-tree", "-r", "fe170c639428cc6baf3549be92b984781d362305", "--", "core"],
+        cwd=_REPOSITORY_ROOT, capture_output=True, text=True, check=False, timeout=30,
+    )
+    assert baseline.returncode == 0, baseline.stderr
+    original = {}
+    for line in baseline.stdout.splitlines():
+        metadata, former = line.split("\t")
+        mode, kind, blob = metadata.split()
+        assert (mode, kind) == ("100644", "blob")
+        original[former] = blob
+    assert set(original) == set(historical)
+    for former, archive, _sha256, blob in records:
+        assert original[former] == blob
+        payload = historical[former]
+        size, crlf = _F06E_PARTIAL_CORE_SIZES_AND_CRLF[former]
+        assert len(payload) == size
+        assert payload.count(b"\r\n") == payload.count(b"\n") == payload.count(b"\r") == crlf
+        mode_probe = subprocess.run(
+            ["git", "diff", "--no-index", "--raw", "--", "/dev/null", archive],
+            cwd=_REPOSITORY_ROOT, capture_output=True, text=True, check=False, timeout=30,
+        )
+        assert mode_probe.returncode == 1, mode_probe.stderr
+        assert mode_probe.stdout.split()[1] == "100644"
+        assert importlib.machinery.PathFinder.find_spec(
+            Path(former).stem, [str(_REPOSITORY_ROOT / "core")]
+        ) is None
+    core = _REPOSITORY_ROOT / "core"
+    assert {p.relative_to(_REPOSITORY_ROOT).as_posix() for p in core.rglob("*")} == (
+        set(_F06E_PARTIAL_CORE_RETAINED_SHA256)
+        | set(_F06E_PARTIAL_CORE_CACHE_SHA256) | {"core/__pycache__"}
+    )
+    assert len(_F06E_PARTIAL_CORE_CACHE_SHA256) == 16
+    for path in core.rglob("*"):
+        assert not path.is_symlink()
+        assert not path.is_junction()
+    for relpath, sha256 in _F06E_PARTIAL_CORE_CACHE_SHA256.items():
+        assert hashlib.sha256((_REPOSITORY_ROOT / relpath).read_bytes()).hexdigest() == sha256
+    # The shared directory remains exact, and the previous leaf is still pinned.
+    _assert_f06e_production_archive_payloads(
+        _F06E_CORE_KERNEL_LEAF_ARCHIVE_RECORDS, {"core": 1}, pytestconfig,
+        partial_roots=frozenset({"core"}),
+    )
+    for relpath, sha256 in _F06E_PARTIAL_CORE_DEBT_SHA256.items():
+        assert hashlib.sha256((_REPOSITORY_ROOT / relpath).read_bytes()).hexdigest() == sha256
+
+
+def test_f06e_partial_core_caller_writer_authority_containment() -> None:
+    """CASE B: only excluded debt reaches the retired subset; owners stay fixed."""
+
+    from tests.tests.platform.test_canonical_import_boundary import (
+        _manifest_classified_paths,
+        analyze_import_closure,
+    )
+
+    modules = {former.removesuffix(".py").replace("/", ".")
+               for former, _archive, _sha256, _blob in _F06E_PARTIAL_CORE_ARCHIVE_RECORDS}
+
+    def retired(name: str) -> bool:
+        return any(name == module or name.startswith(module + ".") for module in modules)
+
+    observed = {}
+    for path in _repository_live_python_paths():
+        relpath = path.relative_to(_REPOSITORY_ROOT).as_posix()
+        package = relpath.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        statements = []
+        for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig"))):
+            names = _f06e_final_import_names(node, package)
+            assert not any(n == "legacy_quarantine" or n.startswith("legacy_quarantine.")
+                           for n in names)
+            if any(retired(n) for n in names):
+                statements.append(ast.unparse(node))
+                assert isinstance(node, (ast.Import, ast.ImportFrom))
+            # Covers literal lazy targets and registrations outside test evidence.
+            if (not relpath.startswith("tests/") and isinstance(node, ast.Constant)
+                    and isinstance(node.value, str)):
+                assert not retired(node.value)
+        if statements:
+            observed[relpath] = statements
+    assert observed == _F06E_PARTIAL_CORE_EXCLUDED_IMPORTS
+    assert len(observed) == sum(map(len, observed.values())) == 16
+    conftest = _load_tests_conftest()
+    assert all(conftest.is_excluded_legacy_module(_REPOSITORY_ROOT / p) for p in observed)
+    assert all(p.startswith("tests/") and not p.startswith("tests/tests/") for p in observed)
+    # Preserve historical references by inspection only; no archive is imported.
+    for path in (_REPOSITORY_ROOT / "legacy_quarantine").rglob("*.py.legacy"):
+        former = path.relative_to(_REPOSITORY_ROOT).as_posix().removeprefix(
+            "legacy_quarantine/production/"
+        ).removesuffix(".legacy")
+        package = former.removesuffix(".py").replace("/", ".").split(".")[:-1]
+        assert not any(retired(n)
+                       for node in ast.walk(ast.parse(path.read_text(encoding="utf-8-sig")))
+                       for n in _f06e_final_import_names(node, package))
+    _assert_f06e_partial_core_historical_inventory()
+    writers = {"core/action_history.py", "core/backup_manager.py",
+               "core/config_manager.py", "core/snapshot_manager.py"}
+    assert writers <= _F06E_PARTIAL_CORE_RETAINED_SHA256.keys()
+    for relpath, sha256 in _F06E_WORKFLOW_PRESERVED_OWNER_SHA256.items():
+        assert hashlib.sha256((_REPOSITORY_ROOT / relpath).read_bytes()).hexdigest() == sha256
+    main = (_REPOSITORY_ROOT / "main.py").read_bytes()
+    assert hashlib.sha256(main).hexdigest() == _F06E_CORE_KERNEL_MAIN_SHA256
+    assert any(isinstance(node, ast.ImportFrom) and node.module == "core.engine"
+               for node in ast.walk(ast.parse(main)))
+    execution = ast.parse((_REPOSITORY_ROOT / "jaos/tools/tool_execution.py").read_text("utf-8"))
+    execute = next(n for n in ast.walk(execution)
+                   if isinstance(n, ast.FunctionDef) and n.name == "execute")
+    calls = sorted((n.lineno, ast.unparse(n.func)) for n in ast.walk(execute)
+                   if isinstance(n, ast.Call))
+    names = [name for _line, name in calls]
+    assert names.index("self._permissions.authorize") < names.index(
+        "self._approval_manager.require_approval"
+    ) < names.index("tool.execute")
+    assert any(line > next(line for line, name in calls if name == "tool.execute")
+               and name == "self._audit_logger.record" for line, name in calls)
+    closure = analyze_import_closure(_REPOSITORY_ROOT, "run_jaos.py")
+    assert closure["violations"] == []
+    assert len(closure["analyzed_files"]) == 207
+    assert len(closure["reached_modules"]) == 206
+    assert not any(retired(n) or n == "workflow" or n.startswith("workflow.")
+                   for n in closure["reached_modules"])
+    manifest = (_REPOSITORY_ROOT / "docs/architecture/FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md").read_text("utf-8")
+    classified = _manifest_classified_paths(manifest)
+    assert classified["D"] == {"brain/", "core/", "main.py", "memory/"}
+    assert not any(p.startswith("legacy_quarantine/production/core") for p in classified["E"])
     assert {code: len(paths) for code, paths in classified.items()} == {
         "A": 10, "B": 1, "D": 4, "E": 15, "F": 3,
     }

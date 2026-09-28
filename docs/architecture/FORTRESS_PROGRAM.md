@@ -4,7 +4,7 @@ Document ID: GOV-FORTRESS-01
 
 Program Name: JAOS Architectural Unification & Runtime Hardening ("Fortress Program")
 
-Document Version: 1.35
+Document Version: 1.36
 
 Certified Repository Baseline: v0.9.0-alpha
 
@@ -101,7 +101,7 @@ requires all of the following:
 | FORTRESS-03 | COMPLETE AND VERIFIED |
 | FORTRESS-04 | COMPLETE AND VERIFIED |
 | FORTRESS-05 | COMPLETE AND VERIFIED — ADR-0011 CONTRACT SATISFIED |
-| FORTRESS-06 | IN PROGRESS — THROUGH F06E WORKFLOW PRODUCTION-FAMILY QUARANTINE IMPLEMENTED AND VERIFIED |
+| FORTRESS-06 | IN PROGRESS — THROUGH F06E PARTIAL CORE QUARANTINE IMPLEMENTED AND VERIFIED; 18 ARCHIVED / 16 RETAINED; CORE REMAINS D |
 | FORTRESS-06A | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `92aa9d7` |
 | FORTRESS-06B | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `eea8190` |
 | FORTRESS-06C | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED AT `0a2ea60` |
@@ -120,6 +120,7 @@ requires all of the following:
 | FORTRESS-06E executive_brain AI/provider production-family quarantine | IMPLEMENTED AND VERIFIED |
 | FORTRESS-06E executive_brain tools production-family quarantine | IMPLEMENTED AND VERIFIED — COMMITTED AND PUSHED `ae9d00a` |
 | FORTRESS-06E final remaining executive_brain production-family quarantine | IMPLEMENTED AND VERIFIED — UNCOMMITTED |
+| FORTRESS-06E approved partial core quarantine | IMPLEMENTED AND VERIFIED — UNCOMMITTED; F06E remains IN PROGRESS; F06F/F06G/F06H NOT STARTED |
 | Later FORTRESS-06D slices | NOT STARTED |
 | FORTRESS-07 | NOT STARTED |
 | Step 7 — Bug Fixing and Regression | IN PROGRESS |
@@ -3777,6 +3778,131 @@ Legacy Quarantine Manifest section 29.1.
 
 ---
 
+### 7.36 FORTRESS-06E Approved Partial Core Quarantine
+
+Date: 2026-09-28. Scope: **CONTROLLED IMPLEMENTATION — partial core only**.
+Baseline branch: `phase8-ai-intelligence`; HEAD and origin tracking ref:
+`fe170c639428cc6baf3549be92b984781d362305`. The approved 18-source inventory
+matched the supplied checkout SHA-256 values, the immutable HEAD blobs and
+100644 modes, sizes and EOL evidence before moving. Destinations were absent;
+no unexpected core artifacts or reparse points were present. The index was empty.
+The eight named, already-modified protected tracked files were snapshotted and
+preserved, along with unrelated tooling/untracked state.
+
+Exactly **18 sources are archived and 16 sources remain live**. Every mapping is
+`core/<name>.py -> legacy_quarantine/production/core/<name>.py.legacy`.
+Moves preserve bytes, checkout SHA-256, normalized Git blob, size, CRLF/LF/CR
+counts, mode and hierarchy. The earlier `core/kernel.py.legacy` is unchanged.
+No wrapper, stub, shim, re-export, replacement implementation or importable
+quarantine payload was introduced.
+
+The 16 retained live files under `core/` are:
+`__init__.py`, `action_history.py`, `backup_manager.py`, `command_system.py`,
+`config_manager.py`, `diagnostics.py`, `engine.py`, `error_handler.py`,
+`event_system.py`, `health_monitor.py`, `module_loader.py`, `plugin_manager.py`,
+`recovery_manager.py`, `snapshot_manager.py`, `status_manager.py`, and
+`version_manager.py`. Their bytes are pinned by the reconstructed historical
+inventory. Exactly 16 retained `.pyc` files remain byte-identical; all 18
+candidate caches remain absent. No bytecode was generated or deleted.
+
+Static caller scans before and after the move agree: **0 canonical production,
+0 canonical launcher closure, 0 external supported production, 0 configured-test,
+0 retained-core and 0 tooling/dev callers** into the retired subset. There are
+no literal lazy/registration targets into it. The 18 candidates have zero
+internal edges. Sixteen excluded flat files retain exactly sixteen direct
+imports, pinned by statement and file SHA; they were not executed. Archived
+historical references remain unchanged (zero imports into this subset).
+
+Static canonical closure from `run_jaos.py -> JAOSApplication ->
+PlatformRuntime / BootManager -> PlatformComposition -> canonical platforms`
+remains **207 files / 206 modules**, with zero violations and no workflow or
+retired-core reachability. This is static evidence, not live-runtime certification.
+
+The four direct F06F-sensitive writers remain live and unchanged:
+`core/action_history.py`, `core/backup_manager.py`, `core/config_manager.py`,
+and `core/snapshot_manager.py`. No writer or F06F responsibility was migrated.
+`main.py -> core.engine` and the retained engine dependency graph are unchanged;
+their later F06F/F06G disposition is unresolved.
+Canonical authority remains `ExecutiveController -> ExecutivePlanner ->
+ExecutionCoordinator -> ToolManager -> ToolExecutionEngine ->
+ToolPermissionManager -> ToolApprovalManager -> tool.execute -> ToolAuditLogger`.
+Owner hashes and permission-before-approval-before-execution/audit checks remain
+in force. No canonical production code changed.
+
+Only `tests/tests/platform/test_collection_containment.py` changed for Python
+tests. It adds exactly two grouped cases:
+`test_f06e_partial_core_archive_fidelity` and
+`test_f06e_partial_core_caller_writer_authority_containment`.
+The existing 34-source historical core guard remains intact through
+**16 retained live + 18 exact archives**, using its original
+`f1b1c574626a8e8c0188f1d8c340cecdf5087eb8e423ad77971a2656a523294c` digest.
+The shared core archive directory is checked against the exact union of the
+previous kernel leaf and the 18 additions. No old configured node is removed.
+
+`tests/tests/platform/test_config_containment.py` is byte-identical, SHA-256
+`d862bd601301ae7bfc85aa16a5cc9f31e5f77b23bc54e84689a4276a5a2a447c`:
+**9 definitions / 11 statically identifiable cases**, all still valid against
+live `core.config_manager`. The canonical import-boundary test is unchanged.
+
+Classification stays **A=10, B=1, D=4, E=15, F=3, TOTAL=33**. D membership is
+exactly **brain/, core/, main.py, memory/**. Core remains D; no partial-core E
+entry is created. **RAA-003 OPEN; RAA-009 OPEN — DEFERRED; F06E IN PROGRESS;
+F06F NOT STARTED; F06G/F06H NOT STARTED; F07-F12 NOT STARTED.**
+
+The first regression ladder below was actually executed after the source/test
+changes and before these documentation edits. No results or verification claims
+were added to the manifest before that ladder passed. All pytest commands use
+`.venv/Scripts/python.exe -B -m pytest -p no:cacheprovider -p anyio.pytest_plugin`,
+`PYTHONDONTWRITEBYTECODE=1`, `PYTEST_DISABLE_PLUGIN_AUTOLOAD=1`, and a different
+external `--basetemp` for every invocation. Full commands, output, exit codes and
+durations are preserved in
+`%LOCALAPPDATA%/Temp/jaos-f06e-core-20260928-a81b/<gate>.json` and `<gate>.log`.
+No repository-local temp/cache was used. Ruff also used `--no-cache`.
+
+| Gate | Exact target arguments after the common prefix | Observed result |
+|---|---|---|
+| 01-core | `tests/tests/platform/test_collection_containment.py::test_f06e_partial_core_archive_fidelity tests/tests/platform/test_collection_containment.py::test_f06e_partial_core_caller_writer_authority_containment -q` | 2 passed in 24.24s; exit 0 |
+| 02-collection | `tests/tests/platform/test_collection_containment.py -q` | 56 passed in 330.83s (0:05:30); exit 0 |
+| 03-import | `tests/tests/platform/test_canonical_import_boundary.py -q` | 55 passed in 6.46s; exit 0 |
+| 04-config | `tests/tests/platform/test_config_containment.py -q` | 11 passed in 4.20s; exit 0 |
+| 05-inventory | `tests/tests/platform/test_runtime_state_inventory.py tests/tests/platform/test_runtime_state_inventory_enrichment.py -q` | 49 passed in 1.85s; exit 0 |
+| 06-launcher | `tests/tests/integration/test_run_jaos_launcher.py tests/tests/integration/test_run_jaos_banner.py tests/tests/integration/test_shell_shutdown_lifecycle.py -q` | 17 passed in 2.22s; exit 0 |
+| 07-runtime | `tests/tests/platform/test_platform_runtime.py tests/tests/platform/test_platform_runtime_lifecycle.py tests/tests/platform/test_boot_manager.py tests/tests/platform/test_lifecycle_state.py tests/tests/platform/test_fortress_03_lifecycle_closure.py -q` | 88 passed in 1.92s; exit 0 |
+| 08-platform | `tests/tests/platform -q` | 401 passed, 1 skipped in 358.87s (0:05:58); exit 0 |
+| 09-invariants | `tests/tests/composition/test_canonical_composition_invariants.py -q` | 16 passed in 4.96s; exit 0 |
+| 10-composition | `tests/tests/composition -q` | 49 passed in 5.76s; exit 0 |
+| 11-integration | `tests/tests/integration -q` | 17 passed in 1.51s; exit 0 |
+| 12-full | `tests/tests -q -rs` | 1782 passed, 1 skipped in 356.79s (0:05:56); exit 0 |
+| 13-explicit-root | `. --collect-only -q` | 1783 tests collected in 4.57s; exit 0 |
+| 14-ruff | `ruff check --no-cache tests/tests/platform/test_collection_containment.py` | All checks passed; exit 0 |
+| 15-diff | `git diff --check` | Clean; no whitespace errors; exit 0 |
+
+Pre-change configured collection at the repository root was rerun: **1,781 node IDs**. Post-change collection
+is **1,783**, reconciled as **1,781 + exactly two new IDs - zero removed IDs**.
+The first configured full run is **1,782 passed / 1 skipped**. The unchanged
+skip is the Windows directory-symlink privilege case; no test was weakened.
+The required final-tree rerun after these documentation edits is recorded
+separately in `final-*.json` / `final-*.log` and the implementation completion
+report; the table above is explicitly the first ladder, not a claim about a
+future run.
+
+Task scope is 18 original paths + 18 archive paths + one test + two architecture
+documents = **39 logical paths**. Git rename review uses disposable external
+before/after trees and `git diff --no-index --find-renames=100%`; it does not
+write or stage the repository index. The observed result is 18 R100
+plus three modified files (21 records). Pre-existing protected modifications and unrelated
+tooling remain outside this task scope. Project-state summary documents,
+protected runtime data and canonical production remain unchanged. Nothing was
+staged, committed or pushed. No legacy launcher/demonstration, excluded flat
+test, archive payload or Graphify command was executed. This slice does not
+authorize the next root or any later workstream.
+
+The exact 18 mappings, hashes, blobs, sizes and EOL counts are recorded in
+FORTRESS_06_LEGACY_QUARANTINE_MANIFEST.md section 30.1; retained writer and
+launcher identities are in section 30.2.
+
+---
+
 ## 8. Relationship to Stabilization and Certified Phases
 
 The Step 7 record is preserved:
@@ -3831,6 +3957,7 @@ certification evidence.
 
 | Date | Version | Change |
 |---|---|---|
+| 2026-09-28 | 1.36 | Partial core only: 18 exact archives, 16 retained live sources/caches, historical 34-source digest preserved, two grouped cases; first ladder 1,782 passed/1 skipped and 1,783 collected. Core remains D; classification unchanged; four F06F writers and main.py/core.engine untouched. RAA-003 OPEN; RAA-009 OPEN — DEFERRED; F06E IN PROGRESS; later slices NOT STARTED. |
 | 2026-09-28 | 1.35 | Verified exact nine-source workflow quarantine, byte/SHA/blob/size/EOL/mode fidelity, zero live namespace/callers, nine singleton SCCs, compatibility consumers 0/0, preserved F06F writers and canonical authority, D=4/E=15/total=33. Full configured 1,780 passed/1 skipped; root 1,781; exactly two new cases; 22 logical paths; no staging. RAA-003 OPEN, RAA-009 OPEN — DEFERRED, F06E IN PROGRESS. |
 | 2026-09-24 | 1.34 | Verified the final 36-source Executive root quarantine, exact byte/SHA/blob/size/EOL mapping, 91-source reconstruction, 55 internal edges/36 singleton SCCs, zero live callers, workflow production-caller-unblocked but untouched, compatibility consumers 1/0, ADR-0012/0013 preserved, and D=5/E=14/total=33. Full configured 1,778 passed/1 skipped; root 1,779; 76 logical paths; no staging. RAA-003 OPEN, RAA-009 OPEN — DEFERRED, F06E IN PROGRESS. |
 | 2026-09-23 | 1.33 | Recorded the verified 42-source Executive tools family quarantine, exact byte/SHA/blob/size/CRLF fidelity, 42 R100 mappings, two grouped containment cases, zero outside callers, canonical Tool ownership, 36 preserved Executive sources, unchanged workflow/config/protected state, and D=6/E=13/total=33. Full configured 1,776 passed, 1 skipped; root collection 1,777. No legacy capability executed; F07/F11 NOT STARTED; RAA-003 OPEN; F06E IN PROGRESS. |
